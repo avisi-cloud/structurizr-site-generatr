@@ -1,0 +1,41 @@
+include:
+  - project: 'pec-ci/ci'
+    file: '/.templates/gradle.yaml'
+  - project: 'pec-ci/ci'
+    file: '/.templates/docker.yaml'
+
+stages:
+  - build
+  - publish
+
+gradle:build:
+  extends: .gradle
+  image: ${GRADLE_JDK17_IMAGE}
+  stage: build
+  script: ./gradlew --no-daemon installDist
+  artifacts:
+    paths:
+      - build/install
+
+docker:build:snapshot:
+  extends: .docker
+  stage: publish
+  except:
+    - tags
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG} .
+    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+  dependencies:
+    - gradle:build
+
+docker:build:tag:
+  extends: .docker
+  stage: publish
+  only:
+    - tags
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG} -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}
+    - docker push ${CI_REGISTRY_IMAGE}:latest
+  dependencies:
+    - gradle:build

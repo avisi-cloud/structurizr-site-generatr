@@ -1,0 +1,8 @@
+.site-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+.menu {
+    border-right: 1px solid #cccccc;
+}
