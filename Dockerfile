@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17
+FROM eclipse-temurin:18
 
 USER root
 RUN apt-get update \
