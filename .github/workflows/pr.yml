@@ -40,6 +40,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: binaries
+          path: build/install
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
