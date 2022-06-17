@@ -19,7 +19,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Execute Gradle build
-        run: ./gradlew assemble installDist
+        run: ./gradlew -PprojectVersion=${{ github.ref_name }} assemble installDist
       - name: Archive binaries
         uses: actions/upload-artifact@v3
         with:

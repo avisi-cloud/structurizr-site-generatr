@@ -5,6 +5,11 @@ plugins {
     application
 }
 
+description = "Structurizr Site Generatr"
+group = "cloud.avisi"
+
+version = project.properties["projectVersion"] ?: "0.0.0-SNAPSHOT"
+
 repositories {
     mavenCentral()
 }
@@ -44,6 +49,13 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
+        }
+    }
+
+    withType<Jar> {
+        manifest {
+            attributes["Implementation-Title"] = project.description
+            attributes["Implementation-Version"] = project.version
         }
     }
 }

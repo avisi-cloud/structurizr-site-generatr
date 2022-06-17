@@ -9,6 +9,6 @@ import kotlinx.cli.ExperimentalCli
 fun main(args: Array<String>) {
     val parser = ArgParser("structurizr-site-generatr")
 
-    parser.subcommands(ServeCommand(), GenerateSiteCommand())
+    parser.subcommands(ServeCommand(), GenerateSiteCommand(), VersionCommand())
     parser.parse(args)
 }
