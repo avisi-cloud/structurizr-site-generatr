@@ -19,12 +19,18 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Execute Gradle build
-        run: ./gradlew installDist
-      - name: Archive production artifacts
+        run: ./gradlew assemble installDist
+      - name: Archive binaries
         uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: build/install
+          retention-days: 1
+      - name: Archive distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: distribution
+          path: build/distributions/structurizr-site-generatr.tar
           retention-days: 1
   build-push-docker:
     runs-on: ubuntu-latest
@@ -48,6 +54,11 @@ jobs:
         with:
           name: binaries
           path: build/install
+      - name: Download distribution
+        uses: actions/download-artifact@v3
+        with:
+          name: distribution
+          path: build/distributions
 
       - name: Build and publish container image
         uses: docker/build-push-action@v3
@@ -65,3 +76,23 @@ jobs:
             org.opencontainers.image.url=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ github.ref_name }}
+
+      - name: Create Draft Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          draft: true
+          prerelease: false
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/distributions/structurizr-site-generatr.tar
+          asset_name: structurizr-site-generatr-${{ github.ref_name }}.tar
+          asset_content_type: application/x-tar
