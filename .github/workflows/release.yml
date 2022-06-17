@@ -6,7 +6,6 @@ on:
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
-  VERSION: ${{ env.GITHUB_REF_NAME }}
 
 jobs:
   build-gradle:
@@ -59,10 +58,10 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           tags: |
-            ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+            ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ env.GITHUB_REF_NAME }}
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
             org.opencontainers.image.url=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.version=${{ env.VERSION }}
+            org.opencontainers.image.version=${{ env.GITHUB_REF_NAME }}
