@@ -26,7 +26,7 @@ fun BODY.pageHeader(context: AbstractPageContext) {
                     }
                     div(classes = "navbar-dropdown is-right") {
                         context.branches.forEach { branchName ->
-                            a(classes = "navbar-item", href = "/$branchName") { +branchName }
+                            a(classes = "navbar-item", href = "${context.generatorContext.siteUrlPrefix}/$branchName") { +branchName }
                         }
                         hr(classes = "navbar-divider")
                         div(classes = "navbar-item has-text-grey-light") {
