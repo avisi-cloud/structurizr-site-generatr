@@ -4,10 +4,7 @@
 package nl.avisi.structurizr.site.generatr
 
 import com.sun.nio.file.SensitivityWatchEventModifier
-import kotlinx.cli.ArgType
-import kotlinx.cli.ExperimentalCli
-import kotlinx.cli.Subcommand
-import kotlinx.cli.required
+import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.copySiteWideAssets
 import nl.avisi.structurizr.site.generatr.site.generateDiagrams
 import nl.avisi.structurizr.site.generatr.site.generateRedirectingIndexPage
@@ -25,10 +22,10 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     ).required()
     private val assetsDir by option(
         ArgType.String, "assets-dir", "a", "Directory where static assets are located"
-    ).required()
+    )
     private val siteDir by option(
         ArgType.String, "site-dir", "s", "Directory for the generated site"
-    ).required()
+    ).default("build/serve")
 
     override fun execute() {
         updateSite()
@@ -57,7 +54,14 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         println("Generating site...")
         copySiteWideAssets(File(siteDir))
         generateRedirectingIndexPage(File(siteDir), "master")
-        generateSite("0.0.0", workspace, File(assetsDir), exportDir, listOf("master"), "master")
+        generateSite(
+            "0.0.0",
+            workspace,
+            assetsDir?.let { File(it) },
+            exportDir,
+            listOf("master"),
+            "master"
+        )
 
         println("Successfully generated diagrams and site")
     }

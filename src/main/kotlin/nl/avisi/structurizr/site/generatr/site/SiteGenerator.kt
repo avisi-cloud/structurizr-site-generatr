@@ -46,14 +46,14 @@ fun generateRedirectingIndexPage(exportDir: File, defaultBranch: String) {
 fun generateSite(
     version: String,
     workspace: Workspace,
-    assetsDir: File,
+    assetsDir: File?,
     exportDir: File,
     branches: List<String>,
     currentBranch: String
 ) {
     val generatorContext = GeneratorContext(version, workspace, branches, currentBranch)
 
-    copyAssets(assetsDir, exportDir)
+    if (assetsDir != null) copyAssets(assetsDir, exportDir)
     generateHtmlFiles(generatorContext, exportDir)
 }
 
