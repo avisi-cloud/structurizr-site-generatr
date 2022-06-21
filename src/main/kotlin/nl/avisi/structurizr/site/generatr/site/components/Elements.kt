@@ -12,15 +12,15 @@ fun DIV.contentDiv(block: DIV.() -> Unit) {
 
 fun DIV.diagram(context: AbstractPageContext, view: View) {
     figure {
-        img(src = "/${context.currentBranch}/svg/${view.key}.svg", alt = view.name)
+        img(src = "${context.urlPrefix}/svg/${view.key}.svg", alt = view.name)
         figcaption {
             +view.name
             +" ["
-            a(href = "/${context.currentBranch}/svg/${view.key}.svg") { +"svg" }
+            a(href = "${context.urlPrefix}/svg/${view.key}.svg") { +"svg" }
             +"|"
-            a(href = "/${context.currentBranch}/png/${view.key}.png") { +"png" }
+            a(href = "${context.urlPrefix}/png/${view.key}.png") { +"png" }
             +"|"
-            a(href = "/${context.currentBranch}/puml/${view.key}.puml") { +"puml" }
+            a(href = "${context.urlPrefix}/puml/${view.key}.puml") { +"puml" }
             +"]"
         }
     }

@@ -4,15 +4,12 @@ import java.io.File
 
 abstract class AbstractPageContext(val generatorContext: GeneratorContext, val title: String, val htmlFile: String) {
     val workspace get() = generatorContext.workspace
-    val currentBranch get() = generatorContext.currentBranch
     val branches get() = generatorContext.branches
+    val urlPrefix get() = "${generatorContext.siteUrlPrefix}/${generatorContext.currentBranch}"
     val url: String
 
     init {
         val parent = File(htmlFile).parent
-        url = if (parent == null)
-            "/${generatorContext.currentBranch}"
-        else
-            "/${generatorContext.currentBranch}/$parent/"
+        url = if (parent == null) urlPrefix else "$urlPrefix/$parent/"
     }
 }

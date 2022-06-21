@@ -22,7 +22,7 @@ fun BODY.pageHeader(context: AbstractPageContext) {
             div(classes = "navbar-end") {
                 div(classes = "navbar-item has-dropdown is-hoverable") {
                     a(classes = "navbar-link has-text-grey-light") {
-                        +context.currentBranch
+                        +context.generatorContext.currentBranch
                     }
                     div(classes = "navbar-dropdown is-right") {
                         context.branches.forEach { branchName ->
