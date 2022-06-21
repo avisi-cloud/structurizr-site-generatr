@@ -55,8 +55,8 @@ Deployment_Node(Live.BigBankplc, "Big Bank plc", "Big Bank plc data center", $ta
 }
 
 Rel_D(Live.BigBankplc.bigbankweb.ApacheTomcat.WebApplication_1, Live.Customerscomputer.WebBrowser.SinglePageApplication_1, "Delivers to the customer's web browser", $tags="Relationship")
-Rel_D(Live.Customersmobiledevice.MobileApp_1, Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
 Rel_D(Live.Customerscomputer.WebBrowser.SinglePageApplication_1, Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
+Rel_D(Live.Customersmobiledevice.MobileApp_1, Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
 Rel_D(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, Live.BigBankplc.bigbankdb01.OraclePrimary.Database_1, "Reads from and writes to", "JDBC", $tags="")
 Rel_D(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, Live.BigBankplc.bigbankdb02.OracleSecondary.Database_1, "Reads from and writes to", "JDBC", $tags="")
 Rel_D(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, Live.BigBankplc.bigbankprod001.MainframeBankingSystem_1, "Makes API calls to", "XML/HTTPS", $tags="")
