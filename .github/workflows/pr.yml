@@ -62,3 +62,28 @@ jobs:
             org.opencontainers.image.url=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ env.VERSION }}
+  publish-example-site:
+    runs-on: ubuntu-latest
+    needs: build-gradle
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: binaries
+          path: build/install
+
+      - name: Generate example site
+        run: |
+          chmod +x build/install/structurizr-site-generatr/bin/structurizr-site-generatr
+          build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site --git-url "https://github.com/avisi-cloud/structurizr-site-generatr.git" --workspace-file docs/example/workspace.dsl
+
+      - name: Publish example site
+        uses: peaceiris/actions-gh-pages@v3
+        #        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/site
+
