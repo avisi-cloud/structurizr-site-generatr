@@ -28,7 +28,8 @@ fun HTML.softwareSystemDecisionPage(context: SoftwareSystemDecisionPageContext) 
 
 private fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext, block: DIV.() -> Unit) {
     page(context) {
-        h1(classes = "title mt-3") { +"${context.softwareSystem.description} (${context.softwareSystem.name})" }
+        h1(classes = "title mt-3") { +context.softwareSystem.name }
+        h2(classes = "subtitle") { +context.softwareSystem.description }
 
         softwareSystemPageTabs(context)
         block()
