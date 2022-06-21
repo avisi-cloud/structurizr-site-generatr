@@ -12,6 +12,7 @@ ENTRYPOINT ["/opt/structurizr-site-generatr/bin/structurizr-site-generatr"]
 
 WORKDIR /opt/structurizr-site-generatr
 COPY build/install/structurizr-site-generatr ./
+RUN chmod +x /opt/structurizr-site-generatr/bin/structurizr-site-generatr
 
 USER 65532
 VOLUME ["/var/model"]
