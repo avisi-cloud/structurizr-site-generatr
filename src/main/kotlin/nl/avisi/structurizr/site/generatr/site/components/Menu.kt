@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.components
 
+import com.structurizr.model.SoftwareSystem
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.homeSection
 import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
@@ -47,12 +48,28 @@ private fun ASIDE.softwareSystemsSection(context: AbstractPageContext) {
         context.workspace.model.internalSoftwareSystems
             .sortedBy { it.name.lowercase() }
             .forEach {
-                val info = SoftwareSystemContextPageContext(context.generatorContext, it)
+                val menuItemContext = createMenuItemContext(context, it)
                 val currentSoftwareSystem = (context as? AbstractSoftwareSystemPageContext)?.softwareSystem
-                val classes = if (currentSoftwareSystem == info.softwareSystem) "is-active" else ""
+                val classes = if (currentSoftwareSystem == menuItemContext.softwareSystem) "is-active" else ""
                 li {
-                    a(href = info.url, classes = classes) { +it.name }
+                    a(href = menuItemContext.url, classes = classes) { +it.name }
                 }
             }
     }
+}
+
+private fun createMenuItemContext(
+    context: AbstractPageContext,
+    softwareSystem: SoftwareSystem
+): AbstractSoftwareSystemPageContext {
+    if (context.workspace.views.systemContextViews.any { it.softwareSystem == softwareSystem })
+        return SoftwareSystemContextPageContext(context.generatorContext, softwareSystem)
+    if (context.workspace.views.containerViews.any { it.softwareSystem == softwareSystem })
+        return SoftwareSystemContainerPageContext(context.generatorContext, softwareSystem)
+    if (context.workspace.views.componentViews.any { it.softwareSystem == softwareSystem })
+        return SoftwareSystemComponentPageContext(context.generatorContext, softwareSystem)
+    if (context.workspace.views.deploymentViews.any { it.softwareSystem == softwareSystem })
+        return SoftwareSystemDeploymentPageContext(context.generatorContext, softwareSystem)
+
+    return SoftwareSystemDependenciesPageContext(context.generatorContext, softwareSystem)
 }
