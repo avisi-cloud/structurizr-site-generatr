@@ -18,11 +18,11 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
     private val gitUsername by option(
         ArgType.String, "git-username", "u",
         "Username for the Git repository"
-    ).required()
+    )
     private val gitPassword by option(
         ArgType.String, "git-password", "p",
         "Password for the Git repository"
-    ).required()
+    )
     private val workspaceFile by option(
         ArgType.String, "workspace-file", "w",
         "Relative path within the Git repository of the workspace file"
@@ -30,7 +30,7 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
     private val assetsDir by option(
         ArgType.String, "assets-dir", "a",
         "Relative path within the Git repository where static assets are located"
-    ).required()
+    )
     private val branches by option(
         ArgType.String, "branches", "b",
         "Comma-separated list of branches to include in the generated site"
@@ -62,7 +62,14 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
 
             val workspace = parseStructurizrDslWorkspace(workspaceFileInRepo)
             generateDiagrams(workspace, File(siteDir, branch))
-            generateSite(version, workspace, File(cloneDir, assetsDir), File(siteDir, branch), branchNames, branch)
+            generateSite(
+                version,
+                workspace,
+                assetsDir?.let { File(cloneDir, it) },
+                File(siteDir, branch),
+                branchNames,
+                branch
+            )
         }
     }
 }

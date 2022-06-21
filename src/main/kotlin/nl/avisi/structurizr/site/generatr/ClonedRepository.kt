@@ -9,13 +9,16 @@ import java.io.File
 class ClonedRepository(
     val cloneDir: File,
     private val url: String,
-    private val username: String,
-    private val password: String
+    private val username: String?,
+    private val password: String?
 ) {
     private val repo = FileRepositoryBuilder.create(File(cloneDir, ".git"))
 
     fun refreshLocalClone() {
-        val credentialsProvider = UsernamePasswordCredentialsProvider(username, password)
+        val credentialsProvider = if (username != null)
+            UsernamePasswordCredentialsProvider(username, password)
+        else
+            null
 
         if (cloneDir.isDirectory) {
             Git(repo).pull()
@@ -23,11 +26,12 @@ class ClonedRepository(
                 .call()
         } else {
             cloneDir.deleteRecursively()
-            Git.cloneRepository()
+            val cloneCommand = Git.cloneRepository()
                 .setURI(url)
                 .setDirectory(cloneDir)
-                .setCredentialsProvider(credentialsProvider)
-                .call()
+            if (credentialsProvider != null)
+                cloneCommand.setCredentialsProvider(credentialsProvider)
+            cloneCommand.call()
         }
     }
 
