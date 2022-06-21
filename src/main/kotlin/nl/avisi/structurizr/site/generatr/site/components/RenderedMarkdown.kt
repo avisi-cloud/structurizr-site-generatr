@@ -38,13 +38,13 @@ private class CustomLinkResolver(private val pageContext: AbstractPageContext) :
         if (link.url.startsWith("embed:")) {
             return link
                 .withStatus(LinkStatus.VALID)
-                .withUrl("/${pageContext.currentBranch}/svg/${link.url.substring(6)}.svg")
+                .withUrl("${pageContext.urlPrefix}/svg/${link.url.substring(6)}.svg")
         }
         if (link.url.startsWith("http"))
             return link
         return link
             .withStatus(LinkStatus.VALID)
-            .withUrl("/${pageContext.currentBranch}/${link.url}".replace("/{2,}".toRegex(), "/"))
+            .withUrl("${pageContext.urlPrefix}/${link.url}".replace("/{2,}".toRegex(), "/"))
     }
 
     class Factory(private val pageContext: AbstractPageContext) : LinkResolverFactory {
