@@ -1,0 +1,46 @@
+@startuml
+title Internet Banking System - Deployment - Development
+
+top to bottom direction
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+Deployment_Node(Development.DeveloperLaptop, "Developer Laptop", "Microsoft Windows 10 or Apple macOS", $tags="Element+Deployment Node") {
+  Deployment_Node(Development.DeveloperLaptop.DockerContainerDatabaseServer, "Docker Container - Database Server", "Docker", $tags="Element+Deployment Node") {
+    Deployment_Node(Development.DeveloperLaptop.DockerContainerDatabaseServer.DatabaseServer, "Database Server", "Oracle 12c", $tags="Element+Deployment Node") {
+      ContainerDb(Development.DeveloperLaptop.DockerContainerDatabaseServer.DatabaseServer.Database_1, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="Element+Container+Database+Container Instance")
+    }
+
+  }
+
+  Deployment_Node(Development.DeveloperLaptop.DockerContainerWebServer, "Docker Container - Web Server", "Docker", $tags="Element+Deployment Node") {
+    Deployment_Node(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat, "Apache Tomcat", "Apache Tomcat 8.x", $tags="Element+Deployment Node") {
+      Container(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, "API Application", "Java and Spring MVC", "Provides Internet banking functionality via a JSON/HTTPS API.", $tags="Element+Container+Container Instance")
+      Container(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.WebApplication_1, "Web Application", "Java and Spring MVC", "Delivers the static content and the Internet banking single page application.", $tags="Element+Container+Container Instance")
+    }
+
+  }
+
+  Deployment_Node(Development.DeveloperLaptop.WebBrowser, "Web Browser", "Chrome, Firefox, Safari, or Edge", $tags="Element+Deployment Node") {
+    Container(Development.DeveloperLaptop.WebBrowser.SinglePageApplication_1, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="Element+Container+Web Browser+Container Instance")
+  }
+
+}
+
+Deployment_Node(Development.BigBankplc, "Big Bank plc", "Big Bank plc data center", $tags="Element+Deployment Node+") {
+  Deployment_Node(Development.BigBankplc.bigbankdev001, "bigbank-dev001", $tags="Element+Deployment Node+") {
+    System(Development.BigBankplc.bigbankdev001.MainframeBankingSystem_1, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="Element+Software System+Existing System+Software System Instance")
+  }
+
+}
+
+Rel_D(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.WebApplication_1, Development.DeveloperLaptop.WebBrowser.SinglePageApplication_1, "Delivers to the customer's web browser", $tags="Relationship")
+Rel_D(Development.DeveloperLaptop.WebBrowser.SinglePageApplication_1, Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
+Rel_D(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, Development.DeveloperLaptop.DockerContainerDatabaseServer.DatabaseServer.Database_1, "Reads from and writes to", "JDBC", $tags="")
+Rel_D(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, Development.BigBankplc.bigbankdev001.MainframeBankingSystem_1, "Makes API calls to", "XML/HTTPS", $tags="")
+
+SHOW_LEGEND()
+@enduml
