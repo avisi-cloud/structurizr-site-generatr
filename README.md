@@ -3,6 +3,10 @@
 A static site generator for C4 architecture models created with [Structrizr DSL](https://github.com/structurizr/dsl).
 See [Background](#background) for the story behind this tool.
 
+[Click here](https://avisi-cloud.github.io/structurizr-site-generatr) to see an example of a generated site. This site
+is generated from the example workspace in this repository. This example is based on
+the [Big Bank plc example](https://structurizr.com/dsl?example=big-bank-plc) from <https://structurizr.com>.
+
 ## Features
 
 * Generate a static HTML site, based on a Structurizr DSL workspace.
@@ -32,6 +36,26 @@ You can also use the Docker image:
 ```shell
 docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.1
 docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.1 --help
+```
+
+## Example usage
+
+These examples use the [example workspace](docs/example) in this repository.
+
+### Start a development server
+
+```shell
+structurizr-site-generatr serve --workspace-file docs/example/workspace.dsl
+```
+
+### Generate a site from a Git repository
+
+```shell
+structurizr-site-generatr generate-site \
+    --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git \
+    --workspace-file docs/example/workspace.dsl \
+    --branches main \
+    --default-branch main
 ```
 
 ## Background
