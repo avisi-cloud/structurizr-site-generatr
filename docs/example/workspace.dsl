@@ -5,6 +5,7 @@
  * - "Big Bank plc - Internet Banking System" (https://structurizr.com/share/36141/)
 */
 workspace "Big Bank plc" "This is an example workspace to illustrate the key features of Structurizr, via the DSL, based around a fictional online banking system." {
+    !docs workspace-docs
 
     model {
         customer = person "Personal Banking Customer" "A customer of the bank, with personal bank accounts." "Customer"
@@ -18,6 +19,8 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             atm = softwaresystem "ATM" "Allows customers to withdraw cash." "Existing System"
 
             internetBankingSystem = softwaresystem "Internet Banking System" "Allows customers to view information about their bank accounts, and make payments." {
+                !adrs internet-banking-system/adr
+
                 singlePageApplication = container "Single-Page Application" "Provides all of the Internet banking functionality to customers via their web browser." "JavaScript and Angular" "Web Browser"
                 mobileApp = container "Mobile App" "Provides a limited subset of the Internet banking functionality to customers via their mobile device." "Xamarin" "Mobile App"
                 webApplication = container "Web Application" "Delivers the static content and the Internet banking single page application." "Java and Spring MVC"
