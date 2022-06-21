@@ -130,6 +130,7 @@ jobs:
           --branches main 
           --default-branch main
           --context-path structurizr-site-generatr
+          --version ${{ github.ref_name }}
 
       - name: Publish example site
         uses: peaceiris/actions-gh-pages@v3
