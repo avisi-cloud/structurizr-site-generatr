@@ -34,8 +34,8 @@ structurizr-site-generatr --help
 You can also use the Docker image:
 
 ```shell
-docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.1
-docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.1 --help
+docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.2
+docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.2 --help
 ```
 
 ## Example usage
