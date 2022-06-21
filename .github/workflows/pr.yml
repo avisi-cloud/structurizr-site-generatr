@@ -78,7 +78,7 @@ jobs:
       - name: Generate example site
         run: |
           chmod +x build/install/structurizr-site-generatr/bin/structurizr-site-generatr
-          build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site --git-url "https://github.com/avisi-cloud/structurizr-site-generatr.git" --workspace-file docs/example/workspace.dsl --branches main
+          build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site --git-url "https://github.com/avisi-cloud/structurizr-site-generatr.git" --workspace-file docs/example/workspace.dsl --branches generate-publish-example-workspace
 
       - name: Publish example site
         uses: peaceiris/actions-gh-pages@v3
@@ -86,4 +86,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/site
-
