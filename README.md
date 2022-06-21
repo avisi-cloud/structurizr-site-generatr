@@ -15,6 +15,25 @@ See [Background](#background) for the story behind this tool.
   site includes diagrams for all configured branches.
 * Include a version number in the generated site.
 
+## Installation
+
+You can install structurizr-site-generatr using Homebrew:
+
+```shell
+brew tap avisi-cloud/tools
+brew install structurizr-site-generatr
+structurizr-site-generatr --help
+```
+
+## Docker image
+
+You can also use the Docker image:
+
+```shell
+docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.1
+docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.1 --help
+```
+
 ## Background
 
 At Avisi, we're big fans of the [C4 model](https://c4model.com). We use it in many projects, big and small, to document
