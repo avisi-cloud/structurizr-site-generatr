@@ -75,11 +75,19 @@ jobs:
           name: binaries
           path: build/install
 
-      - name: Generate example site
+      - name: Set up environment
         run: |
           sudo apt-get install -y graphviz
           chmod +x build/install/structurizr-site-generatr/bin/structurizr-site-generatr
-          build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site --git-url "https://github.com/avisi-cloud/structurizr-site-generatr.git" --workspace-file docs/example/workspace.dsl --branches generate-publish-example-workspace --default-branch generate-publish-example-workspace --context-path structurizr-site-generatr
+
+      - name: Generate example site
+        run: >
+          build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site
+          --git-url "https://github.com/avisi-cloud/structurizr-site-generatr.git"
+          --workspace-file docs/example/workspace.dsl
+          --branches generate-publish-example-workspace 
+          --default-branch generate-publish-example-workspace
+          --context-path structurizr-site-generatr
 
       - name: Publish example site
         uses: peaceiris/actions-gh-pages@v3
