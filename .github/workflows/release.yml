@@ -77,6 +77,19 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ github.ref_name }}
 
+  create-draft-release:
+    runs-on: ubuntu-latest
+    needs: build-gradle
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download distribution
+        uses: actions/download-artifact@v3
+        with:
+          name: distribution
+          path: build/distributions
+
       - name: Create Draft Release
         id: create_release
         uses: actions/create-release@v1
