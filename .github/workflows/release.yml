@@ -142,7 +142,6 @@ jobs:
           --workspace-file docs/example/workspace.dsl
           --branches main 
           --default-branch main
-          --context-path structurizr-site-generatr
           --version ${{ github.ref_name }}
 
       - name: Publish example site
