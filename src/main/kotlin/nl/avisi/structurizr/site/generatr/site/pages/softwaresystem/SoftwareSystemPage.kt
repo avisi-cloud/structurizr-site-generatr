@@ -43,7 +43,7 @@ private fun DIV.softwareSystemPageTabs(context: AbstractSoftwareSystemPageContex
                 href = SoftwareSystemContextPageContext(
                     context.generatorContext,
                     context.softwareSystem
-                ).url,
+                ).urlRelativeTo(context),
                 active = context is SoftwareSystemContextPageContext
             ) { +"System context" }
 
@@ -52,7 +52,7 @@ private fun DIV.softwareSystemPageTabs(context: AbstractSoftwareSystemPageContex
                 href = SoftwareSystemContainerPageContext(
                     context.generatorContext,
                     context.softwareSystem
-                ).url,
+                ).urlRelativeTo(context),
                 active = context is SoftwareSystemContainerPageContext
             ) { +"Container views" }
 
@@ -61,7 +61,7 @@ private fun DIV.softwareSystemPageTabs(context: AbstractSoftwareSystemPageContex
                 href = SoftwareSystemComponentPageContext(
                     context.generatorContext,
                     context.softwareSystem
-                ).url,
+                ).urlRelativeTo(context),
                 active = context is SoftwareSystemComponentPageContext
             ) { +"Component views" }
 
@@ -70,12 +70,15 @@ private fun DIV.softwareSystemPageTabs(context: AbstractSoftwareSystemPageContex
                 href = SoftwareSystemDeploymentPageContext(
                     context.generatorContext,
                     context.softwareSystem
-                ).url,
+                ).urlRelativeTo(context),
                 active = context is SoftwareSystemDeploymentPageContext
             ) { +"Deployment views" }
 
         tab(
-            href = SoftwareSystemDependenciesPageContext(context.generatorContext, context.softwareSystem).url,
+            href = SoftwareSystemDependenciesPageContext(
+                context.generatorContext,
+                context.softwareSystem
+            ).urlRelativeTo(context),
             active = context is SoftwareSystemDependenciesPageContext
         )
         { +"Dependencies" }
@@ -85,12 +88,15 @@ private fun DIV.softwareSystemPageTabs(context: AbstractSoftwareSystemPageContex
                 href = SoftwareSystemDecisionsPageContext(
                     context.generatorContext,
                     context.softwareSystem
-                ).url,
+                ).urlRelativeTo(context),
                 active = context is SoftwareSystemDecisionsPageContext || context is SoftwareSystemDecisionPageContext
             ) { +"Decisions" }
 
         tab(
-            href = SoftwareSystemInfoPageContext(context.generatorContext, context.softwareSystem).url,
+            href = SoftwareSystemInfoPageContext(
+                context.generatorContext,
+                context.softwareSystem
+            ).urlRelativeTo(context),
             active = context is SoftwareSystemInfoPageContext
         ) { +"Info" }
     }

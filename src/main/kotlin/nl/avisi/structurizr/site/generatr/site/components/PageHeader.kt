@@ -4,6 +4,7 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.homeSection
 import nl.avisi.structurizr.site.generatr.site.context.AbstractPageContext
 import nl.avisi.structurizr.site.generatr.site.context.HomePageContext
+import nl.avisi.structurizr.site.generatr.site.makeUrlRelative
 
 fun BODY.pageHeader(context: AbstractPageContext) {
     nav(classes = "navbar is-dark") {
@@ -13,7 +14,10 @@ fun BODY.pageHeader(context: AbstractPageContext) {
         div(classes = "navbar-brand") {
             a(
                 classes = "navbar-item",
-                href = HomePageContext(context.generatorContext, context.workspace.documentation.homeSection).url
+                href = HomePageContext(
+                    context.generatorContext,
+                    context.workspace.documentation.homeSection
+                ).urlRelativeTo(context)
             ) {
                 span(classes = "has-text-weight-semibold") { +context.workspace.name }
             }
@@ -26,7 +30,13 @@ fun BODY.pageHeader(context: AbstractPageContext) {
                     }
                     div(classes = "navbar-dropdown is-right") {
                         context.branches.forEach { branchName ->
-                            a(classes = "navbar-item", href = "${context.generatorContext.siteUrlPrefix}/$branchName") { +branchName }
+                            a(
+                                classes = "navbar-item",
+                                href = makeUrlRelative(
+                                    "/$branchName",
+                                    context.url
+                                )
+                            ) { +branchName }
                         }
                         hr(classes = "navbar-divider")
                         div(classes = "navbar-item has-text-grey-light") {

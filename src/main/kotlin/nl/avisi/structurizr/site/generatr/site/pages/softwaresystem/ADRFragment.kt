@@ -31,7 +31,7 @@ fun DIV.adrFragment(context: AbstractSoftwareSystemPageContext) {
                                     context.generatorContext,
                                     context.softwareSystem,
                                     it
-                                ).url
+                                ).urlRelativeTo(context)
                             ) {
                                 +it.title
                             }

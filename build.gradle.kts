@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.7.0"
+    kotlin("jvm") version "1.7.0"
     application
 }
 
@@ -37,12 +37,15 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:2.0.0-alpha7")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.0")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation(kotlin("test"))
 }
 
 application {
     mainClass.set("nl.avisi.structurizr.site.generatr.AppKt")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks {

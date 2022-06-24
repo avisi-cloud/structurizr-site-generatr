@@ -25,7 +25,11 @@ fun HTML.softwareSystemsOverviewPage(context: SoftwareSystemsOverviewPageContext
                             tr {
                                 th {
                                     if (it.location == Location.Internal)
-                                        a(href = SoftwareSystemContextPageContext(context.generatorContext, it).url) {
+                                        a(
+                                            href = SoftwareSystemContextPageContext(
+                                                context.generatorContext, it
+                                            ).urlRelativeTo(context)
+                                        ) {
                                             +it.name
                                         }
                                     else

@@ -19,11 +19,14 @@ private fun ASIDE.generalSection(context: AbstractPageContext) {
     ul(classes = "menu-list") {
         li {
             a(
-                href = HomePageContext(context.generatorContext, context.workspace.documentation.homeSection).url,
+                href = HomePageContext(
+                    context.generatorContext,
+                    context.workspace.documentation.homeSection
+                ).urlRelativeTo(context),
                 classes = if (context is HomePageContext) "is-active" else ""
             ) { +"Home" }
             a(
-                href = SoftwareSystemsOverviewPageContext(context.generatorContext).url,
+                href = SoftwareSystemsOverviewPageContext(context.generatorContext).urlRelativeTo(context),
                 classes = if (context is SoftwareSystemsOverviewPageContext) "is-active" else ""
             ) { +"Software Systems" }
 
@@ -34,7 +37,10 @@ private fun ASIDE.generalSection(context: AbstractPageContext) {
                     val documentationPageContext = DocumentationSectionPageContext(context.generatorContext, it)
                     val isActiveSection = context is DocumentationSectionPageContext
                             && context.section == documentationPageContext.section
-                    a(href = documentationPageContext.url, classes = if (isActiveSection) "is-active" else "") {
+                    a(
+                        href = documentationPageContext.urlRelativeTo(context),
+                        classes = if (isActiveSection) "is-active" else ""
+                    ) {
                         +it.title
                     }
                 }
@@ -52,7 +58,7 @@ private fun ASIDE.softwareSystemsSection(context: AbstractPageContext) {
                 val currentSoftwareSystem = (context as? AbstractSoftwareSystemPageContext)?.softwareSystem
                 val classes = if (currentSoftwareSystem == menuItemContext.softwareSystem) "is-active" else ""
                 li {
-                    a(href = menuItemContext.url, classes = classes) { +it.name }
+                    a(href = menuItemContext.urlRelativeTo(context), classes = classes) { +it.name }
                 }
             }
     }
