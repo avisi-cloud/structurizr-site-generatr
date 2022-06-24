@@ -105,8 +105,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/distributions/structurizr-site-generatr-${{ github.ref_name }}.tar
-          asset_name: structurizr-site-generatr-${{ github.ref_name }}.tar
+          asset_path: ./build/distributions/structurizr-site-generatr-${{ github.ref_name }}.tar.gz
+          asset_name: structurizr-site-generatr-${{ github.ref_name }}.tar.gz
           asset_content_type: application/x-tar
       - uses: actions/upload-release-asset@v1.0.2
         env:
