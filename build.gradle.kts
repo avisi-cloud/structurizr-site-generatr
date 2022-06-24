@@ -61,4 +61,9 @@ tasks {
             attributes["Implementation-Version"] = project.version
         }
     }
+
+    withType<Tar> {
+        archiveExtension.set("tar.gz")
+        compression = Compression.GZIP
+    }
 }
