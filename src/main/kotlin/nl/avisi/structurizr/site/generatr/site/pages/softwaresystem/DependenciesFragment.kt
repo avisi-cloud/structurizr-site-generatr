@@ -53,7 +53,7 @@ private fun TH.softwareSystemLink(context: AbstractSoftwareSystemPageContext, de
     if (destination == context.softwareSystem)
         +destination.name
     else if (destination.location == Location.Internal)
-        a(href = SoftwareSystemContextPageContext(context.generatorContext, destination).url) {
+        a(href = SoftwareSystemContextPageContext(context.generatorContext, destination).urlRelativeTo(context)) {
             +destination.name
         }
     else

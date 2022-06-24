@@ -27,11 +27,6 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
         ArgType.String, "workspace-file", "w",
         "Relative path within the Git repository of the workspace file"
     ).required()
-    private val contextPath by option(
-        ArgType.String, "context-path", "c",
-        "Context path of the web site; useful when the site is not hosted at the root of a domain, " +
-                "for example: if the site is hosted at https://company.com/system1, the context path is \"system1\""
-    ).default("")
     private val assetsDir by option(
         ArgType.String, "assets-dir", "a",
         "Relative path within the Git repository where static assets are located"
@@ -70,7 +65,6 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
             generateSite(
                 version,
                 workspace,
-                contextPath,
                 assetsDir?.let { File(cloneDir, it) },
                 File(siteDir, branch),
                 branchNames,

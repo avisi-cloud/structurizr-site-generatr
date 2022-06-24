@@ -13,12 +13,14 @@ import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.html.DIV
 import kotlinx.html.unsafe
 import nl.avisi.structurizr.site.generatr.site.context.AbstractPageContext
+import nl.avisi.structurizr.site.generatr.site.makeUrlRelative
 
 fun DIV.renderedMarkdown(context: AbstractPageContext, markdown: String) {
     unsafe {
         +renderMarkdownToHtml(context, markdown)
     }
 }
+
 private fun renderMarkdownToHtml(context: AbstractPageContext, markdown: String): String {
     val options = MutableDataSet()
 
@@ -38,13 +40,18 @@ private class CustomLinkResolver(private val pageContext: AbstractPageContext) :
         if (link.url.startsWith("embed:")) {
             return link
                 .withStatus(LinkStatus.VALID)
-                .withUrl("${pageContext.urlPrefix}/svg/${link.url.substring(6)}.svg")
+                .withUrl(makeUrlRelative("${pageContext.urlPrefix}/svg/${link.url.substring(6)}.svg", pageContext.url))
         }
         if (link.url.startsWith("http"))
             return link
         return link
             .withStatus(LinkStatus.VALID)
-            .withUrl("${pageContext.urlPrefix}/${link.url}".replace("/{2,}".toRegex(), "/"))
+            .withUrl(
+                makeUrlRelative(
+                    "${pageContext.urlPrefix}/${link.url}".replace("/{2,}".toRegex(), "/"),
+                    pageContext.url
+                )
+            )
     }
 
     class Factory(private val pageContext: AbstractPageContext) : LinkResolverFactory {
