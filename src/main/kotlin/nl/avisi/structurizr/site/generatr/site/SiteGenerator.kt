@@ -6,10 +6,7 @@ import kotlinx.html.stream.appendHTML
 import nl.avisi.structurizr.site.generatr.homeSection
 import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.context.*
-import nl.avisi.structurizr.site.generatr.site.context.SoftwareSystemsOverviewPageContext
-import nl.avisi.structurizr.site.generatr.site.pages.documentationSectionPage
-import nl.avisi.structurizr.site.generatr.site.pages.indexPage
-import nl.avisi.structurizr.site.generatr.site.pages.softwareSystemsOverviewPage
+import nl.avisi.structurizr.site.generatr.site.pages.*
 import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemDecisionPage
 import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemPage
 import java.io.File
@@ -80,6 +77,10 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
             .filter { it != context.workspace.documentation.homeSection }
             .forEach { yield(DocumentationSectionPageContext(context, it)) }
         yield(HomePageContext(context, context.workspace.documentation.homeSection))
+        yield(WorkspaceDecisionsPageContext(context))
+        context.workspace.documentation.decisions.forEach { decision ->
+            yield(WorkspaceDecisionPageContext(context, decision))
+        }
         yield(SoftwareSystemsOverviewPageContext(context))
     }
 
@@ -100,6 +101,8 @@ fun writeHtmlFile(exportDir: File, context: AbstractPageContext) {
                     is AbstractSoftwareSystemPageContext -> softwareSystemPage(context)
                     is DocumentationSectionPageContext -> documentationSectionPage(context)
                     is SoftwareSystemsOverviewPageContext -> softwareSystemsOverviewPage(context)
+                    is WorkspaceDecisionPageContext -> workspaceDecisionPage(context)
+                    is WorkspaceDecisionsPageContext -> workspaceDecisionsPage(context)
                 }
             }
         }

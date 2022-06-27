@@ -12,21 +12,13 @@ fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext) {
             is SoftwareSystemContainerPageContext -> containerFragment(context)
             is SoftwareSystemComponentPageContext -> componentFragment(context)
             is SoftwareSystemDeploymentPageContext -> deploymentFragment(context)
-            is SoftwareSystemDecisionsPageContext -> adrFragment(context)
+            is SoftwareSystemDecisionsPageContext -> decisionListFragment(context)
             is SoftwareSystemDependenciesPageContext -> dependenciesFragment(context)
         }
     }
 }
 
-fun HTML.softwareSystemDecisionPage(context: SoftwareSystemDecisionPageContext) {
-    softwareSystemPage(context) {
-        contentDiv {
-            renderedMarkdown(context, context.decision.content)
-        }
-    }
-}
-
-private fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext, block: DIV.() -> Unit) {
+fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext, block: DIV.() -> Unit) {
     page(context) {
         h1(classes = "title mt-3") { +context.softwareSystem.name }
         h2(classes = "subtitle") { +context.softwareSystem.description }
