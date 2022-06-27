@@ -42,16 +42,7 @@ private class CustomLinkResolver(private val pageContext: AbstractPageContext) :
                 .withStatus(LinkStatus.VALID)
                 .withUrl(makeUrlRelative("${pageContext.urlPrefix}/svg/${link.url.substring(6)}.svg", pageContext.url))
         }
-        if (link.url.startsWith("http"))
-            return link
         return link
-            .withStatus(LinkStatus.VALID)
-            .withUrl(
-                makeUrlRelative(
-                    "${pageContext.urlPrefix}/${link.url}".replace("/{2,}".toRegex(), "/"),
-                    pageContext.url
-                )
-            )
     }
 
     class Factory(private val pageContext: AbstractPageContext) : LinkResolverFactory {
