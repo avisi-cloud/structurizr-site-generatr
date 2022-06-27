@@ -6,6 +6,7 @@
 */
 workspace "Big Bank plc" "This is an example workspace to illustrate the key features of Structurizr, via the DSL, based around a fictional online banking system." {
     !docs workspace-docs
+    !adrs workspace-adrs
 
     model {
         customer = person "Personal Banking Customer" "A customer of the bank, with personal bank accounts." "Customer"

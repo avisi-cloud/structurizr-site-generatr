@@ -26,6 +26,10 @@ private fun ASIDE.generalSection(context: AbstractPageContext) {
                 classes = if (context is HomePageContext) "is-active" else ""
             ) { +"Home" }
             a(
+                href = WorkspaceDecisionsPageContext(context.generatorContext).urlRelativeTo(context),
+                classes = if (context is WorkspaceDecisionsContext) "is-active" else ""
+            ) { +"Decisions" }
+            a(
                 href = SoftwareSystemsOverviewPageContext(context.generatorContext).urlRelativeTo(context),
                 classes = if (context is SoftwareSystemsOverviewPageContext) "is-active" else ""
             ) { +"Software Systems" }
