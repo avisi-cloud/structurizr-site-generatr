@@ -50,9 +50,13 @@ class GenerateSiteCommand : Subcommand(
         ArgType.String, "version", "v",
         "The version of the site"
     ).default("0.0.0")
+    private val outputDir by option(
+        ArgType.String, "output-dir", "o",
+        "Directory where the generated site will be stored. Will be created if it doesn't exist yet."
+    ).default("build/site")
 
     override fun execute() {
-        val siteDir = File("build/site").apply { mkdirs() }
+        val siteDir = File(outputDir).apply { mkdirs() }
         val gitUrl = gitUrl
 
         generateRedirectingIndexPage(siteDir, defaultBranch)
