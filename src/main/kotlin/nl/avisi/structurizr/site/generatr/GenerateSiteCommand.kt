@@ -10,11 +10,18 @@ import nl.avisi.structurizr.site.generatr.site.generateRedirectingIndexPage
 import nl.avisi.structurizr.site.generatr.site.generateSite
 import java.io.File
 
-class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the selected workspace") {
+class GenerateSiteCommand : Subcommand(
+    "generate-site",
+    "Generate a site for the selected workspace."
+) {
     private val gitUrl by option(
         ArgType.String, "git-url", "g",
-        "The URL of the Git repository which contains the Structurizr model"
-    ).required()
+        "The URL of the Git repository which contains the Structurizr model. " +
+                "If a Git repository is provided, it will be cloned and" +
+                "--workspace-file and --assets-dir will be treated as paths within the cloned repository. " +
+                "If no Git repository is provided, --workspace-file and --assets-dir will be used as-is, and the site" +
+                "will only contain one branch, named after the --default-branch option."
+    )
     private val gitUsername by option(
         ArgType.String, "git-username", "u",
         "Username for the Git repository"
@@ -46,13 +53,22 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
 
     override fun execute() {
         val siteDir = File("build/site").apply { mkdirs() }
+        val gitUrl = gitUrl
+
+        generateRedirectingIndexPage(siteDir, defaultBranch)
+        copySiteWideAssets(siteDir)
+
+        if (gitUrl != null)
+            generateSiteForModelInGitRepository(gitUrl, siteDir)
+        else
+            generateSiteForModel(siteDir)
+    }
+
+    private fun generateSiteForModelInGitRepository(gitUrl: String, siteDir: File) {
         val cloneDir = File("build/model-clone")
         val clonedRepository = ClonedRepository(cloneDir, gitUrl, gitUsername, gitPassword).apply {
             refreshLocalClone()
         }
-
-        generateRedirectingIndexPage(siteDir, defaultBranch)
-        copySiteWideAssets(siteDir)
 
         val branchNames = branches.split(",")
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
@@ -71,5 +87,18 @@ class GenerateSiteCommand : Subcommand("generate-site", "Generate a site for the
                 branch
             )
         }
+    }
+
+    private fun generateSiteForModel(siteDir: File) {
+        val workspace = parseStructurizrDslWorkspace(File(workspaceFile))
+        generateDiagrams(workspace, File(siteDir, defaultBranch))
+        generateSite(
+            version,
+            workspace,
+            assetsDir?.let { File(it) },
+            File(siteDir, defaultBranch),
+            listOf(defaultBranch),
+            defaultBranch
+        )
     }
 }
