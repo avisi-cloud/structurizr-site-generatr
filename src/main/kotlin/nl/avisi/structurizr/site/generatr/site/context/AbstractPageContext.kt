@@ -1,6 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.context
 
-import nl.avisi.structurizr.site.generatr.site.makeUrlRelative
+import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import java.io.File
 
 abstract class AbstractPageContext(val generatorContext: GeneratorContext, val title: String, val htmlFile: String) {
@@ -10,7 +10,7 @@ abstract class AbstractPageContext(val generatorContext: GeneratorContext, val t
     val url: String
 
     fun urlRelativeTo(sourceContext: AbstractPageContext): String {
-        return makeUrlRelative(url, sourceContext.url)
+        return url.asUrlRelativeTo(sourceContext.url)
     }
 
     init {

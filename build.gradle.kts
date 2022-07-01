@@ -39,6 +39,8 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10")
 
     testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
 }
 
 application {

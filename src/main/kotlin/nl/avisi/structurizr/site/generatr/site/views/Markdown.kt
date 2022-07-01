@@ -1,4 +1,4 @@
-package nl.avisi.structurizr.site.generatr.site.components
+package nl.avisi.structurizr.site.generatr.site.views
 
 import com.vladsch.flexmark.ext.tables.TablesExtension
 import com.vladsch.flexmark.html.HtmlRenderer
@@ -13,41 +13,49 @@ import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.html.DIV
 import kotlinx.html.unsafe
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
-import nl.avisi.structurizr.site.generatr.site.context.AbstractPageContext
+import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
+import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
-fun DIV.renderedMarkdown(context: AbstractPageContext, markdown: String) {
+fun DIV.markdown(pageViewModel: PageViewModel, markdown: MarkdownViewModel) {
     unsafe {
-        +renderMarkdownToHtml(context, markdown)
+        +markdownToHtml(pageViewModel, markdown)
     }
 }
 
-private fun renderMarkdownToHtml(context: AbstractPageContext, markdown: String): String {
+private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewModel): String {
     val options = MutableDataSet()
 
     options.set(Parser.EXTENSIONS, listOf(TablesExtension.create()))
 
     val parser = Parser.builder(options).build()
     val renderer = HtmlRenderer.builder(options)
-        .linkResolverFactory(CustomLinkResolver.Factory(context))
+        .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel, markdown.currentBranch))
         .build()
-    val document = parser.parse(markdown)
+    val document = parser.parse(markdown.markdown)
 
     return renderer.render(document)
 }
 
-private class CustomLinkResolver(private val pageContext: AbstractPageContext) : LinkResolver {
+private class CustomLinkResolver(
+    private val pageViewModel: PageViewModel, private val currentBranch: String
+) : LinkResolver {
     override fun resolveLink(node: Node, context: LinkResolverBasicContext, link: ResolvedLink): ResolvedLink {
         if (link.url.startsWith("embed:")) {
+            val diagramId = link.url.substring(6)
             return link
                 .withStatus(LinkStatus.VALID)
-                .withUrl("${pageContext.urlPrefix}/svg/${link.url.substring(6)}.svg".asUrlRelativeTo(pageContext.url))
+                .withUrl("/$currentBranch/svg/$diagramId.svg".asUrlRelativeTo(pageViewModel.url))
         }
-        return link
+        if (link.url.matches("https?://".toRegex()))
+            return link
+
+        return link.withStatus(LinkStatus.VALID)
+            .withUrl("/$currentBranch/${link.url.dropWhile { it == '/' }}".asUrlRelativeTo(pageViewModel.url))
     }
 
-    class Factory(private val pageContext: AbstractPageContext) : LinkResolverFactory {
+    class Factory(private val viewModel: PageViewModel, private val currentBranch: String) : LinkResolverFactory {
         override fun apply(context: LinkResolverBasicContext): LinkResolver {
-            return CustomLinkResolver(pageContext)
+            return CustomLinkResolver(viewModel, currentBranch)
         }
 
         override fun getAfterDependents(): MutableSet<Class<*>>? = null

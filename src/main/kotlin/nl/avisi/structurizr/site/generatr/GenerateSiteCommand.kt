@@ -86,7 +86,7 @@ class GenerateSiteCommand : Subcommand(
                 version,
                 workspace,
                 assetsDir?.let { File(cloneDir, it) },
-                File(siteDir, branch),
+                siteDir,
                 branchNames,
                 branch
             )
@@ -100,7 +100,7 @@ class GenerateSiteCommand : Subcommand(
             version,
             workspace,
             assetsDir?.let { File(it) },
-            File(siteDir, defaultBranch),
+            siteDir,
             listOf(defaultBranch),
             defaultBranch
         )

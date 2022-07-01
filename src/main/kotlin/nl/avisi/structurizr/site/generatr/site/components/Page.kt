@@ -1,8 +1,8 @@
 package nl.avisi.structurizr.site.generatr.site.components
 
 import kotlinx.html.*
+import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import nl.avisi.structurizr.site.generatr.site.context.AbstractPageContext
-import nl.avisi.structurizr.site.generatr.site.makeUrlRelative
 
 fun HTML.page(context: AbstractPageContext, contents: DIV.() -> Unit) {
     attributes["lang"] = "en"
@@ -18,7 +18,7 @@ private fun HTML.headFragment(context: AbstractPageContext) {
         link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css")
         link(
             rel = "stylesheet",
-            href = makeUrlRelative("/css/style.css", context.url)
+            href = "/css/style.css".asUrlRelativeTo(context.url)
         )
         title { +context.workspace.name }
     }

@@ -2,9 +2,9 @@ package nl.avisi.structurizr.site.generatr.site.components
 
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.homeSection
+import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import nl.avisi.structurizr.site.generatr.site.context.AbstractPageContext
 import nl.avisi.structurizr.site.generatr.site.context.HomePageContext
-import nl.avisi.structurizr.site.generatr.site.makeUrlRelative
 
 fun BODY.pageHeader(context: AbstractPageContext) {
     nav(classes = "navbar is-dark") {
@@ -32,8 +32,7 @@ fun BODY.pageHeader(context: AbstractPageContext) {
                         context.branches.forEach { branchName ->
                             a(
                                 classes = "navbar-item",
-                                href = makeUrlRelative(
-                                    "/$branchName",
+                                href = "/$branchName".asUrlRelativeTo(
                                     context.url
                                 )
                             ) { +branchName }
