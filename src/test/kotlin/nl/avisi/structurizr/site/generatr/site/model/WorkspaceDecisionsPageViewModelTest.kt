@@ -17,7 +17,7 @@ class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
         val viewModel = WorkspaceDecisionsPageViewModel(generatorContext)
 
         assertThat(viewModel.decisionsTable).isEqualTo(
-            TableViewModel.create(viewModel) {
+            TableViewModel.create {
                 decisionsTableHeaderRow()
             }
         )
@@ -32,10 +32,20 @@ class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
         val viewModel = WorkspaceDecisionsPageViewModel(generatorContext)
 
         assertThat(viewModel.decisionsTable).isEqualTo(
-            TableViewModel.create(viewModel) {
+            TableViewModel.create {
                 decisionsTableHeaderRow()
-                bodyRow(cell("1"), cell("01-01-2022"), cell("Accepted"), cellWithLink("Decision 1", "/${generatorContext.currentBranch}/decisions/1"))
-                bodyRow(cell("2"), cell("02-01-2022"), cell("Proposed"), cellWithLink("Decision 2", "/${generatorContext.currentBranch}/decisions/2"))
+                bodyRow(
+                    cell("1"),
+                    cell("01-01-2022"),
+                    cell("Accepted"),
+                    cellWithLink(viewModel, "Decision 1", "/${generatorContext.currentBranch}/decisions/1")
+                )
+                bodyRow(
+                    cell("2"),
+                    cell("02-01-2022"),
+                    cell("Proposed"),
+                    cellWithLink(viewModel, "Decision 2", "/${generatorContext.currentBranch}/decisions/2")
+                )
             }
         )
     }

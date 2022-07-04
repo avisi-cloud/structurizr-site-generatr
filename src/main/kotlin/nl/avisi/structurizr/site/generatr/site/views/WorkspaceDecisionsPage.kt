@@ -44,6 +44,6 @@ private fun TBODY.row(viewModel: TableViewModel.RowViewModel) {
 private fun TR.cell(viewModel: TableViewModel.CellViewModel) {
     when (viewModel) {
         is TableViewModel.TextCellViewModel -> td { +viewModel.title }
-        is TableViewModel.LinkCellViewModel -> td { a(href = viewModel.link.relativeHref) { +viewModel.title } }
+        is TableViewModel.LinkCellViewModel -> td { a(href = viewModel.link.relativeHref) { +viewModel.link.title } }
     }
 }

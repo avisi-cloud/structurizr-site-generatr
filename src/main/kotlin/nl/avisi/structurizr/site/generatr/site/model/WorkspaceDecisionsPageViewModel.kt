@@ -7,7 +7,7 @@ class WorkspaceDecisionsPageViewModel(generatorContext: GeneratorContext) : Page
     override val url = "/${generatorContext.currentBranch}/decisions"
     override val pageSubTitle = "Decisions"
 
-    val decisionsTable = TableViewModel.create(this) {
+    val decisionsTable = TableViewModel.create {
         headerRow(headerCell("ID"), headerCell("Date"), headerCell("Status"), headerCell("Title"))
         generatorContext.workspace.documentation.decisions
             .sortedBy { it.id }
@@ -16,7 +16,7 @@ class WorkspaceDecisionsPageViewModel(generatorContext: GeneratorContext) : Page
                     cell(it.id),
                     cell(formatDate(it.date)),
                     cell(it.status),
-                    cellWithLink(it.title, "$url/${it.id}")
+                    cellWithLink(this@WorkspaceDecisionsPageViewModel, it.title, "$url/${it.id}")
                 )
             }
     }

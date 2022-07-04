@@ -12,7 +12,7 @@ class TableViewModelTest : ViewModelTest() {
 
     @Test
     fun `header rows`() {
-        val viewModel = TableViewModel.create(pageViewModel) {
+        val viewModel = TableViewModel.create {
             headerRow(headerCell("1"), headerCell("2"), headerCell("3"))
         }
 
@@ -29,7 +29,7 @@ class TableViewModelTest : ViewModelTest() {
 
     @Test
     fun `body rows`() {
-        val viewModel = TableViewModel.create(pageViewModel) {
+        val viewModel = TableViewModel.create {
             bodyRow(cell("1"), cell("2"), cell("3"))
         }
 
@@ -46,17 +46,15 @@ class TableViewModelTest : ViewModelTest() {
 
     @Test
     fun `cell with link`() {
-        val viewModel = TableViewModel.create(pageViewModel) {
-            bodyRow(cellWithLink("click me", "/master/decisions"))
+        val viewModel = TableViewModel.create {
+            bodyRow(cellWithLink(pageViewModel, "click me", "/master/decisions"))
         }
 
         assertThat(viewModel.bodyRows).containsAll(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.LinkCellViewModel(
-                        pageViewModel,
-                        "click me",
-                        href = "/master/decisions",
+                        LinkViewModel(pageViewModel, "click me", "/master/decisions"),
                         isHeader = false
                     )
                 )
