@@ -35,7 +35,7 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-server:11.0.11")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.0-alpha7")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.0")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10")
 
     testImplementation(kotlin("test"))
 }
