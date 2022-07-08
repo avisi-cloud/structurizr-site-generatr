@@ -12,6 +12,12 @@ import kotlin.test.Test
 
 class HomePageViewModelTest : ViewModelTest() {
     @Test
+    fun url() {
+        assertThat(HomePageViewModel.url())
+            .isEqualTo("/")
+    }
+
+    @Test
     fun `default homepage`() {
         val generatorContext = generatorContext()
         val viewModel = HomePageViewModel(generatorContext)

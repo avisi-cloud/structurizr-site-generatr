@@ -47,14 +47,14 @@ class TableViewModelTest : ViewModelTest() {
     @Test
     fun `cell with link`() {
         val viewModel = TableViewModel.create {
-            bodyRow(cellWithLink(pageViewModel, "click me", "/master/decisions"))
+            bodyRow(cellWithLink(pageViewModel, "click me", "/decisions"))
         }
 
         assertThat(viewModel.bodyRows).containsAll(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.LinkCellViewModel(
-                        LinkViewModel(pageViewModel, "click me", "/master/decisions"),
+                        LinkViewModel(pageViewModel, "click me", "/decisions"),
                         isHeader = false
                     )
                 )

@@ -4,7 +4,7 @@ import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.formatDate
 
 class WorkspaceDecisionsPageViewModel(generatorContext: GeneratorContext) : PageViewModel(generatorContext) {
-    override val url = "/decisions"
+    override val url = url()
     override val pageSubTitle = "Decisions"
 
     val decisionsTable = TableViewModel.create {
@@ -16,8 +16,12 @@ class WorkspaceDecisionsPageViewModel(generatorContext: GeneratorContext) : Page
                     cell(it.id),
                     cell(formatDate(it.date)),
                     cell(it.status),
-                    cellWithLink(this@WorkspaceDecisionsPageViewModel, it.title, "$url/${it.id}")
+                    cellWithLink(this@WorkspaceDecisionsPageViewModel, it.title, WorkspaceDecisionPageViewModel.url(it))
                 )
             }
+    }
+
+    companion object {
+        fun url() = "/decisions"
     }
 }

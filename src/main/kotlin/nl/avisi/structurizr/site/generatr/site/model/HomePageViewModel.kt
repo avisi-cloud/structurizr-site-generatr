@@ -5,7 +5,7 @@ import org.intellij.lang.annotations.Language
 
 class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(generatorContext) {
     override val pageSubTitle = "Home"
-    override val url = "/"
+    override val url = url()
 
     val content = MarkdownViewModel(
         markdown = generatorContext.workspace.documentation.sections
@@ -13,6 +13,8 @@ class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(gene
     )
 
     companion object {
+        fun url() = "/"
+
         @Language("markdown")
         const val DEFAULT_HOMEPAGE_CONTENT = """
 ## Home

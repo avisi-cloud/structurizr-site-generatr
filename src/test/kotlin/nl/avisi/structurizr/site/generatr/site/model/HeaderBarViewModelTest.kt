@@ -19,7 +19,7 @@ class HeaderBarViewModelTest : ViewModelTest() {
         val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
 
         assertThat(viewModel.titleLink).isEqualTo(
-            LinkViewModel(pageViewModel, "some workspace", "/")
+            LinkViewModel(pageViewModel, "some workspace", HomePageViewModel.url())
         )
     }
 

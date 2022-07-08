@@ -12,6 +12,12 @@ import kotlin.test.Test
 
 class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
     @Test
+    fun url() {
+        assertThat(WorkspaceDecisionsPageViewModel.url())
+            .isEqualTo("/decisions")
+    }
+
+    @Test
     fun `no workspace-level decisions available`() {
         val generatorContext = generatorContext()
         val viewModel = WorkspaceDecisionsPageViewModel(generatorContext)
@@ -25,10 +31,11 @@ class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `many workspace-level decisions available`() {
-        val generatorContext = generatorContext().apply {
-            workspace.documentation.addDecision(createDecision("1", "Accepted", LocalDate.of(2022, Month.JANUARY, 1)))
-            workspace.documentation.addDecision(createDecision("2", "Proposed", LocalDate.of(2022, Month.JANUARY, 2)))
-        }
+        val generatorContext = generatorContext()
+        val decision1 = createDecision("1", "Accepted", LocalDate.of(2022, Month.JANUARY, 1))
+            .also { generatorContext.workspace.documentation.addDecision(it) }
+        val decision2 = createDecision("2", "Proposed", LocalDate.of(2022, Month.JANUARY, 2))
+            .also { generatorContext.workspace.documentation.addDecision(it) }
         val viewModel = WorkspaceDecisionsPageViewModel(generatorContext)
 
         assertThat(viewModel.decisionsTable).isEqualTo(
@@ -38,13 +45,13 @@ class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
                     cell("1"),
                     cell("01-01-2022"),
                     cell("Accepted"),
-                    cellWithLink(viewModel, "Decision 1", "/decisions/1")
+                    cellWithLink(viewModel, "Decision 1", WorkspaceDecisionPageViewModel.url(decision1))
                 )
                 bodyRow(
                     cell("2"),
                     cell("02-01-2022"),
                     cell("Proposed"),
-                    cellWithLink(viewModel, "Decision 2", "/decisions/2")
+                    cellWithLink(viewModel, "Decision 2", WorkspaceDecisionPageViewModel.url(decision2))
                 )
             }
         )

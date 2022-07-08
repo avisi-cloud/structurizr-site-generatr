@@ -21,8 +21,8 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems).containsExactly(
-            LinkViewModel(pageViewModel, "Home", "/"),
-            LinkViewModel(pageViewModel, "Software systems", "/software-systems")
+            LinkViewModel(pageViewModel, "Home", HomePageViewModel.url()),
+            LinkViewModel(pageViewModel, "Software systems", SoftwareSystemsPageViewModel.url())
         )
     }
 
@@ -42,43 +42,41 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems[1]).isEqualTo(
-            LinkViewModel(pageViewModel, "Decisions", "/decisions")
+            LinkViewModel(pageViewModel, "Decisions", WorkspaceDecisionsPageViewModel.url())
         )
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["main", "branch-2"])
     fun `workspace-level documentation in general section`(currentBranch: String) {
-        val generatorContext =
-            generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch).apply {
-                workspace.documentation.addSection(Section("Home", Format.Markdown, "content"))
-                workspace.documentation.addSection(Section("Doc 1", Format.Markdown, "content"))
-                workspace.documentation.addSection(Section("Doc Title 2", Format.Markdown, "content"))
-            }
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
+        generatorContext.workspace.documentation.addSection(Section("Home", Format.Markdown, "content"))
+        val section1 = Section("Doc 1", Format.Markdown, "content")
+            .also { generatorContext.workspace.documentation.addSection(it) }
+        val section2 = Section("Doc Title 2", Format.Markdown, "content")
+            .also { generatorContext.workspace.documentation.addSection(it) }
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems.drop(2)).containsExactly(
-            LinkViewModel(pageViewModel, "Doc 1", "/doc-1"),
-            LinkViewModel(pageViewModel, "Doc Title 2", "/doc-title-2"),
+            LinkViewModel(pageViewModel, "Doc 1", WorkspaceDocumentationSectionPageViewModel.url(section1)),
+            LinkViewModel(pageViewModel, "Doc Title 2", WorkspaceDocumentationSectionPageViewModel.url(section2))
         )
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["main", "branch-2"])
     fun `links to software system pages`(currentBranch: String) {
-        val generatorContext =
-            generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch).apply {
-                workspace.model.addSoftwareSystem(Location.Internal, "System 2", "")
-                workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
-                workspace.model.addSoftwareSystem(Location.External, "External", "")
-            }
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
+        val system2 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 2", "")
+        val system1 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
+        generatorContext.workspace.model.addSoftwareSystem(Location.External, "External", "")
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.softwareSystemItems).containsExactly(
-            LinkViewModel(pageViewModel, "System 1", "/system-1"),
-            LinkViewModel(pageViewModel, "System 2", "/system-2"),
+            LinkViewModel(pageViewModel, "System 1", SoftwareSystemHomePageViewModel.url(system1)),
+            LinkViewModel(pageViewModel, "System 2", SoftwareSystemHomePageViewModel.url(system2)),
         )
     }
 
@@ -86,13 +84,13 @@ class MenuViewModelTest : ViewModelTest() {
     @ValueSource(strings = ["main", "branch-2"])
     fun `active links`(currentBranch: String) {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
-            .apply {
-                workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
-            }
+        val system = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
 
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = "/"))
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let { assertThat(it.generalItems[0].active).isTrue() }
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = "/system-1"))
+        MenuViewModel(
+            generatorContext, createPageViewModel(generatorContext, url = SoftwareSystemHomePageViewModel.url(system))
+        )
             .let { assertThat(it.softwareSystemItems[0].active).isTrue() }
     }
 
