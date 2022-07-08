@@ -20,7 +20,12 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                     }
                     div(classes = "navbar-dropdown is-right") {
                         viewModel.branches.forEach { branchLink ->
-                            link(viewModel = branchLink, classes = "navbar-item")
+                            a(
+                                classes = "navbar-item",
+                                href = branchLink.relativeHref
+                            ) {
+                                +branchLink.title
+                            }
                         }
                         hr(classes = "navbar-divider")
                         div(classes = "navbar-item has-text-grey-light") {

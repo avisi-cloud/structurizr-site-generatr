@@ -8,5 +8,5 @@ data class LinkViewModel(
     val href: String,
     val active: Boolean = false
 ) {
-    val relativeHref = href.asUrlRelativeTo(pageViewModel.url)
+    val relativeHref get() = href.asUrlRelativeTo(pageViewModel.url)
 }

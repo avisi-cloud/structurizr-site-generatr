@@ -35,8 +35,8 @@ class HeaderBarViewModelTest : ViewModelTest() {
         val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
 
         assertThat(viewModel.branches).containsExactly(
-            LinkViewModel(pageViewModel, "main", "/main/"),
-            LinkViewModel(pageViewModel, "branch-2", "/branch-2/")
+            BranchHomeLinkViewModel(pageViewModel, "main"),
+            BranchHomeLinkViewModel(pageViewModel, "branch-2")
         )
     }
 
