@@ -6,7 +6,7 @@ class HeaderBarViewModel(pageViewModel: PageViewModel, generatorContext: Generat
     val titleLink = LinkViewModel(
         pageViewModel,
         generatorContext.workspace.name,
-        "/${generatorContext.currentBranch}/"
+        "/"
     )
     val branches = generatorContext.branches
         .map { LinkViewModel(pageViewModel, it, "/$it/") }

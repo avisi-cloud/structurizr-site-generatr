@@ -4,7 +4,7 @@ import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.formatDate
 
 class WorkspaceDecisionsPageViewModel(generatorContext: GeneratorContext) : PageViewModel(generatorContext) {
-    override val url = "/${generatorContext.currentBranch}/decisions"
+    override val url = "/decisions"
     override val pageSubTitle = "Decisions"
 
     val decisionsTable = TableViewModel.create {

@@ -90,12 +90,13 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
     }
     contexts.forEach { writeHtmlFile(File(exportDir, context.currentBranch), it) }
 
-    writeHtmlFile(exportDir, HomePageViewModel(context))
-    writeHtmlFile(exportDir, WorkspaceDecisionsPageViewModel(context))
+    val branchDir = File(exportDir, context.currentBranch)
+    writeHtmlFile(branchDir, HomePageViewModel(context))
+    writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context))
 
     context.workspace.documentation.sections
         .filter { it.order != 1 }
-        .forEach { writeHtmlFile(exportDir, WorkspaceDocumentationSectionPageViewModel(context, it)) }
+        .forEach { writeHtmlFile(branchDir, WorkspaceDocumentationSectionPageViewModel(context, it)) }
 }
 
 private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {

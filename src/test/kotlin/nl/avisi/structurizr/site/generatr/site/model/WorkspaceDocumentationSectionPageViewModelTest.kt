@@ -14,7 +14,7 @@ class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
             generatorContext, createSection("Some section With words and 1 number")
         )
 
-        assertThat(viewModel.url).isEqualTo("/${generatorContext.currentBranch}/some-section-with-words-and-1-number")
+        assertThat(viewModel.url).isEqualTo("/some-section-with-words-and-1-number")
     }
 
     @Test
@@ -32,7 +32,7 @@ class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
         val section = createSection()
         val viewModel = WorkspaceDocumentationSectionPageViewModel(generatorContext, section)
 
-        assertThat(viewModel.markdown).isEqualTo(MarkdownViewModel(section.content, generatorContext.currentBranch))
+        assertThat(viewModel.markdown).isEqualTo(MarkdownViewModel(section.content))
     }
 
     private fun createSection(title: String = "Section 1") = Section(title, Format.Markdown, "# Content")

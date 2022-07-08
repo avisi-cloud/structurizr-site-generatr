@@ -21,8 +21,8 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems).containsExactly(
-            LinkViewModel(pageViewModel, "Home", "/$currentBranch"),
-            LinkViewModel(pageViewModel, "Software systems", "/$currentBranch/software-systems")
+            LinkViewModel(pageViewModel, "Home", "/"),
+            LinkViewModel(pageViewModel, "Software systems", "/software-systems")
         )
     }
 
@@ -42,7 +42,7 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems[1]).isEqualTo(
-            LinkViewModel(pageViewModel, "Decisions", "/$currentBranch/decisions")
+            LinkViewModel(pageViewModel, "Decisions", "/decisions")
         )
     }
 
@@ -59,8 +59,8 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems.drop(2)).containsExactly(
-            LinkViewModel(pageViewModel, "Doc 1", "/$currentBranch/doc-1"),
-            LinkViewModel(pageViewModel, "Doc Title 2", "/$currentBranch/doc-title-2"),
+            LinkViewModel(pageViewModel, "Doc 1", "/doc-1"),
+            LinkViewModel(pageViewModel, "Doc Title 2", "/doc-title-2"),
         )
     }
 
@@ -77,8 +77,8 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.softwareSystemItems).containsExactly(
-            LinkViewModel(pageViewModel, "System 1", "/$currentBranch/system-1"),
-            LinkViewModel(pageViewModel, "System 2", "/$currentBranch/system-2"),
+            LinkViewModel(pageViewModel, "System 1", "/system-1"),
+            LinkViewModel(pageViewModel, "System 2", "/system-2"),
         )
     }
 
@@ -90,9 +90,9 @@ class MenuViewModelTest : ViewModelTest() {
                 workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
             }
 
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = "/$currentBranch"))
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = "/"))
             .let { assertThat(it.generalItems[0].active).isTrue() }
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = "/$currentBranch/system-1"))
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = "/system-1"))
             .let { assertThat(it.softwareSystemItems[0].active).isTrue() }
     }
 

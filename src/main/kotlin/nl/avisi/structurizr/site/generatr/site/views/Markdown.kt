@@ -29,33 +29,31 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewM
 
     val parser = Parser.builder(options).build()
     val renderer = HtmlRenderer.builder(options)
-        .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel, markdown.currentBranch))
+        .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
         .build()
     val document = parser.parse(markdown.markdown)
 
     return renderer.render(document)
 }
 
-private class CustomLinkResolver(
-    private val pageViewModel: PageViewModel, private val currentBranch: String
-) : LinkResolver {
+private class CustomLinkResolver(private val pageViewModel: PageViewModel) : LinkResolver {
     override fun resolveLink(node: Node, context: LinkResolverBasicContext, link: ResolvedLink): ResolvedLink {
         if (link.url.startsWith("embed:")) {
             val diagramId = link.url.substring(6)
             return link
                 .withStatus(LinkStatus.VALID)
-                .withUrl("/$currentBranch/svg/$diagramId.svg".asUrlRelativeTo(pageViewModel.url))
+                .withUrl("/svg/$diagramId.svg".asUrlRelativeTo(pageViewModel.url))
         }
         if (link.url.matches("https?://".toRegex()))
             return link
 
         return link.withStatus(LinkStatus.VALID)
-            .withUrl("/$currentBranch/${link.url.dropWhile { it == '/' }}".asUrlRelativeTo(pageViewModel.url))
+            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlRelativeTo(pageViewModel.url))
     }
 
-    class Factory(private val viewModel: PageViewModel, private val currentBranch: String) : LinkResolverFactory {
+    class Factory(private val viewModel: PageViewModel) : LinkResolverFactory {
         override fun apply(context: LinkResolverBasicContext): LinkResolver {
-            return CustomLinkResolver(viewModel, currentBranch)
+            return CustomLinkResolver(viewModel)
         }
 
         override fun getAfterDependents(): MutableSet<Class<*>>? = null

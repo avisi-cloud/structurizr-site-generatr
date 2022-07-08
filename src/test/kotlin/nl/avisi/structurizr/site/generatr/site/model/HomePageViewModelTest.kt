@@ -17,7 +17,7 @@ class HomePageViewModelTest : ViewModelTest() {
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.content)
-            .isEqualTo(MarkdownViewModel(DEFAULT_HOMEPAGE_CONTENT, currentBranch = generatorContext.currentBranch))
+            .isEqualTo(MarkdownViewModel(DEFAULT_HOMEPAGE_CONTENT))
     }
 
     @Test
@@ -29,7 +29,7 @@ class HomePageViewModelTest : ViewModelTest() {
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.content)
-            .isEqualTo(MarkdownViewModel("Section content", currentBranch = generatorContext.currentBranch))
+            .isEqualTo(MarkdownViewModel("Section content"))
     }
 
     @ParameterizedTest

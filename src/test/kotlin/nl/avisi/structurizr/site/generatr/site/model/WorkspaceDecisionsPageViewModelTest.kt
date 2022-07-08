@@ -38,13 +38,13 @@ class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
                     cell("1"),
                     cell("01-01-2022"),
                     cell("Accepted"),
-                    cellWithLink(viewModel, "Decision 1", "/${generatorContext.currentBranch}/decisions/1")
+                    cellWithLink(viewModel, "Decision 1", "/decisions/1")
                 )
                 bodyRow(
                     cell("2"),
                     cell("02-01-2022"),
                     cell("Proposed"),
-                    cellWithLink(viewModel, "Decision 2", "/${generatorContext.currentBranch}/decisions/2")
+                    cellWithLink(viewModel, "Decision 2", "/decisions/2")
                 )
             }
         )
