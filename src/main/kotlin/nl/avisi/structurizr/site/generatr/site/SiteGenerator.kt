@@ -6,14 +6,12 @@ import kotlinx.html.stream.appendHTML
 import nl.avisi.structurizr.site.generatr.homeSection
 import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.context.*
-import nl.avisi.structurizr.site.generatr.site.model.HomePageViewModel
-import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
-import nl.avisi.structurizr.site.generatr.site.model.WorkspaceDecisionsPageViewModel
-import nl.avisi.structurizr.site.generatr.site.model.WorkspaceDocumentationSectionPageViewModel
+import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.pages.*
 import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemDecisionPage
 import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemPage
 import nl.avisi.structurizr.site.generatr.site.views.homePage
+import nl.avisi.structurizr.site.generatr.site.views.workspaceDecisionPage
 import nl.avisi.structurizr.site.generatr.site.views.workspaceDecisionsPage
 import nl.avisi.structurizr.site.generatr.site.views.workspaceDocumentationSectionPage
 import java.io.File
@@ -84,8 +82,6 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
         context.workspace.documentation.sections
             .filter { it != context.workspace.documentation.homeSection }
             .forEach { yield(DocumentationSectionPageContext(context, it)) }
-        context.workspace.documentation.decisions
-            .forEach { yield(WorkspaceDecisionPageContext(context, it)) }
         yield(SoftwareSystemsOverviewPageContext(context))
     }
     contexts.forEach { writeHtmlFile(File(exportDir, context.currentBranch), it) }
@@ -97,6 +93,8 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
     context.workspace.documentation.sections
         .filter { it.order != 1 }
         .forEach { writeHtmlFile(branchDir, WorkspaceDocumentationSectionPageViewModel(context, it)) }
+    context.workspace.documentation.decisions
+        .forEach { writeHtmlFile(branchDir, WorkspaceDecisionPageViewModel(context, it)) }
 }
 
 private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
@@ -108,6 +106,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
             appendHTML().html {
                 when (viewModel) {
                     is HomePageViewModel -> homePage(viewModel)
+                    is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
                     is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
                     is WorkspaceDocumentationSectionPageViewModel -> workspaceDocumentationSectionPage(viewModel)
                 }
@@ -128,7 +127,6 @@ fun writeHtmlFile(exportDir: File, context: AbstractPageContext) {
                     is SoftwareSystemDecisionPageContext -> softwareSystemDecisionPage(context)
                     is AbstractSoftwareSystemPageContext -> softwareSystemPage(context)
                     is SoftwareSystemsOverviewPageContext -> softwareSystemsOverviewPage(context)
-                    is WorkspaceDecisionPageContext -> workspaceDecisionPage(context)
                 }
             }
         }

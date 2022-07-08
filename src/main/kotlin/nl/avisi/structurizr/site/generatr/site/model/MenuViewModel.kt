@@ -8,16 +8,14 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         yield(createMenuItem("Home", HomePageViewModel.url()))
 
         if (generatorContext.workspace.documentation.decisions.isNotEmpty())
-            yield(createMenuItem("Decisions", WorkspaceDecisionsPageViewModel.url()))
+            yield(LinkViewModel(pageViewModel, "Decisions", WorkspaceDecisionsPageViewModel.url(), false))
 
         yield(createMenuItem("Software systems", SoftwareSystemsPageViewModel.url()))
 
         generatorContext.workspace.documentation.sections
             .sortedBy { it.order }
             .drop(1)
-            .forEach {
-                yield(createMenuItem(it.title, WorkspaceDocumentationSectionPageViewModel.url(it)))
-            }
+            .forEach { yield(createMenuItem(it.title, WorkspaceDocumentationSectionPageViewModel.url(it))) }
     }.toList()
 
     val softwareSystemItems = generatorContext.workspace.model.softwareSystems
@@ -26,5 +24,5 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         .map { createMenuItem(it.name, SoftwareSystemHomePageViewModel.url(it)) }
 
     private fun createMenuItem(title: String, href: String) =
-        LinkViewModel(pageViewModel, title, href, href == pageViewModel.url)
+        LinkViewModel(pageViewModel, title, href)
 }
