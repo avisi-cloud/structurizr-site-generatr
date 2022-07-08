@@ -7,7 +7,6 @@ import nl.avisi.structurizr.site.generatr.site.context.*
 fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext) {
     softwareSystemPage(context) {
         when (context) {
-            is SoftwareSystemInfoPageContext -> summaryFragment(context)
             is SoftwareSystemContextPageContext -> systemContextFragment(context)
             is SoftwareSystemContainerPageContext -> containerFragment(context)
             is SoftwareSystemComponentPageContext -> componentFragment(context)
@@ -83,13 +82,5 @@ private fun DIV.softwareSystemPageTabs(context: AbstractSoftwareSystemPageContex
                 ).urlRelativeTo(context),
                 active = context is SoftwareSystemDecisionsPageContext || context is SoftwareSystemDecisionPageContext
             ) { +"Decisions" }
-
-        tab(
-            href = SoftwareSystemInfoPageContext(
-                context.generatorContext,
-                context.softwareSystem
-            ).urlRelativeTo(context),
-            active = context is SoftwareSystemInfoPageContext
-        ) { +"Info" }
     }
 }
