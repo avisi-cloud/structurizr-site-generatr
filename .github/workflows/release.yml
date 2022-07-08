@@ -80,7 +80,7 @@ jobs:
             org.opencontainers.image.version=${{ github.ref_name }}
       - name: sign container image
         run: |
-            cosign sign --key env://COSIGN_KEY ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+            cosign sign --key env://COSIGN_KEY ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
         shell: bash
         env:
           COSIGN_KEY: ${{secrets.COSIGN_KEY}}
@@ -88,12 +88,12 @@ jobs:
 
       - name: Check images
         run: |
-          docker buildx imagetools inspect ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ env.VERSION }}
-          docker pull ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ env.VERSION }}
-          cosign verify --key cosign.pub ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ env.VERSION }} 
+          docker buildx imagetools inspect ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
+          docker pull ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
+          cosign verify --key cosign.pub ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
       - uses: anchore/sbom-action@v0
         with:
-          image: ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          image: ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
 
   create-draft-release:
     runs-on: ubuntu-latest
