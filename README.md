@@ -38,6 +38,17 @@ docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.2
 docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.2 --help
 ```
 
+### Verify image with cosign
+
+```
+cat cosign.pub
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzezKl0vAWSHosQ0JLEsDzNBd2nGm
+08KqX+imYqq2avlbH+ehprJFMqKK0/I/bY0q5W9hQC8SLzTRJ9Q5dB9UiQ==
+-----END PUBLIC KEY-----
+cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.2
+```
+
 ## Example usage
 
 These examples use the [example workspace](docs/example) in this repository.
