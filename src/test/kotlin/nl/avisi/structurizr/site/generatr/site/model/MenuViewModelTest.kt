@@ -22,7 +22,7 @@ class MenuViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.generalItems).containsExactly(
             LinkViewModel(pageViewModel, "Home", HomePageViewModel.url()),
-            LinkViewModel(pageViewModel, "Software systems", SoftwareSystemsPageViewModel.url())
+            LinkViewModel(pageViewModel, "Software Systems", SoftwareSystemsPageViewModel.url())
         )
     }
 

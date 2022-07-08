@@ -61,4 +61,22 @@ class TableViewModelTest : ViewModelTest() {
             )
         )
     }
+
+    @Test
+    fun `header cell with link`() {
+        val viewModel = TableViewModel.create {
+            bodyRow(headerCellWithLink(pageViewModel, "click me", "/decisions"))
+        }
+
+        assertThat(viewModel.bodyRows).containsAll(
+            TableViewModel.RowViewModel(
+                listOf(
+                    TableViewModel.LinkCellViewModel(
+                        LinkViewModel(pageViewModel, "click me", "/decisions"),
+                        isHeader = true
+                    )
+                )
+            )
+        )
+    }
 }

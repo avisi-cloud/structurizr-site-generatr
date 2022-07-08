@@ -22,6 +22,8 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
         }
 
         fun headerCell(title: String) = TextCellViewModel(title, true)
+        fun headerCellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
+            LinkCellViewModel(LinkViewModel(pageViewModel, title, href), true)
 
         fun cell(title: String): TextCellViewModel = TextCellViewModel(title, false)
         fun cellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
