@@ -25,9 +25,7 @@ private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
     ul(classes = "menu-list") {
         li {
             items.forEach {
-                a(href = it.relativeHref, classes = if (it.active) "is-active" else "") {
-                    +it.title
-                }
+                link(it)
             }
         }
     }

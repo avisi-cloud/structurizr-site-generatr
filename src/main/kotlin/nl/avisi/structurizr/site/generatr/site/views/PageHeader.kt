@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.HeaderBarViewModel
+import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 
 fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
     nav(classes = "navbar is-dark") {
@@ -9,12 +10,7 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
         attributes["aria-label"] = "main navigation"
 
         div(classes = "navbar-brand") {
-            a(
-                classes = "navbar-item",
-                href = viewModel.titleLink.relativeHref
-            ) {
-                span(classes = "has-text-weight-semibold") { +viewModel.titleLink.title }
-            }
+            navbarLink(viewModel.titleLink)
         }
         div(classes = "navbar-menu") {
             div(classes = "navbar-end") {
@@ -24,10 +20,7 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                     }
                     div(classes = "navbar-dropdown is-right") {
                         viewModel.branches.forEach { branchLink ->
-                            a(
-                                classes = "navbar-item",
-                                href = branchLink.relativeHref
-                            ) { +branchLink.title }
+                            link(viewModel = branchLink, classes = "navbar-item")
                         }
                         hr(classes = "navbar-divider")
                         div(classes = "navbar-item has-text-grey-light") {
@@ -38,5 +31,14 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                 }
             }
         }
+    }
+}
+
+private fun DIV.navbarLink(viewModel: LinkViewModel) {
+    a(
+        classes = "navbar-item",
+        href = viewModel.relativeHref
+    ) {
+        span(classes = "has-text-weight-semibold") { +viewModel.title }
     }
 }
