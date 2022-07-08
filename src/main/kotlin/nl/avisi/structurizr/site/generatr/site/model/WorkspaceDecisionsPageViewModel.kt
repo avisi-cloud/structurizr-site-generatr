@@ -13,7 +13,7 @@ class WorkspaceDecisionsPageViewModel(generatorContext: GeneratorContext) : Page
             .sortedBy { it.id }
             .forEach {
                 bodyRow(
-                    cell(it.id),
+                    headerCell(it.id),
                     cell(formatDate(it.date)),
                     cell(it.status),
                     cellWithLink(this@WorkspaceDecisionsPageViewModel, it.title, WorkspaceDecisionPageViewModel.url(it))

@@ -42,13 +42,13 @@ class WorkspaceDecisionsPageViewModelTest : ViewModelTest() {
             TableViewModel.create {
                 decisionsTableHeaderRow()
                 bodyRow(
-                    cell("1"),
+                    headerCell("1"),
                     cell("01-01-2022"),
                     cell("Accepted"),
                     cellWithLink(viewModel, "Decision 1", WorkspaceDecisionPageViewModel.url(decision1))
                 )
                 bodyRow(
-                    cell("2"),
+                    headerCell("2"),
                     cell("02-01-2022"),
                     cell("Proposed"),
                     cellWithLink(viewModel, "Decision 2", WorkspaceDecisionPageViewModel.url(decision2))
