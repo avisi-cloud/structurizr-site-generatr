@@ -10,7 +10,9 @@ import nl.avisi.structurizr.site.generatr.site.generateDiagrams
 import nl.avisi.structurizr.site.generatr.site.generateRedirectingIndexPage
 import nl.avisi.structurizr.site.generatr.site.generateSite
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.server.handler.ResourceHandler
+import org.eclipse.jetty.servlet.DefaultServlet
+import org.eclipse.jetty.servlet.ServletContextHandler
+import org.eclipse.jetty.servlet.ServletHolder
 import java.io.File
 import java.nio.file.*
 import kotlin.io.path.isDirectory
@@ -66,21 +68,27 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         println("Successfully generated diagrams and site")
     }
 
-    private fun runServer(): Server {
-        val server = Server(8080)
-        val resourceHandler = ResourceHandler()
+    private fun runServer(): Server =
+        Server(8080).also { server ->
+            println("Starting server...")
 
-        resourceHandler.isDirAllowed = true
-        resourceHandler.resourceBase = siteDir
-        server.handler = resourceHandler
+            server.handler = createServletContextHandler()
+            server.start()
 
-        println("Starting server...")
-        server.start()
-        println("Server started")
-        println("Open http://localhost:8080 in your browser to view the site")
+            println("Server started")
+            println("Open http://localhost:8080 in your browser to view the site")
+        }
 
-        return server
-    }
+    private fun createServletContextHandler() =
+        ServletContextHandler().apply {
+            contextPath = "/"
+            addServlet(createStaticResourceServlet(), "/*")
+        }
+
+    private fun createStaticResourceServlet() =
+        ServletHolder("default", DefaultServlet()).apply {
+            setInitParameter("resourceBase", siteDir)
+        }
 
     private fun startWatchService(): WatchService {
         val path = File(workspaceFile).parentFile.toPath()
