@@ -14,18 +14,18 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
         }
 
     @Test
-    fun diagrams() {
+    fun `diagrams sorted by key`() {
         val viewModel = SoftwareSystemContextPageViewModel(generatorContext, softwareSystem)
 
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
-                "System context view 1",
+                "Software system - System Context",
                 ImageViewModel(viewModel, "/svg/context-1.svg"),
                 ImageViewModel(viewModel, "/png/context-1.png"),
                 ImageViewModel(viewModel, "/puml/context-1.puml")
             ),
             DiagramViewModel(
-                "System context view 2",
+                "Software system - System Context",
                 ImageViewModel(viewModel, "/svg/context-2.svg"),
                 ImageViewModel(viewModel, "/png/context-2.png"),
                 ImageViewModel(viewModel, "/puml/context-2.puml")

@@ -7,10 +7,10 @@ class SoftwareSystemContextPageViewModel(generatorContext: GeneratorContext, sof
     SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.SYSTEM_CONTEXT) {
     val diagrams = generatorContext.workspace.views.systemContextViews
         .filter { it.softwareSystem == softwareSystem }
-        .sortedBy { it.description }
+        .sortedBy { it.key }
         .map {
             DiagramViewModel(
-                it.description,
+                it.name,
                 ImageViewModel(this, "/svg/${it.key}.svg"),
                 ImageViewModel(this, "/png/${it.key}.png"),
                 ImageViewModel(this, "/puml/${it.key}.puml")
