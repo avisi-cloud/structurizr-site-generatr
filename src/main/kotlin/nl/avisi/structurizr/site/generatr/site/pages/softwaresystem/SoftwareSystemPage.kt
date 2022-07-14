@@ -7,7 +7,6 @@ import nl.avisi.structurizr.site.generatr.site.context.*
 fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext) {
     softwareSystemPage(context) {
         when (context) {
-            is SoftwareSystemContextPageContext -> systemContextFragment(context)
             is SoftwareSystemContainerPageContext -> containerFragment(context)
             is SoftwareSystemComponentPageContext -> componentFragment(context)
             is SoftwareSystemDeploymentPageContext -> deploymentFragment(context)

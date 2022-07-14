@@ -8,7 +8,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         yield(createMenuItem("Home", HomePageViewModel.url()))
 
         if (generatorContext.workspace.documentation.decisions.isNotEmpty())
-            yield(LinkViewModel(pageViewModel, "Decisions", WorkspaceDecisionsPageViewModel.url(), false))
+            yield(createMenuItem("Decisions", WorkspaceDecisionsPageViewModel.url(), false))
 
         yield(createMenuItem("Software Systems", SoftwareSystemsPageViewModel.url()))
 
@@ -21,8 +21,10 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
     val softwareSystemItems = generatorContext.workspace.model.softwareSystems
         .filter { it.location == Location.Internal }
         .sortedBy { it.name }
-        .map { createMenuItem(it.name, SoftwareSystemHomePageViewModel.url(it)) }
+        .map {
+            createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
+        }
 
-    private fun createMenuItem(title: String, href: String) =
-        LinkViewModel(pageViewModel, title, href)
+    private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
+        LinkViewModel(pageViewModel, title, href, exact)
 }

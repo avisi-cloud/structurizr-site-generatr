@@ -14,7 +14,9 @@ class SoftwareSystemsPageViewModel(generatorContext: GeneratorContext) : PageVie
             .forEach {
                 bodyRow(
                     headerCellWithLink(
-                        this@SoftwareSystemsPageViewModel, it.name, SoftwareSystemHomePageViewModel.url(it)
+                        this@SoftwareSystemsPageViewModel,
+                        it.name,
+                        SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME)
                     ),
                     cell(it.description)
                 )

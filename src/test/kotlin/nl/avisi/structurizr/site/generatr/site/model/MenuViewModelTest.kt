@@ -75,8 +75,18 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.softwareSystemItems).containsExactly(
-            LinkViewModel(pageViewModel, "System 1", SoftwareSystemHomePageViewModel.url(system1)),
-            LinkViewModel(pageViewModel, "System 2", SoftwareSystemHomePageViewModel.url(system2)),
+            LinkViewModel(
+                pageViewModel,
+                "System 1",
+                SoftwareSystemPageViewModel.url(system1, SoftwareSystemPageViewModel.Tab.HOME),
+                false
+            ),
+            LinkViewModel(
+                pageViewModel,
+                "System 2",
+                SoftwareSystemPageViewModel.url(system2, SoftwareSystemPageViewModel.Tab.HOME),
+                false
+            ),
         )
     }
 
@@ -89,7 +99,12 @@ class MenuViewModelTest : ViewModelTest() {
         MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let { assertThat(it.generalItems[0].active).isTrue() }
         MenuViewModel(
-            generatorContext, createPageViewModel(generatorContext, url = SoftwareSystemHomePageViewModel.url(system))
+            generatorContext, createPageViewModel(
+                generatorContext, url = SoftwareSystemPageViewModel.url(
+                    system,
+                    SoftwareSystemPageViewModel.Tab.HOME
+                )
+            )
         )
             .let { assertThat(it.softwareSystemItems[0].active).isTrue() }
     }

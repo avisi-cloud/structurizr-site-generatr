@@ -46,9 +46,4 @@ class LinkViewModelTest : ViewModelTest() {
         val viewModel = LinkViewModel(pageViewModel, "Some other page", "/some-other-page")
         assertThat(viewModel.relativeHref).isEqualTo("../../some-other-page")
     }
-
-    private fun pageViewModel(pageHref: String) = object : PageViewModel(generatorContext()) {
-        override val url = pageHref
-        override val pageSubTitle = "Some page"
-    }
 }

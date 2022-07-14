@@ -31,11 +31,17 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
             TableViewModel.create {
                 headerRow(headerCell("Name"), headerCell("Description"))
                 bodyRow(
-                    headerCellWithLink(viewModel, system1.name, SoftwareSystemHomePageViewModel.url(system1)),
+                    headerCellWithLink(viewModel, system1.name, SoftwareSystemPageViewModel.url(
+                        system1,
+                        SoftwareSystemPageViewModel.Tab.HOME
+                    )),
                     cell(system1.description)
                 )
                 bodyRow(
-                    headerCellWithLink(viewModel, system2.name, SoftwareSystemHomePageViewModel.url(system2)),
+                    headerCellWithLink(viewModel, system2.name, SoftwareSystemPageViewModel.url(
+                        system2,
+                        SoftwareSystemPageViewModel.Tab.HOME
+                    )),
                     cell(system2.description)
                 )
             }
