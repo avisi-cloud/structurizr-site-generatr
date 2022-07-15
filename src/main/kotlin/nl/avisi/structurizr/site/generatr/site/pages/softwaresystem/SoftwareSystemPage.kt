@@ -1,13 +1,17 @@
 package nl.avisi.structurizr.site.generatr.site.pages.softwaresystem
 
-import kotlinx.html.*
-import nl.avisi.structurizr.site.generatr.site.components.*
+import kotlinx.html.DIV
+import kotlinx.html.HTML
+import kotlinx.html.h1
+import kotlinx.html.h2
+import nl.avisi.structurizr.site.generatr.site.components.page
+import nl.avisi.structurizr.site.generatr.site.components.tab
+import nl.avisi.structurizr.site.generatr.site.components.tabs
 import nl.avisi.structurizr.site.generatr.site.context.*
 
 fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext) {
     softwareSystemPage(context) {
         when (context) {
-            is SoftwareSystemDeploymentPageContext -> deploymentFragment(context)
             is SoftwareSystemDecisionsPageContext -> decisionListFragment(context)
             is SoftwareSystemDependenciesPageContext -> dependenciesFragment(context)
         }
