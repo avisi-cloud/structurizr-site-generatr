@@ -75,6 +75,15 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `home tab is visible`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.HOME).visible).isTrue()
+    }
+
+    @Test
     fun `context views tab only visible when context diagrams available`() {
         val generatorContext = generatorContext()
         val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
