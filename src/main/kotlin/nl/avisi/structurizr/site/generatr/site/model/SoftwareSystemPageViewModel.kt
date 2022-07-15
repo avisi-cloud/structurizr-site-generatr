@@ -17,7 +17,7 @@ open class SoftwareSystemPageViewModel(
         private val title
             get() = when (tab) {
                 Tab.HOME -> "Info"
-                Tab.SYSTEM_CONTEXT -> "Context"
+                Tab.SYSTEM_CONTEXT -> "Context views"
             }
 
         val visible

@@ -52,6 +52,8 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.tabs.map { it.tab })
             .containsExactly(Tab.HOME, Tab.SYSTEM_CONTEXT)
+        assertThat(viewModel.tabs.map { it.link.title })
+            .containsExactly("Info", "Context views")
     }
 
     @TestFactory
