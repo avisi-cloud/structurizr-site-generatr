@@ -12,6 +12,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     fun url() = listOf(
         Tab.HOME to "/software-system-with-1-name",
         Tab.SYSTEM_CONTEXT to "/software-system-with-1-name/context",
+        Tab.CONTAINER to "/software-system-with-1-name/container",
     ).map { (tab, expectedUrl) ->
         DynamicTest.dynamicTest("url - $tab") {
             val generatorContext = generatorContext()
@@ -51,9 +52,9 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(viewModel.tabs.map { it.tab })
-            .containsExactly(Tab.HOME, Tab.SYSTEM_CONTEXT)
+            .containsExactly(Tab.HOME, Tab.SYSTEM_CONTEXT, Tab.CONTAINER)
         assertThat(viewModel.tabs.map { it.link.title })
-            .containsExactly("Info", "Context views")
+            .containsExactly("Info", "Context views", "Container views")
     }
 
     @TestFactory
@@ -72,7 +73,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `software system tab only visible when context diagrams available`() {
+    fun `context views tab only visible when context diagrams available`() {
         val generatorContext = generatorContext()
         val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
@@ -80,6 +81,17 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         assertThat(getTab(viewModel, Tab.SYSTEM_CONTEXT).visible).isFalse()
         generatorContext.workspace.views.createSystemContextView(softwareSystem, "context", "description")
         assertThat(getTab(viewModel, Tab.SYSTEM_CONTEXT).visible).isTrue()
+    }
+
+    @Test
+    fun `container views tab only visible when container diagrams available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.CONTAINER).visible).isFalse()
+        generatorContext.workspace.views.createContainerView(softwareSystem, "context", "description")
+        assertThat(getTab(viewModel, Tab.CONTAINER).visible).isTrue()
     }
 
     private fun getTab(viewModel: SoftwareSystemPageViewModel, tab: Tab) =
