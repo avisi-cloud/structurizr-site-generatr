@@ -9,7 +9,7 @@ open class SoftwareSystemPageViewModel(
     private val softwareSystem: SoftwareSystem,
     tab: Tab
 ) : PageViewModel(generatorContext) {
-    enum class Tab { HOME, SYSTEM_CONTEXT, CONTAINER }
+    enum class Tab { HOME, SYSTEM_CONTEXT, CONTAINER, COMPONENT }
 
     inner class TabViewModel(val tab: Tab) {
         val link = LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab))
@@ -19,6 +19,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.HOME -> "Info"
                 Tab.SYSTEM_CONTEXT -> "Context views"
                 Tab.CONTAINER -> "Container views"
+                Tab.COMPONENT -> "Component views"
             }
 
         val visible
@@ -26,6 +27,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.HOME -> true
                 Tab.SYSTEM_CONTEXT -> generatorContext.workspace.views.systemContextViews.any { it.softwareSystem == softwareSystem }
                 Tab.CONTAINER -> generatorContext.workspace.views.containerViews.any { it.softwareSystem == softwareSystem }
+                Tab.COMPONENT -> generatorContext.workspace.views.componentViews.any { it.softwareSystem == softwareSystem }
             }
     }
 
@@ -33,17 +35,23 @@ open class SoftwareSystemPageViewModel(
     override val pageSubTitle: String = softwareSystem.name
 
     val tabs = listOf(
-        TabViewModel(Tab.HOME), TabViewModel(Tab.SYSTEM_CONTEXT), TabViewModel(Tab.CONTAINER),
+        TabViewModel(Tab.HOME),
+        TabViewModel(Tab.SYSTEM_CONTEXT),
+        TabViewModel(Tab.CONTAINER),
+        TabViewModel(Tab.COMPONENT),
     )
 
     val description: String = softwareSystem.description
 
     companion object {
-        fun url(softwareSystem: SoftwareSystem, tab: Tab) =
-            when (tab) {
-                Tab.HOME -> "/${softwareSystem.name.normalize()}"
-                Tab.SYSTEM_CONTEXT -> "/${softwareSystem.name.normalize()}/context"
-                Tab.CONTAINER -> "/${softwareSystem.name.normalize()}/container"
+        fun url(softwareSystem: SoftwareSystem, tab: Tab): String {
+            val home = "/${softwareSystem.name.normalize()}"
+            return when (tab) {
+                Tab.HOME -> home
+                Tab.SYSTEM_CONTEXT -> "$home/context"
+                Tab.CONTAINER -> "$home/container"
+                Tab.COMPONENT -> "$home/component"
             }
+        }
     }
 }

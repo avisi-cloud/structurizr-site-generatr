@@ -13,6 +13,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         Tab.HOME to "/software-system-with-1-name",
         Tab.SYSTEM_CONTEXT to "/software-system-with-1-name/context",
         Tab.CONTAINER to "/software-system-with-1-name/container",
+        Tab.COMPONENT to "/software-system-with-1-name/component",
     ).map { (tab, expectedUrl) ->
         DynamicTest.dynamicTest("url - $tab") {
             val generatorContext = generatorContext()
@@ -52,9 +53,9 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(viewModel.tabs.map { it.tab })
-            .containsExactly(Tab.HOME, Tab.SYSTEM_CONTEXT, Tab.CONTAINER)
+            .containsExactly(Tab.HOME, Tab.SYSTEM_CONTEXT, Tab.CONTAINER, Tab.COMPONENT)
         assertThat(viewModel.tabs.map { it.link.title })
-            .containsExactly("Info", "Context views", "Container views")
+            .containsExactly("Info", "Context views", "Container views", "Component views")
     }
 
     @TestFactory
@@ -90,8 +91,20 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.CONTAINER).visible).isFalse()
-        generatorContext.workspace.views.createContainerView(softwareSystem, "context", "description")
+        generatorContext.workspace.views.createContainerView(softwareSystem, "container", "description")
         assertThat(getTab(viewModel, Tab.CONTAINER).visible).isTrue()
+    }
+
+    @Test
+    fun `component views tab only visible when component diagrams available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val container = softwareSystem.addContainer("Backend")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.COMPONENT).visible).isFalse()
+        generatorContext.workspace.views.createComponentView(container, "component", "description")
+        assertThat(getTab(viewModel, Tab.COMPONENT).visible).isTrue()
     }
 
     private fun getTab(viewModel: SoftwareSystemPageViewModel, tab: Tab) =
