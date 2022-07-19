@@ -2,7 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.normalize
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 open class SoftwareSystemPageViewModel(
     generatorContext: GeneratorContext,
@@ -11,8 +11,8 @@ open class SoftwareSystemPageViewModel(
 ) : PageViewModel(generatorContext) {
     enum class Tab { HOME, SYSTEM_CONTEXT, CONTAINER, COMPONENT, DEPLOYMENT, DEPENDENCIES, DECISIONS }
 
-    inner class TabViewModel(val tab: Tab) {
-        val link = LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab))
+    inner class TabViewModel(val tab: Tab, exactLink: Boolean = true) {
+        val link = LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab), exactLink)
 
         private val title
             get() = when (tab) {
@@ -47,7 +47,7 @@ open class SoftwareSystemPageViewModel(
         TabViewModel(Tab.COMPONENT),
         TabViewModel(Tab.DEPLOYMENT),
         TabViewModel(Tab.DEPENDENCIES),
-        TabViewModel(Tab.DECISIONS),
+        TabViewModel(Tab.DECISIONS, exactLink = false),
     )
 
     val description: String = softwareSystem.description

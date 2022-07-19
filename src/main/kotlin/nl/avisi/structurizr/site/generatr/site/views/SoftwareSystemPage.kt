@@ -1,7 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
-import nl.avisi.structurizr.site.generatr.site.components.contentDiv
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemPageViewModel
 
 fun HTML.softwareSystemPage(viewModel: SoftwareSystemPageViewModel, block: FlowContent.() -> Unit) {

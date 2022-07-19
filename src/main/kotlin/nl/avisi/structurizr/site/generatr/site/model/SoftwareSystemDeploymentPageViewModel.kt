@@ -1,7 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemDeploymentPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
     SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.DEPLOYMENT) {

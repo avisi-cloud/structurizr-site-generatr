@@ -1,6 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import org.intellij.lang.annotations.Language
 
 class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(generatorContext) {

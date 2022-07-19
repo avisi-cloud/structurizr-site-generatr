@@ -1,4 +1,4 @@
-package nl.avisi.structurizr.site.generatr.site.context
+package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
 

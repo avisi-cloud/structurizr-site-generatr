@@ -3,7 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import com.structurizr.Workspace
 import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -21,7 +21,11 @@ abstract class ViewModelTest {
         override val pageSubTitle = "Some page"
     }
 
-    protected fun createDecision(id: String, decisionStatus: String, decisionDate: LocalDate = LocalDate.now()) =
+    protected fun createDecision(
+        id: String = "1",
+        decisionStatus: String = "Accepted",
+        decisionDate: LocalDate = LocalDate.now()
+    ) =
         Decision(id).apply {
             title = "Decision $id"
             status = decisionStatus

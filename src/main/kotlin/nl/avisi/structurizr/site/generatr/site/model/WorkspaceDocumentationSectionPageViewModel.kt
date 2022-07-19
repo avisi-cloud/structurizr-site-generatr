@@ -2,7 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Section
 import nl.avisi.structurizr.site.generatr.normalize
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class WorkspaceDocumentationSectionPageViewModel(generatorContext: GeneratorContext, section: Section) :
     PageViewModel(generatorContext) {

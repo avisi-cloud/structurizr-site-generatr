@@ -1,7 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.Location
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class MenuViewModel(generatorContext: GeneratorContext, private val pageViewModel: PageViewModel) {
     val generalItems = sequence {

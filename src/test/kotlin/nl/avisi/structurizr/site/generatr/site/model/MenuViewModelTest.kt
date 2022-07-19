@@ -8,7 +8,7 @@ import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import com.structurizr.model.Location
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 

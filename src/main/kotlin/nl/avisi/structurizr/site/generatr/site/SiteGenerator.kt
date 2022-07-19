@@ -4,11 +4,7 @@ import com.structurizr.Workspace
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
 import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
-import nl.avisi.structurizr.site.generatr.site.context.AbstractPageContext
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
-import nl.avisi.structurizr.site.generatr.site.context.SoftwareSystemDecisionPageContext
 import nl.avisi.structurizr.site.generatr.site.model.*
-import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemDecisionPage
 import nl.avisi.structurizr.site.generatr.site.views.*
 import java.io.File
 import java.nio.file.Path
@@ -61,15 +57,6 @@ private fun copyAssets(assetsDir: File, exportDir: File) {
 }
 
 private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
-    val contexts = sequence {
-        context.workspace.model.internalSoftwareSystems.forEach { softwareSystem ->
-            softwareSystem.documentation.decisions.forEach {
-                yield(SoftwareSystemDecisionPageContext(context, softwareSystem, it))
-            }
-        }
-    }
-    contexts.forEach { writeHtmlFile(File(exportDir, context.currentBranch), it) }
-
     val branchDir = File(exportDir, context.currentBranch)
     writeHtmlFile(branchDir, HomePageViewModel(context))
     writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context))
@@ -89,6 +76,10 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
         writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemDecisionsPageViewModel(context, it))
+
+        it.documentation.decisions.forEach { decision ->
+            writeHtmlFile(branchDir, SoftwareSystemDecisionPageViewModel(context, it, decision))
+        }
     }
 }
 
@@ -108,6 +99,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                     is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
                     is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
                     is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
+                    is SoftwareSystemDecisionPageViewModel -> softwareSystemDecisionPage(viewModel)
                     is SoftwareSystemDecisionsPageViewModel -> softwareSystemDecisionsPage(viewModel)
                     is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
                     is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
@@ -118,19 +110,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
     )
 }
 
-fun writeHtmlFile(exportDir: File, context: AbstractPageContext) {
-    val htmlFile = File(exportDir, context.htmlFile)
-    htmlFile.parentFile.mkdirs()
-    htmlFile.writeText(
-        buildString {
-            appendLine("<!doctype html>")
-            appendHTML().html {
-                attributes["class"] = "has-background-light"
-                when (context) {
-                    is SoftwareSystemDecisionPageContext -> softwareSystemDecisionPage(context)
-                    else -> throw IllegalStateException("Unexpected context: ${context.javaClass}")
-                }
-            }
-        }
-    )
+fun HTML.softwareSystemDecisionPage(viewModel: SoftwareSystemDecisionPageViewModel) {
+    softwareSystemPage(viewModel) {
+        markdown(viewModel, viewModel.markdown)
+    }
 }

@@ -1,7 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Decision
-import nl.avisi.structurizr.site.generatr.site.context.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class WorkspaceDecisionPageViewModel(generatorContext: GeneratorContext, decision: Decision) :
     PageViewModel(generatorContext) {

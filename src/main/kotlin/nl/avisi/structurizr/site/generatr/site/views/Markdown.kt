@@ -10,15 +10,18 @@ import com.vladsch.flexmark.html.renderer.ResolvedLink
 import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.data.MutableDataSet
-import kotlinx.html.DIV
+import kotlinx.html.FlowContent
+import kotlinx.html.div
 import kotlinx.html.unsafe
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
-fun DIV.markdown(pageViewModel: PageViewModel, markdown: MarkdownViewModel) {
-    unsafe {
-        +markdownToHtml(pageViewModel, markdown)
+fun FlowContent.markdown(pageViewModel: PageViewModel, markdown: MarkdownViewModel) {
+    div {
+        unsafe {
+            +markdownToHtml(pageViewModel, markdown)
+        }
     }
 }
 
