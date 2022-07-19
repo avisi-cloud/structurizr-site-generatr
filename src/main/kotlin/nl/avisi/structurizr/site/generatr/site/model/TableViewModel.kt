@@ -6,21 +6,16 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
     }
 
     data class TextCellViewModel(val title: String, override val isHeader: Boolean) : CellViewModel {
-        override fun toString(): String {
-            return if (isHeader) "headerCell($title)" else "cell($title)"
-        }
+        override fun toString() = if (isHeader) "headerCell($title)" else "cell($title)"
     }
 
     data class LinkCellViewModel(val link: LinkViewModel, override val isHeader: Boolean) : CellViewModel {
-        override fun toString(): String {
-            return if (isHeader) "headerCell($link)" else "cell($link)"
-        }
+        override fun toString() = if (isHeader) "headerCell($link)" else "cell($link)"
     }
 
     data class RowViewModel(val columns: List<CellViewModel>) {
-        override fun toString(): String {
-            return columns.joinToString(separator = ", ", prefix="row { ", postfix = " }") { it.toString() }
-        }
+        override fun toString() =
+            columns.joinToString(separator = ", ", prefix = "row { ", postfix = " }") { it.toString() }
     }
 
     class TableViewInitializerContext(

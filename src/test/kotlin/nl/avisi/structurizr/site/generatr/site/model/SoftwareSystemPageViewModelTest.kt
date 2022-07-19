@@ -16,6 +16,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         Tab.COMPONENT to "/software-system-with-1-name/component",
         Tab.DEPLOYMENT to "/software-system-with-1-name/deployment",
         Tab.DEPENDENCIES to "/software-system-with-1-name/dependencies",
+        Tab.DECISIONS to "/software-system-with-1-name/decisions",
     ).map { (tab, expectedUrl) ->
         DynamicTest.dynamicTest("url - $tab") {
             val generatorContext = generatorContext()
@@ -61,7 +62,8 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
                 Tab.CONTAINER,
                 Tab.COMPONENT,
                 Tab.DEPLOYMENT,
-                Tab.DEPENDENCIES
+                Tab.DEPENDENCIES,
+                Tab.DECISIONS
             )
         assertThat(viewModel.tabs.map { it.link.title })
             .containsExactly(
@@ -70,7 +72,8 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
                 "Container views",
                 "Component views",
                 "Deployment views",
-                "Dependencies"
+                "Dependencies",
+                "Decisions"
             )
     }
 
@@ -150,6 +153,17 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         assertThat(getTab(viewModel, Tab.DEPLOYMENT).visible).isFalse()
         generatorContext.workspace.views.createDeploymentView(softwareSystem, "deployment", "description")
         assertThat(getTab(viewModel, Tab.DEPLOYMENT).visible).isTrue()
+    }
+
+    @Test
+    fun `decisions views tab only visible when decisions available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
+        softwareSystem.documentation.addDecision(createDecision("1", "Proposed"))
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isTrue()
     }
 
     private fun getTab(viewModel: SoftwareSystemPageViewModel, tab: Tab) =

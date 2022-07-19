@@ -9,7 +9,7 @@ open class SoftwareSystemPageViewModel(
     private val softwareSystem: SoftwareSystem,
     tab: Tab
 ) : PageViewModel(generatorContext) {
-    enum class Tab { HOME, SYSTEM_CONTEXT, CONTAINER, COMPONENT, DEPLOYMENT, DEPENDENCIES }
+    enum class Tab { HOME, SYSTEM_CONTEXT, CONTAINER, COMPONENT, DEPLOYMENT, DEPENDENCIES, DECISIONS }
 
     inner class TabViewModel(val tab: Tab) {
         val link = LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab))
@@ -22,6 +22,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.COMPONENT -> "Component views"
                 Tab.DEPLOYMENT -> "Deployment views"
                 Tab.DEPENDENCIES -> "Dependencies"
+                Tab.DECISIONS -> "Decisions"
             }
 
         val visible
@@ -32,6 +33,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.CONTAINER -> generatorContext.workspace.views.containerViews.any { it.softwareSystem == softwareSystem }
                 Tab.COMPONENT -> generatorContext.workspace.views.componentViews.any { it.softwareSystem == softwareSystem }
                 Tab.DEPLOYMENT -> generatorContext.workspace.views.deploymentViews.any { it.softwareSystem == softwareSystem }
+                Tab.DECISIONS -> softwareSystem.documentation.decisions.isNotEmpty()
             }
     }
 
@@ -45,6 +47,7 @@ open class SoftwareSystemPageViewModel(
         TabViewModel(Tab.COMPONENT),
         TabViewModel(Tab.DEPLOYMENT),
         TabViewModel(Tab.DEPENDENCIES),
+        TabViewModel(Tab.DECISIONS),
     )
 
     val description: String = softwareSystem.description
@@ -59,6 +62,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.COMPONENT -> "$home/component"
                 Tab.DEPLOYMENT -> "$home/deployment"
                 Tab.DEPENDENCIES -> "$home/dependencies"
+                Tab.DECISIONS -> "$home/decisions"
             }
         }
     }

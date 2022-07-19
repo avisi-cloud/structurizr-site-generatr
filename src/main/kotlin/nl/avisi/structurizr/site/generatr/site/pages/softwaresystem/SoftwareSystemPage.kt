@@ -9,14 +9,6 @@ import nl.avisi.structurizr.site.generatr.site.components.tab
 import nl.avisi.structurizr.site.generatr.site.components.tabs
 import nl.avisi.structurizr.site.generatr.site.context.*
 
-fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext) {
-    softwareSystemPage(context) {
-        when (context) {
-            is SoftwareSystemDecisionsPageContext -> decisionListFragment(context)
-        }
-    }
-}
-
 fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext, block: DIV.() -> Unit) {
     page(context) {
         h1(classes = "title mt-3") { +context.softwareSystem.name }
