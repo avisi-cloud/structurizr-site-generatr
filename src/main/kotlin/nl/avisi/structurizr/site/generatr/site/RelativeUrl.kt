@@ -1,7 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import java.nio.file.Path
-import kotlin.io.path.Path
 import kotlin.io.path.relativeTo
 
 fun String.asUrlRelativeTo(otherUrl: String) =
