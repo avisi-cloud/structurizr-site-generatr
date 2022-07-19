@@ -64,7 +64,6 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
     val contexts = sequence {
         context.workspace.model.internalSoftwareSystems.forEach { softwareSystem ->
             yield(SoftwareSystemDecisionsPageContext(context, softwareSystem))
-            yield(SoftwareSystemDependenciesPageContext(context, softwareSystem))
 
             softwareSystem.documentation.decisions.forEach {
                 yield(SoftwareSystemDecisionPageContext(context, softwareSystem, it))
@@ -93,6 +92,7 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
         writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemComponentPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it))
     }
 }
 
@@ -111,6 +111,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                     is SoftwareSystemContainerPageViewModel -> softwareSystemContainerPage(viewModel)
                     is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
                     is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
+                    is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
                     is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
                     is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
                     is WorkspaceDocumentationSectionPageViewModel -> workspaceDocumentationSectionPage(viewModel)

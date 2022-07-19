@@ -13,7 +13,6 @@ fun HTML.softwareSystemPage(context: AbstractSoftwareSystemPageContext) {
     softwareSystemPage(context) {
         when (context) {
             is SoftwareSystemDecisionsPageContext -> decisionListFragment(context)
-            is SoftwareSystemDependenciesPageContext -> dependenciesFragment(context)
         }
     }
 }

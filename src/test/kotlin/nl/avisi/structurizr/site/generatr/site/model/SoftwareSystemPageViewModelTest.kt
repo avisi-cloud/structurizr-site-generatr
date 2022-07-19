@@ -15,6 +15,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         Tab.CONTAINER to "/software-system-with-1-name/container",
         Tab.COMPONENT to "/software-system-with-1-name/component",
         Tab.DEPLOYMENT to "/software-system-with-1-name/deployment",
+        Tab.DEPENDENCIES to "/software-system-with-1-name/dependencies",
     ).map { (tab, expectedUrl) ->
         DynamicTest.dynamicTest("url - $tab") {
             val generatorContext = generatorContext()
@@ -54,9 +55,23 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(viewModel.tabs.map { it.tab })
-            .containsExactly(Tab.HOME, Tab.SYSTEM_CONTEXT, Tab.CONTAINER, Tab.COMPONENT, Tab.DEPLOYMENT)
+            .containsExactly(
+                Tab.HOME,
+                Tab.SYSTEM_CONTEXT,
+                Tab.CONTAINER,
+                Tab.COMPONENT,
+                Tab.DEPLOYMENT,
+                Tab.DEPENDENCIES
+            )
         assertThat(viewModel.tabs.map { it.link.title })
-            .containsExactly("Info", "Context views", "Container views", "Component views", "Deployment views")
+            .containsExactly(
+                "Info",
+                "Context views",
+                "Container views",
+                "Component views",
+                "Deployment views",
+                "Dependencies"
+            )
     }
 
     @TestFactory
@@ -81,6 +96,15 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.HOME).visible).isTrue()
+    }
+
+    @Test
+    fun `dependencies tab is visible`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.DEPENDENCIES).visible).isTrue()
     }
 
     @Test

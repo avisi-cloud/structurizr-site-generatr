@@ -5,9 +5,23 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
         val isHeader: Boolean
     }
 
-    data class TextCellViewModel(val title: String, override val isHeader: Boolean) : CellViewModel
-    data class LinkCellViewModel(val link: LinkViewModel, override val isHeader: Boolean) : CellViewModel
-    data class RowViewModel(val columns: List<CellViewModel>)
+    data class TextCellViewModel(val title: String, override val isHeader: Boolean) : CellViewModel {
+        override fun toString(): String {
+            return if (isHeader) "headerCell($title)" else "cell($title)"
+        }
+    }
+
+    data class LinkCellViewModel(val link: LinkViewModel, override val isHeader: Boolean) : CellViewModel {
+        override fun toString(): String {
+            return if (isHeader) "headerCell($link)" else "cell($link)"
+        }
+    }
+
+    data class RowViewModel(val columns: List<CellViewModel>) {
+        override fun toString(): String {
+            return columns.joinToString(separator = ", ", prefix="row { ", postfix = " }") { it.toString() }
+        }
+    }
 
     class TableViewInitializerContext(
         private val headerRows: MutableList<RowViewModel>,
@@ -28,6 +42,25 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
         fun cell(title: String): TextCellViewModel = TextCellViewModel(title, false)
         fun cellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
             LinkCellViewModel(LinkViewModel(pageViewModel, title, href), false)
+    }
+
+    override fun toString(): String {
+        val builder = StringBuilder()
+        builder.appendLine("header {")
+        headerRows.forEach {
+            builder.append("  ")
+            builder.append(it)
+            builder.appendLine()
+        }
+        builder.appendLine("}")
+        builder.appendLine("body {")
+        bodyRows.forEach {
+            builder.append("  ")
+            builder.append(it)
+            builder.appendLine()
+        }
+        builder.appendLine("}")
+        return builder.toString()
     }
 
     companion object {
