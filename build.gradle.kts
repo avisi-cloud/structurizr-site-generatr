@@ -30,7 +30,7 @@ dependencies {
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
 
     implementation("org.eclipse.jetty:jetty-server:11.0.11")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.11")
