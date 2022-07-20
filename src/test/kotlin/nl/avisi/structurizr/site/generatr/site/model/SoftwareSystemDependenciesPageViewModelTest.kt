@@ -87,6 +87,27 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
             .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
     }
 
+    @Test
+    fun `sort by source system name case insensitive`() {
+        val system = generatorContext.workspace.model.addSoftwareSystem("SOftware system 3")
+        system.uses(softwareSystem1, "Uses", "REST")
+        softwareSystem1.uses(softwareSystem2, "Uses REST", "REST")
+        softwareSystem2.uses(softwareSystem1, "Uses SOAP", "SOAP")
+
+        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+        assertThat(
+            viewModel.dependenciesTable.bodyRows
+                .map {
+                    when (val source = it.columns[0]) {
+                        is TableViewModel.TextCellViewModel -> source.title
+                        is TableViewModel.LinkCellViewModel -> source.link.title
+                    }
+                }
+        ).containsExactly(
+            "Software system 1", "Software system 2", "SOftware system 3"
+        )
+    }
+
     private fun TableViewModel.TableViewInitializerContext.dependenciesTableHeader() {
         headerRow(
             headerCell("Source"),

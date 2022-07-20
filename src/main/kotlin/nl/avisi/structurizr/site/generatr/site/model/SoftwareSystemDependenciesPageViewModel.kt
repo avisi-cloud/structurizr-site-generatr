@@ -21,7 +21,7 @@ class SoftwareSystemDependenciesPageViewModel(
             .filter { it.destination == softwareSystem }
             .plus(softwareSystem.relationships)
             .filter { it.source is SoftwareSystem && it.destination is SoftwareSystem }
-            .sortedBy { it.source.name }
+            .sortedBy { it.source.name.lowercase() }
 
     private fun TableViewModel.TableViewInitializerContext.header() {
         headerRow(
