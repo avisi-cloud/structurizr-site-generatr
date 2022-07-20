@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.*
+import com.structurizr.model.Location
 import kotlin.test.Test
 
 class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
@@ -72,6 +73,18 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
 
         assertThat { SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1) }
             .isSuccess()
+    }
+
+    @Test
+    fun `dependencies from and to external systems`() {
+        val externalSystem = generatorContext.workspace.model
+            .addSoftwareSystem(Location.External, "External system", "")
+        externalSystem.uses(softwareSystem1, "Uses", "REST")
+        softwareSystem1.uses(externalSystem, "Uses", "REST")
+
+        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+        assertThat(viewModel.dependenciesTable.bodyRows[0].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
     }
 
     private fun TableViewModel.TableViewInitializerContext.dependenciesTableHeader() {

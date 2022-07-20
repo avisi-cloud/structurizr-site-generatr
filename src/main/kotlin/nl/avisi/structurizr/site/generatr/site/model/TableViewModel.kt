@@ -1,12 +1,16 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List<RowViewModel>) {
-    interface CellViewModel {
+    sealed interface CellViewModel {
         val isHeader: Boolean
     }
 
-    data class TextCellViewModel(val title: String, override val isHeader: Boolean) : CellViewModel {
-        override fun toString() = if (isHeader) "headerCell($title)" else "cell($title)"
+    data class TextCellViewModel(val title: String, override val isHeader: Boolean, val greyText: Boolean = false) :
+        CellViewModel {
+        override fun toString() = if (isHeader)
+            "headerCell($title, greyText=$greyText)"
+        else
+            "cell($title, greyText=$greyText)"
     }
 
     data class LinkCellViewModel(val link: LinkViewModel, override val isHeader: Boolean) : CellViewModel {
@@ -30,7 +34,7 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
             bodyRows.add(RowViewModel(cells.toList()))
         }
 
-        fun headerCell(title: String) = TextCellViewModel(title, true)
+        fun headerCell(title: String, greyText: Boolean = false) = TextCellViewModel(title, true, greyText)
         fun headerCellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
             LinkCellViewModel(LinkViewModel(pageViewModel, title, href), true)
 

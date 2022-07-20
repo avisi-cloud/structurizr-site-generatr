@@ -34,19 +34,16 @@ class SoftwareSystemDependenciesPageViewModel(
 
     private fun TableViewModel.TableViewInitializerContext.bodyRow(relationship: Relationship) {
         bodyRow(
-            softwareSystemCell(relationship.source as SoftwareSystem),
+            softwareSystemDependencyCell(relationship.source as SoftwareSystem),
             cell(relationship.description),
-            softwareSystemCell(relationship.destination as SoftwareSystem),
+            softwareSystemDependencyCell(relationship.destination as SoftwareSystem),
             cell(relationship.technology)
         )
     }
 
-    private fun TableViewModel.TableViewInitializerContext.softwareSystemCell(system: SoftwareSystem) =
+    private fun TableViewModel.TableViewInitializerContext.softwareSystemDependencyCell(system: SoftwareSystem) =
         if (system == softwareSystem)
             headerCell(system.name)
         else
-            headerCellWithLink(
-                this@SoftwareSystemDependenciesPageViewModel, system.name,
-                url(system, Tab.HOME)
-            )
+            softwareSystemCell(this@SoftwareSystemDependenciesPageViewModel, system)
 }

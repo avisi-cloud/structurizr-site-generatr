@@ -11,6 +11,8 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     model {
         customer = person "Personal Banking Customer" "A customer of the bank, with personal bank accounts." "Customer"
 
+        acquirer = softwaresystem "Acquirer" "Facilitates PIN transactions for merchants."
+
         enterprise "Big Bank plc" {
             supportStaff = person "Customer Service Staff" "Customer service staff within the bank." "Bank Staff"
             backoffice = person "Back Office Staff" "Administration and support staff within the bank." "Bank Staff"
@@ -47,6 +49,8 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
         customer -> atm "Withdraws cash using"
         atm -> mainframe "Uses"
         backoffice -> mainframe "Uses"
+
+        acquirer -> mainframe "Peforms clearing and settlement"
 
         # relationships to/from containers
         customer -> webApplication "Visits bigbank.com/ib using" "HTTPS"

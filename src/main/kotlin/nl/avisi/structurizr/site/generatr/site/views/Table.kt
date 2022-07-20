@@ -37,10 +37,16 @@ private fun TBODY.row(viewModel: TableViewModel.RowViewModel) {
 private fun TR.cell(viewModel: TableViewModel.CellViewModel) {
     when (viewModel) {
         is TableViewModel.TextCellViewModel ->
-            if (viewModel.isHeader) th { +viewModel.title }
-            else td { +viewModel.title }
+            if (viewModel.isHeader && viewModel.greyText)
+                th { span(classes = "has-text-grey") { +viewModel.title } }
+            else if (viewModel.isHeader)
+                th { +viewModel.title }
+            else
+                td { +viewModel.title }
         is TableViewModel.LinkCellViewModel ->
-            if (viewModel.isHeader) th { link(viewModel.link) }
-            else td { link(viewModel.link) }
+            if (viewModel.isHeader)
+                th { link(viewModel.link) }
+            else
+                td { link(viewModel.link) }
     }
 }

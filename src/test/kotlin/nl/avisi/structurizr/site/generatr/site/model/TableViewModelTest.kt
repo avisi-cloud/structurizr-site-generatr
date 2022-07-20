@@ -28,6 +28,21 @@ class TableViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `header cell with grey text`() {
+        val viewModel = TableViewModel.create {
+            headerRow(headerCell("1", greyText = true))
+        }
+
+        assertThat(viewModel.headerRows).containsAll(
+            TableViewModel.RowViewModel(
+                listOf(
+                    TableViewModel.TextCellViewModel("1", isHeader = true, greyText = true),
+                )
+            )
+        )
+    }
+
+    @Test
     fun `body rows`() {
         val viewModel = TableViewModel.create {
             bodyRow(cell("1"), cell("2"), cell("3"))

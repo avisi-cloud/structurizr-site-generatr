@@ -13,11 +13,7 @@ class SoftwareSystemsPageViewModel(generatorContext: GeneratorContext) : PageVie
             .sortedBy { it.name.lowercase() }
             .forEach {
                 bodyRow(
-                    headerCellWithLink(
-                        this@SoftwareSystemsPageViewModel,
-                        it.name,
-                        SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME)
-                    ),
+                    softwareSystemCell(this@SoftwareSystemsPageViewModel, it),
                     cell(it.description)
                 )
             }
