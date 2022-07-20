@@ -1,0 +1,49 @@
+package nl.avisi.structurizr.site.generatr.site.model
+
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import java.time.LocalDate
+import java.time.Month
+import kotlin.test.Test
+
+class DecisionsTableViewModelTest : ViewModelTest() {
+
+    @Test
+    fun `no decisions available`() {
+        assertThat(pageViewModel().createDecisionsTableViewModel(emptySet()) { "href" })
+            .isEqualTo(
+                TableViewModel.create {
+                    decisionsTableHeaderRow()
+                }
+            )
+    }
+
+    @Test
+    fun `many decisions available`() {
+        val decision1 = createDecision("1", "Accepted", LocalDate.of(2022, Month.JANUARY, 1))
+        val decision2 = createDecision("2", "Proposed", LocalDate.of(2022, Month.JANUARY, 2))
+
+        val pageViewModel = pageViewModel()
+        assertThat(pageViewModel.createDecisionsTableViewModel(setOf(decision1, decision2)) { it.id }).isEqualTo(
+            TableViewModel.create {
+                decisionsTableHeaderRow()
+                bodyRow(
+                    headerCell("1"),
+                    cell("01-01-2022"),
+                    cell("Accepted"),
+                    cellWithLink(pageViewModel, "Decision 1", decision1.id)
+                )
+                bodyRow(
+                    headerCell("2"),
+                    cell("02-01-2022"),
+                    cell("Proposed"),
+                    cellWithLink(pageViewModel, "Decision 2", decision2.id)
+                )
+            }
+        )
+    }
+
+    private fun TableViewModel.TableViewInitializerContext.decisionsTableHeaderRow() {
+        headerRow(headerCell("ID"), headerCell("Date"), headerCell("Status"), headerCell("Title"))
+    }
+}

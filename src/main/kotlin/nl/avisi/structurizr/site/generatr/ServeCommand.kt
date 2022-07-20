@@ -60,7 +60,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
             "0.0.0",
             workspace,
             assetsDir?.let { File(it) },
-            exportDir,
+            File(siteDir),
             listOf("master"),
             "master"
         )

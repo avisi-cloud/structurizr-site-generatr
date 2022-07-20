@@ -3,13 +3,11 @@ package nl.avisi.structurizr.site.generatr.site
 import com.structurizr.Workspace
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
-import nl.avisi.structurizr.site.generatr.homeSection
 import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
-import nl.avisi.structurizr.site.generatr.site.context.*
-import nl.avisi.structurizr.site.generatr.site.pages.*
-import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemDecisionPage
-import nl.avisi.structurizr.site.generatr.site.pages.softwaresystem.softwareSystemPage
+import nl.avisi.structurizr.site.generatr.site.model.*
+import nl.avisi.structurizr.site.generatr.site.views.*
 import java.io.File
+import java.nio.file.Path
 
 fun copySiteWideAssets(exportDir: File) {
     val css = object {}.javaClass.getResource("/assets/css/style.css")?.readText()
@@ -59,52 +57,61 @@ private fun copyAssets(assetsDir: File, exportDir: File) {
 }
 
 private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
-    val contexts = sequence {
-        context.workspace.model.internalSoftwareSystems.forEach { softwareSystem ->
-            yield(SoftwareSystemInfoPageContext(context, softwareSystem))
-            yield(SoftwareSystemContextPageContext(context, softwareSystem))
-            yield(SoftwareSystemContainerPageContext(context, softwareSystem))
-            yield(SoftwareSystemComponentPageContext(context, softwareSystem))
-            yield(SoftwareSystemDeploymentPageContext(context, softwareSystem))
-            yield(SoftwareSystemDecisionsPageContext(context, softwareSystem))
-            yield(SoftwareSystemDependenciesPageContext(context, softwareSystem))
+    val branchDir = File(exportDir, context.currentBranch)
+    writeHtmlFile(branchDir, HomePageViewModel(context))
+    writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context))
+    writeHtmlFile(branchDir, SoftwareSystemsPageViewModel(context))
 
-            softwareSystem.documentation.decisions.forEach {
-                yield(SoftwareSystemDecisionPageContext(context, softwareSystem, it))
-            }
+    context.workspace.documentation.sections
+        .filter { it.order != 1 }
+        .forEach { writeHtmlFile(branchDir, WorkspaceDocumentationSectionPageViewModel(context, it)) }
+    context.workspace.documentation.decisions
+        .forEach { writeHtmlFile(branchDir, WorkspaceDecisionPageViewModel(context, it)) }
+
+    context.workspace.model.internalSoftwareSystems.forEach {
+        writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemComponentPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemDecisionsPageViewModel(context, it))
+
+        it.documentation.decisions.forEach { decision ->
+            writeHtmlFile(branchDir, SoftwareSystemDecisionPageViewModel(context, it, decision))
         }
-        context.workspace.documentation.sections
-            .filter { it != context.workspace.documentation.homeSection }
-            .forEach { yield(DocumentationSectionPageContext(context, it)) }
-        yield(HomePageContext(context, context.workspace.documentation.homeSection))
-        yield(WorkspaceDecisionsPageContext(context))
-        context.workspace.documentation.decisions.forEach { decision ->
-            yield(WorkspaceDecisionPageContext(context, decision))
-        }
-        yield(SoftwareSystemsOverviewPageContext(context))
     }
-
-    contexts.forEach { writeHtmlFile(exportDir, it) }
 }
 
-fun writeHtmlFile(exportDir: File, context: AbstractPageContext) {
-    val htmlFile = File(exportDir, context.htmlFile)
+private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
+    val htmlFile = File(exportDir, Path.of(viewModel.url, "index.html").toString())
     htmlFile.parentFile.mkdirs()
     htmlFile.writeText(
         buildString {
             appendLine("<!doctype html>")
             appendHTML().html {
-                attributes["class"] = "has-background-light"
-                when (context) {
-                    is HomePageContext -> indexPage(context)
-                    is SoftwareSystemDecisionPageContext -> softwareSystemDecisionPage(context)
-                    is AbstractSoftwareSystemPageContext -> softwareSystemPage(context)
-                    is DocumentationSectionPageContext -> documentationSectionPage(context)
-                    is SoftwareSystemsOverviewPageContext -> softwareSystemsOverviewPage(context)
-                    is WorkspaceDecisionPageContext -> workspaceDecisionPage(context)
-                    is WorkspaceDecisionsPageContext -> workspaceDecisionsPage(context)
+                when (viewModel) {
+                    is HomePageViewModel -> homePage(viewModel)
+                    is SoftwareSystemsPageViewModel -> softwareSystemsPage(viewModel)
+                    is SoftwareSystemHomePageViewModel -> softwareSystemHomePage(viewModel)
+                    is SoftwareSystemContextPageViewModel -> softwareSystemContextPage(viewModel)
+                    is SoftwareSystemContainerPageViewModel -> softwareSystemContainerPage(viewModel)
+                    is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
+                    is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
+                    is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
+                    is SoftwareSystemDecisionPageViewModel -> softwareSystemDecisionPage(viewModel)
+                    is SoftwareSystemDecisionsPageViewModel -> softwareSystemDecisionsPage(viewModel)
+                    is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
+                    is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
+                    is WorkspaceDocumentationSectionPageViewModel -> workspaceDocumentationSectionPage(viewModel)
                 }
             }
         }
     )
+}
+
+fun HTML.softwareSystemDecisionPage(viewModel: SoftwareSystemDecisionPageViewModel) {
+    softwareSystemPage(viewModel) {
+        markdown(viewModel, viewModel.markdown)
+    }
 }
