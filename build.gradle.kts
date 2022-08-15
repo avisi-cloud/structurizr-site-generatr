@@ -23,7 +23,7 @@ dependencies {
 
     implementation("com.structurizr:structurizr-core:1.13.0")
     implementation("com.structurizr:structurizr-dsl:1.19.1")
-    implementation("com.structurizr:structurizr-export:1.5.0")
+    implementation("com.structurizr:structurizr-export:1.6.0")
 
     @Suppress("GradlePackageUpdate")
     implementation("net.sourceforge.plantuml:plantuml:1.2022.6")
