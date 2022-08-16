@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site
 import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.plantuml.C4PlantUMLExporter
+import com.structurizr.export.plantuml.PlantUMLDiagram
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
@@ -58,7 +59,7 @@ private fun Diagram.withCachedIncludes(): Diagram {
         "!include $cachedInclude"
     }
 
-    return Diagram(view, def)
+    return PlantUMLDiagram(view, def)
 }
 
 private object IncludeCache {
