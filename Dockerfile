@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:18-jre
 
 USER root
 RUN apt-get update \
