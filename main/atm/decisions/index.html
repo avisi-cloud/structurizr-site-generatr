@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="has-background-light" lang="en">
+<html lang="en" class="has-background-light">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
     <link href="../../../css/style.css" rel="stylesheet">
-    <title>Big Bank plc</title>
+    <title>ATM | Big Bank plc</title>
   </head>
   <body>
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
@@ -13,9 +13,9 @@
       <div class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-text-grey-light">main</a>
-            <div class="navbar-dropdown is-right"><a href="../.." class="navbar-item">main</a>
+            <div class="navbar-dropdown is-right"><a href="../../../main" class="navbar-item">main</a>
               <hr class="navbar-divider">
-              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.0.6</span></div>
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.0.7</span></div>
             </div>
           </div>
         </div>
@@ -29,10 +29,7 @@
         </ul>
         <p class="menu-label">Software systems</p>
         <ul class="menu-list">
-          <li><a href="../dependencies" class="is-active">ATM</a></li>
-          <li><a href="../../e-mail-system/dependencies" class="">E-mail System</a></li>
-          <li><a href="../../internet-banking-system/context" class="">Internet Banking System</a></li>
-          <li><a href="../../mainframe-banking-system/dependencies" class="">Mainframe Banking System</a></li>
+          <li><a href=".." class="is-active">ATM</a><a href="../../e-mail-system" class="">E-mail System</a><a href="../../internet-banking-system" class="">Internet Banking System</a><a href="../../mainframe-banking-system" class="">Mainframe Banking System</a></li>
         </ul>
       </aside>
       <div class="container is-fluid has-background-white">
@@ -40,17 +37,16 @@
         <h2 class="subtitle">Allows customers to withdraw cash.</h2>
         <div class="tabs mt-3">
           <ul>
-            <li><a href="../dependencies">Dependencies</a></li>
-            <li><a href="..">Info</a></li>
+            <li><a href=".." class="">Info</a></li>
+            <li><a href="../dependencies" class="">Dependencies</a></li>
           </ul>
         </div>
         <div class="content p-3">
-          <h1>Architecture decision records</h1>
-          <table class="table">
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Datum</th>
+                <th>Date</th>
                 <th>Status</th>
                 <th>Title</th>
               </tr>
