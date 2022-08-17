@@ -12,5 +12,5 @@ data class LinkViewModel(
     val active get() = if (exact) isHrefOfContainingPage else isChildHrefOfContainingPage
 
     private val isHrefOfContainingPage get() = href == pageViewModel.url
-    private val isChildHrefOfContainingPage get() = pageViewModel.url.startsWith(href)
+    private val isChildHrefOfContainingPage get() = pageViewModel.url == href || pageViewModel.url.startsWith("$href/")
 }

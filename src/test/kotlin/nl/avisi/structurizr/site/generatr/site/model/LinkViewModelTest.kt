@@ -41,6 +41,14 @@ class LinkViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `non-exact links are only active when page url is a subdirectory of the link`() {
+        val expectInactivePartialMatch = LinkViewModel(pageViewModel("/page-two"), "Some page", "/page", false)
+        val expectActivePartialMatch = LinkViewModel(pageViewModel("/page/two"), "Some page", "/page", false)
+        assertThat(expectInactivePartialMatch.active).isFalse()
+        assertThat(expectActivePartialMatch.active).isTrue()
+    }
+
+    @Test
     fun `relative href`() {
         val pageViewModel = pageViewModel("/some-page/some-subpage")
         val viewModel = LinkViewModel(pageViewModel, "Some other page", "/some-other-page")
