@@ -12,8 +12,7 @@ import java.nio.file.Path
 fun copySiteWideAssets(exportDir: File) {
     val css = object {}.javaClass.getResource("/assets/css/style.css")?.readText()
         ?: throw IllegalStateException("CSS file not found on classpath")
-    val cssDir = File(exportDir, "css").apply { mkdirs() }
-    val cssFile = File(cssDir, "style.css")
+    val cssFile = File(exportDir, "style.css")
 
     cssFile.writeText(css)
 }
