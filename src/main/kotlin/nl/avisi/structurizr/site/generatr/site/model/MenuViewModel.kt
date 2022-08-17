@@ -20,7 +20,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
 
     val softwareSystemItems = generatorContext.workspace.model.softwareSystems
         .filter { it.location == Location.Internal }
-        .sortedBy { it.name }
+        .sortedBy { it.name.lowercase() }
         .map {
             createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
         }

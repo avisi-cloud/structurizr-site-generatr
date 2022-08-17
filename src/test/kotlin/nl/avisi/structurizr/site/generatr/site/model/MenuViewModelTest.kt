@@ -66,10 +66,10 @@ class MenuViewModelTest : ViewModelTest() {
 
     @ParameterizedTest
     @ValueSource(strings = ["main", "branch-2"])
-    fun `links to software system pages`(currentBranch: String) {
+    fun `links to software system pages sorted alphabetically case insensitive`(currentBranch: String) {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
         val system2 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 2", "")
-        val system1 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
+        val system1 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "system 1", "")
         generatorContext.workspace.model.addSoftwareSystem(Location.External, "External", "")
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
@@ -77,7 +77,7 @@ class MenuViewModelTest : ViewModelTest() {
         assertThat(viewModel.softwareSystemItems).containsExactly(
             LinkViewModel(
                 pageViewModel,
-                "System 1",
+                "system 1",
                 SoftwareSystemPageViewModel.url(system1, SoftwareSystemPageViewModel.Tab.HOME),
                 false
             ),
