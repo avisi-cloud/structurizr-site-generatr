@@ -38,6 +38,8 @@ docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
 docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> --help
 ```
 
+Replace `<version>` with the version you want to use.
+
 ### Verify image with cosign
 
 ```
@@ -48,6 +50,8 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzezKl0vAWSHosQ0JLEsDzNBd2nGm
 -----END PUBLIC KEY-----
 cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
 ```
+
+Replace `<version>` with the version you want to verify.
 
 ## Example usage
 
