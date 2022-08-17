@@ -7,7 +7,7 @@ fun PageViewModel.createDecisionsTableViewModel(decisions: Collection<Decision>,
     TableViewModel.create {
         headerRow(headerCell("ID"), headerCell("Date"), headerCell("Status"), headerCell("Title"))
         decisions
-            .sortedBy { it.id }
+            .sortedBy { it.id.toInt() }
             .forEach {
                 bodyRow(
                     headerCell(it.id),
