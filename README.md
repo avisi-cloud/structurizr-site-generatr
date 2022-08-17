@@ -34,8 +34,8 @@ structurizr-site-generatr --help
 You can also use the Docker image:
 
 ```shell
-docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.6
-docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.6 --help
+docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
+docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> --help
 ```
 
 ### Verify image with cosign
@@ -46,7 +46,7 @@ cat cosign.pub
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzezKl0vAWSHosQ0JLEsDzNBd2nGm
 08KqX+imYqq2avlbH+ehprJFMqKK0/I/bY0q5W9hQC8SLzTRJ9Q5dB9UiQ==
 -----END PUBLIC KEY-----
-cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.6
+cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
 ```
 
 ## Example usage
