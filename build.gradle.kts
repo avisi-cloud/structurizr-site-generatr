@@ -26,7 +26,7 @@ dependencies {
     implementation("com.structurizr:structurizr-export:1.6.0")
 
     @Suppress("GradlePackageUpdate")
-    implementation("net.sourceforge.plantuml:plantuml:1.2022.6")
+    implementation("net.sourceforge.plantuml:plantuml:1.2022.7")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
 
