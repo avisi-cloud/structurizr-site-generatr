@@ -91,7 +91,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         }
 
     private fun startWatchService(): WatchService {
-        val path = File(workspaceFile).parentFile.toPath()
+        val path = File(workspaceFile).absoluteFile.parentFile.toPath()
         val watchService = FileSystems.getDefault().newWatchService()
 
         path.watch(watchService)
