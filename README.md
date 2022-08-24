@@ -11,6 +11,8 @@ the [Big Bank plc example](https://structurizr.com/dsl?example=big-bank-plc) fro
 
 * Generate a static HTML site, based on a Structurizr DSL workspace.
 * Generates diagrams in SVG, PNG and PlantUML format, which can be viewed and downloaded from the generated site.
+* Start a development server which generates a site, serves it and updates the site automatically whenever a file that's
+  part of the Structurizr workspace changes.
 * Include workspace-level documentation (in Markdown format) in the generated site.
 * Include system-level ADR's in the generated site.
 * Include static assets in the generated site, which can be used in ADR's and workspace-level documentation.
