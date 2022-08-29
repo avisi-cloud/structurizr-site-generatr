@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
+import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
 import com.structurizr.documentation.Decision
@@ -9,6 +10,7 @@ import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import com.structurizr.model.Location
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -107,6 +109,18 @@ class MenuViewModelTest : ViewModelTest() {
             )
         )
             .let { assertThat(it.softwareSystemItems[0].active).isTrue() }
+    }
+
+    @Test
+    fun `show menu entries for software systems with an unspecified location`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.model.addSoftwareSystem(Location.Unspecified, "System 1", "")
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemItems).hasSize(1)
+                assertThat(it.softwareSystemItems[0].title).isEqualTo("System 1")
+            }
     }
 
     private fun createPageViewModel(generatorContext: GeneratorContext, url: String = "/master/page"): PageViewModel {
