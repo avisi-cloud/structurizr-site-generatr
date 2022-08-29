@@ -12,5 +12,5 @@ fun parseStructurizrDslWorkspace(workspaceFile: File) =
         .workspace
         ?: throw IllegalStateException("Workspace could not be parsed")
 
-val Model.internalSoftwareSystems: List<SoftwareSystem>
-    get() = softwareSystems.filter { it.location == Location.Internal || it.location == Location.Unspecified }
+val Model.includedSoftwareSystems: List<SoftwareSystem>
+    get() = softwareSystems.filter { it.location != Location.External }

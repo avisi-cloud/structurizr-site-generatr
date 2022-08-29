@@ -1,6 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
+import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class MenuViewModel(generatorContext: GeneratorContext, private val pageViewModel: PageViewModel) {
@@ -18,7 +18,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
             .forEach { yield(createMenuItem(it.title, WorkspaceDocumentationSectionPageViewModel.url(it))) }
     }.toList()
 
-    val softwareSystemItems = generatorContext.workspace.model.internalSoftwareSystems
+    val softwareSystemItems = generatorContext.workspace.model.includedSoftwareSystems
         .sortedBy { it.name.lowercase() }
         .map {
             createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)

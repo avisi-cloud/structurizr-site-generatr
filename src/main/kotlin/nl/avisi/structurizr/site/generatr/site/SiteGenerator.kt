@@ -3,7 +3,7 @@ package nl.avisi.structurizr.site.generatr.site
 import com.structurizr.Workspace
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
-import nl.avisi.structurizr.site.generatr.internalSoftwareSystems
+import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.views.*
 import java.io.File
@@ -67,7 +67,7 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
     context.workspace.documentation.decisions
         .forEach { writeHtmlFile(branchDir, WorkspaceDecisionPageViewModel(context, it)) }
 
-    context.workspace.model.internalSoftwareSystems.forEach {
+    context.workspace.model.includedSoftwareSystems.forEach {
         writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it))
