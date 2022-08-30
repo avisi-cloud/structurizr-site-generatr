@@ -159,7 +159,7 @@ Generatr container via a [Docker file system volume mount](https://docs.docker.c
 This is achieved by specifying the `-v` parameter with a linux-like **absolute** path to the folder containing
 the .dsl file specified via `-w`. See how `C:\Projects\C4` has become `-v c:/projects/c4:/var/model` in the above example?
 
-#### Generate a wesite from a Git repository
+#### Generate a website from a Git repository
 
 Instead of relying on local .dsl files only, the `generate-site` command can also retrieve input files from a
 Git repository as follows. This is particularly advantageous for demos, documentation, or CI/CD pipelines.
