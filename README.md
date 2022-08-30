@@ -30,7 +30,8 @@ To get started with the Structurizr Site Generatr, you can either:
 
 ### Installation
 
-As this approach relies on [Homebrew](https://brew.sh/), ensure this is already installed. For Windows and other operating systems not supported by Homebrew, please use the [Docker approach](#docker) instead.
+As this approach relies on [Homebrew](https://brew.sh/), ensure this is already installed. For Windows and other operating
+systems not supported by Homebrew, please use the [Docker approach](#docker) instead.
 
 To install Structurizr Site Generatr execute the following commands in your terminal:
 
@@ -41,31 +42,37 @@ brew install structurizr-site-generatr
 structurizr-site-generatr --help
 ```
 
-Periodically, you would have to update your local installation to take advantage of any new [Structurizr Site Generatr releases](https://github.com/avisi-cloud/structurizr-site-generatr/releases).
+Periodically, you would have to update your local installation to take advantage of any new
+[Structurizr Site Generatr releases](https://github.com/avisi-cloud/structurizr-site-generatr/releases).
 
 ### Docker
 
-Though local installation is recommended for development where possible, Structurizr Site Generatr is also a packaged as a Docker image. Therefore to use this approach, ensure [Docker](https://www.docker.com/) is already installed. Additionally, for Windows 10+ users, you may want to take advantage of [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) (Windows Subsystem for Linux). Both Docker and WSL2 are topics too vast to repeat here, so you are invited to study these as prerequisite learning for this approach.
+Though local installation is recommended for development where possible, Structurizr Site Generatr is also a packaged
+as a Docker image. Therefore to use this approach, ensure [Docker](https://www.docker.com/) is already installed.
+Additionally, for Windows 10+ users, you may want to take advantage of
+[WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) (Windows Subsystem for Linux). Both Docker and WSL2
+are topics too vast to repeat here, so you are invited to study these as prerequisite learning for this approach.
 
-Then to download our packaged image, consider the [Structurizr Site Generatr releases](https://github.com/avisi-cloud/structurizr-site-generatr/releases) and choose the version you wish to use. Then, in your terminal, execute the following:
+Then to download our packaged image, consider the
+[Structurizr Site Generatr releases](https://github.com/avisi-cloud/structurizr-site-generatr/releases) and choose
+the version you wish to use. Then, in your terminal, execute the following:
 
 ```shell
 docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
 ```
 
-Note: The `<version>` suffix should be replaced with your chosen version number. For example `docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
+Note: The `<version>` suffix should be replaced with your chosen version number. For example
+`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
-<!-- FEATURE: By tagging the latest release with `latest` (see below), this step can be omitted as Docker automatically pulls any image unless cached locally -->
-
-Once downloaded, you can execute Structurizr Site Generatr via a temporary Docker container by executing the following in your terminal:
+Once downloaded, you can execute Structurizr Site Generatr via a temporary Docker container by executing the
+following in your terminal:
 
 ```shell
 docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> --help
 ```
 
-Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example `docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9 --help`.
-
-<!-- FEATURE: By tagging the latest release with `latest`, the version can be omitted. By default Docker will pull the `latest` image, which will automatically pull on new releases -->
+Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
+`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
 #### [Optional] Verify the Structurizr Site Generatr image with [CoSign](https://github.com/sigstore/cosign)
 
@@ -84,16 +91,18 @@ Replace `<version>` with the version you want to verify.
 
 These examples use the [example workspace](docs/example) in this repository.
 
-Once installed, Structurizr Site Generatr is operated via your terminal by issuing commands. Each command is explained here:
+Once installed, Structurizr Site Generatr is operated via your terminal by issuing commands. Each command is
+explained here:
 
 ### Help
 
-To learn about available commands, or parameters for individual commands, call Structurizr Site Generatr with the `--help` operator.
+To learn about available commands, or parameters for individual commands, call Structurizr Site Generatr with the
+`--help` argument.
 
 ```shell
 installed> structurizr-site-generatr --help
 
-   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9 --help
+   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> --help
 
 Usage: structurizr-site-generatr options_list
 Subcommands:
@@ -105,6 +114,9 @@ Options:
     --help, -h -> Usage info
 ```
 
+Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
+`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
+
 ### Version
 
 To query the version of Structurizr Site Generatr installed / used.
@@ -112,30 +124,45 @@ To query the version of Structurizr Site Generatr installed / used.
 ```shell
 installed> structurizr-site-generatr version
 
-   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9 version
+   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> version
 
 Structurizr Site Generatr v1.0.9
 ```
 
+Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
+`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
+
 ### Generate a website from a [C4 Workspace](https://github.com/structurizr/dsl)
 
-This is the primary use case of Structurizr Site Generatr -- to generate a website from a [C4 Workspace](https://github.com/structurizr/dsl).
+This is the primary use case of Structurizr Site Generatr -- to generate a website from a
+[C4 Workspace](https://github.com/structurizr/dsl).
 
 ```shell
 installed> structurizr-site-generatr generate-site -w workspace.dsl
 
-   docker> docker run -it --rm -v c:/projects/c4:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9 generate-site -w workspace.dsl
+   docker> docker run -it --rm -v c:/projects/c4:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr:<version> generate-site -w workspace.dsl
 ```
 
-Here, the `--workspace-file` or `-w` parameter specifies the input [C4 Workspace DSL file](https://github.com/structurizr/dsl) to the `generate-site` command. Additional parameters that affect website generation can be reviewed using the `--help` operator.
+Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
+`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
-When using the Docker approach, the local file system must be made available to the temporary Structurizr Site Generatr container via a [Docker file system volume mount](https://docs.docker.com/engine/reference/commandline/run/#mount-volume--v---read-only). This is achieved by specifying the `-v` parameter with a linux-like **absolute** path to the folder containing the .dsl file specified via `-w`. See how `C:\Projects\C4` has become `-v c:/projects/c4:/var/model` in the above example?
+Here, the `--workspace-file` or `-w` parameter specifies the input
+[C4 Workspace DSL file](https://github.com/structurizr/dsl) to the `generate-site` command. Additional
+parameters that affect website generation can be reviewed using the `--help` operator.
 
 By default, the generated website will be placed in `./build`, which is overwritten if it already exisits.
 
+#### For those taking the Docker approach
+
+When using the Docker approach, the local file system must be made available to the temporary Structurizr Site
+Generatr container via a [Docker file system volume mount](https://docs.docker.com/engine/reference/commandline/run/#mount-volume--v---read-only).
+This is achieved by specifying the `-v` parameter with a linux-like **absolute** path to the folder containing
+the .dsl file specified via `-w`. See how `C:\Projects\C4` has become `-v c:/projects/c4:/var/model` in the above example?
+
 #### Generate a wesite from a Git repository
 
-Instead of relying on local .dsl files only, the `generate-site` command can also retrieve input files from a Git repository as follows. This is particularly advantageous for demos, documentation, or CI/CD pipelines.
+Instead of relying on local .dsl files only, the `generate-site` command can also retrieve input files from a
+Git repository as follows. This is particularly advantageous for demos, documentation, or CI/CD pipelines.
 
 ```shell
 structurizr-site-generatr generate-site
@@ -147,15 +174,28 @@ structurizr-site-generatr generate-site
 
 ### Start a development web server around the generated website
 
-To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will both monitor the input .dsl file specified with `-w` and automatically re-generate the website when changes are detected. Additional parameters that affect website generation and the development web server can be reviewed using the `--help` operator.
+To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
+both monitor the input .dsl file specified with `-w` and automatically re-generate the website when changes are
+detected. Additional parameters that affect website generation and the development web server can be reviewed
+using the `--help` operator.
 
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl
 
-   docker> docker run -it --rm -v c:/projects/c4:/var/model -p 8080:8080 ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9 serve -w workspace.dsl
+   docker> docker run -it --rm -v c:/projects/c4:/var/model -p 8080:8080 ghcr.io/avisi-cloud/structurizr-site-generatr:<version> serve -w workspace.dsl
 ```
 
-By defalult, a development web server will be started and accessible at http://localhost:8080/ (if available). However, when using the Docker approach, this development web server is within the temporary Structurizr Site Generatr container. So [Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose) is needed to expose the container's port 8080 to the host (web browser). In the example above, the `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
+Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
+`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
+
+By defalult, a development web server will be started and accessible at http://localhost:8080/ (if available).
+
+#### For those taking the Docker approach
+
+However, when using the Docker approach, this development web server is within the temporary Structurizr Site
+Generatr container. So [Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose)
+is needed to expose the container's port 8080 to the host (web browser). In the example above, the
+`-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
 
 ## Background
 

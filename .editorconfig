@@ -1,0 +1,30 @@
+# EditorConfig is awesome:
+# - https://EditorConfig.org
+# - https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+# - https://blog.logrocket.com/using-prettier-eslint-automate-formatting-fixing-javascript/
+# - https://prettier.io/docs/en/options.html
+
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+# end_of_line = lf | crlf
+# indent_size = 2
+# indent_style = tab
+insert_final_newline = true
+max_line_length = 120  # supported in only some editors; instead use prettier.printWidth
+trim_trailing_whitespace = true
+
+[*.{markdown,md,mdx}]
+indent_style = space
+trim_trailing_whitespace = false
+
+
+[*.{json,yaml,yml,toml}]
+# indent_size = 2
+indent_style = space
+
+[Dockerfile]
+# indent_size = 4
+indent_style = space
