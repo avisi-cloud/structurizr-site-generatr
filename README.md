@@ -174,10 +174,17 @@ structurizr-site-generatr generate-site
 
 ### Start a development web server around the generated website
 
+<!--
+FEATURE raised #42
+
 To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
 both monitor the input .dsl file specified with `-w` and automatically re-generate the website when changes are
-detected. Additional parameters that affect website generation and the development web server can be reviewed
-using the `--help` operator.
+detected.
+-->
+
+To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
+generate a website from the input .dsl specified with `-w` _and_ start a web server on **port 8080** to view it. Additional
+parameters that affect website generation and the development web server can be reviewed using the `--help` operator.
 
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl
