@@ -23,7 +23,7 @@ dependencies {
 
     implementation("com.structurizr:structurizr-core:1.14.1")
     implementation("com.structurizr:structurizr-dsl:1.20.0")
-    implementation("com.structurizr:structurizr-export:1.6.0")
+    implementation("com.structurizr:structurizr-export:1.6.1")
 
     implementation("net.sourceforge.plantuml:plantuml:1.2022.7")
 
