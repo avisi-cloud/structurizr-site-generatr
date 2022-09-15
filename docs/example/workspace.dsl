@@ -22,6 +22,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             atm = softwaresystem "ATM" "Allows customers to withdraw cash." "Existing System"
 
             internetBankingSystem = softwaresystem "Internet Banking System" "Allows customers to view information about their bank accounts, and make payments." {
+                !docs internet-banking-system/docs
                 !adrs internet-banking-system/adr
 
                 singlePageApplication = container "Single-Page Application" "Provides all of the Internet banking functionality to customers via their web browser." "JavaScript and Angular" "Web Browser"
