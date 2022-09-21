@@ -72,6 +72,7 @@ jobs:
           platforms: linux/amd64
           tags: |
             ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:latest
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
