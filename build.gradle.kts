@@ -34,7 +34,7 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-server:11.0.11")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.11")
 
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.1")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.2")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.13")
     runtimeOnly("org.jruby:jruby-core:9.3.8.0")
