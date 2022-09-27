@@ -1,4 +1,4 @@
-FROM eclipse-temurin:18-jre-alpine
+FROM eclipse-temurin:19-jre-alpine
 
 USER root
 RUN apk add --no-cache graphviz
