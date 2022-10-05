@@ -108,9 +108,3 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
         }
     )
 }
-
-fun HTML.softwareSystemDecisionPage(viewModel: SoftwareSystemDecisionPageViewModel) {
-    softwareSystemPage(viewModel) {
-        markdown(viewModel, viewModel.markdown)
-    }
-}
