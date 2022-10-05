@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import com.structurizr.Workspace
 import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
+import com.structurizr.documentation.Section
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import java.time.LocalDate
 import java.time.ZoneId
@@ -33,4 +34,6 @@ abstract class ViewModelTest {
             format = Format.Markdown
             content = "Decision $id content"
         }
+
+    protected fun createSection(title: String = "Section 1") = Section(title, Format.Markdown, "# Content")
 }
