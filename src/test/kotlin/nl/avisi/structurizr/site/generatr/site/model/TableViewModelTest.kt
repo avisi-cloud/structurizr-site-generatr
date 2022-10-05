@@ -94,4 +94,25 @@ class TableViewModelTest : ViewModelTest() {
             )
         )
     }
+
+    @Test
+    fun `cell with index`() {
+        val viewModel = TableViewModel.create {
+            bodyRow(cellWithIndex("1"))
+        }
+
+        assertThat(viewModel.bodyRows).containsAll(
+            TableViewModel.RowViewModel(
+                listOf(
+                    TableViewModel.TextCellViewModel(
+                        "1",
+                        isHeader = false,
+                        greyText = false,
+                        boldText = true,
+                        oneTenthWidth = true
+                    )
+                )
+            )
+        )
+    }
 }

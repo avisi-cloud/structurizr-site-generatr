@@ -41,6 +41,12 @@ private fun TR.cell(viewModel: TableViewModel.CellViewModel) {
                 th { span(classes = "has-text-grey") { +viewModel.title } }
             else if (viewModel.isHeader)
                 th { +viewModel.title }
+            else if (viewModel.boldText && viewModel.oneTenthWidth)
+                td(classes = "is-one-tenth") { span(classes = "has-text-weight-bold") { +viewModel.title } }
+            else if (viewModel.boldText)
+                td { span(classes = "has-text-weight-bold") { +viewModel.title } }
+            else if (viewModel.oneTenthWidth)
+                td(classes = "is-one-tenth") { +viewModel.title }
             else
                 td { +viewModel.title }
         is TableViewModel.LinkCellViewModel ->
