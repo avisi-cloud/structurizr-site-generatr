@@ -63,7 +63,8 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
                 Tab.COMPONENT,
                 Tab.DEPLOYMENT,
                 Tab.DEPENDENCIES,
-                Tab.DECISIONS
+                Tab.DECISIONS,
+                Tab.SECTIONS
             )
         assertThat(viewModel.tabs.map { it.link.title })
             .containsExactly(
@@ -73,7 +74,8 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
                 "Component views",
                 "Deployment views",
                 "Dependencies",
-                "Decisions"
+                "Decisions",
+                "Documentation"
             )
     }
 
@@ -164,6 +166,19 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
         softwareSystem.documentation.addDecision(createDecision("1", "Proposed"))
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isTrue()
+    }
+
+    @Test
+    fun `sections views tab only visible when two or more sections available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
+        softwareSystem.documentation.addSection(createSection("Section 0000"))
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
+        softwareSystem.documentation.addSection(createSection("Section 0001"))
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isTrue()
     }
 
     private fun getTab(viewModel: SoftwareSystemPageViewModel, tab: Tab) =

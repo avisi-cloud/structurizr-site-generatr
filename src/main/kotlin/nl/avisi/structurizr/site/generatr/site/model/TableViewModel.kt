@@ -5,12 +5,17 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
         val isHeader: Boolean
     }
 
-    data class TextCellViewModel(val title: String, override val isHeader: Boolean, val greyText: Boolean = false) :
-        CellViewModel {
+    data class TextCellViewModel(
+        val title: String,
+        override val isHeader: Boolean,
+        val greyText: Boolean = false,
+        val boldText: Boolean = false,
+        val oneTenthWidth: Boolean = false
+    ) : CellViewModel {
         override fun toString() = if (isHeader)
             "headerCell($title, greyText=$greyText)"
         else
-            "cell($title, greyText=$greyText)"
+            "cell($title, greyText=$greyText, boldText=$boldText, oneTenthWidth=$oneTenthWidth)"
     }
 
     data class LinkCellViewModel(val link: LinkViewModel, override val isHeader: Boolean) : CellViewModel {
@@ -39,6 +44,9 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
             LinkCellViewModel(LinkViewModel(pageViewModel, title, href), true)
 
         fun cell(title: String): TextCellViewModel = TextCellViewModel(title, false)
+        fun cellWithIndex(title: String): TextCellViewModel =
+            TextCellViewModel(title, false, greyText = false, boldText = true, oneTenthWidth = true)
+
         fun cellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
             LinkCellViewModel(LinkViewModel(pageViewModel, title, href), false)
     }

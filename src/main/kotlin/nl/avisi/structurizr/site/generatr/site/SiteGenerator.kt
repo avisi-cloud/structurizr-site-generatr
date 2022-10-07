@@ -75,9 +75,14 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
         writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it))
         writeHtmlFile(branchDir, SoftwareSystemDecisionsPageViewModel(context, it))
+        writeHtmlFile(branchDir, SoftwareSystemSectionsPageViewModel(context, it))
 
         it.documentation.decisions.forEach { decision ->
             writeHtmlFile(branchDir, SoftwareSystemDecisionPageViewModel(context, it, decision))
+        }
+
+        it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
+            writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section))
         }
     }
 }
@@ -100,6 +105,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                     is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
                     is SoftwareSystemDecisionPageViewModel -> softwareSystemDecisionPage(viewModel)
                     is SoftwareSystemDecisionsPageViewModel -> softwareSystemDecisionsPage(viewModel)
+                    is SoftwareSystemSectionPageViewModel -> softwareSystemSectionPage(viewModel)
+                    is SoftwareSystemSectionsPageViewModel -> softwareSystemSectionsPage(viewModel)
                     is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
                     is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
                     is WorkspaceDocumentationSectionPageViewModel -> workspaceDocumentationSectionPage(viewModel)
@@ -107,10 +114,4 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
             }
         }
     )
-}
-
-fun HTML.softwareSystemDecisionPage(viewModel: SoftwareSystemDecisionPageViewModel) {
-    softwareSystemPage(viewModel) {
-        markdown(viewModel, viewModel.markdown)
-    }
 }

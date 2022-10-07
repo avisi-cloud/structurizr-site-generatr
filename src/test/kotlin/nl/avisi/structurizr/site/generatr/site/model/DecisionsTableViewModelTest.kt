@@ -28,13 +28,13 @@ class DecisionsTableViewModelTest : ViewModelTest() {
             TableViewModel.create {
                 decisionsTableHeaderRow()
                 bodyRow(
-                    headerCell("2"),
+                    cellWithIndex("2"),
                     cell("02-01-2022"),
                     cell("Proposed"),
                     cellWithLink(pageViewModel, "Decision 2", decision2.id)
                 )
                 bodyRow(
-                    headerCell("10"),
+                    cellWithIndex("10"),
                     cell("01-01-2022"),
                     cell("Accepted"),
                     cellWithLink(pageViewModel, "Decision 10", decision1.id)

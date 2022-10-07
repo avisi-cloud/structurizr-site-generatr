@@ -10,7 +10,7 @@ fun PageViewModel.createDecisionsTableViewModel(decisions: Collection<Decision>,
             .sortedBy { it.id.toInt() }
             .forEach {
                 bodyRow(
-                    headerCell(it.id),
+                    cellWithIndex(it.id),
                     cell(formatDate(it.date)),
                     cell(it.status),
                     cellWithLink(this@createDecisionsTableViewModel, it.title, hrefFactory(it))

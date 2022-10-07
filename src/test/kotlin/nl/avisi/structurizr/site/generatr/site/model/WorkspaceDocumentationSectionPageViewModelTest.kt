@@ -42,6 +42,4 @@ class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.markdown).isEqualTo(MarkdownViewModel(section.content))
     }
-
-    private fun createSection(title: String = "Section 1") = Section(title, Format.Markdown, "# Content")
 }
