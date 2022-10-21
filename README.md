@@ -79,6 +79,12 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzezKl0vAWSHosQ0JLEsDzNBd2nGm
 cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr
 ```
 
+Or by using the Github repo url:
+
+```shell
+ cosign verify --key https://github.com/avisi-cloud/structurizr-site-generatr ghcr.io/avisi-cloud/structurizr-site-generatr
+ ```
+
 ## Usage
 
 These examples use the [example workspace](docs/example) in this repository.
