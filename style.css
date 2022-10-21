@@ -6,3 +6,7 @@
 .menu {
     border-right: 1px solid #cccccc;
 }
+
+.is-one-tenth {
+    width: 10%;
+}
