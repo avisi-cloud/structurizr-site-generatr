@@ -47,7 +47,7 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
                 .withStatus(LinkStatus.VALID)
                 .withUrl("/svg/$diagramId.svg".asUrlRelativeTo(pageViewModel.url))
         }
-        if (link.url.matches("https?://".toRegex()))
+        if (link.url.matches("https?://.*".toRegex()))
             return link
 
         return link.withStatus(LinkStatus.VALID)
