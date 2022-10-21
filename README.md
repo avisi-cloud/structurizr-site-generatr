@@ -30,8 +30,8 @@ To get started with the Structurizr Site Generatr, you can either:
 
 ### Installation
 
-As this approach relies on [Homebrew](https://brew.sh/), ensure this is already installed. For Windows and other operating
-systems not supported by Homebrew, please use the [Docker approach](#docker) instead.
+As this approach relies on [Homebrew](https://brew.sh/), ensure this is already installed. For Windows and other
+operating systems not supported by Homebrew, please use the [Docker approach](#docker) instead.
 
 To install Structurizr Site Generatr execute the following commands in your terminal:
 
@@ -155,9 +155,11 @@ By default, the generated website will be placed in `./build`, which is overwrit
 #### For those taking the Docker approach
 
 When using the Docker approach, the local file system must be made available to the temporary Structurizr Site
-Generatr container via a [Docker file system volume mount](https://docs.docker.com/engine/reference/commandline/run/#mount-volume--v---read-only).
+Generatr container via a
+[Docker file system volume mount](https://docs.docker.com/engine/reference/commandline/run/#mount-volume--v---read-only).
 This is achieved by specifying the `-v` parameter with a linux-like **absolute** path to the folder containing
-the .dsl file specified via `-w`. See how `C:\Projects\C4` has become `-v c:/projects/c4:/var/model` in the above example?
+the .dsl file specified via `-w`. See how `C:\Projects\C4` has become `-v c:/projects/c4:/var/model` in the above
+example?
 
 #### Generate a website from a Git repository
 
@@ -183,8 +185,9 @@ detected.
 -->
 
 To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
-generate a website from the input .dsl specified with `-w` _and_ start a web server on **port 8080** to view it. Additional
-parameters that affect website generation and the development web server can be reviewed using the `--help` operator.
+generate a website from the input .dsl specified with `-w` _and_ start a web server on **port 8080** to view it.
+Additional parameters that affect website generation and the development web server can be reviewed using the `--help`
+operator.
 
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl
@@ -200,7 +203,8 @@ By defalult, a development web server will be started and accessible at http://l
 #### For those taking the Docker approach
 
 However, when using the Docker approach, this development web server is within the temporary Structurizr Site
-Generatr container. So [Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose)
+Generatr container. So
+[Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose)
 is needed to expose the container's port 8080 to the host (web browser). In the example above, the
 `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
 
