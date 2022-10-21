@@ -132,7 +132,9 @@ Structurizr Site Generatr v1.0.9
 Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
 `ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
-### Generate a website from a [C4 Workspace](https://github.com/structurizr/dsl)
+### Generate a website
+
+#### From a [C4 Workspace](https://github.com/structurizr/dsl)
 
 This is the primary use case of Structurizr Site Generatr -- to generate a website from a
 [C4 Workspace](https://github.com/structurizr/dsl).
