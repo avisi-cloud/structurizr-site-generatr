@@ -58,21 +58,15 @@ Then to download our packaged image, consider the
 the version you wish to use. Then, in your terminal, execute the following:
 
 ```shell
-docker pull ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
+docker pull ghcr.io/avisi-cloud/structurizr-site-generatr
 ```
-
-Note: The `<version>` suffix should be replaced with your chosen version number. For example
-`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
 Once downloaded, you can execute Structurizr Site Generatr via a temporary Docker container by executing the
 following in your terminal:
 
 ```shell
-docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> --help
+docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr --help
 ```
-
-Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
-`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
 #### [Optional] Verify the Structurizr Site Generatr image with [CoSign](https://github.com/sigstore/cosign)
 
@@ -82,10 +76,8 @@ cat cosign.pub
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzezKl0vAWSHosQ0JLEsDzNBd2nGm
 08KqX+imYqq2avlbH+ehprJFMqKK0/I/bY0q5W9hQC8SLzTRJ9Q5dB9UiQ==
 -----END PUBLIC KEY-----
-cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr:<version>
+cosign verify --key cosign.pub ghcr.io/avisi-cloud/structurizr-site-generatr
 ```
-
-Replace `<version>` with the version you want to verify.
 
 ## Usage
 
@@ -102,7 +94,7 @@ To learn about available commands, or parameters for individual commands, call S
 ```shell
 installed> structurizr-site-generatr --help
 
-   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> --help
+   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr --help
 
 Usage: structurizr-site-generatr options_list
 Subcommands:
@@ -114,9 +106,6 @@ Options:
     --help, -h -> Usage info
 ```
 
-Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
-`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
-
 ### Version
 
 To query the version of Structurizr Site Generatr installed / used.
@@ -124,13 +113,10 @@ To query the version of Structurizr Site Generatr installed / used.
 ```shell
 installed> structurizr-site-generatr version
 
-   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr:<version> version
+   docker> docker run -it --rm ghcr.io/avisi-cloud/structurizr-site-generatr version
 
-Structurizr Site Generatr v1.0.9
+Structurizr Site Generatr v1.0.12
 ```
-
-Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
-`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
 ### Generate a website
 
@@ -142,11 +128,8 @@ This is the primary use case of Structurizr Site Generatr -- to generate a websi
 ```shell
 installed> structurizr-site-generatr generate-site -w workspace.dsl
 
-   docker> docker run -it --rm -v c:/projects/c4:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr:<version> generate-site -w workspace.dsl
+   docker> docker run -it --rm -v c:/projects/c4:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr generate-site -w workspace.dsl
 ```
-
-Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
-`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
 Here, the `--workspace-file` or `-w` parameter specifies the input
 [C4 Workspace DSL file](https://github.com/structurizr/dsl) to the `generate-site` command. Additional
@@ -186,11 +169,8 @@ operator.
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl
 
-   docker> docker run -it --rm -v c:/projects/c4:/var/model -p 8080:8080 ghcr.io/avisi-cloud/structurizr-site-generatr:<version> serve -w workspace.dsl
+   docker> docker run -it --rm -v c:/projects/c4:/var/model -p 8080:8080 ghcr.io/avisi-cloud/structurizr-site-generatr serve -w workspace.dsl
 ```
-
-Note: The `<version>` suffix should be replaced with same version number of your downloaded image. For example
-`ghcr.io/avisi-cloud/structurizr-site-generatr:1.0.9`.
 
 By defalult, a development web server will be started and accessible at http://localhost:8080/ (if available).
 
