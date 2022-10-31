@@ -29,7 +29,7 @@ fun generateRedirectingIndexPage(exportDir: File, defaultBranch: String) {
                         httpEquiv = "refresh"
                         content = "0; url=$defaultBranch/"
                     }
-                    title { +"PEC Architectuur" }
+                    title { +"Structurizr site generatr" }
                 }
                 body()
             }
