@@ -7,13 +7,13 @@ fun createPropertiesTableViewModel(properties: Map<String, String>) =
         headerRow(headerCell("Name"), headerCell("Value"))
         properties
             .toSortedMap()
-            .forEach {
+            .forEach { (name, value) ->
                 bodyRow(
-                    cell(it.key),
-                    if (Url.isUrl(it.value))
-                        cellWithExternalLink(it.value, it.value)
+                    cell(name),
+                    if (Url.isUrl(value))
+                        cellWithExternalLink(value, value)
                     else
-                        cell(it.value)
+                        cell(value)
                 )
             }
     }
