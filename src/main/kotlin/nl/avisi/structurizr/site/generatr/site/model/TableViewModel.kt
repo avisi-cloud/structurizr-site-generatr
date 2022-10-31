@@ -22,6 +22,13 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
         override fun toString() = if (isHeader) "headerCell($link)" else "cell($link)"
     }
 
+    data class ExternalLinkCellViewModel(
+        val link: ExternalLinkViewModel,
+        override val isHeader: Boolean
+    ) : CellViewModel {
+        override fun toString() = if (isHeader) "headerCell($link)" else "cell($link)"
+    }
+
     data class RowViewModel(val columns: List<CellViewModel>) {
         override fun toString() =
             columns.joinToString(separator = ", ", prefix = "row { ", postfix = " }") { it.toString() }
@@ -49,6 +56,9 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
 
         fun cellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
             LinkCellViewModel(LinkViewModel(pageViewModel, title, href), false)
+
+        fun cellWithExternalLink(title: String, href: String) =
+            ExternalLinkCellViewModel(ExternalLinkViewModel(title, href), false)
     }
 
     override fun toString(): String {

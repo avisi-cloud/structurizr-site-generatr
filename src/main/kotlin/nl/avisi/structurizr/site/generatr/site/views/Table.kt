@@ -54,5 +54,10 @@ private fun TR.cell(viewModel: TableViewModel.CellViewModel) {
                 th { link(viewModel.link) }
             else
                 td { link(viewModel.link) }
+        is TableViewModel.ExternalLinkCellViewModel ->
+            if (viewModel.isHeader)
+                th { externalLink(viewModel.link) }
+            else
+                td { externalLink(viewModel.link) }
     }
 }
