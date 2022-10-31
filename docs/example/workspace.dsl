@@ -14,8 +14,16 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
         acquirer = softwaresystem "Acquirer" "Facilitates PIN transactions for merchants."
 
         enterprise "Big Bank plc" {
-            supportStaff = person "Customer Service Staff" "Customer service staff within the bank." "Bank Staff"
-            backoffice = person "Back Office Staff" "Administration and support staff within the bank." "Bank Staff"
+            supportStaff = person "Customer Service Staff" "Customer service staff within the bank." "Bank Staff" {
+                properties {
+                    "Location" "Customer Services"
+                }
+            }
+            backoffice = person "Back Office Staff" "Administration and support staff within the bank." "Bank Staff" {
+                properties {
+                    "Location" "Internal Services"
+                }
+            }
 
             mainframe = softwaresystem "Mainframe Banking System" "Stores all of the core banking information about customers, accounts, transactions, etc." "Existing System"
             email = softwaresystem "E-mail System" "The internal Microsoft Exchange e-mail system." "Existing System"
@@ -24,6 +32,10 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             internetBankingSystem = softwaresystem "Internet Banking System" "Allows customers to view information about their bank accounts, and make payments." {
                 !docs internet-banking-system/docs
                 !adrs internet-banking-system/adr
+                properties {
+                    "Owner" "Customer Services"
+                    "Development Team" "Dev/Internet Services"
+                }
 
                 singlePageApplication = container "Single-Page Application" "Provides all of the Internet banking functionality to customers via their web browser." "JavaScript and Angular" "Web Browser"
                 mobileApp = container "Mobile App" "Provides a limited subset of the Internet banking functionality to customers via their mobile device." "Xamarin" "Mobile App"
