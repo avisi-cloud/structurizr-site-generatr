@@ -36,6 +36,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     "Owner" "Customer Services"
                     "Development Team" "Dev/Internet Services"
                 }
+                url https://en.wikipedia.org/wiki/Online_banking
 
                 singlePageApplication = container "Single-Page Application" "Provides all of the Internet banking functionality to customers via their web browser." "JavaScript and Angular" "Web Browser"
                 mobileApp = container "Mobile App" "Provides a limited subset of the Internet banking functionality to customers via their mobile device." "Xamarin" "Mobile App"
