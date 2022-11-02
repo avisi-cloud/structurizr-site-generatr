@@ -2,7 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
-abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
+abstract class PageViewModel(val generatorContext: GeneratorContext) {
     val pageTitle by lazy {
         if (generatorContext.workspace.name.isNotBlank())
             "$pageSubTitle | ${generatorContext.workspace.name}"

@@ -20,12 +20,14 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "Software system - System Context",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/context-1.svg"),
                 ImageViewModel(viewModel, "/png/context-1.png"),
                 ImageViewModel(viewModel, "/puml/context-1.puml")
             ),
             DiagramViewModel(
                 "Software system - System Context",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/context-2.svg"),
                 ImageViewModel(viewModel, "/png/context-2.png"),
                 ImageViewModel(viewModel, "/puml/context-2.puml")

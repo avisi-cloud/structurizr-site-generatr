@@ -29,12 +29,14 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "Software system - Containers",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/container-1.svg"),
                 ImageViewModel(viewModel, "/png/container-1.png"),
                 ImageViewModel(viewModel, "/puml/container-1.puml")
             ),
             DiagramViewModel(
                 "Software system - Containers",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/container-2.svg"),
                 ImageViewModel(viewModel, "/png/container-2.png"),
                 ImageViewModel(viewModel, "/puml/container-2.puml")

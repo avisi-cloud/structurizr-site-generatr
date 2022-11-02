@@ -5,6 +5,7 @@ import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
+import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -15,7 +16,7 @@ abstract class ViewModelTest {
         branches: List<String> = listOf("main"),
         currentBranch: String = "main",
         version: String = "1.0.0"
-    ) = GeneratorContext(version, Workspace(workspaceName, ""), branches, currentBranch)
+    ) = GeneratorContext(version, Workspace(workspaceName, ""), File("export-dir"), branches, currentBranch)
 
     protected fun pageViewModel(pageHref: String = "/some-page") = object : PageViewModel(generatorContext()) {
         override val url = pageHref
