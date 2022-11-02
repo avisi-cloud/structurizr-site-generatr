@@ -101,6 +101,7 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
                     when (val source = it.columns[0]) {
                         is TableViewModel.TextCellViewModel -> source.title
                         is TableViewModel.LinkCellViewModel -> source.link.title
+                        is TableViewModel.ExternalLinkCellViewModel -> source.link.title
                     }
                 }
         ).containsExactly(

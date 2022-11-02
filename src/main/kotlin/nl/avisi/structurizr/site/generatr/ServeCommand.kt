@@ -47,7 +47,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     }
 
     private fun updateSite() {
-        val workspace = parseStructurizrDslWorkspace(File(workspaceFile))
+        val workspace = createStructurizrWorkspace(File(workspaceFile))
         val exportDir = File(siteDir, "master")
 
         println("Generating diagrams...")

@@ -96,6 +96,24 @@ class TableViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `cell with external link`() {
+        val viewModel = TableViewModel.create {
+            bodyRow(cellWithExternalLink("Temporary URI", "https://tempuri.org/"))
+        }
+
+        assertThat(viewModel.bodyRows).containsAll(
+            TableViewModel.RowViewModel(
+                listOf(
+                    TableViewModel.ExternalLinkCellViewModel(
+                        ExternalLinkViewModel("Temporary URI", "https://tempuri.org/"),
+                        isHeader = false
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
     fun `cell with index`() {
         val viewModel = TableViewModel.create {
             bodyRow(cellWithIndex("1"))

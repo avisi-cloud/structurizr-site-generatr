@@ -80,7 +80,7 @@ class GenerateSiteCommand : Subcommand(
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
 
-            val workspace = parseStructurizrDslWorkspace(workspaceFileInRepo)
+            val workspace = createStructurizrWorkspace(workspaceFileInRepo)
             generateDiagrams(workspace, File(siteDir, branch))
             generateSite(
                 version,
@@ -94,7 +94,7 @@ class GenerateSiteCommand : Subcommand(
     }
 
     private fun generateSiteForModel(siteDir: File) {
-        val workspace = parseStructurizrDslWorkspace(File(workspaceFile))
+        val workspace = createStructurizrWorkspace(File(workspaceFile))
         generateDiagrams(workspace, File(siteDir, defaultBranch))
         generateSite(
             version,

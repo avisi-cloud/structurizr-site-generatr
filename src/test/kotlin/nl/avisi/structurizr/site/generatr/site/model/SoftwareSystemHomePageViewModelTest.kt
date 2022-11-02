@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import assertk.all
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.prop
@@ -45,5 +46,38 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
             .prop(MarkdownViewModel::markdown).isEqualTo(
                 softwareSystem.documentation.sections.single().content
             )
+    }
+
+    @Test
+    fun `no properties present`() {
+        val generatorContext = generatorContext()
+        val softwareSystem: SoftwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system")
+            .apply { description = "It's a system." }
+        val viewModel = SoftwareSystemHomePageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel)
+            .all {
+                prop(SoftwareSystemHomePageViewModel::hasProperties).isEqualTo(false)
+                prop(SoftwareSystemHomePageViewModel::propertiesTable)
+                    .isEqualTo(createPropertiesTableViewModel(mapOf()))
+            }
+    }
+
+    @Test
+    fun `properties present`() {
+        val generatorContext = generatorContext()
+        val softwareSystem: SoftwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system")
+            .apply {
+                description = "It's a system."
+                addProperty("Url", "https://tempuri.org/")
+            }
+        val viewModel = SoftwareSystemHomePageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel)
+            .all {
+                prop(SoftwareSystemHomePageViewModel::hasProperties).isEqualTo(true)
+                prop(SoftwareSystemHomePageViewModel::propertiesTable)
+                    .isEqualTo(createPropertiesTableViewModel(softwareSystem.properties))
+            }
     }
 }
