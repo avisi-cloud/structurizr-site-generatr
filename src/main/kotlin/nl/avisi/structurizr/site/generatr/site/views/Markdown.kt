@@ -13,9 +13,13 @@ import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.unsafe
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
+import java.io.File
 
 fun FlowContent.markdown(pageViewModel: PageViewModel, markdown: MarkdownViewModel) {
     div {
@@ -34,18 +38,20 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewM
     val renderer = HtmlRenderer.builder(options)
         .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
         .build()
-    val document = parser.parse(markdown.markdown)
+    val markDownDocument = parser.parse(markdown.markdown)
+    val html = renderer.render(markDownDocument)
 
-    return renderer.render(document)
+    return Jsoup.parse(html)
+        .apply { body().transformEmbeddedDiagramElements(pageViewModel) }
+        .html()
 }
 
 private class CustomLinkResolver(private val pageViewModel: PageViewModel) : LinkResolver {
     override fun resolveLink(node: Node, context: LinkResolverBasicContext, link: ResolvedLink): ResolvedLink {
         if (link.url.startsWith("embed:")) {
-            val diagramId = link.url.substring(6)
             return link
                 .withStatus(LinkStatus.VALID)
-                .withUrl("/svg/$diagramId.svg".asUrlRelativeTo(pageViewModel.url))
+                .withUrl(link.url)
         }
         if (link.url.matches("https?://.*".toRegex()))
             return link
@@ -66,3 +72,18 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
         override fun affectsGlobalScope() = false
     }
 }
+
+private fun Element.transformEmbeddedDiagramElements(pageViewModel: PageViewModel) = this.allElements
+    .toList()
+    .filter { it.tag().name == "img" && it.attr("src").startsWith("embed:") }
+    .forEach {
+        val diagramId = it.attr("src").substring(6)
+        val svg = File(svgPathname(pageViewModel.generatorContext, diagramId)).readText()
+        it.parent()?.append(svg)
+        it.remove()
+    }
+
+private fun svgPathname(
+    generatorContext: GeneratorContext,
+    diagramId: String
+) = "${generatorContext.exportDir}/${generatorContext.currentBranch}/svg/$diagramId.svg"
