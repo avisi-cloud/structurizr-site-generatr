@@ -7,6 +7,10 @@
     border-right: 1px solid #cccccc;
 }
 
+.container {
+    overflow-x: auto;
+}
+
 .is-one-tenth {
     width: 10%;
 }
