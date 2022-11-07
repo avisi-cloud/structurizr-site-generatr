@@ -8,5 +8,5 @@ class SoftwareSystemDeploymentPageViewModel(generatorContext: GeneratorContext, 
     val diagrams = generatorContext.workspace.views.deploymentViews
         .filter { it.softwareSystem == softwareSystem }
         .sortedBy { it.key }
-        .map { DiagramViewModel.forView(this, it) }
+        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
 }

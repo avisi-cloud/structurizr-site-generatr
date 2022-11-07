@@ -9,7 +9,8 @@ class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(gene
 
     val content = MarkdownViewModel(
         markdown = generatorContext.workspace.documentation.sections
-            .firstOrNull { it.order == 1 }?.content ?: DEFAULT_HOMEPAGE_CONTENT
+            .firstOrNull { it.order == 1 }?.content ?: DEFAULT_HOMEPAGE_CONTENT,
+        svgFactory = generatorContext.svgFactory
     )
 
     companion object {

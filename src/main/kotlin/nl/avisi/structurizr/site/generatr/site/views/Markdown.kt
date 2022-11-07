@@ -13,23 +13,21 @@ import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.unsafe
-import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import java.io.File
 
-fun FlowContent.markdown(pageViewModel: PageViewModel, markdown: MarkdownViewModel) {
+fun FlowContent.markdown(pageViewModel: PageViewModel, markdownViewModel: MarkdownViewModel) {
     div {
         unsafe {
-            +markdownToHtml(pageViewModel, markdown)
+            +markdownToHtml(pageViewModel, markdownViewModel)
         }
     }
 }
 
-private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewModel): String {
+private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: MarkdownViewModel): String {
     val options = MutableDataSet()
 
     options.set(Parser.EXTENSIONS, listOf(TablesExtension.create()))
@@ -38,11 +36,11 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewM
     val renderer = HtmlRenderer.builder(options)
         .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
         .build()
-    val markDownDocument = parser.parse(markdown.markdown)
+    val markDownDocument = parser.parse(markdownViewModel.markdown)
     val html = renderer.render(markDownDocument)
 
     return Jsoup.parse(html)
-        .apply { body().transformEmbeddedDiagramElements(pageViewModel) }
+        .apply { body().transformEmbeddedDiagramElements(markdownViewModel.svgFactory) }
         .html()
 }
 
@@ -73,17 +71,11 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
     }
 }
 
-private fun Element.transformEmbeddedDiagramElements(pageViewModel: PageViewModel) = this.allElements
+private fun Element.transformEmbeddedDiagramElements(svgFactory: (name: String) -> String) = this.allElements
     .toList()
     .filter { it.tag().name == "img" && it.attr("src").startsWith("embed:") }
     .forEach {
         val diagramId = it.attr("src").substring(6)
-        val svg = File(svgPathname(pageViewModel.generatorContext, diagramId)).readText()
-        it.parent()?.append(svg)
+        it.parent()?.append(svgFactory(diagramId))
         it.remove()
     }
-
-private fun svgPathname(
-    generatorContext: GeneratorContext,
-    diagramId: String
-) = "${generatorContext.exportDir}/${generatorContext.currentBranch}/svg/$diagramId.svg"

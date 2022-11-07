@@ -5,6 +5,6 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemSectionPageVi
 
 fun HTML.softwareSystemSectionPage(viewModel: SoftwareSystemSectionPageViewModel) {
     softwareSystemPage(viewModel) {
-        markdown(viewModel, viewModel.markdown)
+        markdown(viewModel, viewModel.content)
     }
 }

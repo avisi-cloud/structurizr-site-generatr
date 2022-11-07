@@ -5,18 +5,19 @@ import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
-import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
 abstract class ViewModelTest {
+    protected val svgFactory = { _: String -> "<svg></svg>" }
+
     protected fun generatorContext(
         workspaceName: String = "workspace name",
         branches: List<String> = listOf("main"),
         currentBranch: String = "main",
         version: String = "1.0.0"
-    ) = GeneratorContext(version, Workspace(workspaceName, ""), File("export-dir"), branches, currentBranch)
+    ) = GeneratorContext(version, Workspace(workspaceName, ""), branches, currentBranch, svgFactory)
 
     protected fun pageViewModel(pageHref: String = "/some-page") = object : PageViewModel(generatorContext()) {
         override val url = pageHref

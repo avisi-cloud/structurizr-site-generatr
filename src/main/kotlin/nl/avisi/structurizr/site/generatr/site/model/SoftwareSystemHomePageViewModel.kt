@@ -9,6 +9,9 @@ class SoftwareSystemHomePageViewModel(generatorContext: GeneratorContext, softwa
     val propertiesTable = createPropertiesTableViewModel(softwareSystem.properties)
     val content = softwareSystem.documentation.sections
         .minByOrNull { it.order }
-        ?.let { MarkdownViewModel(it.content) }
-        ?: MarkdownViewModel("# Description${System.lineSeparator()}${softwareSystem.description}")
+        ?.let { MarkdownViewModel(it.content, generatorContext.svgFactory) }
+        ?: MarkdownViewModel(
+            "# Description${System.lineSeparator()}${softwareSystem.description}",
+            generatorContext.svgFactory
+        )
 }

@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.WorkspaceDocumentationSecti
 fun HTML.workspaceDocumentationSectionPage(viewModel: WorkspaceDocumentationSectionPageViewModel) {
     page(viewModel) {
         contentDiv {
-            markdown(viewModel, viewModel.markdown)
+            markdown(viewModel, viewModel.content)
         }
     }
 }
