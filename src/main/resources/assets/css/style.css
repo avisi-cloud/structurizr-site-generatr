@@ -10,3 +10,7 @@
 .is-one-tenth {
     width: 10%;
 }
+
+svg a:hover {
+    opacity: 90%;
+}
