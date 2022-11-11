@@ -164,6 +164,7 @@ jobs:
           build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site
           --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
           --workspace-file docs/example/workspace.dsl
+          --assets-dir docs/example/assets
           --branches main
           --default-branch main
           --version ${{ github.ref_name }}
