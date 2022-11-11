@@ -112,6 +112,8 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         while (true) {
             val watchKey = watchService.take()
             val parentPath = watchKey.watchable() as Path
+
+            Thread.sleep(100) // Throttle the file watcher to give editors time for cleaning up temporary files
             val events = watchKey.pollEvents().filterNot { isHashFile(it) }
 
             val fileModified = events.map { parentPath.resolve(it.context() as Path) }
