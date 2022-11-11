@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.structurizr.Workspace
 import com.structurizr.view.SystemContextView
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 class C4PlantUmlExporterWithElementLinksTest {
 
