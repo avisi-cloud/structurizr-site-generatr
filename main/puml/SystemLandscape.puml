@@ -7,12 +7,20 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
 Enterprise_Boundary(enterprise, "Big Bank plc") {
+  WithoutPropertyHeader()
+  AddProperty("Location","Customer Services")
   Person(CustomerServiceStaff, "Customer Service Staff", "Customer service staff within the bank.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("Location","Internal Services")
   Person(BackOfficeStaff, "Back Office Staff", "Administration and support staff within the bank.", $tags="")
-  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")
-  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")
-  System(ATM, "ATM", "Allows customers to withdraw cash.", $tags="")
-  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")
+  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[/main/mainframe-banking-system/context/]]
+  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[/main/e-mail-system/context/]]
+  System(ATM, "ATM", "Allows customers to withdraw cash.", $tags="")[[/main/atm/context/]]
+  WithoutPropertyHeader()
+  AddProperty("Development Team","Dev/Internet Services")
+  AddProperty("Owner","Customer Services")
+  AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
+  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")[[/main/internet-banking-system/context/]]
 }
 
 Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
