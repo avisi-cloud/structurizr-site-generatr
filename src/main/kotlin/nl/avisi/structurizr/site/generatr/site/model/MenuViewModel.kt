@@ -10,7 +10,8 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         if (generatorContext.workspace.documentation.decisions.isNotEmpty())
             yield(createMenuItem("Decisions", WorkspaceDecisionsPageViewModel.url(), false))
 
-        yield(createMenuItem("Software Systems", SoftwareSystemsPageViewModel.url()))
+        if (generatorContext.workspace.model.softwareSystems.isNotEmpty())
+            yield(createMenuItem("Software Systems", SoftwareSystemsPageViewModel.url()))
 
         generatorContext.workspace.documentation.sections
             .sortedBy { it.order }
