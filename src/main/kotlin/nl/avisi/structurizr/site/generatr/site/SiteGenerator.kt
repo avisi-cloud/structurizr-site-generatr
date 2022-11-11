@@ -7,7 +7,9 @@ import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.views.*
 import java.io.File
+import java.math.BigInteger
 import java.nio.file.Path
+import java.security.MessageDigest
 
 fun copySiteWideAssets(exportDir: File) {
     val css = object {}.javaClass.getResource("/assets/css/style.css")?.readText()
@@ -50,9 +52,13 @@ fun generateSite(
         generateDiagramWithElementLinks(view, url, exportDir)
     }
 
+    deleteOldHashes(exportDir)
     if (assetsDir != null) copyAssets(assetsDir, File(exportDir, currentBranch))
     generateHtmlFiles(generatorContext, exportDir)
 }
+
+private fun deleteOldHashes(exportDir: File) = exportDir.walk().filter { it.extension == "md5" }
+    .forEach { it.delete() }
 
 private fun copyAssets(assetsDir: File, exportDir: File) {
     assetsDir.copyRecursively(exportDir, overwrite = true)
@@ -99,30 +105,36 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
 }
 
 private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
-    val htmlFile = File(exportDir, Path.of(viewModel.url, "index.html").toString())
-    htmlFile.parentFile.mkdirs()
-    htmlFile.writeText(
-        buildString {
-            appendLine("<!doctype html>")
-            appendHTML().html {
-                when (viewModel) {
-                    is HomePageViewModel -> homePage(viewModel)
-                    is SoftwareSystemsPageViewModel -> softwareSystemsPage(viewModel)
-                    is SoftwareSystemHomePageViewModel -> softwareSystemHomePage(viewModel)
-                    is SoftwareSystemContextPageViewModel -> softwareSystemContextPage(viewModel)
-                    is SoftwareSystemContainerPageViewModel -> softwareSystemContainerPage(viewModel)
-                    is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
-                    is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
-                    is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
-                    is SoftwareSystemDecisionPageViewModel -> softwareSystemDecisionPage(viewModel)
-                    is SoftwareSystemDecisionsPageViewModel -> softwareSystemDecisionsPage(viewModel)
-                    is SoftwareSystemSectionPageViewModel -> softwareSystemSectionPage(viewModel)
-                    is SoftwareSystemSectionsPageViewModel -> softwareSystemSectionsPage(viewModel)
-                    is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
-                    is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
-                    is WorkspaceDocumentationSectionPageViewModel -> workspaceDocumentationSectionPage(viewModel)
-                }
+    val html = buildString {
+        appendLine("<!doctype html>")
+        appendHTML().html {
+            when (viewModel) {
+                is HomePageViewModel -> homePage(viewModel)
+                is SoftwareSystemsPageViewModel -> softwareSystemsPage(viewModel)
+                is SoftwareSystemHomePageViewModel -> softwareSystemHomePage(viewModel)
+                is SoftwareSystemContextPageViewModel -> softwareSystemContextPage(viewModel)
+                is SoftwareSystemContainerPageViewModel -> softwareSystemContainerPage(viewModel)
+                is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
+                is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
+                is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
+                is SoftwareSystemDecisionPageViewModel -> softwareSystemDecisionPage(viewModel)
+                is SoftwareSystemDecisionsPageViewModel -> softwareSystemDecisionsPage(viewModel)
+                is SoftwareSystemSectionPageViewModel -> softwareSystemSectionPage(viewModel)
+                is SoftwareSystemSectionsPageViewModel -> softwareSystemSectionsPage(viewModel)
+                is WorkspaceDecisionPageViewModel -> workspaceDecisionPage(viewModel)
+                is WorkspaceDecisionsPageViewModel -> workspaceDecisionsPage(viewModel)
+                is WorkspaceDocumentationSectionPageViewModel -> workspaceDocumentationSectionPage(viewModel)
             }
         }
-    )
+    }
+
+    val htmlFile = File(exportDir, Path.of(viewModel.url, "index.html").toString())
+    htmlFile.parentFile.mkdirs()
+    htmlFile.writeText(html)
+
+    val hash = MessageDigest.getInstance("MD5").digest(html.toByteArray())
+        .let { BigInteger(1, it).toString(16) }
+
+    val hashFile = File("${htmlFile.absolutePath}.md5")
+    hashFile.writeText(hash)
 }

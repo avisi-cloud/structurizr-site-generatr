@@ -15,6 +15,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
 import java.io.File
 import java.nio.file.*
+import kotlin.io.path.extension
 import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
 
@@ -111,7 +112,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         while (true) {
             val watchKey = watchService.take()
             val parentPath = watchKey.watchable() as Path
-            val events = watchKey.pollEvents()
+            val events = watchKey.pollEvents().filterNot { isHashFile(it) }
 
             val fileModified = events.map { parentPath.resolve(it.context() as Path) }
                 .any { it.isRegularFile() }
@@ -136,10 +137,14 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         }
     }
 
+    private fun isHashFile(it: WatchEvent<*>) = (it.context() as Path).extension == "md5"
+
     private fun Path.watch(watchService: WatchService) {
         register(
-            watchService, arrayOf(
-                StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE,
+            watchService,
+            arrayOf(
+                StandardWatchEventKinds.ENTRY_CREATE,
+                StandardWatchEventKinds.ENTRY_DELETE,
                 StandardWatchEventKinds.ENTRY_MODIFY
             ),
             SensitivityWatchEventModifier.HIGH
