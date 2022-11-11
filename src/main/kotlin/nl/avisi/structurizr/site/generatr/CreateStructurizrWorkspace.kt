@@ -10,7 +10,6 @@ fun createStructurizrWorkspace(workspaceFile: File) =
         .apply { parse(workspaceFile) }
         .workspace
         .apply {
-            views.configuration.addProperty(C4PlantUMLExporter.C4PLANTUML_ELEMENT_PROPERTIES_PROPERTY, true.toString())
             model.elements.forEach {
                 moveUrlToProperty(it) // We need the URL later for our own links, preserve the original in a property
             }

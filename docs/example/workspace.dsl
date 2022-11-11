@@ -154,6 +154,10 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     }
 
     views {
+        properties {
+            "c4plantuml.elementProperties" "true"
+        }
+
         systemlandscape "SystemLandscape" {
             include *
             autoLayout
