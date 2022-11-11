@@ -47,7 +47,7 @@ fun generateSite(
 ) {
     val generatorContext = GeneratorContext(version, workspace, branches, currentBranch)
 
-    if (assetsDir != null) copyAssets(assetsDir, exportDir)
+    if (assetsDir != null) copyAssets(assetsDir, File(exportDir, currentBranch))
     generateHtmlFiles(generatorContext, exportDir)
 }
 
