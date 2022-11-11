@@ -16,12 +16,17 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
     head {
         meta(charset = "utf-8")
         meta(name = "viewport", content = "width=device-width, initial-scale=1")
+        title { +viewModel.pageTitle }
         link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css")
         link(
             rel = "stylesheet",
             href = "../" + "/style.css".asUrlRelativeTo(viewModel.url)
         )
-        title { +viewModel.pageTitle }
+        if (viewModel.includeAutoReloading)
+            script(
+                type = ScriptType.textJavaScript,
+                src = "../" + "/auto-reload.js".asUrlRelativeTo(viewModel.url)
+            ) { }
     }
 }
 

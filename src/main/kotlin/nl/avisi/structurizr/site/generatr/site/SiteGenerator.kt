@@ -12,11 +12,16 @@ import java.nio.file.Path
 import java.security.MessageDigest
 
 fun copySiteWideAssets(exportDir: File) {
-    val css = object {}.javaClass.getResource("/assets/css/style.css")?.readText()
-        ?: throw IllegalStateException("CSS file not found on classpath")
-    val cssFile = File(exportDir, "style.css")
+    copySiteWideAsset(exportDir, "/css/style.css")
+    copySiteWideAsset(exportDir, "/js/auto-reload.js")
+}
 
-    cssFile.writeText(css)
+private fun copySiteWideAsset(exportDir: File, asset: String) {
+    val content = object {}.javaClass.getResource("/assets$asset")?.readText()
+        ?: throw IllegalStateException("File $asset not found on classpath")
+    val file = File(exportDir, asset.substringAfterLast('/'))
+
+    file.writeText(content)
 }
 
 fun generateRedirectingIndexPage(exportDir: File, defaultBranch: String) {
@@ -45,9 +50,10 @@ fun generateSite(
     assetsDir: File?,
     exportDir: File,
     branches: List<String>,
-    currentBranch: String
+    currentBranch: String,
+    serving: Boolean = false
 ) {
-    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch) { key, url ->
+    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch, serving) { key, url ->
         val view = workspace.views.views.single { view -> view.key == key }
         generateDiagramWithElementLinks(view, url, exportDir)
     }
@@ -59,6 +65,7 @@ fun generateSite(
 
 private fun deleteOldHashes(exportDir: File) = exportDir.walk().filter { it.extension == "md5" }
     .forEach { it.delete() }
+
 
 private fun copyAssets(assetsDir: File, exportDir: File) {
     assetsDir.copyRecursively(exportDir, overwrite = true)

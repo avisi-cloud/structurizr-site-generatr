@@ -64,7 +64,8 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
             assetsDir?.let { File(it) },
             File(siteDir),
             listOf(branch),
-            branch
+            branch,
+            serving = true
         )
 
         println("Successfully generated diagrams and site")
