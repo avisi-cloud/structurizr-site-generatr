@@ -48,21 +48,22 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
     private fun updateSite() {
         val workspace = createStructurizrWorkspace(File(workspaceFile))
-        val exportDir = File(siteDir, "master")
+        val branch = "master"
+        val exportDir = File(siteDir, branch)
 
         println("Generating diagrams...")
-        generateDiagrams(workspace, exportDir)
+        generateDiagrams(workspace, exportDir, branch)
 
         println("Generating site...")
         copySiteWideAssets(File(siteDir))
-        generateRedirectingIndexPage(File(siteDir), "master")
+        generateRedirectingIndexPage(File(siteDir), branch)
         generateSite(
             "0.0.0",
             workspace,
             assetsDir?.let { File(it) },
             File(siteDir),
-            listOf("master"),
-            "master"
+            listOf(branch),
+            branch
         )
 
         println("Successfully generated diagrams and site")

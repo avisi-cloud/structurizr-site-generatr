@@ -45,7 +45,13 @@ fun generateSite(
     branches: List<String>,
     currentBranch: String
 ) {
-    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch)
+    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch) {
+        val pathname = "${exportDir.absolutePath}/${currentBranch}/svg/${it}.svg"
+        File(pathname)
+            .let { file ->
+                if (file.exists()) file.readText() else "$pathname not found"
+            }
+    }
 
     if (assetsDir != null) copyAssets(assetsDir, exportDir)
     generateHtmlFiles(generatorContext, exportDir)

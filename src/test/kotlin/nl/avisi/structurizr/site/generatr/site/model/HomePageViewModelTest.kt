@@ -23,7 +23,7 @@ class HomePageViewModelTest : ViewModelTest() {
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.content)
-            .isEqualTo(MarkdownViewModel(DEFAULT_HOMEPAGE_CONTENT))
+            .isEqualTo(MarkdownViewModel(DEFAULT_HOMEPAGE_CONTENT, svgFactory))
     }
 
     @Test
@@ -35,7 +35,7 @@ class HomePageViewModelTest : ViewModelTest() {
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.content)
-            .isEqualTo(MarkdownViewModel("Section content"))
+            .isEqualTo(MarkdownViewModel("Section content", svgFactory))
     }
 
     @ParameterizedTest

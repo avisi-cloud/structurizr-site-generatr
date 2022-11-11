@@ -5,7 +5,9 @@ import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
 
 fun FlowContent.diagram(viewModel: DiagramViewModel) {
     figure {
-        img(src = viewModel.svgLocation.relativeHref, alt = viewModel.name)
+        unsafe {
+            +viewModel.svg
+        }
         figcaption {
             +viewModel.name
             +" ["

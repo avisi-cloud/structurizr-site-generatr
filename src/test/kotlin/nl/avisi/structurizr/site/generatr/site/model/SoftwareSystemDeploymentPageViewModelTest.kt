@@ -29,12 +29,14 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "Software system - Deployment - Default",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/deployment-1.svg"),
                 ImageViewModel(viewModel, "/png/deployment-1.png"),
                 ImageViewModel(viewModel, "/puml/deployment-1.puml")
             ),
             DiagramViewModel(
                 "Software system - Deployment - Default",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/deployment-2.svg"),
                 ImageViewModel(viewModel, "/png/deployment-2.png"),
                 ImageViewModel(viewModel, "/puml/deployment-2.puml")

@@ -16,16 +16,18 @@ import kotlinx.html.unsafe
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
 import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 
-fun FlowContent.markdown(pageViewModel: PageViewModel, markdown: MarkdownViewModel) {
+fun FlowContent.markdown(pageViewModel: PageViewModel, markdownViewModel: MarkdownViewModel) {
     div {
         unsafe {
-            +markdownToHtml(pageViewModel, markdown)
+            +markdownToHtml(pageViewModel, markdownViewModel)
         }
     }
 }
 
-private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewModel): String {
+private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: MarkdownViewModel): String {
     val options = MutableDataSet()
 
     options.set(Parser.EXTENSIONS, listOf(TablesExtension.create()))
@@ -34,18 +36,20 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdown: MarkdownViewM
     val renderer = HtmlRenderer.builder(options)
         .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
         .build()
-    val document = parser.parse(markdown.markdown)
+    val markDownDocument = parser.parse(markdownViewModel.markdown)
+    val html = renderer.render(markDownDocument)
 
-    return renderer.render(document)
+    return Jsoup.parse(html)
+        .apply { body().transformEmbeddedDiagramElements(markdownViewModel.svgFactory) }
+        .html()
 }
 
 private class CustomLinkResolver(private val pageViewModel: PageViewModel) : LinkResolver {
     override fun resolveLink(node: Node, context: LinkResolverBasicContext, link: ResolvedLink): ResolvedLink {
         if (link.url.startsWith("embed:")) {
-            val diagramId = link.url.substring(6)
             return link
                 .withStatus(LinkStatus.VALID)
-                .withUrl("/svg/$diagramId.svg".asUrlRelativeTo(pageViewModel.url))
+                .withUrl(link.url)
         }
         if (link.url.matches("https?://.*".toRegex()))
             return link
@@ -66,3 +70,12 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
         override fun affectsGlobalScope() = false
     }
 }
+
+private fun Element.transformEmbeddedDiagramElements(svgFactory: (name: String) -> String) = this.allElements
+    .toList()
+    .filter { it.tag().name == "img" && it.attr("src").startsWith("embed:") }
+    .forEach {
+        val diagramId = it.attr("src").substring(6)
+        it.parent()?.append(svgFactory(diagramId))
+        it.remove()
+    }

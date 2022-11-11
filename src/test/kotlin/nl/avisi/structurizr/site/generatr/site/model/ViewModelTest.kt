@@ -10,12 +10,14 @@ import java.time.ZoneId
 import java.util.*
 
 abstract class ViewModelTest {
+    protected val svgFactory = { _: String -> "<svg></svg>" }
+
     protected fun generatorContext(
         workspaceName: String = "workspace name",
         branches: List<String> = listOf("main"),
         currentBranch: String = "main",
         version: String = "1.0.0"
-    ) = GeneratorContext(version, Workspace(workspaceName, ""), branches, currentBranch)
+    ) = GeneratorContext(version, Workspace(workspaceName, ""), branches, currentBranch, svgFactory)
 
     protected fun pageViewModel(pageHref: String = "/some-page") = object : PageViewModel(generatorContext()) {
         override val url = pageHref

@@ -30,12 +30,14 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "Software system - Backend - Components",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/component-1.svg"),
                 ImageViewModel(viewModel, "/png/component-1.png"),
                 ImageViewModel(viewModel, "/puml/component-1.puml")
             ),
             DiagramViewModel(
                 "Software system - Backend - Components",
+                "<svg></svg>",
                 ImageViewModel(viewModel, "/svg/component-2.svg"),
                 ImageViewModel(viewModel, "/png/component-2.png"),
                 ImageViewModel(viewModel, "/puml/component-2.puml")

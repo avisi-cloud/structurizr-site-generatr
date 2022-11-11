@@ -8,7 +8,7 @@ class WorkspaceDecisionPageViewModel(generatorContext: GeneratorContext, decisio
     override val url = url(decision)
     override val pageSubTitle: String = decision.title
 
-    val markdown = MarkdownViewModel(decision.content)
+    val content = MarkdownViewModel(decision.content, generatorContext.svgFactory)
 
     companion object {
         fun url(decision: Decision) = "/decisions/${decision.id}"

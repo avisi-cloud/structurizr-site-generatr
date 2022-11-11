@@ -9,7 +9,7 @@ class SoftwareSystemSectionPageViewModel(
 ) : SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.DECISIONS) {
     override val url = url(softwareSystem, section)
 
-    val markdown = MarkdownViewModel(section.content)
+    val content = MarkdownViewModel(section.content, generatorContext.svgFactory)
 
     companion object {
         fun url(softwareSystem: SoftwareSystem, section: Section) =

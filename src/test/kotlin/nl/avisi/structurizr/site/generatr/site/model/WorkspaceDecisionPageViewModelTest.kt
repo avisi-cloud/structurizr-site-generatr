@@ -28,6 +28,6 @@ class WorkspaceDecisionPageViewModelTest : ViewModelTest() {
         val decision = createDecision()
         val viewModel = WorkspaceDecisionPageViewModel(generatorContext(), decision)
 
-        assertThat(viewModel.markdown).isEqualTo(MarkdownViewModel(decision.content))
+        assertThat(viewModel.content).isEqualTo(MarkdownViewModel(decision.content, svgFactory))
     }
 }

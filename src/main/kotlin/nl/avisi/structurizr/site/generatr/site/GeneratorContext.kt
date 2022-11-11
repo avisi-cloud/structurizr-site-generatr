@@ -6,5 +6,6 @@ data class GeneratorContext(
     val version: String,
     val workspace: Workspace,
     val branches: List<String>,
-    val currentBranch: String
+    val currentBranch: String,
+    val svgFactory: (name: String) -> String
 )
