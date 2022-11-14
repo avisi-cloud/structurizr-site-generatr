@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
 import com.structurizr.export.Diagram
+import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.export.plantuml.PlantUMLDiagram
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
@@ -9,12 +10,12 @@ import net.sourceforge.plantuml.SourceStringReader
 import java.io.File
 import java.net.URL
 
-fun generateDiagrams(workspace: Workspace, exportDir: File, branch: String) {
+fun generateDiagrams(workspace: Workspace, exportDir: File) {
     val pumlDir = File(exportDir, "puml").apply { mkdirs() }
     val pngDir = File(exportDir, "png").apply { mkdirs() }
     val svgDir = File(exportDir, "svg").apply { mkdirs() }
 
-    val plantUMLDiagrams = generatePlantUMLDiagrams(workspace, branch)
+    val plantUMLDiagrams = generatePlantUMLDiagrams(workspace)
 
     plantUMLDiagrams.parallelStream()
         .forEach { diagram ->
@@ -29,8 +30,8 @@ fun generateDiagrams(workspace: Workspace, exportDir: File, branch: String) {
         }
 }
 
-private fun generatePlantUMLDiagrams(workspace: Workspace, branch: String): Collection<Diagram> {
-    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(workspace, branch)
+private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
+    val plantUMLExporter = C4PlantUMLExporter()
 
     return plantUMLExporter.export(workspace)
 }

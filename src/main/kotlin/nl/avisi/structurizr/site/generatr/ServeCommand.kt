@@ -52,7 +52,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         val exportDir = File(siteDir, branch)
 
         println("Generating diagrams...")
-        generateDiagrams(workspace, exportDir, branch)
+        generateDiagrams(workspace, exportDir)
 
         println("Generating site...")
         copySiteWideAssets(File(siteDir))
