@@ -4,16 +4,18 @@ import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.export.plantuml.PlantUMLDiagram
+import com.structurizr.view.View
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
+import nl.avisi.structurizr.site.generatr.site.C4PlantUmlExporterWithElementLinks.Companion.export
 import java.io.File
 import java.net.URL
 
 fun generateDiagrams(workspace: Workspace, exportDir: File) {
-    val pumlDir = File(exportDir, "puml").apply { mkdirs() }
-    val pngDir = File(exportDir, "png").apply { mkdirs() }
-    val svgDir = File(exportDir, "svg").apply { mkdirs() }
+    val pumlDir = pumlDir(exportDir)
+    val svgDir = svgDir(exportDir)
+    val pngDir = pngDir(exportDir)
 
     val plantUMLDiagrams = generatePlantUMLDiagrams(workspace)
 
@@ -23,11 +25,30 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
             if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
                 println("${diagram.key}...")
                 saveAsPUML(diagram, plantUMLFile)
-                saveImages(diagram, pngDir, svgDir)
+                saveAsSvg(diagram, svgDir)
+                saveAsPng(diagram, pngDir)
             } else {
                 println("${diagram.key} UP-TO-DATE")
             }
         }
+}
+
+fun generateDiagramWithElementLinks(workspace: Workspace, exportDir: File, view: View, baseUrl: String): String {
+    val pumlDir = pumlDir(exportDir)
+    val svgDir = svgDir(exportDir)
+
+    val diagram = generatePlantUMLDiagramWithElementLinks(workspace, baseUrl, view)
+
+    val name = "${diagram.key}-${view.key}"
+    val plantUMLFile = File(pumlDir, "$name.puml")
+    if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
+        saveAsPUML(diagram, plantUMLFile)
+        saveAsSvg(diagram, svgDir, name)
+    } else {
+        println("$name UP-TO-DATE")
+    }
+
+    return readSvg(svgDir, name)
 }
 
 private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
@@ -40,18 +61,38 @@ private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
     plantUMLFile.writeText(diagram.definition)
 }
 
-private fun saveImages(diagram: Diagram, pngDir: File, svgDir: File) {
+private fun saveAsSvg(diagram: Diagram, svgDir: File, name: String = diagram.key) {
     val reader = SourceStringReader(diagram.withCachedIncludes().definition)
-    val pngFile = File(pngDir, "${diagram.key}.png")
-    val svgFile = File(svgDir, "${diagram.key}.svg")
+    val svgFile = File(svgDir, "$name.svg")
 
-    pngFile.outputStream().use {
-        reader.outputImage(it)
-    }
     svgFile.outputStream().use {
         reader.outputImage(it, FileFormatOption(FileFormat.SVG, false))
     }
 }
+
+private fun saveAsPng(diagram: Diagram, pngDir: File) {
+    val reader = SourceStringReader(diagram.withCachedIncludes().definition)
+    val pngFile = File(pngDir, "${diagram.key}.png")
+
+    pngFile.outputStream().use {
+        reader.outputImage(it)
+    }
+}
+
+private fun readSvg(svgDir: File, name: String): String {
+    val svgFile = File(svgDir, "$name.svg")
+    return svgFile.readText()
+}
+
+private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, baseUrl: String, view: View ): Diagram {
+    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(workspace, baseUrl)
+
+    return plantUMLExporter.export(view)
+}
+
+private fun pumlDir(exportDir: File) = File(exportDir, "puml").apply { mkdirs() }
+private fun svgDir(exportDir: File) = File(exportDir, "svg").apply { mkdirs() }
+private fun pngDir(exportDir: File) = File(exportDir, "png").apply { mkdirs() }
 
 private fun Diagram.withCachedIncludes(): Diagram {
     val def = definition.replace("!include\\s+(.*)".toRegex()) {

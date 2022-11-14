@@ -45,12 +45,9 @@ fun generateSite(
     branches: List<String>,
     currentBranch: String
 ) {
-    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch) {
-        val pathname = "${exportDir.absolutePath}/${currentBranch}/svg/${it}.svg"
-        File(pathname)
-            .let { file ->
-                if (file.exists()) file.readText() else "$pathname not found"
-            }
+    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch) { name, baseUrl ->
+        val view = workspace.views.views.single { view -> view.key == name }
+        generateDiagramWithElementLinks(workspace, exportDir, view, baseUrl)
     }
 
     if (assetsDir != null) copyAssets(assetsDir, File(exportDir, currentBranch))
