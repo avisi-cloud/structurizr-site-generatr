@@ -45,9 +45,9 @@ fun generateSite(
     branches: List<String>,
     currentBranch: String
 ) {
-    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch) { name, baseUrl ->
-        val view = workspace.views.views.single { view -> view.key == name }
-        generateDiagramWithElementLinks(workspace, exportDir, view, baseUrl)
+    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch) { key, url ->
+        val view = workspace.views.views.single { view -> view.key == key }
+        generateDiagramWithElementLinks(view, url, exportDir)
     }
 
     if (assetsDir != null) copyAssets(assetsDir, File(exportDir, currentBranch))

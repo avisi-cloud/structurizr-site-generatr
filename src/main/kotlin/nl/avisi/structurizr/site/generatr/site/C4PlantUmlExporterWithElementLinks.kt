@@ -1,6 +1,5 @@
 package nl.avisi.structurizr.site.generatr.site
 
-import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.C4PlantUMLExporter
@@ -14,11 +13,10 @@ import com.structurizr.view.DynamicView
 import com.structurizr.view.SystemContextView
 import com.structurizr.view.SystemLandscapeView
 import com.structurizr.view.View
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
+import nl.avisi.structurizr.site.generatr.includedSoftwareSystem
 import nl.avisi.structurizr.site.generatr.normalize
 
 class C4PlantUmlExporterWithElementLinks(
-    private val workspace: Workspace,
     private val url: String
 ): C4PlantUMLExporter() {
     companion object {
@@ -46,7 +44,7 @@ class C4PlantUmlExporterWithElementLinks(
     }
 
     private fun Element.linkNeeded(view: View?) =
-        workspace.model.includedSoftwareSystems.contains(this) && this != view?.softwareSystem
+        this is SoftwareSystem && this.includedSoftwareSystem && this != view?.softwareSystem
 
     private fun setElementUrl(element: Element) {
         val path = "/${element.name.normalize()}/context/".asUrlRelativeTo(url)

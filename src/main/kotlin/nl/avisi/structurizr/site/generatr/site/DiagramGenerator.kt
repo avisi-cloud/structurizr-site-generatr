@@ -33,11 +33,11 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
         }
 }
 
-fun generateDiagramWithElementLinks(workspace: Workspace, exportDir: File, view: View, baseUrl: String): String {
+fun generateDiagramWithElementLinks(view: View, url: String, exportDir: File): String {
     val pumlDir = pumlDir(exportDir)
     val svgDir = svgDir(exportDir)
 
-    val diagram = generatePlantUMLDiagramWithElementLinks(workspace, baseUrl, view)
+    val diagram = generatePlantUMLDiagramWithElementLinks(view, url)
 
     val name = "${diagram.key}-${view.key}"
     val plantUMLFile = File(pumlDir, "$name.puml")
@@ -84,8 +84,8 @@ private fun readSvg(svgDir: File, name: String): String {
     return svgFile.readText()
 }
 
-private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, baseUrl: String, view: View ): Diagram {
-    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(workspace, baseUrl)
+private fun generatePlantUMLDiagramWithElementLinks(view: View, url: String): Diagram {
+    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url)
 
     return plantUMLExporter.export(view)
 }

@@ -10,9 +10,9 @@ class C4PlantUmlExporterWithElementLinksTest {
 
     @Test
     fun `renders diagram`() {
-        val (workspace, view) = createWorkspaceWithOneSystem()
+        val view = createWorkspaceWithOneSystem()
 
-        val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/landscape/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -24,9 +24,9 @@ class C4PlantUmlExporterWithElementLinksTest {
 
     @Test
     fun `link to other software system`() {
-        val (workspace, view) = createWorkspaceWithTwoSystems()
+        val view = createWorkspaceWithTwoSystems()
 
-        val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/landscape/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -41,9 +41,9 @@ class C4PlantUmlExporterWithElementLinksTest {
 
     @Test
     fun `link to other software system from two path segments deep`() {
-        val (workspace, view) = createWorkspaceWithTwoSystems()
+        val view = createWorkspaceWithTwoSystems()
 
-        val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/system-1/context/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/system-1/context/")
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -56,23 +56,21 @@ class C4PlantUmlExporterWithElementLinksTest {
         )
     }
 
-    private fun createWorkspaceWithOneSystem(): Pair<Workspace, SystemContextView> {
+    private fun createWorkspaceWithOneSystem(): SystemContextView {
         val workspace = Workspace("workspace name", "")
         val system = workspace.model.addSoftwareSystem("System 1")
-        val view = workspace.views.createSystemContextView(system, "Context1", "")
-            .apply { addAllElements() }
 
-        return workspace to view
+        return workspace.views.createSystemContextView(system, "Context1", "")
+            .apply { addAllElements() }
     }
 
-    private fun createWorkspaceWithTwoSystems(): Pair<Workspace, SystemContextView> {
+    private fun createWorkspaceWithTwoSystems(): SystemContextView {
         val workspace = Workspace("workspace name", "")
         val system = workspace.model.addSoftwareSystem("System 1")
         workspace.model.addSoftwareSystem("System 2").apply { uses(system, "uses") }
-        val view = workspace.views.createSystemContextView(system, "Context 1", "")
-            .apply { addAllElements() }
 
-        return workspace to view
+        return workspace.views.createSystemContextView(system, "Context 1", "")
+            .apply { addAllElements() }
     }
 
     private fun String.withoutHeaderAndFooter() = this
