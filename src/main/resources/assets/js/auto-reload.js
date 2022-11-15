@@ -27,4 +27,26 @@ function reloadIfNeeded() {
         });
 }
 
-setInterval(reloadIfNeeded, 200);
+function connectToWs() {
+    const ws = new WebSocket("ws://" + location.host + "/_events");
+    ws.onopen = () => {
+        console.log("Connected to socket.");
+        reloadIfNeeded();
+    }
+    ws.onclose = (event) => {
+        console.log('Socket has been closed. Attempting to reconnect ...', event.reason);
+        setTimeout(() => connectToWs(), 1000);
+    };
+    ws.onmessage = (event) => {
+        if (event.data === "site-updating") {
+            console.log("Site updating ...")
+        } else if (event.data === "site-updated") {
+            console.log("Site update detected, detect page content change ...")
+            reloadIfNeeded();
+        } else {
+            console.log(event.data)
+        }
+    }
+}
+
+connectToWs();
