@@ -7,5 +7,5 @@ data class GeneratorContext(
     val workspace: Workspace,
     val branches: List<String>,
     val currentBranch: String,
-    val svgFactory: (name: String) -> String
+    val svgFactory: (key: String, url: String) -> String
 )

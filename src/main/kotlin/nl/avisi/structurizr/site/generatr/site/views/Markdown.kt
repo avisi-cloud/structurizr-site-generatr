@@ -40,7 +40,7 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: Mark
     val html = renderer.render(markDownDocument)
 
     return Jsoup.parse(html)
-        .apply { body().transformEmbeddedDiagramElements(markdownViewModel.svgFactory) }
+        .apply { body().transformEmbeddedDiagramElements(markdownViewModel.svgFactory, pageViewModel.url) }
         .html()
 }
 
@@ -71,11 +71,14 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
     }
 }
 
-private fun Element.transformEmbeddedDiagramElements(svgFactory: (name: String) -> String) = this.allElements
+private fun Element.transformEmbeddedDiagramElements(
+    svgFactory: (key: String, url: String) -> String,
+    url: String
+) = this.allElements
     .toList()
     .filter { it.tag().name == "img" && it.attr("src").startsWith("embed:") }
     .forEach {
         val diagramId = it.attr("src").substring(6)
-        it.parent()?.append(svgFactory(diagramId))
+        it.parent()?.append(svgFactory(diagramId, url))
         it.remove()
     }

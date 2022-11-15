@@ -10,7 +10,7 @@ import java.time.ZoneId
 import java.util.*
 
 abstract class ViewModelTest {
-    protected val svgFactory = { _: String -> "<svg></svg>" }
+    protected val svgFactory = { _: String, _: String -> "<svg></svg>" }
 
     protected fun generatorContext(
         workspaceName: String = "workspace name",

@@ -10,9 +10,9 @@ data class DiagramViewModel(
     val pumlLocation: ImageViewModel
 ) {
     companion object {
-        fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (name: String) -> String) = DiagramViewModel(
+        fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (key: String, url: String) -> String) = DiagramViewModel(
             view.name,
-            svgFactory(view.key),
+            svgFactory(view.key, pageViewModel.url),
             ImageViewModel(pageViewModel, "/svg/${view.key}.svg"),
             ImageViewModel(pageViewModel, "/png/${view.key}.png"),
             ImageViewModel(pageViewModel, "/puml/${view.key}.puml")
