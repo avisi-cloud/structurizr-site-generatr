@@ -60,34 +60,42 @@ private fun copyAssets(assetsDir: File, exportDir: File) {
 
 private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
     val branchDir = File(exportDir, context.currentBranch)
-    writeHtmlFile(branchDir, HomePageViewModel(context))
-    writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context))
-    writeHtmlFile(branchDir, SoftwareSystemsPageViewModel(context))
+    buildList {
+        add { writeHtmlFile(branchDir, HomePageViewModel(context)) }
+        add { writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context)) }
+        add { writeHtmlFile(branchDir, SoftwareSystemsPageViewModel(context)) }
 
-    context.workspace.documentation.sections
-        .filter { it.order != 1 }
-        .forEach { writeHtmlFile(branchDir, WorkspaceDocumentationSectionPageViewModel(context, it)) }
-    context.workspace.documentation.decisions
-        .forEach { writeHtmlFile(branchDir, WorkspaceDecisionPageViewModel(context, it)) }
+        context.workspace.documentation.sections
+            .filter { it.order != 1 }
+            .forEach {
+                add { writeHtmlFile(branchDir, WorkspaceDocumentationSectionPageViewModel(context, it)) }
+            }
+        context.workspace.documentation.decisions
+            .forEach {
+                add { writeHtmlFile(branchDir, WorkspaceDecisionPageViewModel(context, it)) }
+            }
 
-    context.workspace.model.includedSoftwareSystems.forEach {
-        writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemComponentPageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemDecisionsPageViewModel(context, it))
-        writeHtmlFile(branchDir, SoftwareSystemSectionsPageViewModel(context, it))
+        context.workspace.model.includedSoftwareSystems.forEach {
+            add { writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemComponentPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemDecisionsPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemSectionsPageViewModel(context, it)) }
 
-        it.documentation.decisions.forEach { decision ->
-            writeHtmlFile(branchDir, SoftwareSystemDecisionPageViewModel(context, it, decision))
-        }
+            it.documentation.decisions.forEach { decision ->
+                add { writeHtmlFile(branchDir, SoftwareSystemDecisionPageViewModel(context, it, decision)) }
+            }
 
-        it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
-            writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section))
+            it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
+                add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
+            }
         }
     }
+        .parallelStream()
+        .forEach { it.invoke() }
 }
 
 private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
