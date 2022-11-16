@@ -24,6 +24,7 @@ import java.time.Duration
 import kotlin.io.path.extension
 import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
+import kotlin.system.measureTimeMillis
 
 class ServeCommand : Subcommand("serve", "Start a development server") {
     private val workspaceFile by option(
@@ -62,27 +63,29 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         val exportDir = File(siteDir, branch)
 
         try {
-            broadcast("site-updating")
-            val workspace = createStructurizrWorkspace(File(workspaceFile))
-            println("Generating diagrams...")
-            generateDiagrams(workspace, exportDir)
+            val ms = measureTimeMillis {
+                broadcast("site-updating")
+                val workspace = createStructurizrWorkspace(File(workspaceFile))
+                println("Generating diagrams...")
+                generateDiagrams(workspace, exportDir)
 
-            println("Generating site...")
-            copySiteWideAssets(File(siteDir))
-            generateRedirectingIndexPage(File(siteDir), branch)
-            generateSite(
-                "0.0.0",
-                workspace,
-                assetsDir?.let { File(it) },
-                File(siteDir),
-                listOf(branch),
-                branch,
-                serving = true
-            )
+                println("Generating site...")
+                copySiteWideAssets(File(siteDir))
+                generateRedirectingIndexPage(File(siteDir), branch)
+                generateSite(
+                    "0.0.0",
+                    workspace,
+                    assetsDir?.let { File(it) },
+                    File(siteDir),
+                    listOf(branch),
+                    branch,
+                    serving = true
+                )
 
-            updateSiteError = null
-            broadcast("site-updated")
-            println("Successfully generated diagrams and site")
+                updateSiteError = null
+                broadcast("site-updated")
+            }
+            println("Successfully generated diagrams and site in ${ms.toDouble() / 1000} seconds")
         } catch (e: Exception) {
             updateSiteError = e.message ?: "Unknown error"
             broadcast(updateSiteError!!)
