@@ -42,9 +42,14 @@ function connectToWs() {
             console.log("Site updating ...")
         } else if (event.data === "site-updated") {
             console.log("Site update detected, detect page content change ...")
+            document.getElementById("site").classList.remove("is-hidden")
+            document.getElementById("hero").classList.add("is-hidden")
             reloadIfNeeded();
         } else {
             console.log(event.data)
+            document.getElementById("hero-subtitle").innerText = event.data
+            document.getElementById("site").classList.add("is-hidden")
+            document.getElementById("hero").classList.remove("is-hidden")
         }
     }
 }

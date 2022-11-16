@@ -22,6 +22,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             rel = "stylesheet",
             href = "../" + "/style.css".asUrlRelativeTo(viewModel.url)
         )
+
         if (viewModel.includeAutoReloading)
             script(
                 type = ScriptType.textJavaScript,
@@ -35,10 +36,26 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
         pageHeader(viewModel.headerBar)
 
         div(classes = "site-layout") {
+            id = "site"
             menu(viewModel.menu)
             div(classes = "container is-fluid has-background-white") {
                 block()
             }
         }
+
+        if (viewModel.includeAutoReloading)
+            div(classes = "container is-hidden") {
+                id = "hero"
+                div(classes = "hero is-danger mt-6") {
+                    div(classes = "hero-body") {
+                        p(classes = "title") {
+                            text("Error loading workspace file")
+                        }
+                        p(classes = "subtitle") {
+                            id = "hero-subtitle"
+                        }
+                    }
+                }
+            }
     }
 }
