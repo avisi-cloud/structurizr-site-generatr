@@ -4,6 +4,7 @@
 package nl.avisi.structurizr.site.generatr
 
 import com.sun.nio.file.SensitivityWatchEventModifier
+import jakarta.servlet.ServletContext
 import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.copySiteWideAssets
 import nl.avisi.structurizr.site.generatr.site.generateDiagrams
@@ -13,10 +14,17 @@ import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.DefaultServlet
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
+import org.eclipse.jetty.websocket.api.Session
+import org.eclipse.jetty.websocket.api.WebSocketAdapter
+import org.eclipse.jetty.websocket.server.JettyWebSocketServerContainer
+import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer
 import java.io.File
 import java.nio.file.*
+import java.time.Duration
+import kotlin.io.path.extension
 import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
+import kotlin.system.measureTimeMillis
 
 class ServeCommand : Subcommand("serve", "Start a development server") {
     private val workspaceFile by option(
@@ -28,6 +36,10 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     private val siteDir by option(
         ArgType.String, "site-dir", "s", "Directory for the generated site"
     ).default("build/serve")
+
+    private val eventSockets = mutableListOf<EventSocket>()
+    private val eventSocketsLock = Any()
+    private var updateSiteError: String? = null
 
     override fun execute() {
         updateSite()
@@ -47,26 +59,38 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     }
 
     private fun updateSite() {
-        val workspace = createStructurizrWorkspace(File(workspaceFile))
         val branch = "master"
         val exportDir = File(siteDir, branch)
 
-        println("Generating diagrams...")
-        generateDiagrams(workspace, exportDir)
+        try {
+            val ms = measureTimeMillis {
+                broadcast("site-updating")
+                val workspace = createStructurizrWorkspace(File(workspaceFile))
+                println("Generating diagrams...")
+                generateDiagrams(workspace, exportDir)
 
-        println("Generating site...")
-        copySiteWideAssets(File(siteDir))
-        generateRedirectingIndexPage(File(siteDir), branch)
-        generateSite(
-            "0.0.0",
-            workspace,
-            assetsDir?.let { File(it) },
-            File(siteDir),
-            listOf(branch),
-            branch
-        )
+                println("Generating site...")
+                copySiteWideAssets(File(siteDir))
+                generateRedirectingIndexPage(File(siteDir), branch)
+                generateSite(
+                    "0.0.0",
+                    workspace,
+                    assetsDir?.let { File(it) },
+                    File(siteDir),
+                    listOf(branch),
+                    branch,
+                    serving = true
+                )
 
-        println("Successfully generated diagrams and site")
+                updateSiteError = null
+                broadcast("site-updated")
+            }
+            println("Successfully generated diagrams and site in ${ms.toDouble() / 1000} seconds")
+        } catch (e: Exception) {
+            updateSiteError = e.message ?: "Unknown error"
+            broadcast(updateSiteError!!)
+            e.printStackTrace()
+        }
     }
 
     private fun runServer(): Server =
@@ -84,12 +108,23 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         ServletContextHandler().apply {
             contextPath = "/"
             addServlet(createStaticResourceServlet(), "/*")
+            addWebSocketServlet(this, "/_events")
         }
 
     private fun createStaticResourceServlet() =
         ServletHolder("default", DefaultServlet()).apply {
             setInitParameter("resourceBase", siteDir)
         }
+
+    private fun addWebSocketServlet(
+        context: ServletContextHandler,
+        @Suppress("SameParameterValue") pathSpec: String
+    ) =
+        JettyWebSocketServletContainerInitializer
+            .configure(context) { _: ServletContext?, container: JettyWebSocketServerContainer ->
+                container.idleTimeout = Duration.ZERO
+                container.addMapping(pathSpec) { _, _ -> EventSocket() }
+            }
 
     private fun startWatchService(): WatchService {
         val path = File(workspaceFile).absoluteFile.parentFile.toPath()
@@ -111,7 +146,9 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         while (true) {
             val watchKey = watchService.take()
             val parentPath = watchKey.watchable() as Path
-            val events = watchKey.pollEvents()
+
+            Thread.sleep(100) // Throttle the file watcher to give editors time for cleaning up temporary files
+            val events = watchKey.pollEvents().filterNot { isHashFile(it) }
 
             val fileModified = events.map { parentPath.resolve(it.context() as Path) }
                 .any { it.isRegularFile() }
@@ -136,13 +173,42 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         }
     }
 
+    private fun isHashFile(it: WatchEvent<*>) = (it.context() as Path).extension == "md5"
+
     private fun Path.watch(watchService: WatchService) {
         register(
-            watchService, arrayOf(
-                StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE,
+            watchService,
+            arrayOf(
+                StandardWatchEventKinds.ENTRY_CREATE,
+                StandardWatchEventKinds.ENTRY_DELETE,
                 StandardWatchEventKinds.ENTRY_MODIFY
             ),
             SensitivityWatchEventModifier.HIGH
         )
+    }
+
+    private fun broadcast(message: String) = synchronized(eventSocketsLock) {
+        eventSockets.forEach { it.send(message) }
+    }
+
+    private inner class EventSocket : WebSocketAdapter() {
+        override fun onWebSocketConnect(sess: Session?) {
+            super.onWebSocketConnect(sess)
+            synchronized(eventSocketsLock) { eventSockets.add(this) }
+            updateSiteError?.let { send(it) }
+        }
+
+        override fun onWebSocketClose(statusCode: Int, reason: String?) {
+            synchronized(eventSocketsLock) { eventSockets.remove(this) }
+        }
+
+        override fun onWebSocketError(cause: Throwable?) {
+            synchronized(eventSocketsLock) { eventSockets.remove(this) }
+        }
+
+        fun send(message: String) {
+            if (session != null && session.isOpen)
+                this.session.remote?.sendString(message)
+        }
     }
 }

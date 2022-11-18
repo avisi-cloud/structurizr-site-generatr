@@ -24,6 +24,20 @@ class MenuViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.generalItems).containsExactly(
             LinkViewModel(pageViewModel, "Home", HomePageViewModel.url()),
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["main", "branch-2"])
+    fun `software systems menu item if available`(currentBranch: String) {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
+            .apply {
+                workspace.model.addSoftwareSystem("Software system 1")
+            }
+        val pageViewModel = createPageViewModel(generatorContext)
+        val viewModel = MenuViewModel(generatorContext, pageViewModel)
+
+        assertThat(viewModel.generalItems[1]).isEqualTo(
             LinkViewModel(pageViewModel, "Software Systems", SoftwareSystemsPageViewModel.url())
         )
     }
@@ -60,7 +74,7 @@ class MenuViewModelTest : ViewModelTest() {
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
-        assertThat(viewModel.generalItems.drop(2)).containsExactly(
+        assertThat(viewModel.generalItems.drop(1)).containsExactly(
             LinkViewModel(pageViewModel, "Doc 1", WorkspaceDocumentationSectionPageViewModel.url(section1)),
             LinkViewModel(pageViewModel, "Doc Title 2", WorkspaceDocumentationSectionPageViewModel.url(section2))
         )

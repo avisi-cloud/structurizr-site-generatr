@@ -16,12 +16,18 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
     head {
         meta(charset = "utf-8")
         meta(name = "viewport", content = "width=device-width, initial-scale=1")
+        title { +viewModel.pageTitle }
         link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css")
         link(
             rel = "stylesheet",
             href = "../" + "/style.css".asUrlRelativeTo(viewModel.url)
         )
-        title { +viewModel.pageTitle }
+
+        if (viewModel.includeAutoReloading)
+            script(
+                type = ScriptType.textJavaScript,
+                src = "../" + "/auto-reload.js".asUrlRelativeTo(viewModel.url)
+            ) { }
     }
 }
 
@@ -30,10 +36,26 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
         pageHeader(viewModel.headerBar)
 
         div(classes = "site-layout") {
+            id = "site"
             menu(viewModel.menu)
             div(classes = "container is-fluid has-background-white") {
                 block()
             }
         }
+
+        if (viewModel.includeAutoReloading)
+            div(classes = "container is-hidden") {
+                id = "hero"
+                div(classes = "hero is-danger mt-6") {
+                    div(classes = "hero-body") {
+                        p(classes = "title") {
+                            text("Error loading workspace file")
+                        }
+                        p(classes = "subtitle") {
+                            id = "hero-subtitle"
+                        }
+                    }
+                }
+            }
     }
 }
