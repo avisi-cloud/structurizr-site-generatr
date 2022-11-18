@@ -9,7 +9,11 @@ top to bottom direction
 Enterprise_Boundary(enterprise, "Big Bank plc") {
   System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")
   System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")
-  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")[[https://en.wikipedia.org/wiki/Online_banking]]
+  WithoutPropertyHeader()
+  AddProperty("Development Team","Dev/Internet Services")
+  AddProperty("Owner","Customer Services")
+  AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
+  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")
 }
 
 Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")

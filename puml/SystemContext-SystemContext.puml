@@ -1,0 +1,27 @@
+@startuml
+title Internet Banking System - System Context
+
+top to bottom direction
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Enterprise_Boundary(enterprise, "Big Bank plc") {
+  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../../mainframe-banking-system/context]]
+  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../../e-mail-system/context]]
+  WithoutPropertyHeader()
+  AddProperty("Development Team","Dev/Internet Services")
+  AddProperty("Owner","Customer Services")
+  AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
+  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")
+}
+
+Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
+
+Rel_D(PersonalBankingCustomer, InternetBankingSystem, "Views account balances, and makes payments using", $tags="")
+Rel_D(InternetBankingSystem, MainframeBankingSystem, "Gets account information from, and makes payments using", $tags="")
+Rel_D(InternetBankingSystem, EmailSystem, "Sends e-mail using", $tags="")
+Rel_D(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $tags="")
+
+SHOW_LEGEND()
+@enduml
