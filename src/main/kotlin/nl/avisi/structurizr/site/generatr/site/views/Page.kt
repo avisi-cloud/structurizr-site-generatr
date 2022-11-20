@@ -24,15 +24,15 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         )
 
         if (viewModel.includeAutoReloading)
-            script(
-                type = ScriptType.textJavaScript,
-                src = "../" + "/auto-reload.js".asUrlRelativeTo(viewModel.url)
-            ) { }
+            autoReloadScript(viewModel)
     }
 }
 
 private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
     body {
+        if (viewModel.includeAutoReloading)
+            updatingSiteProgressBar()
+
         pageHeader(viewModel.headerBar)
 
         div(classes = "site-layout") {
@@ -44,18 +44,6 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
         }
 
         if (viewModel.includeAutoReloading)
-            div(classes = "container is-hidden") {
-                id = "hero"
-                div(classes = "hero is-danger mt-6") {
-                    div(classes = "hero-body") {
-                        p(classes = "title") {
-                            text("Error loading workspace file")
-                        }
-                        p(classes = "subtitle") {
-                            id = "hero-subtitle"
-                        }
-                    }
-                }
-            }
+            updateSiteErrorHero()
     }
 }

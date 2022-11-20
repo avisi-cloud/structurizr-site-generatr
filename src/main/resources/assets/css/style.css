@@ -11,6 +11,13 @@
     overflow-x: auto;
 }
 
+.is-front-centered {
+    width: 40%;
+    margin-left: 30%;
+    height: fit-content;
+    z-index: 50;
+}
+
 .is-one-tenth {
     width: 10%;
 }
