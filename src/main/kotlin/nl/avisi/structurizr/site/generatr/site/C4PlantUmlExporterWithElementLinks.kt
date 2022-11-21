@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site
 
+import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.C4PlantUMLExporter
@@ -17,8 +18,9 @@ import nl.avisi.structurizr.site.generatr.includedSoftwareSystem
 import nl.avisi.structurizr.site.generatr.normalize
 
 class C4PlantUmlExporterWithElementLinks(
+    private val workspace: Workspace,
     private val url: String
-): C4PlantUMLExporter() {
+) : C4PlantUMLExporter() {
     companion object {
         const val TEMP_URI = "https://will-be-changed-to-relative/"
 
@@ -53,9 +55,15 @@ class C4PlantUmlExporterWithElementLinks(
         this is SoftwareSystem && this.includedSoftwareSystem && this != view?.softwareSystem
 
     private fun setElementUrl(element: Element) {
-        val path = "/${element.name.normalize()}/context/".asUrlRelativeTo(url)
-        element.url = "${TEMP_URI}$path"
+        val root = "/${element.name.normalize()}"
+        val path = if (isContextViewDefinedFor(element)) "$root/context/" else "$root/"
+
+        element.url = TEMP_URI + path.asUrlRelativeTo(url)
     }
+
+    private fun isContextViewDefinedFor(element: Element) =
+        workspace.views.systemContextViews
+            .any { it.softwareSystem == element }
 
     private fun writeModifiedElement(
         view: View?,
