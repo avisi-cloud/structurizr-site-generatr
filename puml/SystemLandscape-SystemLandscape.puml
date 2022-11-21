@@ -6,6 +6,8 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
+skinparam svgDimensionStyle false
+skinparam preserveAspectRatio meet
 Enterprise_Boundary(enterprise, "Big Bank plc") {
   WithoutPropertyHeader()
   AddProperty("Location","Customer Services")

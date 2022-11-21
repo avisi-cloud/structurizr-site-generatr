@@ -8,6 +8,8 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
 
+skinparam svgDimensionStyle false
+skinparam preserveAspectRatio meet
 Deployment_Node(Live.Customersmobiledevice, "Customer's mobile device", "Apple iOS or Android", $tags="") {
   Container(Live.Customersmobiledevice.MobileApp_1, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")
 }
