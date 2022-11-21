@@ -18,7 +18,7 @@ class C4PlantUmlExporterWithElementLinksTest {
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
             System(System1, "System 1", "", ${'$'}tags="")
-            """.withoutTrailingSpaces()
+            """.trimIndent()
         )
     }
 
@@ -35,7 +35,7 @@ class C4PlantUmlExporterWithElementLinksTest {
             System(System2, "System 2", "", ${'$'}tags="")[[../system-2/context]]
 
             Rel_D(System2, System1, "uses", ${'$'}tags="")
-            """.withoutTrailingSpaces()
+            """.trimIndent()
         )
     }
 
@@ -52,7 +52,7 @@ class C4PlantUmlExporterWithElementLinksTest {
             System(System2, "System 2", "", ${'$'}tags="")[[../../system-2/context]]
 
             Rel_D(System2, System1, "uses", ${'$'}tags="")
-            """.withoutTrailingSpaces()
+            """.trimIndent()
         )
     }
 
@@ -75,13 +75,8 @@ class C4PlantUmlExporterWithElementLinksTest {
 
     private fun String.withoutHeaderAndFooter() = this
         .split(System.lineSeparator())
-        .drop(7)
+        .drop(10)
         .dropLast(3)
         .joinToString(System.lineSeparator())
-        .trimEnd()
-
-    private fun String.withoutTrailingSpaces() = this
-        .split(System.lineSeparator())
-        .joinToString(System.lineSeparator()) { it.trim() }
         .trimEnd()
 }
