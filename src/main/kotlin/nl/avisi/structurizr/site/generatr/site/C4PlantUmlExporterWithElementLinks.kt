@@ -34,6 +34,12 @@ class C4PlantUmlExporterWithElementLinks(
         }
     }
 
+    override fun writeHeader(view: View, writer: IndentingWriter) {
+        super.writeHeader(view, writer)
+        writer.writeLine("skinparam svgDimensionStyle false")
+        writer.writeLine("skinparam preserveAspectRatio meet")
+    }
+
     override fun writeElement(view: View?, element: Element?, writer: IndentingWriter?) {
         if (element !is SoftwareSystem || !element.linkNeeded(view))
             return super.writeElement(view, element, writer)

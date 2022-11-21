@@ -1,12 +1,34 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import assertk.assertThat
+import assertk.assertions.contains
 import assertk.assertions.isEqualTo
 import com.structurizr.Workspace
 import com.structurizr.view.SystemContextView
 import kotlin.test.Test
 
 class C4PlantUmlExporterWithElementLinksTest {
+    @Test
+    fun `adds skinparam to remove explicit size from generated svg`() {
+        val view = createWorkspaceWithOneSystem()
+
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
+            .export(view)
+
+        assertThat(diagram.definition)
+            .contains("skinparam svgDimensionStyle false")
+    }
+
+    @Test
+    fun `adds skinparam to preserve the aspect ratio of the generated svg`() {
+        val view = createWorkspaceWithOneSystem()
+
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
+            .export(view)
+
+        assertThat(diagram.definition)
+            .contains("skinparam preserveAspectRatio meet")
+    }
 
     @Test
     fun `renders diagram`() {
@@ -18,7 +40,7 @@ class C4PlantUmlExporterWithElementLinksTest {
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
             System(System1, "System 1", "", ${'$'}tags="")
-            """.withoutTrailingSpaces()
+            """.trimIndent()
         )
     }
 
@@ -35,7 +57,7 @@ class C4PlantUmlExporterWithElementLinksTest {
             System(System2, "System 2", "", ${'$'}tags="")[[../system-2/context]]
 
             Rel_D(System2, System1, "uses", ${'$'}tags="")
-            """.withoutTrailingSpaces()
+            """.trimIndent()
         )
     }
 
@@ -52,7 +74,7 @@ class C4PlantUmlExporterWithElementLinksTest {
             System(System2, "System 2", "", ${'$'}tags="")[[../../system-2/context]]
 
             Rel_D(System2, System1, "uses", ${'$'}tags="")
-            """.withoutTrailingSpaces()
+            """.trimIndent()
         )
     }
 
@@ -75,13 +97,8 @@ class C4PlantUmlExporterWithElementLinksTest {
 
     private fun String.withoutHeaderAndFooter() = this
         .split(System.lineSeparator())
-        .drop(7)
+        .drop(10)
         .dropLast(3)
         .joinToString(System.lineSeparator())
-        .trimEnd()
-
-    private fun String.withoutTrailingSpaces() = this
-        .split(System.lineSeparator())
-        .joinToString(System.lineSeparator()) { it.trim() }
         .trimEnd()
 }
