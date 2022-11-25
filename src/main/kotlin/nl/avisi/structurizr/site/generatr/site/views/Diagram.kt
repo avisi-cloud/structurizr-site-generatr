@@ -8,9 +8,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
         figure {
             style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
 
-            unsafe {
-                +viewModel.svg
-            }
+            rawHtml(viewModel.svg)
             figcaption {
                 +viewModel.name
                 +" ["

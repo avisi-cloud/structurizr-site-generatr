@@ -5,6 +5,6 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemDecisionPageV
 
 fun HTML.softwareSystemDecisionPage(viewModel: SoftwareSystemDecisionPageViewModel) {
     softwareSystemPage(viewModel) {
-        markdown(viewModel, viewModel.content)
+        rawHtml(viewModel.content)
     }
 }

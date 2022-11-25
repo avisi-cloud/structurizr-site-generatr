@@ -1,4 +1,4 @@
-package nl.avisi.structurizr.site.generatr.site.views
+package nl.avisi.structurizr.site.generatr.site.model
 
 import com.vladsch.flexmark.ext.tables.TablesExtension
 import com.vladsch.flexmark.html.HtmlRenderer
@@ -10,26 +10,14 @@ import com.vladsch.flexmark.html.renderer.ResolvedLink
 import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.data.MutableDataSet
-import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.stream.createHTML
-import kotlinx.html.unsafe
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
-import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
-import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
-import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
+import nl.avisi.structurizr.site.generatr.site.views.diagram
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-fun FlowContent.markdown(pageViewModel: PageViewModel, markdownViewModel: MarkdownViewModel) {
-    div {
-        unsafe {
-            +markdownToHtml(pageViewModel, markdownViewModel)
-        }
-    }
-}
-
-private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: MarkdownViewModel): String {
+fun markdownToHtml(pageViewModel: PageViewModel, markdown: String, svgFactory: (key: String, url: String) -> String?): String {
     val options = MutableDataSet()
 
     options.set(Parser.EXTENSIONS, listOf(TablesExtension.create()))
@@ -38,11 +26,11 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: Mark
     val renderer = HtmlRenderer.builder(options)
         .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
         .build()
-    val markDownDocument = parser.parse(markdownViewModel.markdown)
+    val markDownDocument = parser.parse(markdown)
     val html = renderer.render(markDownDocument)
 
     return Jsoup.parse(html)
-        .apply { body().transformEmbeddedDiagramElements(pageViewModel, markdownViewModel.svgFactory) }
+        .apply { body().transformEmbeddedDiagramElements(pageViewModel, svgFactory) }
         .body()
         .html()
 }

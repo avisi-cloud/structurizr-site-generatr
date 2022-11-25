@@ -38,6 +38,6 @@ class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
         val section = createSection()
         val viewModel = WorkspaceDocumentationSectionPageViewModel(generatorContext, section)
 
-        assertThat(viewModel.content).isEqualTo(MarkdownViewModel(section.content, svgFactory))
+        assertThat(viewModel.content).isEqualTo(markdownToHtml(viewModel, section.content, svgFactory))
     }
 }
