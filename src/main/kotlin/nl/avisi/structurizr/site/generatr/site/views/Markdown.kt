@@ -43,6 +43,7 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: Mark
 
     return Jsoup.parse(html)
         .apply { body().transformEmbeddedDiagramElements(pageViewModel, markdownViewModel.svgFactory) }
+        .body()
         .html()
 }
 
