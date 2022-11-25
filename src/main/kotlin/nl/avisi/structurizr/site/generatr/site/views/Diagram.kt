@@ -4,26 +4,28 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
 
 fun FlowContent.diagram(viewModel: DiagramViewModel) {
-    val diagramWidthInPixels = "viewBox=\"\\d+ \\d+ (\\d+) \\d+\"".toRegex()
-        .find(viewModel.svg)
-        ?.let { it.groupValues[1].toInt() }
-        ?: throw IllegalStateException("No viewBox attribute found in SVG!")
+    if (viewModel.svg != null)
+        figure {
+            style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
 
-    figure {
-        style = "width: min(100%, ${diagramWidthInPixels}px);"
-
-        unsafe {
-            +viewModel.svg
+            unsafe {
+                +viewModel.svg
+            }
+            figcaption {
+                +viewModel.name
+                +" ["
+                a(href = viewModel.svgLocation.relativeHref) { +"svg" }
+                +"|"
+                a(href = viewModel.pngLocation.relativeHref) { +"png" }
+                +"|"
+                a(href = viewModel.pumlLocation.relativeHref) { +"puml" }
+                +"]"
+            }
         }
-        figcaption {
-            +viewModel.name
-            +" ["
-            a(href = viewModel.svgLocation.relativeHref) { +"svg" }
-            +"|"
-            a(href = viewModel.pngLocation.relativeHref) { +"png" }
-            +"|"
-            a(href = viewModel.pumlLocation.relativeHref) { +"puml" }
-            +"]"
+    else
+        div(classes = "notification is-danger") {
+            +"No view with key"
+            span(classes = "has-text-weight-bold") { +" ${viewModel.key} " }
+            +"found!"
         }
-    }
 }

@@ -12,8 +12,10 @@ import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.html.FlowContent
 import kotlinx.html.div
+import kotlinx.html.stream.createHTML
 import kotlinx.html.unsafe
 import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
+import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MarkdownViewModel
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 import org.jsoup.Jsoup
@@ -40,13 +42,13 @@ private fun markdownToHtml(pageViewModel: PageViewModel, markdownViewModel: Mark
     val html = renderer.render(markDownDocument)
 
     return Jsoup.parse(html)
-        .apply { body().transformEmbeddedDiagramElements(markdownViewModel.svgFactory, pageViewModel.url) }
+        .apply { body().transformEmbeddedDiagramElements(pageViewModel, markdownViewModel.svgFactory) }
         .html()
 }
 
 private class CustomLinkResolver(private val pageViewModel: PageViewModel) : LinkResolver {
     override fun resolveLink(node: Node, context: LinkResolverBasicContext, link: ResolvedLink): ResolvedLink {
-        if (link.url.startsWith("embed:")) {
+        if (link.url.startsWith(embedPrefix)) {
             return link
                 .withStatus(LinkStatus.VALID)
                 .withUrl(link.url)
@@ -72,13 +74,20 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
 }
 
 private fun Element.transformEmbeddedDiagramElements(
-    svgFactory: (key: String, url: String) -> String,
-    url: String
+    pageViewModel: PageViewModel,
+    svgFactory: (key: String, url: String) -> String?
 ) = this.allElements
     .toList()
-    .filter { it.tag().name == "img" && it.attr("src").startsWith("embed:") }
+    .filter { it.tag().name == "img" && it.attr("src").startsWith(embedPrefix) }
     .forEach {
-        val diagramId = it.attr("src").substring(6)
-        it.parent()?.append(svgFactory(diagramId, url))
+        val key = it.attr("src").substring(embedPrefix.length)
+        val name = it.attr("alt").ifBlank { key }
+        val html = createHTML().div {
+            diagram(DiagramViewModel.forView(pageViewModel, key, name, svgFactory))
+        }
+
+        it.parent()?.append(html)
         it.remove()
     }
+
+private const val embedPrefix = "embed:"
