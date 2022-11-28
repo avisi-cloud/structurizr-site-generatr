@@ -2,7 +2,7 @@
 * [Structurizr Site Generatr](#structurizr-site-generatr)
   * [Features](#features)
   * [Getting Started](#getting-started)
-    * [Installation using Homebrew (recommended)](#installation-using-homebrew--recommended-)
+    * [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
     * [Manual installation](#manual-installation)
     * [Docker](#docker)
       * [[Optional] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
@@ -54,7 +54,7 @@ To get started with the Structurizr Site Generatr, you can either:
 **Please note**: The intended use of the Docker image is to generate a site from a CI pipeline. Using it for model
 development is possible, but not a usage scenario that's actively supported.
 
-### Installation using Homebrew (recommended)
+### Installation using Homebrew - Recommended
 
 As this approach relies on [Homebrew](https://brew.sh/), ensure this is already installed. For Windows and other
 operating systems not supported by Homebrew, please use the [Docker approach](#docker) instead.
