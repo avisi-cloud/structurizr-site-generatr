@@ -7,11 +7,10 @@ class SoftwareSystemHomePageViewModel(generatorContext: GeneratorContext, softwa
     SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME) {
     val hasProperties = softwareSystem.properties.any()
     val propertiesTable = createPropertiesTableViewModel(softwareSystem.properties)
-    val content = softwareSystem.documentation.sections
+    val content = markdownToHtml(this, softwareSystem.info(), generatorContext.svgFactory)
+
+    private fun SoftwareSystem.info() = documentation.sections
         .minByOrNull { it.order }
-        ?.let { MarkdownViewModel(it.content, generatorContext.svgFactory) }
-        ?: MarkdownViewModel(
-            "# Description${System.lineSeparator()}${softwareSystem.description}",
-            generatorContext.svgFactory
-        )
+        ?.content
+        ?: "# Description${System.lineSeparator()}${description}"
 }

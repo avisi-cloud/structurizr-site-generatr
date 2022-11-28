@@ -54,8 +54,8 @@ fun generateSite(
     serving: Boolean = false
 ) {
     val generatorContext = GeneratorContext(version, workspace, branches, currentBranch, serving) { key, url ->
-        val view = workspace.views.views.single { view -> view.key == key }
-        generateDiagramWithElementLinks(view, url, exportDir)
+        workspace.views.views.singleOrNull { view -> view.key == key }
+            ?.let { generateDiagramWithElementLinks(it, url, exportDir) }
     }
 
     deleteOldHashes(exportDir)

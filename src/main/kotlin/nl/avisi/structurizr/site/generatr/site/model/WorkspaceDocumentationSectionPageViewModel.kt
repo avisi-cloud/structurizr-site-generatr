@@ -9,7 +9,7 @@ class WorkspaceDocumentationSectionPageViewModel(generatorContext: GeneratorCont
     override val url = url(section)
     override val pageSubTitle: String = section.title
 
-    val content = MarkdownViewModel(section.content, generatorContext.svgFactory)
+    val content = markdownToHtml(this, section.content, generatorContext.svgFactory)
 
     companion object {
         fun url(section: Section): String {

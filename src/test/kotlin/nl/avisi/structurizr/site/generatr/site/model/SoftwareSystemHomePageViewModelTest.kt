@@ -28,8 +28,12 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemHomePageViewModel(generatorContext, softwareSystem)
 
         assertThat(viewModel.content)
-            .prop(MarkdownViewModel::markdown).isEqualTo(
-                "# Description${System.lineSeparator()}${softwareSystem.description}"
+            .isEqualTo(
+                markdownToHtml(
+                    viewModel,
+                    "# Description${System.lineSeparator()}${softwareSystem.description}",
+                    svgFactory
+                )
             )
     }
 
@@ -43,8 +47,8 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemHomePageViewModel(generatorContext, softwareSystem)
 
         assertThat(viewModel.content)
-            .prop(MarkdownViewModel::markdown).isEqualTo(
-                softwareSystem.documentation.sections.single().content
+            .isEqualTo(
+                markdownToHtml(viewModel, softwareSystem.documentation.sections.single().content, svgFactory)
             )
     }
 

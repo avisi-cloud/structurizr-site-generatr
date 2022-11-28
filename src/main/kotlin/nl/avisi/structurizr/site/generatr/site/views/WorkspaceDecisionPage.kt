@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.WorkspaceDecisionPageViewMo
 fun HTML.workspaceDecisionPage(viewModel: WorkspaceDecisionPageViewModel) {
     page(viewModel) {
         contentDiv {
-            markdown(viewModel, viewModel.content)
+            rawHtml(viewModel.content)
         }
     }
 }

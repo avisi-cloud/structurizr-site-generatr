@@ -7,7 +7,8 @@ class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(gene
     override val pageSubTitle = "Home"
     override val url = url()
 
-    val content = MarkdownViewModel(
+    val content = markdownToHtml(
+        this,
         markdown = generatorContext.workspace.documentation.sections
             .firstOrNull { it.order == 1 }?.content ?: DEFAULT_HOMEPAGE_CONTENT,
         svgFactory = generatorContext.svgFactory

@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemHomePageViewM
 
 fun HTML.softwareSystemHomePage(viewModel: SoftwareSystemHomePageViewModel) {
     softwareSystemPage(viewModel) {
-        markdown(viewModel, viewModel.content)
+        rawHtml(viewModel.content)
         if (viewModel.hasProperties) {
             h2 { +"Properties" }
             table(viewModel.propertiesTable)
