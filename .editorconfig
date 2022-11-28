@@ -13,7 +13,8 @@ charset = utf-8
 # indent_size = 2
 # indent_style = tab
 insert_final_newline = true
-max_line_length = 120  # supported in only some editors; instead use prettier.printWidth
+# supported in only some editors; instead use prettier.printWidth
+max_line_length = 120
 trim_trailing_whitespace = true
 
 [*.{markdown,md,mdx}]
