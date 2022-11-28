@@ -21,6 +21,7 @@ import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerI
 import java.io.File
 import java.nio.file.*
 import java.time.Duration
+import kotlin.io.path.absolutePathString
 import kotlin.io.path.extension
 import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
@@ -129,10 +130,11 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     private fun startWatchService(): WatchService {
         val path = File(workspaceFile).absoluteFile.parentFile.toPath()
         val watchService = FileSystems.getDefault().newWatchService()
+        val absoluteSiteDir = File(siteDir).absolutePath
 
         path.watch(watchService)
         Files.walk(path)
-            .filter { it.isDirectory() }
+            .filter { it.isDirectory() && !it.absolutePathString().startsWith(absoluteSiteDir) }
             .forEach { it.watch(watchService) }
 
         Thread { monitorFileChanges(watchService) }
