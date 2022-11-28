@@ -4,9 +4,12 @@ import kotlinx.html.HTML
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContextPageViewModel
 
 fun HTML.softwareSystemContextPage(viewModel: SoftwareSystemContextPageViewModel) {
-    softwareSystemPage(viewModel) {
-        viewModel.diagrams.forEach {
-            diagram(it)
+    if (viewModel.visible)
+        softwareSystemPage(viewModel) {
+            viewModel.diagrams.forEach {
+                diagram(it)
+            }
         }
-    }
+    else
+        redirectUpPage()
 }

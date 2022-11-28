@@ -66,7 +66,6 @@ fun generateSite(
 private fun deleteOldHashes(exportDir: File) = exportDir.walk().filter { it.extension == "md5" }
     .forEach { it.delete() }
 
-
 private fun copyAssets(assetsDir: File, exportDir: File) {
     assetsDir.copyRecursively(exportDir, overwrite = true)
 }

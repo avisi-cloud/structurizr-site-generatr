@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
 import nl.avisi.structurizr.site.generatr.normalize
 import kotlin.test.Test
 
@@ -29,5 +30,15 @@ class SoftwareSystemDecisionsPageViewModelTest : ViewModelTest() {
                     "/${softwareSystem.name.normalize()}/decisions/1"
                 }
             )
+    }
+
+    @Test
+    fun `hidden view`() {
+        val viewModel = SoftwareSystemDecisionsPageViewModel(
+            generatorContext,
+            generatorContext.workspace.model.addSoftwareSystem("Software system 2")
+        )
+
+        assertThat(viewModel.visible).isFalse()
     }
 }
