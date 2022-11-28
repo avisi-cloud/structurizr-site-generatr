@@ -1,3 +1,23 @@
+<!-- TOC -->
+* [Structurizr Site Generatr](#structurizr-site-generatr)
+  * [Features](#features)
+  * [Getting Started](#getting-started)
+    * [Installation using Homebrew (recommended)](#installation-using-homebrew--recommended-)
+    * [Manual installation](#manual-installation)
+    * [Docker](#docker)
+      * [[Optional] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
+  * [Usage](#usage)
+    * [Help](#help)
+    * [Version](#version)
+    * [Generate a website](#generate-a-website)
+      * [From a C4 Workspace](#from-a-c4-workspace)
+      * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
+      * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
+    * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
+      * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
+  * [Background](#background)
+<!-- TOC -->
+
 # Structurizr Site Generatr
 
 A static site generator for C4 architecture models created with [Structrizr DSL](https://github.com/structurizr/dsl).
@@ -11,11 +31,14 @@ is generated from the example workspace in this repository.
 
 - Generate a static HTML site, based on a Structurizr DSL workspace.
 - Generates diagrams in SVG, PNG and PlantUML format, which can be viewed and downloaded from the generated site.
+- Easy browsing through the site by clicking on software system elements in the diagrams.
 - Start a development server which generates a site, serves it and updates the site automatically whenever a file that's
   part of the Structurizr workspace changes.
-- Include workspace-level documentation (in Markdown format) in the generated site.
-- Include system-level ADR's in the generated site.
-- Include static assets in the generated site, which can be used in ADR's and workspace-level documentation.
+- Include documentation (in Markdown format) in the generated site. Both workspace level documentation and software
+  system level documentation are included in the site.
+- Include ADR's in the generated site. Again, both workspace level ADR's and software system level ADR's are included in
+  the site.
+- Include static assets in the generated site, which can be used in ADR's and documentation.
 - Generate a site from a Structurizr DSL model in a Git repository. Supports multiple branches, which makes it possible
   to for example maintain an actual state in `master` and one or more future states in feature branches. The generated
   site includes diagrams for all configured branches.
@@ -25,10 +48,13 @@ is generated from the example workspace in this repository.
 
 To get started with the Structurizr Site Generatr, you can either:
 
-- Install it to your local machine (requires Homebrew), or
+- Install it to your local machine (recommended for the best experience), or
 - Execute it on your local machine via a container (requires Docker)
 
-### Installation
+**Please note**: The intended use of the Docker image is to generate a site from a CI pipeline. Using it for model
+development is possible, but not a usage scenario that's actively supported.
+
+### Installation using Homebrew (recommended)
 
 As this approach relies on [Homebrew](https://brew.sh/), ensure this is already installed. For Windows and other
 operating systems not supported by Homebrew, please use the [Docker approach](#docker) instead.
@@ -44,6 +70,18 @@ structurizr-site-generatr --help
 
 Periodically, you would have to update your local installation to take advantage of any new
 [Structurizr Site Generatr releases](https://github.com/avisi-cloud/structurizr-site-generatr/releases).
+
+### Manual installation
+
+If using Homebrew is not an option for you, it's also possible to install Structurizr Site Generatr manually. This can
+be done as follows:
+
+- Consult the
+  [Structurizr Site Generatr releases](https://github.com/avisi-cloud/structurizr-site-generatr/releases) and choose
+  the version you wish to use
+- Download the `.tar.gz` or `.zip` distribution
+- Extract the archive using your favourite tool
+- For ease of use, it's recommended to add Structurizr Site Generatr's `bin` directory to your `PATH`
 
 ### Docker
 
