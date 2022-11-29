@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.hasDocumentationSections
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemSectionsPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
@@ -8,4 +9,5 @@ class SoftwareSystemSectionsPageViewModel(generatorContext: GeneratorContext, so
     val sectionsTable = createSectionsTableViewModel(softwareSystem.documentation.sections) {
         "$url/${it.order}"
     }
+    val visible = softwareSystem.hasDocumentationSections()
 }

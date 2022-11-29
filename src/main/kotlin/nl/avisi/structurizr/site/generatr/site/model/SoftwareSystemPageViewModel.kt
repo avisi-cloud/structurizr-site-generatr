@@ -1,6 +1,12 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.hasComponentViews
+import nl.avisi.structurizr.site.generatr.hasContainerViews
+import nl.avisi.structurizr.site.generatr.hasDecisions
+import nl.avisi.structurizr.site.generatr.hasDeploymentViews
+import nl.avisi.structurizr.site.generatr.hasDocumentationSections
+import nl.avisi.structurizr.site.generatr.hasSystemContextViews
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
@@ -30,12 +36,12 @@ open class SoftwareSystemPageViewModel(
             get() = when (tab) {
                 Tab.HOME -> true
                 Tab.DEPENDENCIES -> true
-                Tab.SYSTEM_CONTEXT -> generatorContext.workspace.views.systemContextViews.any { it.softwareSystem == softwareSystem }
-                Tab.CONTAINER -> generatorContext.workspace.views.containerViews.any { it.softwareSystem == softwareSystem }
-                Tab.COMPONENT -> generatorContext.workspace.views.componentViews.any { it.softwareSystem == softwareSystem }
-                Tab.DEPLOYMENT -> generatorContext.workspace.views.deploymentViews.any { it.softwareSystem == softwareSystem }
-                Tab.DECISIONS -> softwareSystem.documentation.decisions.isNotEmpty()
-                Tab.SECTIONS -> softwareSystem.documentation.sections.size >= 2
+                Tab.SYSTEM_CONTEXT -> generatorContext.workspace.views.hasSystemContextViews(softwareSystem)
+                Tab.CONTAINER -> generatorContext.workspace.views.hasContainerViews(softwareSystem)
+                Tab.COMPONENT -> generatorContext.workspace.views.hasComponentViews(softwareSystem)
+                Tab.DEPLOYMENT -> generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
+                Tab.DECISIONS -> softwareSystem.hasDecisions()
+                Tab.SECTIONS -> softwareSystem.hasDocumentationSections()
             }
     }
 
@@ -50,7 +56,7 @@ open class SoftwareSystemPageViewModel(
         TabViewModel(Tab.DEPLOYMENT),
         TabViewModel(Tab.DEPENDENCIES),
         TabViewModel(Tab.DECISIONS, exactLink = false),
-        TabViewModel(Tab.SECTIONS, exactLink = false),
+        TabViewModel(Tab.SECTIONS, exactLink = false)
     )
 
     val description: String = softwareSystem.description

@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.hasSystemContextViews
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemContextPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
@@ -9,4 +10,5 @@ class SoftwareSystemContextPageViewModel(generatorContext: GeneratorContext, sof
         .filter { it.softwareSystem == softwareSystem }
         .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
+    val visible = generatorContext.workspace.views.hasSystemContextViews(softwareSystem)
 }

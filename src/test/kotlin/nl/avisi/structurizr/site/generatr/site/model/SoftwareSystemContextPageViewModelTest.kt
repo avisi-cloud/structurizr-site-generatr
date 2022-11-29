@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
+import assertk.assertions.isFalse
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -37,5 +38,15 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
                 ImageViewModel(viewModel, "/puml/context-2.puml")
             )
         )
+    }
+
+    @Test
+    fun `hidden view`() {
+        val viewModel = SoftwareSystemContextPageViewModel(
+            generatorContext,
+            generatorContext.workspace.model.addSoftwareSystem("Software system 2")
+        )
+
+        assertThat(viewModel.visible).isFalse()
     }
 }
