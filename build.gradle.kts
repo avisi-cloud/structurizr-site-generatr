@@ -32,7 +32,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
 
-    implementation("org.eclipse.jetty:jetty-server:11.0.12")
+    implementation("org.eclipse.jetty:jetty-server:11.0.13")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.12")
     implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.12")
 
