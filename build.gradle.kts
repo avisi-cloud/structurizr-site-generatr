@@ -38,7 +38,7 @@ dependencies {
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.6")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.22")
-    runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.13")
+    runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.14")
     runtimeOnly("org.jruby:jruby-core:9.4.0.0")
 
     testImplementation(kotlin("test"))
