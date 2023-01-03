@@ -1,7 +1,7 @@
-FROM eclipse-temurin:19-jre-alpine
+FROM eclipse-temurin:19-jre-jammy
 
 USER root
-RUN apk add --no-cache graphviz
+RUN apt update && apt install graphviz --yes
 RUN mkdir -p /var/model \
     && chown 65532:65532 /var/model
 RUN adduser -h /home/generatr -u 65532 -D generatr
