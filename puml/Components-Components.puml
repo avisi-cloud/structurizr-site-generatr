@@ -16,7 +16,7 @@ ContainerDb(InternetBankingSystem.Database, "Database", "Oracle Database Schema"
 Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
 Container(InternetBankingSystem.MobileApp, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")
 
-Container_Boundary("InternetBankingSystem.APIApplication_boundary", "API Application") {
+Container_Boundary("InternetBankingSystem.APIApplication_boundary", "API Application", $tags="") {
   Component(InternetBankingSystem.APIApplication.SignInController, "Sign In Controller", "Spring MVC Rest Controller", "Allows users to sign in to the Internet Banking System.", $tags="")
   Component(InternetBankingSystem.APIApplication.AccountsSummaryController, "Accounts Summary Controller", "Spring MVC Rest Controller", "Provides customers with a summary of their bank accounts.", $tags="")
   Component(InternetBankingSystem.APIApplication.ResetPasswordController, "Reset Password Controller", "Spring MVC Rest Controller", "Allows users to reset their passwords with a single use URL.", $tags="")
@@ -39,5 +39,5 @@ Rel_D(InternetBankingSystem.APIApplication.SecurityComponent, InternetBankingSys
 Rel_D(InternetBankingSystem.APIApplication.MainframeBankingSystemFacade, MainframeBankingSystem, "Makes API calls to", "XML/HTTPS", $tags="")
 Rel_D(InternetBankingSystem.APIApplication.EmailComponent, EmailSystem, "Sends e-mail using", $tags="")
 
-SHOW_LEGEND()
+SHOW_LEGEND(true)
 @enduml

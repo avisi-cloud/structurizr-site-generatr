@@ -8,7 +8,7 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container_Boundary("InternetBankingSystem.APIApplication_boundary", "API Application") {
+Container_Boundary("InternetBankingSystem.APIApplication_boundary", "API Application", $tags="") {
   Component(InternetBankingSystem.APIApplication.SignInController, "Sign In Controller", "Spring MVC Rest Controller", "Allows users to sign in to the Internet Banking System.", $tags="")
   Component(InternetBankingSystem.APIApplication.SecurityComponent, "Security Component", "Spring Bean", "Provides functionality related to signing in, changing passwords, etc.", $tags="")
 }
@@ -23,5 +23,5 @@ Rel_D(InternetBankingSystem.Database, InternetBankingSystem.APIApplication.Secur
 Rel_D(InternetBankingSystem.APIApplication.SecurityComponent, InternetBankingSystem.APIApplication.SignInController, "5. Returns true if the hashed password matches", $tags="")
 Rel_D(InternetBankingSystem.APIApplication.SignInController, InternetBankingSystem.SinglePageApplication, "6. Sends back an authentication token to", "JSON/HTTPS", $tags="")
 
-SHOW_LEGEND()
+SHOW_LEGEND(true)
 @enduml

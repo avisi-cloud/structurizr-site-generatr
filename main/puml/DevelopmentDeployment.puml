@@ -42,5 +42,5 @@ Rel_D(Development.DeveloperLaptop.WebBrowser.SinglePageApplication_1, Developmen
 Rel_D(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, Development.DeveloperLaptop.DockerContainerDatabaseServer.DatabaseServer.Database_1, "Reads from and writes to", "JDBC", $tags="")
 Rel_D(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, Development.BigBankplc.bigbankdev001.MainframeBankingSystem_1, "Makes API calls to", "XML/HTTPS", $tags="")
 
-SHOW_LEGEND()
+SHOW_LEGEND(true)
 @enduml
