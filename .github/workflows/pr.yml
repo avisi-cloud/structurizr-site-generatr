@@ -53,7 +53,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64/v8
           tags: |
             ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
             ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:latest
