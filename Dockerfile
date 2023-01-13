@@ -4,7 +4,7 @@ USER root
 RUN apt update && apt install graphviz --yes
 RUN mkdir -p /var/model \
     && chown 65532:65532 /var/model
-RUN adduser -h /home/generatr -u 65532 -D generatr
+RUN useradd -d /home/generatr -u 65532 --create-home generatr
 
 ENTRYPOINT ["/opt/structurizr-site-generatr/bin/structurizr-site-generatr"]
 
