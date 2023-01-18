@@ -7,7 +7,7 @@ import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 fun HEAD.autoReloadScript(viewModel: PageViewModel) {
     script(
         type = ScriptType.textJavaScript,
-        src = "../" + "/auto-reload.js".asUrlRelativeTo(viewModel.url)
+        src = "../" + "/auto-reload.js".asUrlRelativeTo(viewModel.url, appendSlash = false)
     ) { }
 }
 

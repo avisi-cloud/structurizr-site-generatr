@@ -46,7 +46,7 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
             return link
 
         return link.withStatus(LinkStatus.VALID)
-            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlRelativeTo(pageViewModel.url))
+            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlRelativeTo(pageViewModel.url, appendSlash = false))
     }
 
     class Factory(private val viewModel: PageViewModel) : LinkResolverFactory {
