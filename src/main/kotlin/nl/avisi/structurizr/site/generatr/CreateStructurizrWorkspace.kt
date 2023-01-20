@@ -1,8 +1,8 @@
 package nl.avisi.structurizr.site.generatr
 
 import com.structurizr.dsl.StructurizrDslParser
-import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.model.Element
+import com.structurizr.view.ThemeUtils
 import java.io.File
 
 fun createStructurizrWorkspace(workspaceFile: File) =
@@ -10,6 +10,7 @@ fun createStructurizrWorkspace(workspaceFile: File) =
         .apply { parse(workspaceFile) }
         .workspace
         .apply {
+            ThemeUtils.loadThemes(this)
             model.elements.forEach {
                 moveUrlToProperty(it) // We need the URL later for our own links, preserve the original in a property
             }
