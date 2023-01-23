@@ -15,6 +15,7 @@
       * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
     * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
       * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
+  * [Contributing](#contributing)
   * [Background](#background)
 <!-- TOC -->
 
@@ -225,6 +226,10 @@ Generatr container. So
 [Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose)
 is needed to expose the container's port 8080 to the host (web browser). In the example above, the
 `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
+
+## Contributing
+
+We welcome contributions! Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how you can help.
 
 ## Background
 

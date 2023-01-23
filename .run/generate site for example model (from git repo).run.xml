@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="generate site for example model (from git repo)" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="nl.avisi.structurizr.site.generatr.AppKt" />
+    <module name="structurizr-site-generatr.main" />
+    <option name="PROGRAM_PARAMETERS" value="generate-site --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git --workspace-file docs/example/workspace.dsl --branches main --default-branch main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
