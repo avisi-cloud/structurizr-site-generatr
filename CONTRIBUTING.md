@@ -7,7 +7,7 @@ For those who'd like to help out by filing a pull request, here's some informati
 
 ## Recommended development tooling
 
-We recomment using IntelliJ Community or Ultimate edition as your IDE. Additionally, you will need the following tools:
+We recommend using IntelliJ Community or Ultimate edition as your IDE. Additionally, you will need the following tools:
 
 - Git for version control
 - Java Development Kit (JDK) version 18 for building the source code
