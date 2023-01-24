@@ -12,7 +12,7 @@ import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.html.div
 import kotlinx.html.stream.createHTML
-import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
+import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.views.diagram
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -46,7 +46,7 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
             return link
 
         return link.withStatus(LinkStatus.VALID)
-            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlRelativeTo(pageViewModel.url, appendSlash = false))
+            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlToFile(pageViewModel.url))
     }
 
     class Factory(private val viewModel: PageViewModel) : LinkResolverFactory {

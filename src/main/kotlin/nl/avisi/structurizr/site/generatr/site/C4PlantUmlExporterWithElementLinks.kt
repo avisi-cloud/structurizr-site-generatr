@@ -53,7 +53,7 @@ class C4PlantUmlExporterWithElementLinks(
         this is SoftwareSystem && this.includedSoftwareSystem && this != view?.softwareSystem
 
     private fun setElementUrl(element: Element) {
-        val path = "/${element.name.normalize()}/context/".asUrlRelativeTo(url)
+        val path = "/${element.name.normalize()}/context/".asUrlToDirectory(url)
         element.url = "${TEMP_URI}$path"
     }
 

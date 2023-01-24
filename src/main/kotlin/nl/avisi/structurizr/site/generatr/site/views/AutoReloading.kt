@@ -1,13 +1,13 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
-import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
+import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
 fun HEAD.autoReloadScript(viewModel: PageViewModel) {
     script(
         type = ScriptType.textJavaScript,
-        src = "../" + "/auto-reload.js".asUrlRelativeTo(viewModel.url, appendSlash = false)
+        src = "../" + "/auto-reload.js".asUrlToFile(viewModel.url)
     ) { }
 }
 

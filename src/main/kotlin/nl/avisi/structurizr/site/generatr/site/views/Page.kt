@@ -1,7 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
-import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
+import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
 fun HTML.page(viewModel: PageViewModel, block: DIV.() -> Unit) {
@@ -20,7 +20,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css")
         link(
             rel = "stylesheet",
-            href = "../" + "/style.css".asUrlRelativeTo(viewModel.url, appendSlash = false)
+            href = "../" + "/style.css".asUrlToFile(viewModel.url)
         )
 
         if (viewModel.includeAutoReloading)
