@@ -5,17 +5,17 @@ import nl.avisi.structurizr.site.generatr.site.model.HeaderBarViewModel
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 
 fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
-    nav(classes = "navbar is-dark") {
+    nav(classes = "navbar") {
         role = "navigation"
         attributes["aria-label"] = "main navigation"
 
-        div(classes = "navbar-brand") {
+        div(classes = "navbar-brand has-site-branding") {
             navbarLink(viewModel.titleLink)
         }
-        div(classes = "navbar-menu") {
+        div(classes = "navbar-menu has-site-branding") {
             div(classes = "navbar-end") {
                 div(classes = "navbar-item has-dropdown is-hoverable") {
-                    a(classes = "navbar-link has-text-grey-light") {
+                    a(classes = "navbar-link has-site-branding") {
                         +viewModel.currentBranch
                     }
                     div(classes = "navbar-dropdown is-right") {
@@ -44,6 +44,6 @@ private fun DIV.navbarLink(viewModel: LinkViewModel) {
         classes = "navbar-item",
         href = viewModel.relativeHref
     ) {
-        span(classes = "has-text-weight-semibold") { +viewModel.title }
+        span(classes = "has-text-weight-semibold has-site-branding") { +viewModel.title }
     }
 }

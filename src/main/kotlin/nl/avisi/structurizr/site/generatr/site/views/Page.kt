@@ -22,6 +22,10 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             rel = "stylesheet",
             href = "../" + "/style.css".asUrlToFile(viewModel.url)
         )
+        link(
+            rel = "stylesheet",
+            href = "../" + "/style-branding.css".asUrlToFile(viewModel.url)
+        )
 
         if (viewModel.includeAutoReloading)
             autoReloadScript(viewModel)

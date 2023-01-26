@@ -60,6 +60,7 @@ fun generateSite(
 
     deleteOldHashes(exportDir)
     if (assetsDir != null) copyAssets(assetsDir, File(exportDir, currentBranch))
+    generateStyle(generatorContext, exportDir)
     generateHtmlFiles(generatorContext, exportDir)
 }
 
@@ -68,6 +69,29 @@ private fun deleteOldHashes(exportDir: File) = exportDir.walk().filter { it.exte
 
 private fun copyAssets(assetsDir: File, exportDir: File) {
     assetsDir.copyRecursively(exportDir, overwrite = true)
+}
+
+private fun generateStyle(context: GeneratorContext, exportDir: File) {
+    val configuration = context.workspace.views.configuration.properties
+    val primary = configuration.getOrDefault("structurizr.style.colors.primary", "#333333")
+    val secondary = configuration.getOrDefault("structurizr.style.colors.secondary", "#cccccc")
+
+    val file = File(exportDir, "style-branding.css")
+    val content = """
+        .navbar .has-site-branding {
+            background-color: $primary!important;
+            color: $secondary!important;
+        }
+        .navbar .has-site-branding::after {
+            border-color: $secondary!important;
+        }
+        .menu .has-site-branding a.is-active {
+            color: $secondary!important;
+            background-color: $primary!important;
+        }
+    """.trimIndent()
+
+    file.writeText(content)
 }
 
 private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {

@@ -22,7 +22,7 @@ private fun ASIDE.softwareSystemsSection(items: List<LinkViewModel>) {
 }
 
 private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
-    ul(classes = "menu-list") {
+    ul(classes = "menu-list has-site-branding") {
         li {
             items.forEach {
                 link(it)
