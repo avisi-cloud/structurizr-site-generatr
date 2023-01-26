@@ -1,6 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import nl.avisi.structurizr.site.generatr.site.asUrlRelativeTo
+import nl.avisi.structurizr.site.generatr.site.asUrlToDirectory
 
 data class LinkViewModel(
     private val pageViewModel: PageViewModel,
@@ -8,7 +8,7 @@ data class LinkViewModel(
     val href: String,
     val exact: Boolean = true
 ) {
-    val relativeHref get() = href.asUrlRelativeTo(pageViewModel.url)
+    val relativeHref get() = href.asUrlToDirectory(pageViewModel.url)
     val active get() = if (exact) isHrefOfContainingPage else isChildHrefOfContainingPage
 
     private val isHrefOfContainingPage get() = href == pageViewModel.url

@@ -52,6 +52,6 @@ class LinkViewModelTest : ViewModelTest() {
     fun `relative href`() {
         val pageViewModel = pageViewModel("/some-page/some-subpage")
         val viewModel = LinkViewModel(pageViewModel, "Some other page", "/some-other-page")
-        assertThat(viewModel.relativeHref).isEqualTo("../../some-other-page")
+        assertThat(viewModel.relativeHref).isEqualTo("../../some-other-page/")
     }
 }
