@@ -9,8 +9,8 @@ top to bottom direction
 skinparam svgDimensionStyle false
 skinparam preserveAspectRatio meet
 Enterprise_Boundary(enterprise, "Big Bank plc") {
-  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../../mainframe-banking-system/context]]
-  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../../e-mail-system/context]]
+  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../../mainframe-banking-system/context/]]
+  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../../e-mail-system/context/]]
   WithoutPropertyHeader()
   AddProperty("Development Team","Dev/Internet Services")
   AddProperty("Owner","Customer Services")

@@ -10,8 +10,8 @@ top to bottom direction
 
 skinparam svgDimensionStyle false
 skinparam preserveAspectRatio meet
-System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../../mainframe-banking-system/context]]
-System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../../e-mail-system/context]]
+System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../../mainframe-banking-system/context/]]
+System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../../e-mail-system/context/]]
 ContainerDb(InternetBankingSystem.Database, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="")
 Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
 Container(InternetBankingSystem.MobileApp, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")

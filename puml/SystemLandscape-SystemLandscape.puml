@@ -15,14 +15,14 @@ Enterprise_Boundary(enterprise, "Big Bank plc") {
   WithoutPropertyHeader()
   AddProperty("Location","Internal Services")
   Person(BackOfficeStaff, "Back Office Staff", "Administration and support staff within the bank.", $tags="")
-  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../mainframe-banking-system/context]]
-  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../e-mail-system/context]]
-  System(ATM, "ATM", "Allows customers to withdraw cash.", $tags="")[[../atm/context]]
+  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../mainframe-banking-system/context/]]
+  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../e-mail-system/context/]]
+  System(ATM, "ATM", "Allows customers to withdraw cash.", $tags="")[[../atm/context/]]
   WithoutPropertyHeader()
   AddProperty("Development Team","Dev/Internet Services")
   AddProperty("Owner","Customer Services")
   AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
-  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")[[../internet-banking-system/context]]
+  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")[[../internet-banking-system/context/]]
 }
 
 Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
