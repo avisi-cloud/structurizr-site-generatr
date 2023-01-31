@@ -1,0 +1,11 @@
+.navbar .has-site-branding {
+    background-color: #485fc7!important;
+    color: #ffffff!important;
+}
+.navbar .has-site-branding::after {
+    border-color: #ffffff!important;
+}
+.menu .has-site-branding a.is-active {
+    color: #ffffff!important;
+    background-color: #485fc7!important;
+}

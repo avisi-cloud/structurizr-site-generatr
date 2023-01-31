@@ -6,16 +6,17 @@
     <title>Record architecture decisions | Big Bank plc</title>
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
     <link href="../../../style.css" rel="stylesheet">
+    <link href="../../../style-branding.css" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand"><a href="../../" class="navbar-item"><span class="has-text-weight-semibold">Big Bank plc</span></a></div>
-      <div class="navbar-menu">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand has-site-branding"><a href="../../" class="navbar-item"><span class="has-text-weight-semibold has-site-branding">Big Bank plc</span></a></div>
+      <div class="navbar-menu has-site-branding">
         <div class="navbar-end">
-          <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-text-grey-light">main</a>
+          <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
             <div class="navbar-dropdown is-right"><a href="../../../main" class="navbar-item">main</a>
               <hr class="navbar-divider">
-              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.0.20</span></div>
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.0.21</span></div>
             </div>
           </div>
         </div>
@@ -24,11 +25,11 @@
     <div class="site-layout" id="site">
       <aside class="menu p-3">
         <p class="menu-label">General</p>
-        <ul class="menu-list">
+        <ul class="menu-list has-site-branding">
           <li><a href="../../" class="">Home</a><a href="../" class="is-active">Decisions</a><a href="../../software-systems/" class="">Software Systems</a><a href="../../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a></li>
         </ul>
         <p class="menu-label">Software systems</p>
-        <ul class="menu-list">
+        <ul class="menu-list has-site-branding">
           <li><a href="../../atm/" class="">ATM</a><a href="../../e-mail-system/" class="">E-mail System</a><a href="../../internet-banking-system/" class="">Internet Banking System</a><a href="../../mainframe-banking-system/" class="">Mainframe Banking System</a></li>
         </ul>
       </aside>
