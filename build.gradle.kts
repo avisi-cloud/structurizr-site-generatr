@@ -39,7 +39,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:2.0.6")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.8.10")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.14")
-    runtimeOnly("org.jruby:jruby-core:9.4.0.0")
+    runtimeOnly("org.jruby:jruby-core:9.4.1.0")
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
