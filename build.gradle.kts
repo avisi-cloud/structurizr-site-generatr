@@ -48,16 +48,16 @@ application {
     mainClass.set("nl.avisi.structurizr.site.generatr.AppKt")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 kotlin {
     jvmToolchain(19)
 }
 
 tasks {
-    withType<Jar> {
+    test {
+        useJUnitPlatform()
+    }
+
+    jar {
         manifest {
             attributes["Implementation-Title"] = project.description
             attributes["Implementation-Version"] = project.version
