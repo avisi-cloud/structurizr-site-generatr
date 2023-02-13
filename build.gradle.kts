@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "1.8.10"
     application
@@ -54,14 +52,11 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
-            jvmTarget = "17"
-        }
-    }
+kotlin {
+    jvmToolchain(19)
+}
 
+tasks {
     withType<Jar> {
         manifest {
             attributes["Implementation-Title"] = project.description
