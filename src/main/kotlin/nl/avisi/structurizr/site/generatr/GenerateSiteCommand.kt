@@ -1,4 +1,3 @@
-@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 @file:OptIn(ExperimentalCli::class)
 
 package nl.avisi.structurizr.site.generatr
