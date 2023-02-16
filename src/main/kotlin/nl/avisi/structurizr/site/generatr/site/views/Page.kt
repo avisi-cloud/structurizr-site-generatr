@@ -27,6 +27,9 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             href = "../" + "/style-branding.css".asUrlToFile(viewModel.url)
         )
 
+        if (viewModel.favicon.includeFavicon)
+            favicon(viewModel.favicon)
+
         if (viewModel.includeAutoReloading)
             autoReloadScript(viewModel)
     }
