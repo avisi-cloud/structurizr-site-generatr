@@ -5,14 +5,7 @@ import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.model.Element
 import com.structurizr.model.SoftwareSystem
-import com.structurizr.view.ComponentView
-import com.structurizr.view.ContainerView
-import com.structurizr.view.CustomView
-import com.structurizr.view.DeploymentView
-import com.structurizr.view.DynamicView
-import com.structurizr.view.SystemContextView
-import com.structurizr.view.SystemLandscapeView
-import com.structurizr.view.View
+import com.structurizr.view.*
 import nl.avisi.structurizr.site.generatr.includedSoftwareSystem
 import nl.avisi.structurizr.site.generatr.normalize
 
@@ -34,13 +27,13 @@ class C4PlantUmlExporterWithElementLinks(
         }
     }
 
-    override fun writeHeader(view: View, writer: IndentingWriter) {
+    override fun writeHeader(view: ModelView, writer: IndentingWriter) {
         super.writeHeader(view, writer)
         writer.writeLine("skinparam svgDimensionStyle false")
         writer.writeLine("skinparam preserveAspectRatio meet")
     }
 
-    override fun writeElement(view: View?, element: Element?, writer: IndentingWriter?) {
+    override fun writeElement(view: ModelView?, element: Element?, writer: IndentingWriter?) {
         if (element !is SoftwareSystem || !element.linkNeeded(view))
             return super.writeElement(view, element, writer)
 
@@ -49,7 +42,7 @@ class C4PlantUmlExporterWithElementLinks(
         restoreElement(element)
     }
 
-    private fun Element.linkNeeded(view: View?) =
+    private fun Element.linkNeeded(view: ModelView?) =
         this is SoftwareSystem && this.includedSoftwareSystem && this != view?.softwareSystem
 
     private fun setElementUrl(element: Element) {
@@ -58,7 +51,7 @@ class C4PlantUmlExporterWithElementLinks(
     }
 
     private fun writeModifiedElement(
-        view: View?,
+        view: ModelView?,
         element: Element?,
         writer: IndentingWriter?
     ) = IndentingWriter().let {

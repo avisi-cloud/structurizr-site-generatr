@@ -4,6 +4,7 @@ import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.export.plantuml.PlantUMLDiagram
+import com.structurizr.view.ModelView
 import com.structurizr.view.View
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
@@ -100,7 +101,7 @@ private fun Diagram.withCachedIncludes(): Diagram {
         "!include $cachedInclude"
     }
 
-    return PlantUMLDiagram(view, def)
+    return PlantUMLDiagram(view as ModelView, def)
 }
 
 private object IncludeCache {

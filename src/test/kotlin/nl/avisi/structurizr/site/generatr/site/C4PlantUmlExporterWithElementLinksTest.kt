@@ -97,7 +97,7 @@ class C4PlantUmlExporterWithElementLinksTest {
 
     private fun String.withoutHeaderAndFooter() = this
         .split(System.lineSeparator())
-        .drop(10)
+        .drop(11)
         .dropLast(3)
         .joinToString(System.lineSeparator())
         .trimEnd()
