@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.HeaderBarViewModel
+import nl.avisi.structurizr.site.generatr.site.model.ImageViewModel
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 
 fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
@@ -10,6 +11,9 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
         attributes["aria-label"] = "main navigation"
 
         div(classes = "navbar-brand has-site-branding") {
+            if (viewModel.hasLogo)
+                logo(viewModel.titleLink, viewModel.logo!!)
+
             navbarLink(viewModel.titleLink)
         }
         div(classes = "navbar-menu has-site-branding") {
@@ -35,6 +39,18 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                     }
                 }
             }
+        }
+    }
+}
+
+private fun DIV.logo(linkViewModel: LinkViewModel, imageViewModel: ImageViewModel) {
+    a(
+        classes = "navbar-item",
+        href = linkViewModel.relativeHref
+    ) {
+        img {
+            alt = linkViewModel.title
+            src = imageViewModel.relativeHref
         }
     }
 }

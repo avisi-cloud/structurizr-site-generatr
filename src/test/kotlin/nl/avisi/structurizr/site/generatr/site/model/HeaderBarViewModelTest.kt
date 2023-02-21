@@ -3,6 +3,8 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import kotlin.test.Test
 
 class HeaderBarViewModelTest : ViewModelTest() {
@@ -45,5 +47,24 @@ class HeaderBarViewModelTest : ViewModelTest() {
         val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
 
         assertThat(viewModel.version).isEqualTo("0.42.1337")
+    }
+
+    @Test
+    fun logo() {
+        generatorContext.workspace.views.configuration.addProperty(
+            "structurizr.style.logo.path",
+            "site/logo.png"
+        )
+        val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
+
+        assertThat(viewModel.hasLogo).isTrue()
+        assertThat(viewModel.logo).isEqualTo(ImageViewModel(pageViewModel, "/site/logo.png"))
+    }
+
+    @Test
+    fun `no logo`() {
+        val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
+
+        assertThat(viewModel.hasLogo).isFalse()
     }
 }
