@@ -9,7 +9,7 @@ fun String.asUrlToFile(otherUrl: String) =
         .relativeTo(Path.of(otherUrl)).toString()
 
 fun String.asUrlToDirectory(otherUrl: String) =
-        if (otherUrl == this) "."
+        if (otherUrl == this) "./"
         else Path.of(this)
                 .relativeTo(Path.of(otherUrl)).toString() + "/"
 
