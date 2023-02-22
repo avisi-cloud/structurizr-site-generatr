@@ -159,6 +159,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             "structurizr.style.colors.primary" "#485fc7"
             "structurizr.style.colors.secondary" "#ffffff"
             "structurizr.style.favicon.path" "site/favicon.ico"
+            "structurizr.style.logo.path" "site/logo.png"
         }
 
         systemlandscape "SystemLandscape" {
