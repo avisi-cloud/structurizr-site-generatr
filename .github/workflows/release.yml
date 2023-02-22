@@ -146,7 +146,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 18
+          java-version: 19
 
       - name: Download binaries
         uses: actions/download-artifact@v3
