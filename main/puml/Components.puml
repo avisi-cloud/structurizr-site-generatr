@@ -1,4 +1,5 @@
 @startuml
+set separator none
 title Internet Banking System - API Application - Components
 
 top to bottom direction
@@ -8,18 +9,40 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","mainframe")
 System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","email")
 System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","database")
 ContainerDb(InternetBankingSystem.Database, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="")
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","singlepageapplication")
 Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","mobileapp")
 Container(InternetBankingSystem.MobileApp, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")
 
 Container_Boundary("InternetBankingSystem.APIApplication_boundary", "API Application", $tags="") {
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","signincontroller")
   Component(InternetBankingSystem.APIApplication.SignInController, "Sign In Controller", "Spring MVC Rest Controller", "Allows users to sign in to the Internet Banking System.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","accountssummarycontroller")
   Component(InternetBankingSystem.APIApplication.AccountsSummaryController, "Accounts Summary Controller", "Spring MVC Rest Controller", "Provides customers with a summary of their bank accounts.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","resetpasswordcontroller")
   Component(InternetBankingSystem.APIApplication.ResetPasswordController, "Reset Password Controller", "Spring MVC Rest Controller", "Allows users to reset their passwords with a single use URL.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","securitycomponent")
   Component(InternetBankingSystem.APIApplication.SecurityComponent, "Security Component", "Spring Bean", "Provides functionality related to signing in, changing passwords, etc.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","mainframebankingsystemfacade")
   Component(InternetBankingSystem.APIApplication.MainframeBankingSystemFacade, "Mainframe Banking System Facade", "Spring Bean", "A facade onto the mainframe banking system.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","emailcomponent")
   Component(InternetBankingSystem.APIApplication.EmailComponent, "E-mail Component", "Spring Bean", "Sends e-mails to users.", $tags="")
 }
 

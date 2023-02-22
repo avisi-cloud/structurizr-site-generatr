@@ -1,4 +1,5 @@
 @startuml
+set separator none
 title Internet Banking System - Deployment - Development
 
 top to bottom direction
@@ -11,6 +12,8 @@ top to bottom direction
 Deployment_Node(Development.DeveloperLaptop, "Developer Laptop", "Microsoft Windows 10 or Apple macOS", $tags="") {
   Deployment_Node(Development.DeveloperLaptop.DockerContainerDatabaseServer, "Docker Container - Database Server", "Docker", $tags="") {
     Deployment_Node(Development.DeveloperLaptop.DockerContainerDatabaseServer.DatabaseServer, "Database Server", "Oracle 12c", $tags="") {
+      WithoutPropertyHeader()
+      AddProperty("structurizr.dsl.identifier","developerdatabaseinstance")
       ContainerDb(Development.DeveloperLaptop.DockerContainerDatabaseServer.DatabaseServer.Database_1, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="")
     }
 
@@ -18,13 +21,19 @@ Deployment_Node(Development.DeveloperLaptop, "Developer Laptop", "Microsoft Wind
 
   Deployment_Node(Development.DeveloperLaptop.DockerContainerWebServer, "Docker Container - Web Server", "Docker", $tags="") {
     Deployment_Node(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat, "Apache Tomcat", "Apache Tomcat 8.x", $tags="") {
+      WithoutPropertyHeader()
+      AddProperty("structurizr.dsl.identifier","developerapiapplicationinstance")
       Container(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.APIApplication_1, "API Application", "Java and Spring MVC", "Provides Internet banking functionality via a JSON/HTTPS API.", $tags="")
+      WithoutPropertyHeader()
+      AddProperty("structurizr.dsl.identifier","developerwebapplicationinstance")
       Container(Development.DeveloperLaptop.DockerContainerWebServer.ApacheTomcat.WebApplication_1, "Web Application", "Java and Spring MVC", "Delivers the static content and the Internet banking single page application.", $tags="")
     }
 
   }
 
   Deployment_Node(Development.DeveloperLaptop.WebBrowser, "Web Browser", "Chrome, Firefox, Safari, or Edge", $tags="") {
+    WithoutPropertyHeader()
+    AddProperty("structurizr.dsl.identifier","developersinglepageapplicationinstance")
     Container(Development.DeveloperLaptop.WebBrowser.SinglePageApplication_1, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
   }
 

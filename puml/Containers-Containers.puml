@@ -1,4 +1,5 @@
 @startuml
+set separator none
 title Internet Banking System - Containers
 
 top to bottom direction
@@ -9,15 +10,31 @@ top to bottom direction
 
 skinparam svgDimensionStyle false
 skinparam preserveAspectRatio meet
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","customer")
 Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","mainframe")
 System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../../mainframe-banking-system/context/]]
+WithoutPropertyHeader()
+AddProperty("structurizr.dsl.identifier","email")
 System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../../e-mail-system/context/]]
 
 System_Boundary("InternetBankingSystem_boundary", "Internet Banking System", $tags="") {
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","mobileapp")
   Container(InternetBankingSystem.MobileApp, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","webapplication")
   Container(InternetBankingSystem.WebApplication, "Web Application", "Java and Spring MVC", "Delivers the static content and the Internet banking single page application.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","apiapplication")
   Container(InternetBankingSystem.APIApplication, "API Application", "Java and Spring MVC", "Provides Internet banking functionality via a JSON/HTTPS API.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","database")
   ContainerDb(InternetBankingSystem.Database, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="")
+  WithoutPropertyHeader()
+  AddProperty("structurizr.dsl.identifier","singlepageapplication")
   Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
 }
 
