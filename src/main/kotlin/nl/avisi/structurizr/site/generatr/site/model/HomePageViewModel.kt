@@ -4,7 +4,7 @@ import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import org.intellij.lang.annotations.Language
 
 class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(generatorContext) {
-    override val pageSubTitle = "Home"
+    override val pageSubTitle = if (generatorContext.workspace.name.isNotBlank()) "" else "Home"
     override val url = url()
 
     val content = markdownToHtml(
