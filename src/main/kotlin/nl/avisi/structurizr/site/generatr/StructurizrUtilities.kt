@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr
 
+import com.structurizr.model.Container
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
@@ -13,7 +14,11 @@ val SoftwareSystem.includedSoftwareSystem
 
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 
+fun SoftwareSystem.hasContainerDecisions() = containers.flatMap { it.documentation.decisions  }.isNotEmpty()
+
 fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
+
+fun Container.hasDecisions() = documentation.decisions.isNotEmpty()
 
 fun ViewSet.hasSystemContextViews(softwareSystem: SoftwareSystem) =
     systemContextViews.any { it.softwareSystem == softwareSystem }

@@ -31,6 +31,21 @@ class SoftwareSystemDecisionsPageViewModelTest : ViewModelTest() {
                 }
             )
     }
+    @Test
+    fun `container decision table`() {
+        softwareSystem.addContainer("API Application").also {
+            it.documentation.addDecision(createDecision("1", "Rejected"))
+        }
+
+        val viewModel = SoftwareSystemDecisionsPageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel.containerDecisionsTable)
+                .isEqualTo(
+                        viewModel.createContainerTableViewModel(softwareSystem.containers) {
+                            "/${softwareSystem.name.normalize()}/decisions/${softwareSystem.containers.first().name.normalize()}"
+                        }
+                )
+    }
 
     @Test
     fun `hidden view`() {

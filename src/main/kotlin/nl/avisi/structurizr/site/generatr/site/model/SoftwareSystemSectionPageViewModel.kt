@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemSectionPageViewModel(
     generatorContext: GeneratorContext, softwareSystem: SoftwareSystem, section: Section
-) : SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.DECISIONS) {
+) : SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.SECTIONS) {
     override val url = url(softwareSystem, section)
 
     val content = markdownToHtml(this, section.content, generatorContext.svgFactory)
