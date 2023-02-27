@@ -25,9 +25,9 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
             val plantUMLFile = File(pumlDir, "${diagram.key}.puml")
             if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
                 println("${diagram.key}...")
-                saveAsPUML(diagram, plantUMLFile)
                 saveAsSvg(diagram, svgDir)
                 saveAsPng(diagram, pngDir)
+                saveAsPUML(diagram, plantUMLFile)
             } else {
                 println("${diagram.key} UP-TO-DATE")
             }
@@ -43,8 +43,8 @@ fun generateDiagramWithElementLinks(view: View, url: String, exportDir: File): S
     val name = "${diagram.key}-${view.key}"
     val plantUMLFile = File(pumlDir, "$name.puml")
     if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
-        saveAsPUML(diagram, plantUMLFile)
         saveAsSvg(diagram, svgDir, name)
+        saveAsPUML(diagram, plantUMLFile)
     } else {
         println("$name UP-TO-DATE")
     }
