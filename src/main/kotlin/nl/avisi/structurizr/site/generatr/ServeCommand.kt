@@ -66,12 +66,14 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
             val ms = measureTimeMillis {
                 broadcast("site-updating")
                 val workspace = createStructurizrWorkspace(File(workspaceFile))
+
+                println("Generating idex page...")
+                generateRedirectingIndexPage(File(siteDir), branch)
+                println("Copying assets...")
+                copySiteWideAssets(File(siteDir))
                 println("Generating diagrams...")
                 generateDiagrams(workspace, exportDir)
-
                 println("Generating site...")
-                copySiteWideAssets(File(siteDir))
-                generateRedirectingIndexPage(File(siteDir), branch)
                 generateSite(
                     "0.0.0",
                     workspace,
