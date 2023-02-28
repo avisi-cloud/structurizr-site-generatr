@@ -32,7 +32,7 @@ dependencies {
 
     implementation("org.eclipse.jetty:jetty-server:11.0.14")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.13")
-    implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.13")
+    implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.14")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.6")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.8.10")
