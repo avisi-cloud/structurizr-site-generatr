@@ -8,22 +8,15 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
 Enterprise_Boundary(enterprise, "Big Bank plc") {
-  WithoutPropertyHeader()
-  AddProperty("structurizr.dsl.identifier","mainframe")
   System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")
-  WithoutPropertyHeader()
-  AddProperty("structurizr.dsl.identifier","email")
   System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")
   WithoutPropertyHeader()
   AddProperty("Development Team","Dev/Internet Services")
   AddProperty("Owner","Customer Services")
   AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
-  AddProperty("structurizr.dsl.identifier","internetbankingsystem")
   System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")
 }
 
-WithoutPropertyHeader()
-AddProperty("structurizr.dsl.identifier","customer")
 Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
 
 Rel_D(PersonalBankingCustomer, InternetBankingSystem, "Views account balances, and makes payments using", $tags="")

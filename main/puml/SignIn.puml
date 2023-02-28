@@ -10,19 +10,11 @@ top to bottom direction
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary("InternetBankingSystem.APIApplication_boundary", "API Application", $tags="") {
-  WithoutPropertyHeader()
-  AddProperty("structurizr.dsl.identifier","signincontroller")
   Component(InternetBankingSystem.APIApplication.SignInController, "Sign In Controller", "Spring MVC Rest Controller", "Allows users to sign in to the Internet Banking System.", $tags="")
-  WithoutPropertyHeader()
-  AddProperty("structurizr.dsl.identifier","securitycomponent")
   Component(InternetBankingSystem.APIApplication.SecurityComponent, "Security Component", "Spring Bean", "Provides functionality related to signing in, changing passwords, etc.", $tags="")
 }
 
-WithoutPropertyHeader()
-AddProperty("structurizr.dsl.identifier","database")
 ContainerDb(InternetBankingSystem.Database, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="")
-WithoutPropertyHeader()
-AddProperty("structurizr.dsl.identifier","singlepageapplication")
 Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
 
 Rel_D(InternetBankingSystem.SinglePageApplication, InternetBankingSystem.APIApplication.SignInController, "1. Submits credentials to", "JSON/HTTPS", $tags="")
