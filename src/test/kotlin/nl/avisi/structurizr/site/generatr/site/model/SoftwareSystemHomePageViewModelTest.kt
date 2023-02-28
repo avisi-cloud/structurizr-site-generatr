@@ -84,4 +84,22 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
                     .isEqualTo(createPropertiesTableViewModel(softwareSystem.properties))
             }
     }
+
+    @Test
+    fun `internal properties present`() {
+        val generatorContext = generatorContext()
+        val softwareSystem: SoftwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system")
+            .apply {
+                description = "It's a system."
+                addProperty("structurizr.dsl.identifier", "id")
+            }
+        val viewModel = SoftwareSystemHomePageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel)
+            .all {
+                prop(SoftwareSystemHomePageViewModel::hasProperties).isEqualTo(false)
+                prop(SoftwareSystemHomePageViewModel::propertiesTable)
+                    .isEqualTo(createPropertiesTableViewModel(mapOf()))
+            }
+    }
 }

@@ -11,6 +11,9 @@ val Model.includedSoftwareSystems: List<SoftwareSystem>
 val SoftwareSystem.includedSoftwareSystem
     get() = this.location != Location.External
 
+val SoftwareSystem.includedProperties
+    get() = this.properties.filterNot { (name, _) -> name == "structurizr.dsl.identifier" }
+
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 
 fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
