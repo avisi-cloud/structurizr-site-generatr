@@ -49,23 +49,23 @@ class HomePageViewModelTest : ViewModelTest() {
 
     @Test
     fun `page title with workspace name`() {
-        val generatorContext = generatorContext("this is a workspace")
+        val generatorContext = generatorContext("Workspace name")
         val viewModel = HomePageViewModel(generatorContext)
 
-        assertThat(viewModel.pageTitle).isEqualTo("Home | this is a workspace")
+        assertThat(viewModel.pageTitle).isEqualTo("Workspace name")
     }
 
     @Test
     fun `header bar`() {
-        val generatorContext = generatorContext("this is a workspace")
+        val generatorContext = generatorContext("Workspace name")
         val viewModel = HomePageViewModel(generatorContext)
 
-        assertThat(viewModel.headerBar.titleLink.title).isEqualTo("this is a workspace")
+        assertThat(viewModel.headerBar.titleLink.title).isEqualTo("Workspace name")
     }
 
     @Test
     fun menu() {
-        val generatorContext = generatorContext("this is a workspace")
+        val generatorContext = generatorContext("Workspace name")
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.menu.generalItems[0].active).isTrue()
