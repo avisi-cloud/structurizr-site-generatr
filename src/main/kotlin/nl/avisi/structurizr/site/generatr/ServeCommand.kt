@@ -60,7 +60,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
     private fun updateSite() {
         val branch = "master"
-        val exportDir = File(siteDir, branch)
+        val exportDir = File(siteDir, branch).apply { mkdirs() }
 
         try {
             val ms = measureTimeMillis {
