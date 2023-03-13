@@ -166,9 +166,10 @@ Structurizr Site Generatr v1.0.12
 
 ### Setting favicon and logo branding
 
-1. Place your favicon to `assets/site/favicon.ico`
-2. Place your logo to `assets/site/logo.png`
-2. Add properties to `workspace → views → properties` block of your `.dsl` file
+1. Add `--assets-dir assets` to your generatr command
+2. Place your favicon to `assets/site/favicon.ico`
+3. Place your logo to `assets/site/logo.png`
+4. Add properties to `workspace → views → properties` block of your `.dsl` file
     ```
     workspace {
         ...
@@ -183,8 +184,7 @@ Structurizr Site Generatr v1.0.12
         ...
     }
     ```
-3. Don't forget to add `--assets-dir assets` to your generatr command
-4. Read the following instructions and Generate a website
+5. Read the following instructions and Generate a website
 
 ### Generate a website
 
