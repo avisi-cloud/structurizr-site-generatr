@@ -166,7 +166,7 @@ Structurizr Site Generatr v1.0.12
 
 ### Setting a favicon
 
-1. Place your `favicon.ico` to the same folder as your structurizr workspace `.dsl` file.
+1. Place your favicon to `assets/site/favicon.ico`
 2. Add property `"structurizr.style.favicon.path" "site/favicon.ico"` to `workspace → views → properties` block of your `.dsl` file
 3. Read the following instructions and Generate a website
 
