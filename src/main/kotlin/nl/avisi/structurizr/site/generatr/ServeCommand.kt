@@ -23,6 +23,7 @@ import java.time.Duration
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.extension
 import kotlin.io.path.isDirectory
+import kotlin.io.path.isHidden
 import kotlin.io.path.isRegularFile
 import kotlin.system.measureTimeMillis
 
@@ -135,7 +136,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
         path.watch(watchService)
         Files.walk(path)
-            .filter { it.isDirectory() && !it.absolutePathString().startsWith(absoluteSiteDir) }
+            .filter { it.isDirectory() && !it.isHidden() && !it.absolutePathString().startsWith(absoluteSiteDir) }
             .forEach { it.watch(watchService) }
 
         Thread { monitorFileChanges(watchService) }
@@ -160,7 +161,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
             events.filter { it.kind() == StandardWatchEventKinds.ENTRY_CREATE }
                 .map { parentPath.resolve(it.context() as Path) }
-                .filter { it.isDirectory() }
+                .filter { it.isDirectory() && !it.isHidden() }
                 .forEach { it.watch(watchService) }
 
             if (fileModified || fileOrDirectoryDeleted) {
