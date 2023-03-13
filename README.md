@@ -9,7 +9,7 @@
   * [Usage](#usage)
     * [Help](#help)
     * [Version](#version)
-    * [Setting a favicon](#setting-a-favicon)
+    * [Setting favicon and logo branding](#setting-favicon-and-logo-branding)
     * [Generate a website](#generate-a-website)
       * [From a C4 Workspace](#from-a-c4-workspace)
       * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
@@ -164,10 +164,25 @@ installed> structurizr-site-generatr version
 Structurizr Site Generatr v1.0.12
 ```
 
-### Setting a favicon
+### Setting favicon and logo branding
 
 1. Place your favicon to `assets/site/favicon.ico`
-2. Add property `"structurizr.style.favicon.path" "site/favicon.ico"` to `workspace → views → properties` block of your `.dsl` file
+2. Place your logo to `assets/site/logo.png`
+2. Add properties to `workspace → views → properties` block of your `.dsl` file
+    ```
+    workspace {
+        ...
+        views {
+            ...
+            properties {
+                "structurizr.style.favicon.path" "site/favicon.ico"
+                "structurizr.style.logo.path" "site/logo.png"
+            }
+            ...
+        }
+        ...
+    }
+    ```
 3. Don't forget to add `--assets-dir assets` to your generatr command
 4. Read the following instructions and Generate a website
 
