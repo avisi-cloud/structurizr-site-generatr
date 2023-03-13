@@ -9,6 +9,7 @@
   * [Usage](#usage)
     * [Help](#help)
     * [Version](#version)
+    * [Setting a favicon](#setting-a-favicon)
     * [Generate a website](#generate-a-website)
       * [From a C4 Workspace](#from-a-c4-workspace)
       * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
@@ -162,6 +163,12 @@ installed> structurizr-site-generatr version
 
 Structurizr Site Generatr v1.0.12
 ```
+
+### Setting a favicon
+
+1. Place your `favicon.ico` to the same folder as your structurizr workspace `.dsl` file.
+2. Add property `"structurizr.style.favicon.path" "site/favicon.ico"` to `workspace → views → properties` block of your `.dsl` file
+3. Read the following instructions and Generate a website
 
 ### Generate a website
 
