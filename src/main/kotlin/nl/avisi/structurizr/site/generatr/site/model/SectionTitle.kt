@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import com.vladsch.flexmark.ast.Heading
 import com.vladsch.flexmark.ast.Paragraph
@@ -9,6 +10,9 @@ private val parser = Parser.builder().build()
 private const val MAX_TITLE_LENGTH = 50
 
 fun Section.title(): String {
+    if (format != Format.Markdown)
+        return "unsupported document"
+
     val document = parser.parse(content)
 
     if (!document.hasChildren())
