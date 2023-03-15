@@ -13,25 +13,25 @@ class SectionTitleTest {
     @Test
     fun `no content`() {
         val section = Section(Format.Markdown, "")
-        assertThat(section.title()).isEqualTo("untitled document")
+        assertThat(section.contentTitle()).isEqualTo("untitled document")
     }
 
     @Test
     fun `only whitespaces`() {
         val section = Section(Format.Markdown, " \n ")
-        assertThat(section.title()).isEqualTo("untitled document")
+        assertThat(section.contentTitle()).isEqualTo("untitled document")
     }
 
     @Test
     fun `no markdown`() {
         val section = Section(Format.AsciiDoc, "== title")
-        assertThat(section.title()).isEqualTo("unsupported document")
+        assertThat(section.contentTitle()).isEqualTo("unsupported document")
     }
 
     @Test
     fun `short paragraph`() {
         val section = Section(Format.Markdown, "some content")
-        assertThat(section.title()).isEqualTo("some content")
+        assertThat(section.contentTitle()).isEqualTo("some content")
     }
 
     @Test
@@ -40,7 +40,7 @@ class SectionTitleTest {
             Format.Markdown,
             "some very very long content we really need to truncate since no one wants to read such an exhausting title"
         )
-        assertThat(section.title()).isEqualTo("some very very long content we really need to")
+        assertThat(section.contentTitle()).isEqualTo("some very very long content we really need to")
     }
 
     @Test
@@ -49,13 +49,13 @@ class SectionTitleTest {
             Format.Markdown,
             "some-very-very-long-content-we-really-need-to-truncate-since-no-one-wants-to-read-such-an-exhausting-title"
         )
-        assertThat(section.title()).isEqualTo("some-very-very-long-content-we-really-need-to-trun")
+        assertThat(section.contentTitle()).isEqualTo("some-very-very-long-content-we-really-need-to-trun")
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["# header", "## header", "### header"])
     fun `with heading`(content: String) {
         val section = Section(Format.Markdown, content)
-        assertThat(section.title()).isEqualTo("header")
+        assertThat(section.contentTitle()).isEqualTo("header")
     }
 }

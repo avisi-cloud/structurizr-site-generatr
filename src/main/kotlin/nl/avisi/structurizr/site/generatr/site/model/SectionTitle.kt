@@ -9,7 +9,7 @@ import com.vladsch.flexmark.parser.Parser
 private val parser = Parser.builder().build()
 private const val MAX_TITLE_LENGTH = 50
 
-fun Section.title(): String {
+fun Section.contentTitle(): String {
     if (format != Format.Markdown)
         return "unsupported document"
 
