@@ -16,7 +16,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         generatorContext.workspace.documentation.sections
             .sortedBy { it.order }
             .drop(1)
-            .forEach { yield(createMenuItem(it.title, WorkspaceDocumentationSectionPageViewModel.url(it))) }
+            .forEach { yield(createMenuItem(it.title(), WorkspaceDocumentationSectionPageViewModel.url(it))) }
     }.toList()
 
     val softwareSystemItems = generatorContext.workspace.model.includedSoftwareSystems

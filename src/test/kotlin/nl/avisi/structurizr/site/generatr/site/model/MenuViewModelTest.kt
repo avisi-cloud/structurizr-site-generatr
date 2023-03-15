@@ -7,7 +7,6 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
 import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
-import com.structurizr.documentation.Section
 import com.structurizr.model.Location
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import org.junit.jupiter.api.Test
@@ -66,10 +65,10 @@ class MenuViewModelTest : ViewModelTest() {
     @ValueSource(strings = ["main", "branch-2"])
     fun `workspace-level documentation in general section`(currentBranch: String) {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
-        generatorContext.workspace.documentation.addSection(Section("Home", Format.Markdown, "content"))
-        val section1 = Section("Doc 1", Format.Markdown, "content")
+        generatorContext.workspace.documentation.addSection(createSection("# Home"))
+        val section1 = createSection("# Doc 1")
             .also { generatorContext.workspace.documentation.addSection(it) }
-        val section2 = Section("Doc Title 2", Format.Markdown, "content")
+        val section2 = createSection(" Doc Title 2")
             .also { generatorContext.workspace.documentation.addSection(it) }
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)

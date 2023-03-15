@@ -42,7 +42,7 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
         val generatorContext = generatorContext()
         val softwareSystem: SoftwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system")
             .apply {
-                documentation.addSection(Section("Title", Format.Markdown, "# Content"))
+                documentation.addSection(createSection("# Title"))
             }
         val viewModel = SoftwareSystemHomePageViewModel(generatorContext, softwareSystem)
 
