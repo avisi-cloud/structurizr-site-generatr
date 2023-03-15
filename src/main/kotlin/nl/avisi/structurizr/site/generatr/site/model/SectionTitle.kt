@@ -12,7 +12,7 @@ fun Section.title(): String {
     val document = parser.parse(content)
 
     if (!document.hasChildren())
-        return "no title"
+        return "untitled document"
 
     val header = document.children.firstOrNull { it is Heading }?.let { it as Heading }
     if (header != null)
@@ -28,5 +28,5 @@ fun Section.title(): String {
             paragraph.take(whitespacePosition ?: MAX_TITLE_LENGTH)
         } else paragraph
 
-    return "unknown title"
+    return "unknown document"
 }

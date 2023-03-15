@@ -10,37 +10,49 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class SectionTitleTest {
 
-    @Test
-    fun `no content`() {
-        val section = Section(Format.Markdown, "")
-        assertThat(section.title()).isEqualTo("no title")
+    @ParameterizedTest
+    @ValueSource(strings = ["Markdown", "AsciiDoc"])
+    fun `no content`(format: Format) {
+        val section = Section(format, "")
+        assertThat(section.title()).isEqualTo("untitled document")
     }
 
-    @Test
-    fun `only whitespaces`() {
-        val section = Section(Format.Markdown, " \n ")
-        assertThat(section.title()).isEqualTo("no title")
+    @ParameterizedTest
+    @ValueSource(strings = ["Markdown", "AsciiDoc"])
+    fun `only whitespaces`(format: Format) {
+        val section = Section(format, " \n ")
+        assertThat(section.title()).isEqualTo("untitled document")
     }
 
-    @Test
-    fun `short paragraph`() {
-        val section = Section(Format.Markdown, "some content")
+    @ParameterizedTest
+    @ValueSource(strings = ["Markdown", "AsciiDoc"])
+    fun `invalid format`(format: Format) {
+        val section = Section(format, "<h1>title</h1>")
+        assertThat(section.title()).isEqualTo("unknown document")
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["Markdown", "AsciiDoc"])
+    fun `short paragraph`(format: Format) {
+        val section = Section(format, "some content")
         assertThat(section.title()).isEqualTo("some content")
     }
 
-    @Test
-    fun `long paragraph`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["Markdown", "AsciiDoc"])
+    fun `long paragraph`(format: Format) {
         val section = Section(
-            Format.Markdown,
+            format,
             "some very very long content we really need to truncate since no one wants to read such an exhausting title"
         )
         assertThat(section.title()).isEqualTo("some very very long content we really need to")
     }
 
-    @Test
-    fun `long paragraph without whitespaces`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["Markdown", "AsciiDoc"])
+    fun `long paragraph without whitespaces`(format: Format) {
         val section = Section(
-            Format.Markdown,
+            format,
             "some-very-very-long-content-we-really-need-to-truncate-since-no-one-wants-to-read-such-an-exhausting-title"
         )
         assertThat(section.title()).isEqualTo("some-very-very-long-content-we-really-need-to-trun")
