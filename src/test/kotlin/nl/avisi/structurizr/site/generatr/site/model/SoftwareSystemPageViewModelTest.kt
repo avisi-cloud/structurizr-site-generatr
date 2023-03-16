@@ -175,9 +175,9 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
-        softwareSystem.documentation.addSection(createSection("Section 0000"))
+        softwareSystem.documentation.addSection(createSection("# Section 0000"))
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
-        softwareSystem.documentation.addSection(createSection("Section 0001"))
+        softwareSystem.documentation.addSection(createSection("# Section 0001"))
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isTrue()
     }
 

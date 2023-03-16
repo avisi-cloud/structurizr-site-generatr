@@ -29,7 +29,7 @@ class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
         val section = createSection()
         val viewModel = WorkspaceDocumentationSectionPageViewModel(generatorContext, section)
 
-        assertThat(viewModel.pageSubTitle).isEqualTo(section.title)
+        assertThat(viewModel.pageSubTitle).isEqualTo(section.contentTitle())
     }
 
     @Test

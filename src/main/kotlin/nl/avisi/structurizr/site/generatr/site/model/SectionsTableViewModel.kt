@@ -12,7 +12,7 @@ fun PageViewModel.createSectionsTableViewModel(sections: Collection<Section>, hr
             .forEach { (section, index) ->
                 bodyRow(
                     cellWithIndex(index.toString()),
-                    cellWithLink(this@createSectionsTableViewModel, section.title, hrefFactory(section))
+                    cellWithLink(this@createSectionsTableViewModel, section.contentTitle(), hrefFactory(section))
                 )
             }
     }

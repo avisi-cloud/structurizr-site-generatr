@@ -3,8 +3,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
-import com.structurizr.documentation.Format
-import com.structurizr.documentation.Section
 import nl.avisi.structurizr.site.generatr.site.model.HomePageViewModel.Companion.DEFAULT_HOMEPAGE_CONTENT
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -30,7 +28,7 @@ class HomePageViewModelTest : ViewModelTest() {
     fun `homepage with workspace docs`() {
         val generatorContext = generatorContext()
         generatorContext.workspace.documentation.addSection(
-            Section("Section title", Format.Markdown, "Section content")
+            createSection("Section content")
         )
         val viewModel = HomePageViewModel(generatorContext)
 

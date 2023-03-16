@@ -37,5 +37,5 @@ abstract class ViewModelTest {
             content = "Decision $id content"
         }
 
-    protected fun createSection(title: String = "Section 1") = Section(title, Format.Markdown, "# Content")
+    protected fun createSection(content: String = "# Content") = Section(Format.Markdown, content)
 }
