@@ -21,7 +21,7 @@ dependencies {
 
     implementation("com.structurizr:structurizr-core:1.23.1")
     implementation("com.structurizr:structurizr-dsl:1.29.0")
-    implementation("com.structurizr:structurizr-export:1.12.1")
+    implementation("com.structurizr:structurizr-export:1.13.0")
 
     implementation("net.sourceforge.plantuml:plantuml:1.2023.4")
 
