@@ -13,7 +13,7 @@ data class DiagramViewModel(
 ) {
     companion object {
         fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (key: String, url: String) -> String?) =
-            forView(pageViewModel, view.key, view.name, svgFactory)
+            forView(pageViewModel, view.key, view.name,  svgFactory)
 
         fun forView(
             pageViewModel: PageViewModel,

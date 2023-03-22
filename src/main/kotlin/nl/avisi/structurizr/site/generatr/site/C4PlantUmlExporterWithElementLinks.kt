@@ -3,11 +3,11 @@ package nl.avisi.structurizr.site.generatr.site
 import com.structurizr.export.Diagram
 import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.C4PlantUMLExporter
+import com.structurizr.model.Container
 import com.structurizr.model.Element
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.*
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystem
-import nl.avisi.structurizr.site.generatr.normalize
+import nl.avisi.structurizr.site.generatr.*
 
 class C4PlantUmlExporterWithElementLinks(
     private val url: String
@@ -34,19 +34,56 @@ class C4PlantUmlExporterWithElementLinks(
     }
 
     override fun writeElement(view: ModelView?, element: Element?, writer: IndentingWriter?) {
-        if (element !is SoftwareSystem || !element.linkNeeded(view))
-            return super.writeElement(view, element, writer)
+        if (element is SoftwareSystem) {
+            if (element.includedSoftwareSystem && element != view?.softwareSystem) {
+                setSoftwareSystemUrl(element)
+                writeModifiedElement(view, element, writer)
+                restoreElement(element)
+                return
+            } else if (element.includedSoftwareSystem && element == view?.softwareSystem){
+                if (element.hasContainers) {
+                    setContainerUrl(element)
+                    writeModifiedElement(view, element, writer)
+                    restoreElement(element)
+                    return
+                } else {
+                    return super.writeElement(view, element, writer)
+                }
+            } else {
+                return super.writeElement(view, element, writer)
+            }
+        }
 
-        setElementUrl(element)
-        writeModifiedElement(view, element, writer)
-        restoreElement(element)
+        if (element is Container) {
+            if (element.hasComponents) {
+                setComponentUrl(element)
+                writeModifiedElement(view, element, writer)
+                restoreElement(element)
+                return
+            } else {
+                return super.writeElement(view, element, writer)
+            }
+        }
+
+        return super.writeElement(view, element, writer)
     }
 
-    private fun Element.linkNeeded(view: ModelView?) =
-        this is SoftwareSystem && this.includedSoftwareSystem && this != view?.softwareSystem
-
-    private fun setElementUrl(element: Element) {
+    private fun setSoftwareSystemUrl(element: Element) {
         val path = "/${element.name.normalize()}/context/".asUrlToDirectory(url)
+        element.url = "${TEMP_URI}$path"
+    }
+
+    private fun setContainerUrl(element: Element) {
+        val path = "/${element.name.normalize()}/container/".asUrlToDirectory(url)
+        element.url = "${TEMP_URI}$path"
+    }
+
+    private fun setComponentUrl(element: Element) {
+        val anchor = element.canonicalName.normalize()
+            .replace("container://","")
+            .replace("-","")
+            .replace(".","-") + "-component"
+        val path = "/${element.parent.name.normalize()}/component/#${anchor}".asUrlToFile(url)
         element.url = "${TEMP_URI}$path"
     }
 
