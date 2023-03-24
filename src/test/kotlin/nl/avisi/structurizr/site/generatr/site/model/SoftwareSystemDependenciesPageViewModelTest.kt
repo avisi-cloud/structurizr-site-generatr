@@ -22,7 +22,7 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
     fun `empty table when no dependencies are present`() {
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
 
-        assertThat(viewModel.dependenciesTable).isEqualTo(
+        assertThat(viewModel.dependenciesInboundTable).isEqualTo(
             TableViewModel.create {
                 dependenciesTableHeader()
             }
@@ -30,31 +30,42 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show dependencies in table when present`() {
-        softwareSystem1.uses(softwareSystem2, "Uses REST", "REST")
-        softwareSystem2.uses(softwareSystem1, "Uses SOAP", "SOAP")
+    fun `show outbound dependencies in table when present`() {
+        softwareSystem1.uses(softwareSystem2, "Uses SOAP", "SOAP")
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
 
-        assertThat(viewModel.dependenciesTable).isEqualTo(
+        assertThat(viewModel.dependenciesOutboundTable).isEqualTo(
             TableViewModel.create {
                 dependenciesTableHeader()
-                bodyRow(
-                    headerCell(softwareSystem1.name),
-                    cell("Uses REST"),
-                    headerCellWithLink(
-                        viewModel, softwareSystem2.name,
-                        SoftwareSystemPageViewModel.url(softwareSystem2, SoftwareSystemPageViewModel.Tab.HOME)
-                    ),
-                    cell("REST")
-                )
                 bodyRow(
                     headerCellWithLink(
                         viewModel, softwareSystem2.name,
                         SoftwareSystemPageViewModel.url(softwareSystem2, SoftwareSystemPageViewModel.Tab.HOME)
                     ),
                     cell("Uses SOAP"),
-                    headerCell(softwareSystem1.name),
-                    cell("SOAP")
+                    cell("SOAP"),
+                    cell("")
+                )
+            }
+        )
+    }
+
+    @Test
+    fun `show inbound dependencies in table when present`() {
+        softwareSystem2.uses(softwareSystem1, "Uses REST", "REST")
+        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+
+        assertThat(viewModel.dependenciesInboundTable).isEqualTo(
+            TableViewModel.create {
+                dependenciesTableHeader()
+                bodyRow(
+                    headerCellWithLink(
+                        viewModel, softwareSystem2.name,
+                        SoftwareSystemPageViewModel.url(softwareSystem2, SoftwareSystemPageViewModel.Tab.HOME)
+                    ),
+                    cell("Uses REST"),
+                    cell("REST"),
+                    cell("")
                 )
             }
         )
@@ -83,20 +94,21 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         softwareSystem1.uses(externalSystem, "Uses", "REST")
 
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
-        assertThat(viewModel.dependenciesTable.bodyRows[0].columns[0])
+        assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
             .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
     }
 
     @Test
     fun `sort by source system name case insensitive`() {
-        val system = generatorContext.workspace.model.addSoftwareSystem("SOftware system 3")
+        val system = generatorContext.workspace.model.addSoftwareSystem("Software system 3")
         system.uses(softwareSystem1, "Uses", "REST")
         softwareSystem1.uses(softwareSystem2, "Uses REST", "REST")
         softwareSystem2.uses(softwareSystem1, "Uses SOAP", "SOAP")
 
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+        // Inbound Table
         assertThat(
-            viewModel.dependenciesTable.bodyRows
+            viewModel.dependenciesInboundTable.bodyRows
                 .map {
                     when (val source = it.columns[0]) {
                         is TableViewModel.TextCellViewModel -> source.title
@@ -105,16 +117,29 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
                     }
                 }
         ).containsExactly(
-            "Software system 1", "Software system 2", "SOftware system 3"
+            "Software system 2", "Software system 3"
+        )
+        // Outbound Table
+        assertThat(
+            viewModel.dependenciesInboundTable.bodyRows
+                .map {
+                    when (val source = it.columns[0]) {
+                        is TableViewModel.TextCellViewModel -> source.title
+                        is TableViewModel.LinkCellViewModel -> source.link.title
+                        is TableViewModel.ExternalLinkCellViewModel -> source.link.title
+                    }
+                }
+        ).containsExactly(
+            "Software system 2", "Software system 3"
         )
     }
 
     private fun TableViewModel.TableViewInitializerContext.dependenciesTableHeader() {
         headerRow(
-            headerCell("Source"),
+            headerCell("System"),
             headerCell("Description"),
-            headerCell("Destination"),
-            headerCell("Technology")
+            headerCell("Technology"),
+            headerCell("Tags")
         )
     }
 }
