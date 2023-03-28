@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.8.20"
+    kotlin("plugin.serialization") version "1.8.20"
     application
 }
 
@@ -29,6 +30,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.15.4")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("org.eclipse.jetty:jetty-server:11.0.14")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.14")
