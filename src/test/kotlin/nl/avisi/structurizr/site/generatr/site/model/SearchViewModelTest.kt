@@ -3,11 +3,30 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.hasSize
+import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import org.junit.jupiter.api.Test
 
 class SearchViewModelTest : ViewModelTest() {
+
+    @Test
+    fun `no index language configured`() {
+        val viewModel = SearchViewModel(generatorContext())
+
+        assertThat(viewModel.language).isEmpty()
+    }
+
+    @Test
+    fun `index language configured`() {
+        val generatorContext = generatorContext().apply {
+            workspace.views.configuration.addProperty("structurizr.style.search.language", "nl")
+        }
+        val viewModel = SearchViewModel(generatorContext)
+
+        assertThat(viewModel.language).isEqualTo("nl")
+    }
 
     @Test
     fun `nothing to index`() {
