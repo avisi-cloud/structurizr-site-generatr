@@ -34,57 +34,49 @@ class C4PlantUmlExporterWithElementLinks(
     }
 
     override fun writeElement(view: ModelView?, element: Element?, writer: IndentingWriter?) {
-        if (element is SoftwareSystem) {
-            if (element.includedSoftwareSystem && element != view?.softwareSystem) {
-                setSoftwareSystemUrl(element)
-                writeModifiedElement(view, element, writer)
-                restoreElement(element)
-                return
-            } else if (element.includedSoftwareSystem && element == view?.softwareSystem){
-                if (element.hasContainers) {
-                    setContainerUrl(element)
-                    writeModifiedElement(view, element, writer)
-                    restoreElement(element)
-                    return
-                } else {
-                    return super.writeElement(view, element, writer)
-                }
-            } else {
-                return super.writeElement(view, element, writer)
-            }
+        val url = when {
+            needsLinkToSoftwareSystem(element, view) -> getUrlToSoftwareSystem(element)
+            needsLinkToContainerViews(element, view) -> getUrlToContainerViews(element)
+            needsLinkToComponentViews(element) -> getUrlToComponentViews(element)
+            else -> null
         }
 
-        if (element is Container) {
-            if (element.hasComponents) {
-                setComponentUrl(element)
-                writeModifiedElement(view, element, writer)
-                restoreElement(element)
-                return
-            } else {
-                return super.writeElement(view, element, writer)
-            }
+        if (url != null)
+            writeElementWithCustomUrl(element, url, view, writer)
+        else
+            super.writeElement(view, element, writer)
+    }
+
+    private fun needsLinkToSoftwareSystem(element: Element?, view: ModelView?) =
+        element is SoftwareSystem && element.includedSoftwareSystem && element != view?.softwareSystem
+
+    private fun getUrlToSoftwareSystem(element: Element?): String {
+        val path = "/${element?.name?.normalize()}/context/".asUrlToDirectory(url)
+        return "$TEMP_URI$path"
+    }
+
+    private fun needsLinkToContainerViews(element: Element?, view: ModelView?) =
+        element is SoftwareSystem && element.includedSoftwareSystem && element == view?.softwareSystem && element.hasContainers
+
+    private fun getUrlToContainerViews(element: Element?): String {
+        val path = "/${element?.name?.normalize()}/container/".asUrlToDirectory(url)
+        return "$TEMP_URI$path"
+    }
+
+    private fun needsLinkToComponentViews(element: Element?) =
+        element is Container && element.hasComponents
+
+    private fun getUrlToComponentViews(element: Element?): String {
+        val path = "/${element?.parent?.name?.normalize()}/component/".asUrlToFile(url)
+        return "$TEMP_URI$path"
+    }
+
+    private fun writeElementWithCustomUrl(element: Element?, url: String?, view: ModelView?, writer: IndentingWriter?) {
+        element?.url = url
+        writeModifiedElement(view, element, writer)
+        if (element != null) {
+            restoreElement(element)
         }
-
-        return super.writeElement(view, element, writer)
-    }
-
-    private fun setSoftwareSystemUrl(element: Element) {
-        val path = "/${element.name.normalize()}/context/".asUrlToDirectory(url)
-        element.url = "${TEMP_URI}$path"
-    }
-
-    private fun setContainerUrl(element: Element) {
-        val path = "/${element.name.normalize()}/container/".asUrlToDirectory(url)
-        element.url = "${TEMP_URI}$path"
-    }
-
-    private fun setComponentUrl(element: Element) {
-        val anchor = element.canonicalName.normalize()
-            .replace("container://","")
-            .replace("-","")
-            .replace(".","-") + "-component"
-        val path = "/${element.parent.name.normalize()}/component/#${anchor}".asUrlToFile(url)
-        element.url = "${TEMP_URI}$path"
     }
 
     private fun writeModifiedElement(
