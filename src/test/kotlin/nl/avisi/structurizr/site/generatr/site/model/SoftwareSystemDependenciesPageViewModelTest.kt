@@ -96,6 +96,8 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
         assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
             .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+        assertThat(viewModel.dependenciesOutboundTable.bodyRows[0].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
     }
 
     @Test
