@@ -1,6 +1,6 @@
 @startuml
 set separator none
-title System Landscape for Big Bank plc
+title System Landscape
 
 top to bottom direction
 
