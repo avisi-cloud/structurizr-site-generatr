@@ -83,7 +83,7 @@ jobs:
             org.opencontainers.image.version=${{ github.ref_name }}
       - name: sign container image
         run: |
-          cosign sign --key env://COSIGN_KEY ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}@${{ steps.build_push.outputs.digest }}
+          cosign sign --yes --key env://COSIGN_KEY ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}@${{ steps.build_push.outputs.digest }}
         shell: bash
         env:
           COSIGN_KEY: ${{secrets.COSIGN_KEY}}
