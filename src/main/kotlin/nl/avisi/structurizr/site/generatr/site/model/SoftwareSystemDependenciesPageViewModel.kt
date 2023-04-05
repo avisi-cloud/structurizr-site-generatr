@@ -4,7 +4,9 @@ import com.structurizr.model.Relationship
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
-class SoftwareSystemDependenciesPageViewModel(generatorContext: GeneratorContext,private val softwareSystem: SoftwareSystem
+class SoftwareSystemDependenciesPageViewModel(
+    generatorContext: GeneratorContext,
+    private val softwareSystem: SoftwareSystem
 ) : SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.DEPENDENCIES) {
 
     val dependenciesInboundTable = TableViewModel.create {
