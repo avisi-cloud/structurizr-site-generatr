@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr
 
+import com.structurizr.model.Container
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
@@ -10,6 +11,12 @@ val Model.includedSoftwareSystems: List<SoftwareSystem>
 
 val SoftwareSystem.includedSoftwareSystem
     get() = this.location != Location.External
+
+val Container.hasComponents
+    get() = this.components.isNotEmpty()
+
+val SoftwareSystem.hasContainers
+    get() = this.containers.isNotEmpty()
 
 val SoftwareSystem.includedProperties
     get() = this.properties.filterNot { (name, _) -> name == "structurizr.dsl.identifier" }
