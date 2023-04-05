@@ -74,9 +74,7 @@ class C4PlantUmlExporterWithElementLinks(
     private fun writeElementWithCustomUrl(element: Element?, url: String?, view: ModelView?, writer: IndentingWriter?) {
         element?.url = url
         writeModifiedElement(view, element, writer)
-        if (element != null) {
-            restoreElement(element)
-        }
+        element?.url = null
     }
 
     private fun writeModifiedElement(
@@ -91,7 +89,4 @@ class C4PlantUmlExporterWithElementLinks(
             .forEach { line -> writer?.writeLine(line) }
     }
 
-    private fun restoreElement(element: Element) {
-        element.url = null
-    }
 }
