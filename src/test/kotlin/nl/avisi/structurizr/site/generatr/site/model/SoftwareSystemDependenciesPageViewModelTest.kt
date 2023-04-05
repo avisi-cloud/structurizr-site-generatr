@@ -44,7 +44,6 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
                     ),
                     cell("Uses SOAP"),
                     cell("SOAP"),
-                    cell("")
                 )
             }
         )
@@ -65,7 +64,6 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
                     ),
                     cell("Uses REST"),
                     cell("REST"),
-                    cell("")
                 )
             }
         )
@@ -141,7 +139,6 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
             headerCell("System"),
             headerCell("Description"),
             headerCell("Technology"),
-            headerCell("Tags")
         )
     }
 }

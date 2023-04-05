@@ -37,8 +37,7 @@ class SoftwareSystemDependenciesPageViewModel(generatorContext: GeneratorContext
         headerRow(
             headerCell("System"),
             headerCell("Description"),
-            headerCell("Technology"),
-            headerCell("Tags")
+            headerCell("Technology")
         )
     }
 
@@ -46,8 +45,7 @@ class SoftwareSystemDependenciesPageViewModel(generatorContext: GeneratorContext
         bodyRow(
             softwareSystemDependencyCell(relationship.source as SoftwareSystem),
             cell(relationship.description),
-            cell(relationship.technology),
-            cell(relationship.tags.replace("Relationship,","").replace("Relationship",""))
+            cell(relationship.technology)
         )
     }
 
@@ -55,8 +53,7 @@ class SoftwareSystemDependenciesPageViewModel(generatorContext: GeneratorContext
         bodyRow(
             softwareSystemDependencyCell(relationship.destination as SoftwareSystem),
             cell(relationship.description),
-            cell(relationship.technology),
-            cell(relationship.tags.replace("Relationship,","").replace("Relationship",""))
+            cell(relationship.technology)
         )
     }
 
