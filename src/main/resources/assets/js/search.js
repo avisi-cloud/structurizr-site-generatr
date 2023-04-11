@@ -17,27 +17,41 @@ function search(terms) {
     return { score: item.score, href: document.href, type: document.type, title: document.title };
   });
 
-  const ul = document.getElementById('search-results');
-  results.forEach(result => {
-    ul.appendChild(createLi(result));
-  });
+  const div = document.getElementById('search-results');
+
+  if (results.length === 0) {
+    div.appendChild(createNoResultsElement());
+  } else {
+    results.forEach(result => {
+      div.appendChild(createResultElement(result));
+    });
+  }
 }
 
-function createLi(result) {
-  const li = document.createElement('li');
-  const a1 = document.createElement('a');
-  a1.href = result.href;
-  a1.innerText = result.href;
+function createResultElement(result) {
+  const p = document.createElement('p');
 
-  const a2 = document.createElement('a');
-  a2.href = result.href;
-  const h = document.createElement('h3');
-  h.innerText = result.title;
-  h.className = 'mb-0';
+  const link = document.createElement('a');
+  link.href = result.href;
+  const title = document.createElement('p');
+  title.innerText = result.title;
+  title.className = 'mb-0';
 
-  a2.appendChild(h);
-  li.appendChild(a1);
-  li.appendChild(a2);
-  li.append(result.type);
-  return li;
+  const type = document.createElement('small');
+  type.innerText = result.type;
+
+  link.appendChild(title);
+  p.appendChild(link);
+  p.appendChild(type);
+  return p;
+}
+
+function createNoResultsElement() {
+  const p = document.createElement('p');
+  const small = document.createElement('small');
+  small.className = 'is-italic';
+  small.innerText = 'Your search yielded no results';
+
+  p.appendChild(small);
+  return p;
 }

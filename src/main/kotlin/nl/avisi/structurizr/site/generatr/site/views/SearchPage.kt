@@ -51,7 +51,7 @@ fun HTML.searchPage(viewModel: SearchViewModel) {
                 type = ScriptType.textJavaScript,
                 src = "../" + "/search.js".asUrlToFile(viewModel.url)
             ) { }
-            ul { id = "search-results" }
+            div { id = "search-results" }
         }
     }
 }

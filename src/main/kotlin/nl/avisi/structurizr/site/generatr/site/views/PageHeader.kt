@@ -27,7 +27,9 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                     input(classes = "input is-small is-rounded has-site-branding") {
                         id = "search"
                         type = InputType.search
-                        placeholder = "Search (3 characters required)..."
+                        size = "30"
+                        maxLength = "50"
+                        placeholder = "Search (requires 3 characters)..."
                         onKeyUp = "redirect(event, value, '${viewModel.searchLink.relativeHref}')"
                     }
                 }
