@@ -68,7 +68,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
                 broadcast("site-updating")
                 val workspace = createStructurizrWorkspace(File(workspaceFile))
 
-                println("Generating idex page...")
+                println("Generating index page...")
                 generateRedirectingIndexPage(File(siteDir), branch)
                 println("Copying assets...")
                 copySiteWideAssets(File(siteDir))
