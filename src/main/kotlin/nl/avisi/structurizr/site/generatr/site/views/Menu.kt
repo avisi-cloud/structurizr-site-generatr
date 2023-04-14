@@ -6,18 +6,18 @@ import nl.avisi.structurizr.site.generatr.site.model.MenuNodeViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
 fun DIV.menu(viewModel: MenuViewModel, nestGroups: Boolean) {
-    aside(classes = "menu p-3") {
+    nav(classes = "menu p-3") {
         generalSection(viewModel.generalItems)
         softwareSystemsSection(viewModel, nestGroups)
     }
 }
 
-private fun ASIDE.generalSection(items: List<LinkViewModel>) {
+private fun NAV.generalSection(items: List<LinkViewModel>) {
     p(classes = "menu-label") { +"General" }
     menuItemLinks(items)
 }
 
-private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: Boolean) {
+private fun NAV.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: Boolean) {
     p(classes = "menu-label") { +"Software systems" }
     if (nestGroups) {
         ul(classes = "listree menu-list has-site-branding") {
@@ -28,7 +28,7 @@ private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: B
     }
 }
 
-private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
+private fun NAV.menuItemLinks(items: List<LinkViewModel>) {
     ul(classes = "menu-list has-site-branding") {
         li {
             items.forEach {
