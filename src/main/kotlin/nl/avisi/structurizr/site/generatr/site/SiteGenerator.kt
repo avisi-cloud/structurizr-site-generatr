@@ -13,6 +13,8 @@ import java.security.MessageDigest
 
 fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/css/style.css")
+    copySiteWideAsset(exportDir, "/js/header.js")
+    copySiteWideAsset(exportDir, "/js/search.js")
     copySiteWideAsset(exportDir, "/js/auto-reload.js")
 }
 
@@ -89,6 +91,14 @@ private fun generateStyle(context: GeneratorContext, exportDir: File) {
             color: $secondary!important;
             background-color: $primary!important;
         }
+        .input.has-site-branding {
+            color: dimgrey!important;
+            background-color: white!important;
+        }
+        .input.has-site-branding:focus {
+            border-color: $secondary!important;
+            box-shadow: 0 0 0 0.125em $secondary;
+        }
     """.trimIndent()
 
     file.writeText(content)
@@ -100,6 +110,7 @@ private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
         add { writeHtmlFile(branchDir, HomePageViewModel(context)) }
         add { writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context)) }
         add { writeHtmlFile(branchDir, SoftwareSystemsPageViewModel(context)) }
+        add { writeHtmlFile(branchDir, SearchViewModel(context)) }
 
         context.workspace.documentation.sections
             .filter { it.order != 1 }
@@ -140,6 +151,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
         appendHTML().html {
             when (viewModel) {
                 is HomePageViewModel -> homePage(viewModel)
+                is SearchViewModel -> searchPage(viewModel)
                 is SoftwareSystemsPageViewModel -> softwareSystemsPage(viewModel)
                 is SoftwareSystemHomePageViewModel -> softwareSystemHomePage(viewModel)
                 is SoftwareSystemContextPageViewModel -> softwareSystemContextPage(viewModel)
