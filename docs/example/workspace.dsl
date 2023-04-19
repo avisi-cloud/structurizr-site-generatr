@@ -156,10 +156,10 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     views {
         properties {
             "c4plantuml.elementProperties" "true"
-            "structurizr.style.colors.primary" "#485fc7"
-            "structurizr.style.colors.secondary" "#ffffff"
-            "structurizr.style.favicon.path" "site/favicon.ico"
-            "structurizr.style.logo.path" "site/logo.png"
+            "generatr.style.colors.primary" "#485fc7"
+            "generatr.style.colors.secondary" "#ffffff"
+            "generatr.style.faviconPath" "site/favicon.ico"
+            "generatr.style.logoPath" "site/logo.png"
         }
 
         systemlandscape "SystemLandscape" {
