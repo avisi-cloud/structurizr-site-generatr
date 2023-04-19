@@ -18,7 +18,7 @@ class SearchViewModel(generatorContext: GeneratorContext) : PageViewModel(genera
     override val url = url()
 
     val language: String = generatorContext.workspace.views
-        .configuration.properties.getOrDefault("structurizr.style.search.language", "")
+        .configuration.properties.getOrDefault("generatr.search.language", "")
 
     val documents = buildList {
         add(home(generatorContext.workspace.documentation, this@SearchViewModel))

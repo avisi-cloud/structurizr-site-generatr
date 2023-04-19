@@ -75,8 +75,8 @@ private fun copyAssets(assetsDir: File, exportDir: File) {
 
 private fun generateStyle(context: GeneratorContext, exportDir: File) {
     val configuration = context.workspace.views.configuration.properties
-    val primary = configuration.getOrDefault("structurizr.style.colors.primary", "#333333")
-    val secondary = configuration.getOrDefault("structurizr.style.colors.secondary", "#cccccc")
+    val primary = configuration.getOrDefault("generatr.style.colors.primary", "#333333")
+    val secondary = configuration.getOrDefault("generatr.style.colors.secondary", "#cccccc")
 
     val file = File(exportDir, "style-branding.css")
     val content = """

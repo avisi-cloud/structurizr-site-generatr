@@ -52,7 +52,7 @@ class HeaderBarViewModelTest : ViewModelTest() {
     @Test
     fun logo() {
         generatorContext.workspace.views.configuration.addProperty(
-            "structurizr.style.logo.path",
+            "generatr.style.logoPath",
             "site/logo.png"
         )
         val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
