@@ -15,6 +15,7 @@
       * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
     * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
       * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
+  * [Customizing the generated website](#customizing-the-generated-website)
   * [Contributing](#contributing)
   * [Background](#background)
 <!-- TOC -->
@@ -226,6 +227,29 @@ Generatr container. So
 [Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose)
 is needed to expose the container's port 8080 to the host (web browser). In the example above, the
 `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
+
+## Customizing the generated website
+
+The site generator use the
+[C4PlantUmlExporter](https://github.com/structurizr/export/tree/main/src/main/java/com/structurizr/export/plantuml#c4plantumlexporter)
+to generate the diagrams. All properties available for the C4PlantUMLExporter, e.g. `c4plantuml.tags`, can be applied
+and affect the diagrams in the generate site. See also
+[Diagram notation](https://github.com/structurizr/export/tree/main#diagram-notation) for an overview of supported
+features and limitations for this exporter.
+
+The look and feel of the generated site can be customized with several additionally view properties in the C4
+architecture model:
+
+| Property name                        | Description                                                                                                                                                                                                                                                                          | Default   | Example            |
+|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------------------|
+| `structurizr.style.colors.primary`   | Primary site color, used for header bar background and active menu background.                                                                                                                                                                                                       | `#333333` | `#485fc7`          |
+| `structurizr.style.colors.secondary` | Secondary site color, used for font color in header bar and for active menu.                                                                                                                                                                                                         | `#cccccc` | `#ffffff`          |
+| `structurizr.style.favicon.path`     | Site logo location relative to the configured `assets` folder. When configured, the logo image will be place on the left side in the header bar. This requires the `--assets-dir` switch when generating the site and the corresponding file to be available in the `assets` folder. |           | `site/favicon.ico` |
+| `structurizr.style.logo.path`        | Site favicon location relative to the configured `assets` folder. When configured, the favicon will be set for all generated pages. This requires the `--assets-dir` switch when generating the site and the corresponding file to be available in the `assets` folder.              |           | `site/logo.png`    |
+| `structurizr.style.search.language`  | Indexing/stemming language for the search index. See [Lunr language support](https://github.com/olivernn/lunr-languages)                                                                                                                                                             | `en`      | `nl`               |
+
+See the included example for usage of some those properties in the
+[C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L159).
 
 ## Contributing
 
