@@ -15,7 +15,7 @@ class FaviconViewModelTest : ViewModelTest() {
     @Test
     fun favicon() {
         generatorContext.workspace.views.configuration.addProperty(
-            "structurizr.style.favicon.path",
+            "generatr.style.faviconPath",
             "site/favicon.png"
         )
         val faviconViewModel = faviconViewModel()
@@ -28,7 +28,7 @@ class FaviconViewModelTest : ViewModelTest() {
     @Test
     fun `invalid favicon`() {
         generatorContext.workspace.views.configuration.addProperty(
-            "structurizr.style.favicon.path",
+            "generatr.style.faviconPath",
             "favicon"
         )
 

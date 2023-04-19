@@ -21,7 +21,7 @@ class SearchViewModelTest : ViewModelTest() {
     @Test
     fun `index language configured`() {
         val generatorContext = generatorContext().apply {
-            workspace.views.configuration.addProperty("structurizr.style.search.language", "nl")
+            workspace.views.configuration.addProperty("generatr.search.language", "nl")
         }
         val viewModel = SearchViewModel(generatorContext)
 

@@ -12,7 +12,7 @@ class FaviconViewModel(generatorContext: GeneratorContext, pageViewModel: PageVi
     private fun faviconPath(generatorContext: GeneratorContext) =
         generatorContext.workspace.views.configuration.properties
             .getOrDefault(
-                "structurizr.style.favicon.path",
+                "generatr.style.faviconPath",
                 null
             )
 

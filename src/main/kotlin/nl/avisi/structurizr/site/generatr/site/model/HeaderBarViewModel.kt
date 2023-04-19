@@ -16,7 +16,7 @@ class HeaderBarViewModel(pageViewModel: PageViewModel, generatorContext: Generat
     private fun logoPath(generatorContext: GeneratorContext) =
         generatorContext.workspace.views.configuration.properties
             .getOrDefault(
-                "structurizr.style.logo.path",
+                "generatr.style.logoPath",
                 null
             )
 }
