@@ -29,7 +29,7 @@ dependencies {
     implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
     implementation("org.jsoup:jsoup:1.15.4")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("org.eclipse.jetty:jetty-server:11.0.15")
