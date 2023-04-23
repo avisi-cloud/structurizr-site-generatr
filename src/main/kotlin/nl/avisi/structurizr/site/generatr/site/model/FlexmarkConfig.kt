@@ -22,8 +22,6 @@ import com.vladsch.flexmark.parser.Parser
 
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
-import mu.KotlinLogging
-
 data class FlexmarkConfig(
     val flexmarkExtensionsProperty: String,
     val selectedExtensionMap: Map<String, Extension>,
