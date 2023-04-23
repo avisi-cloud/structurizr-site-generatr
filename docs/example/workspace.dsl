@@ -5,6 +5,14 @@
  * - "Big Bank plc - Internet Banking System" (https://structurizr.com/share/36141/)
 */
 workspace "Big Bank plc" "This is an example workspace to illustrate the key features of Structurizr, via the DSL, based around a fictional online banking system." {
+    properties {
+        // full list of available "flexmark.extensions" 
+        // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"
+        // ATTENTION: 
+        // * "flexmark.extensions" must be separated by comma
+        // * it's not possible to use "GitLab" and "ResizableImage" extensions together
+        "flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
+    }
     !docs workspace-docs
     !adrs workspace-adrs
 
