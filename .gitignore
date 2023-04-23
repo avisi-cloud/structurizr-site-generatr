@@ -4,3 +4,4 @@ build
 out
 *.md_
 .vscode
+bin
