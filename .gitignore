@@ -2,3 +2,5 @@
 .idea
 build
 out
+*.md_
+.vscode
