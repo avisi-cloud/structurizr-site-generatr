@@ -6,6 +6,12 @@ This page showcases the ability to use extended markdown formating features in w
 
 `[TOC]` element which renders a table of contents
 
+```markdown
+[TOC]
+```
+
+will render into
+
 [TOC]
 
 ### Render Tables
@@ -31,12 +37,22 @@ Admonitions create block-styled side content.
 ```markdown
 !!! faq "FAQ"
     This is a FAQ.
+!!! attention "Warning"
+    This is a warning message
+
+!!! info "information"
+    this is an additional information
 ```
 
 This will be rendered as
 
 !!! faq "FAQ"
     This is a FAQ.
+!!! attention "Warning"
+    This is a warning message
+
+!!! info "information"
+    this is an additional information
 
 ### GitLab flavored markdown extensions
 
