@@ -69,7 +69,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
     @Test
     fun `doesnt translate markdown table with extension property without Tables`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("flexmark.extensions", "Admonition")
+            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition")
         }
         val viewModel = HomePageViewModel(generatorContext)
 
@@ -96,7 +96,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
     @Test
     fun `translates markdown table with extension property containing Tables`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("flexmark.extensions", "Admonition, Tables")
+            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
         }    
         val viewModel = HomePageViewModel(generatorContext)
 
@@ -136,7 +136,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
     @Test
     fun `translates markdown admonition block with extension property containing Admonition`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("flexmark.extensions", "Admonition, Tables")
+            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
         }    
         val viewModel = HomePageViewModel(generatorContext)
 
@@ -176,7 +176,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
     @Test
     fun `translates mermaid graphings in markdown with extension property containing GitLab`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("flexmark.extensions", "Admonition, GitLab, Tables")
+            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition, GitLab, Tables")
         }    
         val viewModel = HomePageViewModel(generatorContext)
 

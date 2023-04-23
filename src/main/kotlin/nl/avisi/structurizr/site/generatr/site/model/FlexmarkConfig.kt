@@ -70,8 +70,8 @@ val availableExtensionMap: MutableMap<String, Extension> = mutableMapOf<String, 
 fun buildFlexmarkConfig(generatorContext: GeneratorContext): FlexmarkConfig {
     var flexmarkExtensionString: String = "Tables"
 
-    if (generatorContext.workspace.properties.containsKey("flexmark.extensions")) {
-        flexmarkExtensionString = generatorContext.workspace.properties["flexmark.extensions"] as String
+    if (generatorContext.workspace.properties.containsKey("generatr.markdown.flexmark.extensions")) {
+        flexmarkExtensionString = generatorContext.workspace.properties["generatr.markdown.flexmark.extensions"] as String
     }
 
     val flexmarkExtensionNames = flexmarkExtensionString.split(",")
