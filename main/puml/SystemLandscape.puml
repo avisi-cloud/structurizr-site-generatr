@@ -4,8 +4,8 @@ title System Landscape
 
 top to bottom direction
 
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include <C4/C4>
+!include <C4/C4_Context>
 
 Enterprise_Boundary(enterprise, "Big Bank plc") {
   WithoutPropertyHeader()

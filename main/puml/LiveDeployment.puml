@@ -4,10 +4,10 @@ title Internet Banking System - Deployment - Live
 
 top to bottom direction
 
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Deployment>
 
 Deployment_Node(Live.Customersmobiledevice, "Customer's mobile device", "Apple iOS or Android", $tags="") {
   Container(Live.Customersmobiledevice.MobileApp_1, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")
@@ -21,6 +21,13 @@ Deployment_Node(Live.Customerscomputer, "Customer's computer", "Microsoft Window
 }
 
 Deployment_Node(Live.BigBankplc, "Big Bank plc", "Big Bank plc data center", $tags="") {
+  Deployment_Node(Live.BigBankplc.bigbankweb, "bigbank-web*** (x4)", "Ubuntu 16.04 LTS", $tags="") {
+    Deployment_Node(Live.BigBankplc.bigbankweb.ApacheTomcat, "Apache Tomcat", "Apache Tomcat 8.x", $tags="") {
+      Container(Live.BigBankplc.bigbankweb.ApacheTomcat.WebApplication_1, "Web Application", "Java and Spring MVC", "Delivers the static content and the Internet banking single page application.", $tags="")
+    }
+
+  }
+
   Deployment_Node(Live.BigBankplc.bigbankapi, "bigbank-api*** (x8)", "Ubuntu 16.04 LTS", $tags="") {
     Deployment_Node(Live.BigBankplc.bigbankapi.ApacheTomcat, "Apache Tomcat", "Apache Tomcat 8.x", $tags="") {
       Container(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "API Application", "Java and Spring MVC", "Provides Internet banking functionality via a JSON/HTTPS API.", $tags="")
@@ -46,18 +53,11 @@ Deployment_Node(Live.BigBankplc, "Big Bank plc", "Big Bank plc data center", $ta
     System(Live.BigBankplc.bigbankprod001.MainframeBankingSystem_1, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")
   }
 
-  Deployment_Node(Live.BigBankplc.bigbankweb, "bigbank-web*** (x4)", "Ubuntu 16.04 LTS", $tags="") {
-    Deployment_Node(Live.BigBankplc.bigbankweb.ApacheTomcat, "Apache Tomcat", "Apache Tomcat 8.x", $tags="") {
-      Container(Live.BigBankplc.bigbankweb.ApacheTomcat.WebApplication_1, "Web Application", "Java and Spring MVC", "Delivers the static content and the Internet banking single page application.", $tags="")
-    }
-
-  }
-
 }
 
 Rel_D(Live.BigBankplc.bigbankweb.ApacheTomcat.WebApplication_1, Live.Customerscomputer.WebBrowser.SinglePageApplication_1, "Delivers to the customer's web browser", $tags="")
-Rel_D(Live.Customerscomputer.WebBrowser.SinglePageApplication_1, Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
 Rel_D(Live.Customersmobiledevice.MobileApp_1, Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
+Rel_D(Live.Customerscomputer.WebBrowser.SinglePageApplication_1, Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, "Makes API calls to", "JSON/HTTPS", $tags="")
 Rel_D(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, Live.BigBankplc.bigbankdb01.OraclePrimary.Database_1, "Reads from and writes to", "JDBC", $tags="")
 Rel_D(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, Live.BigBankplc.bigbankdb02.OracleSecondary.Database_1, "Reads from and writes to", "JDBC", $tags="")
 Rel_D(Live.BigBankplc.bigbankapi.ApacheTomcat.APIApplication_1, Live.BigBankplc.bigbankprod001.MainframeBankingSystem_1, "Makes API calls to", "XML/HTTPS", $tags="")

@@ -4,8 +4,8 @@ title Internet Banking System - System Context
 
 top to bottom direction
 
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include <C4/C4>
+!include <C4/C4_Context>
 
 skinparam svgDimensionStyle false
 skinparam preserveAspectRatio meet
@@ -16,7 +16,7 @@ Enterprise_Boundary(enterprise, "Big Bank plc") {
   AddProperty("Development Team","Dev/Internet Services")
   AddProperty("Owner","Customer Services")
   AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
-  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")
+  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")[[../container/]]
 }
 
 Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")

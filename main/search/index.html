@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" class="has-background-light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search results | Big Bank plc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+    <link href="../../style.css" rel="stylesheet">
+    <link href="../../style-branding.css" rel="stylesheet">
+    <link href="../site/favicon.ico" rel="icon" type="image/ico">
+  </head>
+  <body>
+    <script type="text/javascript" src="../../header.js"></script>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand has-site-branding"><a href="../" class="navbar-item"><img alt="Big Bank plc" src="../site/logo.png"></a><a href="../" class="navbar-item"><span class="has-text-weight-semibold has-site-branding">Big Bank plc</span></a></div>
+      <div class="navbar-menu has-site-branding">
+        <div class="navbar-end">
+          <div class="navbar-item"><input class="input is-small is-rounded has-site-branding" id="search" type="search" size="30" maxlength="50" placeholder="Search (requires 3 characters)..." onkeyup="redirect(event, value, './')"></div>
+          <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
+            <div class="navbar-dropdown is-right"><a href="../../main" class="navbar-item">main</a>
+              <hr class="navbar-divider">
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="site-layout" id="site">
+      <aside class="menu p-3">
+        <p class="menu-label">General</p>
+        <ul class="menu-list has-site-branding">
+          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a></li>
+        </ul>
+        <p class="menu-label">Software systems</p>
+        <ul class="menu-list has-site-branding">
+          <li><a href="../atm/" class="">ATM</a><a href="../e-mail-system/" class="">E-mail System</a><a href="../internet-banking-system/" class="">Internet Banking System</a><a href="../mainframe-banking-system/" class="">Mainframe Banking System</a></li>
+        </ul>
+      </aside>
+      <div class="container is-fluid has-background-white">
+        <div class="content p-3">
+          <h2>Search results</h2>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr-languages@1.10.0/min/lunr.stemmer.support.min.js"></script>
+          <script type="text/javascript">const documents = [{"href":"../","type":"Home","title":"Big Bank plc architecture","text":"Big Bank plc architecture This site contains the C4 architecture model for Big Bank plc. This page is the home page, because it is the first file in the `workspace-docs` directory, when the files are sorted\nalphabetically."},{"href":"../decisions/1/","type":"Workspace Decision","title":"Record architecture decisions","text":"Record architecture decisions Status Context Decision Consequences Date: 2022-06-27 Accepted We need to record the architectural decisions made on this project. We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions). See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools)."},{"href":"../embedding-diagrams-and-images/","type":"Workspace Documentation","title":"Embedding diagrams and images","text":"Embedding diagrams and images Embedding diagrams Example: Embedded diagram Embedding static images Example: Embedded picture This page showcases the ability to embed diagrams and static images in documentation. Diagrams can be embedded using the `embed:` syntax: See also: <https://www.structurizr.com/help/documentation/diagrams> ![System Landscape Diagram](embed:SystemLandscape) Static assets can be included in the generated site, using the `--assets-dir` command-line flag. This flag can be used\nwith the `serve` command and the `generate-site` command. When, for example, you would like to embed a nice picture which is located in the `pictures` directory under the assets\ndirectory, you can do that as follows: [Sun](https://www.flickr.com/photos/schmollmolch/4937297813/), by Christian Scheja ![A nice picture](/pictures/nice-picture.png)"},{"href":"../mainframe-banking-system/","type":"Software System Info","title":"Mainframe Banking System | Info","text":"mainframe"},{"href":"../mainframe-banking-system/context/","type":"Context views","title":"Mainframe Banking System | Context views","text":"Mainframe Banking System Stores all of the core banking information about customers, accounts, transactions, etc."},{"href":"../mainframe-banking-system/dependencies/","type":"Dependencies","title":"Mainframe Banking System | Dependencies","text":"ATM Uses Acquirer Peforms clearing and settlement Internet Banking System Gets account information from, and makes payments using"},{"href":"../e-mail-system/","type":"Software System Info","title":"E-mail System | Info","text":"email"},{"href":"../e-mail-system/context/","type":"Context views","title":"E-mail System | Context views","text":"E-mail System The internal Microsoft Exchange e-mail system."},{"href":"../e-mail-system/dependencies/","type":"Dependencies","title":"E-mail System | Dependencies","text":"Personal Banking Customer Sends e-mails to Internet Banking System Sends e-mail using"},{"href":"../atm/","type":"Software System Info","title":"ATM | Info","text":"atm"},{"href":"../atm/context/","type":"Context views","title":"ATM | Context views","text":"ATM Allows customers to withdraw cash."},{"href":"../atm/dependencies/","type":"Dependencies","title":"ATM | Dependencies","text":"Mainframe Banking System Uses"},{"href":"../internet-banking-system/","type":"Software System Info","title":"Internet Banking System | Description","text":"Description Vision References This is our fancy Internet Banking System. One system to rule them all! internetbankingsystem Customer Services https://en.wikipedia.org/wiki/Online_banking Dev/Internet Services"},{"href":"../internet-banking-system/context/","type":"Context views","title":"Internet Banking System | Context views","text":"Internet Banking System Allows customers to view information about their bank accounts, and make payments."},{"href":"../internet-banking-system/container/","type":"Container views","title":"Internet Banking System | Container views","text":"API Application Provides Internet banking functionality via a JSON/HTTPS API. Java and Spring MVC Database Stores user registration information, hashed authentication credentials, access logs, etc. Oracle Database Schema Mobile App Provides a limited subset of the Internet banking functionality to customers via their mobile device. Xamarin Single-Page Application Provides all of the Internet banking functionality to customers via their web browser. JavaScript and Angular Web Application Delivers the static content and the Internet banking single page application. Java and Spring MVC"},{"href":"../internet-banking-system/component/","type":"Component views","title":"Internet Banking System | Component views","text":"Accounts Summary Controller Provides customers with a summary of their bank accounts. Spring MVC Rest Controller E-mail Component Sends e-mails to users. Spring Bean Mainframe Banking System Facade A facade onto the mainframe banking system. Spring Bean Reset Password Controller Allows users to reset their passwords with a single use URL. Spring MVC Rest Controller Security Component Provides functionality related to signing in, changing passwords, etc. Spring Bean Sign In Controller Allows users to sign in to the Internet Banking System. Spring MVC Rest Controller"},{"href":"../internet-banking-system/dependencies/","type":"Dependencies","title":"Internet Banking System | Dependencies","text":"E-mail System Sends e-mail using Mainframe Banking System Gets account information from, and makes payments using"},{"href":"../internet-banking-system/decisions/1/","type":"Decision","title":"Internet Banking System | Record architecture decisions","text":"Record architecture decisions Status Context Decision Consequences Date: 2022-06-21 Accepted We need to record the architectural decisions made on this project. We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions). See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools)."},{"href":"../internet-banking-system/sections/2/","type":"Documentation","title":"Internet Banking System | History","text":"History Some notes how we got to the current state."},{"href":"../internet-banking-system/sections/3/","type":"Documentation","title":"Internet Banking System | Usage","text":"Usage This is how we use this thing."}];const idx = lunr(function () {
+                        this.ref('href')
+                        this.field('text')
+
+                        documents.forEach(function (doc) {
+                          this.add(doc)
+                        }, this)
+                      });
+                    </script>
+          <script type="text/javascript" src="../../search.js"></script>
+          <div id="search-results"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
