@@ -74,11 +74,12 @@ private fun copyAssets(assetsDir: File, exportDir: File) {
 }
 
 private fun generateStyle(context: GeneratorContext, exportDir: File) {
+    val branchDir = File(exportDir, context.currentBranch)
     val configuration = context.workspace.views.configuration.properties
     val primary = configuration.getOrDefault("generatr.style.colors.primary", "#333333")
     val secondary = configuration.getOrDefault("generatr.style.colors.secondary", "#cccccc")
 
-    val file = File(exportDir, "style-branding.css")
+    val file = File(branchDir, "style-branding.css")
     val content = """
         .navbar .has-site-branding {
             background-color: $primary!important;
