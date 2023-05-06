@@ -87,7 +87,7 @@ class C4PlantUmlExporterWithElementLinksTest {
             """
             skinparam preserveAspectRatio meet
             System_Boundary("System1_boundary", "System 1", ${'$'}tags="") {
-              Container(System1.Container1, "Container 1", "", ${'$'}tags="")[[../system-1/component]]
+              Container(System1.Container1, "Container 1", "", ${'$'}tags="")[[../system-1/component/]]
             }
             """.trimIndent()
         )
