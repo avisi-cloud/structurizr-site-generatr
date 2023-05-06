@@ -67,7 +67,7 @@ class C4PlantUmlExporterWithElementLinks(
         element is Container && element.hasComponents
 
     private fun getUrlToComponentViews(element: Element?): String {
-        val path = "/${element?.parent?.name?.normalize()}/component/".asUrlToFile(url)
+        val path = "/${element?.parent?.name?.normalize()}/component/".asUrlToDirectory(url)
         return "$TEMP_URI$path"
     }
 
