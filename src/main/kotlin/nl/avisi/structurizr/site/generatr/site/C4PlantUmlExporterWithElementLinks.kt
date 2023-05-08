@@ -37,7 +37,7 @@ class C4PlantUmlExporterWithElementLinks(
         val url = when {
             needsLinkToSoftwareSystem(element, view) -> getUrlToSoftwareSystem(element)
             needsLinkToContainerViews(element, view) -> getUrlToContainerViews(element)
-            needsLinkToComponentViews(element) -> getUrlToComponentViews(element)
+            needsLinkToComponentViews(element, view) -> getUrlToComponentViews(element)
             else -> null
         }
 
@@ -63,11 +63,11 @@ class C4PlantUmlExporterWithElementLinks(
         return "$TEMP_URI$path"
     }
 
-    private fun needsLinkToComponentViews(element: Element?) =
-        element is Container && element.hasComponents
+    private fun needsLinkToComponentViews(element: Element?, view: ModelView?) =
+        element is Container && element.hasComponents && view !is ComponentView
 
     private fun getUrlToComponentViews(element: Element?): String {
-        val path = "/${element?.parent?.name?.normalize()}/component/".asUrlToFile(url)
+        val path = "/${element?.parent?.name?.normalize()}/component/".asUrlToDirectory(url)
         return "$TEMP_URI$path"
     }
 
