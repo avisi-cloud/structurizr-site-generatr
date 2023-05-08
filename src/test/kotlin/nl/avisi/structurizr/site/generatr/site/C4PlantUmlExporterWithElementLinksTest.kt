@@ -94,6 +94,36 @@ class C4PlantUmlExporterWithElementLinksTest {
     }
 
     @Test
+    fun `renders Components Diagram without link to other Component Diagram`() {
+        val workspace = Workspace("workspace name", "")
+        val system = workspace.model.addSoftwareSystem("System 1")
+        val container1 = system.addContainer("Container 1")
+        val container2 = system.addContainer("Container 2")
+        container1.addComponent("Component 1").apply { uses(container2, "uses") }
+        container2.addComponent("Component 2")
+
+        val view = workspace.views.createComponentView(container1,"Component2","")
+            .apply { addAllElements() }
+
+        val diagram = C4PlantUmlExporterWithElementLinks("/system-1/component/")
+            .export(view)
+
+        assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
+            """
+            skinparam svgDimensionStyle false
+            skinparam preserveAspectRatio meet
+            Container(System1.Container2, "Container 2", "", ${'$'}tags="")
+
+            Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
+              Component(System1.Container1.Component1, "Component 1", "", ${'$'}tags="")
+            }
+
+            Rel_D(System1.Container1.Component1, System1.Container2, "uses", ${'$'}tags="")
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `link to other software system`() {
         val view = createWorkspaceWithTwoSystems()
 
