@@ -60,25 +60,27 @@ fun generateSite(
             ?.let { generateDiagramWithElementLinks(it, url, exportDir) }
     }
 
-    deleteOldHashes(exportDir)
-    if (assetsDir != null) copyAssets(assetsDir, File(exportDir, currentBranch))
-    generateStyle(generatorContext, exportDir)
-    generateHtmlFiles(generatorContext, exportDir)
+    val branchDir = File(exportDir, currentBranch)
+
+    deleteOldHashes(branchDir)
+    if (assetsDir != null) copyAssets(assetsDir, branchDir)
+    generateStyle(generatorContext, branchDir)
+    generateHtmlFiles(generatorContext, branchDir)
 }
 
-private fun deleteOldHashes(exportDir: File) = exportDir.walk().filter { it.extension == "md5" }
+private fun deleteOldHashes(branchDir: File) = branchDir.walk().filter { it.extension == "md5" }
     .forEach { it.delete() }
 
-private fun copyAssets(assetsDir: File, exportDir: File) {
-    assetsDir.copyRecursively(exportDir, overwrite = true)
+private fun copyAssets(assetsDir: File, branchDir: File) {
+    assetsDir.copyRecursively(branchDir, overwrite = true)
 }
 
-private fun generateStyle(context: GeneratorContext, exportDir: File) {
+private fun generateStyle(context: GeneratorContext, branchDir: File) {
     val configuration = context.workspace.views.configuration.properties
     val primary = configuration.getOrDefault("generatr.style.colors.primary", "#333333")
     val secondary = configuration.getOrDefault("generatr.style.colors.secondary", "#cccccc")
 
-    val file = File(exportDir, "style-branding.css")
+    val file = File(branchDir, "style-branding.css")
     val content = """
         .navbar .has-site-branding {
             background-color: $primary!important;
@@ -104,8 +106,7 @@ private fun generateStyle(context: GeneratorContext, exportDir: File) {
     file.writeText(content)
 }
 
-private fun generateHtmlFiles(context: GeneratorContext, exportDir: File) {
-    val branchDir = File(exportDir, context.currentBranch)
+private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
     buildList {
         add { writeHtmlFile(branchDir, HomePageViewModel(context)) }
         add { writeHtmlFile(branchDir, WorkspaceDecisionsPageViewModel(context)) }
