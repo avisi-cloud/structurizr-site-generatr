@@ -18,6 +18,7 @@ function search(terms) {
   });
 
   const div = document.getElementById('search-results');
+  clearResultElements(div);
 
   if (results.length === 0) {
     div.appendChild(createNoResultsElement());
@@ -25,6 +26,12 @@ function search(terms) {
     results.forEach(result => {
       div.appendChild(createResultElement(result));
     });
+  }
+}
+
+function clearResultElements(div) {
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
   }
 }
 
