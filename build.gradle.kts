@@ -30,7 +30,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.16.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     implementation("org.eclipse.jetty:jetty-server:11.0.15")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.15")
