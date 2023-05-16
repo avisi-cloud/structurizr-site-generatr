@@ -12,6 +12,15 @@ val Model.includedSoftwareSystems: List<SoftwareSystem>
 val SoftwareSystem.includedSoftwareSystem
     get() = this.location != Location.External
 
+val Container.hasComponents
+    get() = this.components.isNotEmpty()
+
+val SoftwareSystem.hasContainers
+    get() = this.containers.isNotEmpty()
+
+val SoftwareSystem.includedProperties
+    get() = this.properties.filterNot { (name, _) -> name == "structurizr.dsl.identifier" }
+
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 
 fun SoftwareSystem.hasContainerDecisions() = containers.flatMap { it.documentation.decisions  }.isNotEmpty()

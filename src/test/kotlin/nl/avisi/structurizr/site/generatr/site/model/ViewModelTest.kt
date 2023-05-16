@@ -13,7 +13,7 @@ abstract class ViewModelTest {
     protected val svgFactory = { _: String, _: String -> """<svg viewBox="0 0 800 900"></svg>""" }
 
     protected fun generatorContext(
-        workspaceName: String = "workspace name",
+        workspaceName: String = "Workspace name",
         branches: List<String> = listOf("main"),
         currentBranch: String = "main",
         version: String = "1.0.0"
@@ -37,5 +37,5 @@ abstract class ViewModelTest {
             content = "Decision $id content"
         }
 
-    protected fun createSection(title: String = "Section 1") = Section(title, Format.Markdown, "# Content")
+    protected fun createSection(content: String = "# Content") = Section(Format.Markdown, content)
 }

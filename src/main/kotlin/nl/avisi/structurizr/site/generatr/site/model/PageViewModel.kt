@@ -3,9 +3,11 @@ package nl.avisi.structurizr.site.generatr.site.model
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
-    val pageTitle by lazy {
-        if (generatorContext.workspace.name.isNotBlank())
+    val pageTitle: String by lazy {
+        if (pageSubTitle.isNotBlank() && generatorContext.workspace.name.isNotBlank())
             "$pageSubTitle | ${generatorContext.workspace.name}"
+        else if (generatorContext.workspace.name.isNotBlank())
+            generatorContext.workspace.name
         else
             pageSubTitle
     }

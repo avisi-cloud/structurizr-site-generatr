@@ -23,6 +23,7 @@ import java.time.Duration
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.extension
 import kotlin.io.path.isDirectory
+import kotlin.io.path.isHidden
 import kotlin.io.path.isRegularFile
 import kotlin.system.measureTimeMillis
 
@@ -36,6 +37,10 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     private val siteDir by option(
         ArgType.String, "site-dir", "s", "Directory for the generated site"
     ).default("build/serve")
+
+    private val port by option(
+        ArgType.Int, "port", "p", "Port the site is served on"
+    ).default(8080)
 
     private val eventSockets = mutableListOf<EventSocket>()
     private val eventSocketsLock = Any()
@@ -60,18 +65,20 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
     private fun updateSite() {
         val branch = "master"
-        val exportDir = File(siteDir, branch)
+        val exportDir = File(siteDir, branch).apply { mkdirs() }
 
         try {
             val ms = measureTimeMillis {
                 broadcast("site-updating")
                 val workspace = createStructurizrWorkspace(File(workspaceFile))
+
+                println("Generating index page...")
+                generateRedirectingIndexPage(File(siteDir), branch)
+                println("Copying assets...")
+                copySiteWideAssets(File(siteDir))
                 println("Generating diagrams...")
                 generateDiagrams(workspace, exportDir)
-
                 println("Generating site...")
-                copySiteWideAssets(File(siteDir))
-                generateRedirectingIndexPage(File(siteDir), branch)
                 generateSite(
                     "0.0.0",
                     workspace,
@@ -94,14 +101,14 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     }
 
     private fun runServer(): Server =
-        Server(8080).also { server ->
+        Server(port).also { server ->
             println("Starting server...")
 
             server.handler = createServletContextHandler()
             server.start()
 
             println("Server started")
-            println("Open http://localhost:8080 in your browser to view the site")
+            println("Open http://localhost:$port in your browser to view the site")
         }
 
     private fun createServletContextHandler() =
@@ -133,7 +140,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
         path.watch(watchService)
         Files.walk(path)
-            .filter { it.isDirectory() && !it.absolutePathString().startsWith(absoluteSiteDir) }
+            .filter { it.isDirectory() && !it.isHidden() && !it.absolutePathString().startsWith(absoluteSiteDir) }
             .forEach { it.watch(watchService) }
 
         Thread { monitorFileChanges(watchService) }
@@ -158,7 +165,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
 
             events.filter { it.kind() == StandardWatchEventKinds.ENTRY_CREATE }
                 .map { parentPath.resolve(it.context() as Path) }
-                .filter { it.isDirectory() }
+                .filter { it.isDirectory() && !it.isHidden() }
                 .forEach { it.watch(watchService) }
 
             if (fileModified || fileOrDirectoryDeleted) {

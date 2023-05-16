@@ -1,11 +1,16 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
+import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.model.HeaderBarViewModel
 import nl.avisi.structurizr.site.generatr.site.model.ImageViewModel
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 
 fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
+    script(
+        type = ScriptType.textJavaScript,
+        src = "../" + "/header.js".asUrlToFile(viewModel.url)
+    ) { }
     nav(classes = "navbar") {
         role = "navigation"
         attributes["aria-label"] = "main navigation"
@@ -18,6 +23,16 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
         }
         div(classes = "navbar-menu has-site-branding") {
             div(classes = "navbar-end") {
+                div(classes = "navbar-item") {
+                    input(classes = "input is-small is-rounded has-site-branding") {
+                        id = "search"
+                        type = InputType.search
+                        size = "30"
+                        maxLength = "50"
+                        placeholder = "Search (requires 3 characters)..."
+                        onKeyUp = "redirect(event, value, '${viewModel.searchLink.relativeHref}')"
+                    }
+                }
                 div(classes = "navbar-item has-dropdown is-hoverable") {
                     a(classes = "navbar-link has-site-branding") {
                         +viewModel.currentBranch

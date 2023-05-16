@@ -1,22 +1,23 @@
 <!-- TOC -->
-* [Structurizr Site Generatr](#structurizr-site-generatr)
-  * [Features](#features)
-  * [Getting Started](#getting-started)
-    * [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
-    * [Manual installation](#manual-installation)
-    * [Docker](#docker)
-      * [[Optional] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
-  * [Usage](#usage)
-    * [Help](#help)
-    * [Version](#version)
-    * [Generate a website](#generate-a-website)
-      * [From a C4 Workspace](#from-a-c4-workspace)
-      * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
-      * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
-    * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
-      * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
-  * [Contributing](#contributing)
-  * [Background](#background)
+- [Structurizr Site Generatr](#structurizr-site-generatr)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
+    - [Manual installation](#manual-installation)
+    - [Docker](#docker)
+      - [\[Optional\] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
+  - [Usage](#usage)
+    - [Help](#help)
+    - [Version](#version)
+    - [Generate a website](#generate-a-website)
+      - [From a C4 Workspace](#from-a-c4-workspace)
+      - [For those taking the Docker approach](#for-those-taking-the-docker-approach)
+      - [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
+    - [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
+      - [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
+  - [Customizing the generated website](#customizing-the-generated-website)
+  - [Contributing](#contributing)
+  - [Background](#background)
 <!-- TOC -->
 
 # Structurizr Site Generatr
@@ -207,9 +208,9 @@ structurizr-site-generatr generate-site
 ### Start a development web server around the generated website
 
 To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
-generate a website from the input .dsl specified with `-w` _and_ start a web server on **port 8080** to view it.
-Additional parameters that affect website generation and the development web server can be reviewed using the `--help`
-operator.
+generate a website from the input .dsl specified with `-w` _and_ start a web server to view it. **Default port** for the web server is **8080**.
+A differing port for the web server can be specified with `-p PORT`. Additional parameters that affect website generation and the development
+web server can be reviewed using the `--help` operator.
 
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl
@@ -226,6 +227,29 @@ Generatr container. So
 [Docker port mapping](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose)
 is needed to expose the container's port 8080 to the host (web browser). In the example above, the
 `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
+
+## Customizing the generated website
+
+The site generator use the
+[C4PlantUmlExporter](https://github.com/structurizr/export/tree/main/src/main/java/com/structurizr/export/plantuml#c4plantumlexporter)
+to generate the diagrams. All properties available for the C4PlantUMLExporter, e.g. `c4plantuml.tags`, can be applied
+and affect the diagrams in the generate site. See also
+[Diagram notation](https://github.com/structurizr/export/tree/main#diagram-notation) for an overview of supported
+features and limitations for this exporter.
+
+The look and feel of the generated site can be customized with several additionally view properties in the C4
+architecture model:
+
+| Property name                     | Description                                                                                                                                                                                                                                                                          | Default   | Example            |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------------------|
+| `generatr.style.colors.primary`   | Primary site color, used for header bar background and active menu background.                                                                                                                                                                                                       | `#333333` | `#485fc7`          |
+| `generatr.style.colors.secondary` | Secondary site color, used for font color in header bar and for active menu.                                                                                                                                                                                                         | `#cccccc` | `#ffffff`          |
+| `generatr.style.faviconPath`      | Site logo location relative to the configured `assets` folder. When configured, the logo image will be place on the left side in the header bar. This requires the `--assets-dir` switch when generating the site and the corresponding file to be available in the `assets` folder. |           | `site/favicon.ico` |
+| `generatr.style.logoPath`         | Site favicon location relative to the configured `assets` folder. When configured, the favicon will be set for all generated pages. This requires the `--assets-dir` switch when generating the site and the corresponding file to be available in the `assets` folder.              |           | `site/logo.png`    |
+| `generatr.search.language`        | Indexing/stemming language for the search index. See [Lunr language support](https://github.com/olivernn/lunr-languages)                                                                                                                                                             | `en`      | `nl`               |
+
+See the included example for usage of some those properties in the
+[C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L159).
 
 ## Contributing
 

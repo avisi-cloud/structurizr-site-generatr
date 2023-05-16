@@ -24,7 +24,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         )
         link(
             rel = "stylesheet",
-            href = "../" + "/style-branding.css".asUrlToFile(viewModel.url)
+            href = "./" + "/style-branding.css".asUrlToFile(viewModel.url)
         )
 
         if (viewModel.favicon.includeFavicon)
