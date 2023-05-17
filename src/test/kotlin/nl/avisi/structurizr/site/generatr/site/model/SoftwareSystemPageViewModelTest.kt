@@ -158,12 +158,35 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `decisions views tab only visible when decisions available`() {
+    fun `decisions views tab visible when software system decisions available`() {
         val generatorContext = generatorContext()
         val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
+        softwareSystem.documentation.addDecision(createDecision("1", "Proposed"))
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isTrue()
+    }
+
+    @Test
+    fun `decisions views tab visible when container decisions available in software system`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
+        softwareSystem.addContainer("Some Container").documentation.addDecision(createDecision("2", "Proposed"))
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isTrue()
+    }
+
+    @Test
+    fun `decisions views tab visible when container & software system decisions are available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
+        softwareSystem.addContainer("Some Container").documentation.addDecision(createDecision("2", "Proposed"))
         softwareSystem.documentation.addDecision(createDecision("1", "Proposed"))
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isTrue()
     }

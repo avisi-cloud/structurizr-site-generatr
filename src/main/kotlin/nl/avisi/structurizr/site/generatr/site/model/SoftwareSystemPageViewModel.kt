@@ -1,13 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
-import nl.avisi.structurizr.site.generatr.hasComponentViews
-import nl.avisi.structurizr.site.generatr.hasContainerViews
-import nl.avisi.structurizr.site.generatr.hasDecisions
-import nl.avisi.structurizr.site.generatr.hasDeploymentViews
-import nl.avisi.structurizr.site.generatr.hasDocumentationSections
-import nl.avisi.structurizr.site.generatr.hasSystemContextViews
-import nl.avisi.structurizr.site.generatr.normalize
+import nl.avisi.structurizr.site.generatr.*
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 open class SoftwareSystemPageViewModel(
@@ -40,7 +34,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.CONTAINER -> generatorContext.workspace.views.hasContainerViews(softwareSystem)
                 Tab.COMPONENT -> generatorContext.workspace.views.hasComponentViews(softwareSystem)
                 Tab.DEPLOYMENT -> generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
-                Tab.DECISIONS -> softwareSystem.hasDecisions()
+                Tab.DECISIONS -> softwareSystem.hasDecisions() or softwareSystem.hasContainerDecisions()
                 Tab.SECTIONS -> softwareSystem.hasDocumentationSections()
             }
     }
