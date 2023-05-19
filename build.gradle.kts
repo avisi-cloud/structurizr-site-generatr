@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.8.20"
-    kotlin("plugin.serialization") version "1.8.20"
+    kotlin("jvm") version "1.8.21"
+    kotlin("plugin.serialization") version "1.8.21"
     application
 }
 
@@ -24,26 +24,26 @@ dependencies {
     implementation("com.structurizr:structurizr-dsl:1.30.1")
     implementation("com.structurizr:structurizr-export:1.14.0")
 
-    implementation("net.sourceforge.plantuml:plantuml:1.2023.6")
+    implementation("net.sourceforge.plantuml:plantuml:1.2023.7")
 
-    implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
-    implementation("org.jsoup:jsoup:1.15.4")
+    implementation("com.vladsch.flexmark:flexmark-all:0.64.4")
+    implementation("org.jsoup:jsoup:1.16.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     implementation("org.eclipse.jetty:jetty-server:11.0.15")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.15")
     implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.15")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.7")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.8.20")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.8.21")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.17")
     runtimeOnly("org.jruby:jruby-core:9.4.2.0")
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26")
 }
 
 application {

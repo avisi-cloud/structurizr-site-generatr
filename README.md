@@ -1,23 +1,23 @@
 <!-- TOC -->
-* [Structurizr Site Generatr](#structurizr-site-generatr)
-  * [Features](#features)
-  * [Getting Started](#getting-started)
-    * [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
-    * [Manual installation](#manual-installation)
-    * [Docker](#docker)
-      * [[Optional] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
-  * [Usage](#usage)
-    * [Help](#help)
-    * [Version](#version)
-    * [Generate a website](#generate-a-website)
-      * [From a C4 Workspace](#from-a-c4-workspace)
-      * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
-      * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
-    * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
-      * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
-  * [Customizing the generated website](#customizing-the-generated-website)
-  * [Contributing](#contributing)
-  * [Background](#background)
+- [Structurizr Site Generatr](#structurizr-site-generatr)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
+    - [Manual installation](#manual-installation)
+    - [Docker](#docker)
+      - [\[Optional\] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
+  - [Usage](#usage)
+    - [Help](#help)
+    - [Version](#version)
+    - [Generate a website](#generate-a-website)
+      - [From a C4 Workspace](#from-a-c4-workspace)
+      - [For those taking the Docker approach](#for-those-taking-the-docker-approach)
+      - [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
+    - [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
+      - [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
+  - [Customizing the generated website](#customizing-the-generated-website)
+  - [Contributing](#contributing)
+  - [Background](#background)
 <!-- TOC -->
 
 # Structurizr Site Generatr
@@ -208,9 +208,9 @@ structurizr-site-generatr generate-site
 ### Start a development web server around the generated website
 
 To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
-generate a website from the input .dsl specified with `-w` _and_ start a web server on **port 8080** to view it.
-Additional parameters that affect website generation and the development web server can be reviewed using the `--help`
-operator.
+generate a website from the input .dsl specified with `-w` _and_ start a web server to view it. **Default port** for the web server is **8080**.
+A differing port for the web server can be specified with `-p PORT`. Additional parameters that affect website generation and the development
+web server can be reviewed using the `--help` operator.
 
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl

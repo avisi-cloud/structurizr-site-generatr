@@ -1,12 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
-import assertk.assertions.hasMessage
-import assertk.assertions.isEqualTo
-import assertk.assertions.isFailure
-import assertk.assertions.isFalse
-import assertk.assertions.isTrue
-import assertk.thrownError
+import assertk.assertions.*
 import kotlin.test.Test
 
 class FaviconViewModelTest : ViewModelTest() {
