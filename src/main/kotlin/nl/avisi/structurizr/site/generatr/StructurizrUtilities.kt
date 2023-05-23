@@ -23,7 +23,7 @@ val SoftwareSystem.includedProperties
 
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 
-fun SoftwareSystem.hasContainerDecisions() = containers.flatMap { it.documentation.decisions  }.isNotEmpty()
+fun SoftwareSystem.hasContainerDecisions() = containers.any { it.hasDecisions() }
 
 fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
 
