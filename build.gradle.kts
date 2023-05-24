@@ -24,9 +24,9 @@ dependencies {
     implementation("com.structurizr:structurizr-dsl:1.30.1")
     implementation("com.structurizr:structurizr-export:1.14.0")
 
-    implementation("net.sourceforge.plantuml:plantuml:1.2023.7")
+    implementation("net.sourceforge.plantuml:plantuml:1.2023.8")
 
-    implementation("com.vladsch.flexmark:flexmark-all:0.64.4")
+    implementation("com.vladsch.flexmark:flexmark-all:0.64.6")
     implementation("org.jsoup:jsoup:1.16.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.1")
@@ -43,7 +43,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26.1")
 }
 
 application {
