@@ -17,7 +17,7 @@ data class FlexmarkConfig(
     val flexmarkOptions: DataHolder
 )
 
-val availableExtensionMap: MutableMap<String, Extension> = mutableMapOf<String, Extension>(
+val availableExtensionMap: MutableMap<String, Extension> = mutableMapOf(
     "Abbreviation" to com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension.create(),
     "Admonition" to com.vladsch.flexmark.ext.admonition.AdmonitionExtension.create(),
     "AnchorLink" to com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension.create(),
@@ -62,12 +62,12 @@ fun buildFlexmarkConfig(context: GeneratorContext): FlexmarkConfig {
 
     val flexmarkExtensionNames = flexmarkExtensionString.split(",")
 
-    val selectedExtensionMap = mutableMapOf<String, Extension>();
+    val selectedExtensionMap: MutableMap<String, Extension> = mutableMapOf();
 
-    flexmarkExtensionNames.forEach { it ->
+    flexmarkExtensionNames.forEach {
         val extensionName = it.trim()
         if (availableExtensionMap.containsKey(extensionName)) {
-            selectedExtensionMap.put(extensionName, availableExtensionMap[extensionName] as Extension)
+            selectedExtensionMap[extensionName] = availableExtensionMap[extensionName] as Extension
         } else {
             println("Unknown flexmark extension requested in generatr.markdown.flexmark.extensions: Skipping $extensionName.")
         }
