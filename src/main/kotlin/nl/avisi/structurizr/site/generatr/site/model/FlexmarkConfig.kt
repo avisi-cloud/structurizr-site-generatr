@@ -5,19 +5,8 @@ import com.structurizr.Workspace
 import com.vladsch.flexmark.util.misc.Extension
 import com.vladsch.flexmark.util.data.DataHolder
 import com.vladsch.flexmark.util.data.MutableDataSet
-import com.vladsch.flexmark.ext.admonition.AdmonitionExtension
-import com.vladsch.flexmark.ext.aside.AsideExtension
-import com.vladsch.flexmark.ext.attributes.AttributesExtension
-import com.vladsch.flexmark.ext.autolink.AutolinkExtension
-import com.vladsch.flexmark.ext.definition.DefinitionExtension
 import com.vladsch.flexmark.ext.emoji.EmojiExtension
 import com.vladsch.flexmark.ext.emoji.EmojiImageType
-import com.vladsch.flexmark.ext.enumerated.reference.EnumeratedReferenceExtension
-import com.vladsch.flexmark.ext.footnotes.FootnoteExtension
-import com.vladsch.flexmark.ext.gfm.issues.GfmIssuesExtension
-import com.vladsch.flexmark.ext.gfm.users.GfmUsersExtension
-import com.vladsch.flexmark.ext.gitlab.GitLabExtension
-import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.parser.Parser
 
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
@@ -73,20 +62,17 @@ fun buildFlexmarkConfig(context: GeneratorContext): FlexmarkConfig {
 
     val flexmarkExtensionNames = flexmarkExtensionString.split(",")
 
-    // Create a Mutable List to store Extension objects
-    val selectedExtensionMap: MutableMap<String, Extension> = mutableMapOf<String, Extension>();
+    val selectedExtensionMap = mutableMapOf<String, Extension>();
 
-    // Add each extension to the MutableDataSet
     flexmarkExtensionNames.forEach { it ->
         val extensionName = it.trim()
         if (availableExtensionMap.containsKey(extensionName)) {
             selectedExtensionMap.put(extensionName, availableExtensionMap[extensionName] as Extension)
         } else {
-            println("Flexmark extension $extensionName not found. Skipping.")
+            println("Unknown flexmark extension requested in generatr.markdown.flexmark.extensions: Skipping $extensionName.")
         }
     }
 
-    // Create a MutableDataSet to store the parser options
     val flexmarkOptions = MutableDataSet()
     flexmarkOptions.set(Parser.EXTENSIONS, selectedExtensionMap.values)
 
