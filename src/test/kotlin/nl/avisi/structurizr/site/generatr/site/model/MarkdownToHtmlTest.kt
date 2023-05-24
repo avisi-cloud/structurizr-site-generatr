@@ -37,7 +37,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
             viewModel,
             """
                 ## header
-                
+
                 | header1 | header2 |
                 | ------- | ------- |
                 | content | content |
@@ -69,7 +69,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
     @Test
     fun `doesnt translate markdown table with extension property without Tables`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition")
+            workspace.views.configuration.addProperty("generatr.markdown.flexmark.extensions", "Admonition")
         }
         val viewModel = HomePageViewModel(generatorContext)
 
@@ -77,7 +77,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
             viewModel,
             """
                 ## header
-                
+
                 | header1 | header2 |
                 | ------- | ------- |
                 | content | content |
@@ -96,21 +96,21 @@ class MarkdownToHtmlTest : ViewModelTest() {
     @Test
     fun `translates markdown table with extension property containing Tables`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
-        }    
+            workspace.views.configuration.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
+        }
         val viewModel = HomePageViewModel(generatorContext)
 
         val html = markdownToHtml(
             viewModel,
             """
                 ## header
-                
+
                 | header1 | header2 |
                 | ------- | ------- |
                 | content | content |
             """.trimIndent(),
             svgFactory
-        )    
+        )
 
         assertThat(html).isEqualTo(
             """
@@ -131,25 +131,25 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 </table>
             """.trimIndent()
         )
-    }    
+    }
 
     @Test
     fun `translates markdown admonition block with extension property containing Admonition`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
-        }    
+            workspace.views.configuration.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
+        }
         val viewModel = HomePageViewModel(generatorContext)
 
         val html = markdownToHtml(
             viewModel,
             """
                 ## header
-                
+
                 !!! faq "FAQ"
                     This is a FAQ.
             """.trimIndent(),
             svgFactory
-        )    
+        )
 
         assertThat(html).isEqualTo(
             """
@@ -173,20 +173,20 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 </div>
             """.trimIndent()
         )
-    }    
+    }
 
     @Test
     fun `translates mermaid graphings in markdown with extension property containing GitLab`() {
         val generatorContext = generatorContext().apply {
-            workspace.addProperty("generatr.markdown.flexmark.extensions", "Admonition, GitLab, Tables")
-        }    
+            workspace.views.configuration.addProperty("generatr.markdown.flexmark.extensions", "Admonition, GitLab, Tables")
+        }
         val viewModel = HomePageViewModel(generatorContext)
 
         val html = markdownToHtml(
             viewModel,
             """
                 ## Mermaid
-                
+
                 ```mermaid
                 graph TD;
                 A-->B;
@@ -196,7 +196,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 ```
             """.trimIndent(),
             svgFactory
-        )    
+        )
 
         assertThat(html).isEqualTo(
             """
@@ -206,7 +206,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
             </div>
             """.trimIndent()
         )
-    }    
+    }
 
     @Test
     fun `embedded diagram`() {

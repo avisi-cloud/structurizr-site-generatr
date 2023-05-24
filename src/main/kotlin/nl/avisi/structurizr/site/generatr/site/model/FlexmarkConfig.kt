@@ -33,7 +33,7 @@ val availableExtensionMap: MutableMap<String, Extension> = mutableMapOf<String, 
     "Admonition" to com.vladsch.flexmark.ext.admonition.AdmonitionExtension.create(),
     "AnchorLink" to com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension.create(),
     "Aside" to com.vladsch.flexmark.ext.aside.AsideExtension.create(),
-    "Attributes" to com.vladsch.flexmark.ext.attributes.AttributesExtension.create(), 
+    "Attributes" to com.vladsch.flexmark.ext.attributes.AttributesExtension.create(),
     "Autolink" to com.vladsch.flexmark.ext.autolink.AutolinkExtension.create(),
     "Definition" to com.vladsch.flexmark.ext.definition.DefinitionExtension.create(),
     // Docx Converter: render doxc from markdown
@@ -67,18 +67,15 @@ val availableExtensionMap: MutableMap<String, Extension> = mutableMapOf<String, 
     "YouTubeLink" to com.vladsch.flexmark.ext.youtube.embedded.YouTubeLinkExtension.create(),
 )
 
-fun buildFlexmarkConfig(generatorContext: GeneratorContext): FlexmarkConfig {
-    var flexmarkExtensionString: String = "Tables"
-
-    if (generatorContext.workspace.properties.containsKey("generatr.markdown.flexmark.extensions")) {
-        flexmarkExtensionString = generatorContext.workspace.properties["generatr.markdown.flexmark.extensions"] as String
-    }
+fun buildFlexmarkConfig(context: GeneratorContext): FlexmarkConfig {
+    val configuration = context.workspace.views.configuration.properties
+    val flexmarkExtensionString = configuration.getOrDefault("generatr.markdown.flexmark.extensions", "Tables")
 
     val flexmarkExtensionNames = flexmarkExtensionString.split(",")
 
     // Create a Mutable List to store Extension objects
     val selectedExtensionMap: MutableMap<String, Extension> = mutableMapOf<String, Extension>();
-    
+
     // Add each extension to the MutableDataSet
     flexmarkExtensionNames.forEach { it ->
         val extensionName = it.trim()
@@ -88,7 +85,7 @@ fun buildFlexmarkConfig(generatorContext: GeneratorContext): FlexmarkConfig {
             println("Flexmark extension $extensionName not found. Skipping.")
         }
     }
-    
+
     // Create a MutableDataSet to store the parser options
     val flexmarkOptions = MutableDataSet()
     flexmarkOptions.set(Parser.EXTENSIONS, selectedExtensionMap.values)
