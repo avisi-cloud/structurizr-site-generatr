@@ -4,11 +4,11 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlin.test.Test
 
-class ContainersTableViewModelTest : ViewModelTest() {
+class ContainerDecisionsTableViewModelTest : ViewModelTest() {
 
     @Test
     fun `no container with decisions available`() {
-        assertThat(pageViewModel().createContainerTableViewModel(emptySet()) { "href" })
+        assertThat(pageViewModel().createContainerDecisionsTableViewModel(emptySet()) { "href" })
             .isEqualTo(
                 TableViewModel.create {
                     containersTableHeaderRow()
@@ -26,7 +26,7 @@ class ContainersTableViewModelTest : ViewModelTest() {
                     .documentation.addDecision(createDecision("1", "Mobile Decision"))
         }.containers
         val pageViewModel = pageViewModel()
-        assertThat(pageViewModel.createContainerTableViewModel(containers) { it.name }).isEqualTo(
+        assertThat(pageViewModel.createContainerDecisionsTableViewModel(containers) { it.name }).isEqualTo(
             TableViewModel.create {
                 containersTableHeaderRow()
                 bodyRow(

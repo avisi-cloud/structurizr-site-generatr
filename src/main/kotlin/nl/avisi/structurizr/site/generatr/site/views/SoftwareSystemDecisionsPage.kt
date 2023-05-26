@@ -7,7 +7,7 @@ import kotlinx.html.ul
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemDecisionsPageViewModel
 
 fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewModel) {
-    if (viewModel.visibleOnlyContainersDecisions) {
+    if (viewModel.onlyContainersDecisionsVisible) {
         redirectRelative(
             viewModel.decisionTabs.first { it.visible }.link.relativeHref
         )
@@ -25,7 +25,7 @@ fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewM
                             }
                 }
             }
-            if (viewModel.visibleSoftwareSystemDecisions) {
+            if (viewModel.softwareSystemDecisionsVisible) {
                 table(viewModel.decisionsTable)
             }
         }
