@@ -18,6 +18,7 @@ fun SoftwareSystemPageViewModel.createDecisionsTabViewModel(softwareSystem: Soft
         }
         softwareSystem
                 .containers
+                .filter { it.hasDecisions() }
                 .map {
                     DecisionTabViewModel(
                             this@createDecisionsTabViewModel,
