@@ -57,4 +57,18 @@ class DecisionTabViewModelTest : ViewModelTest() {
         assertThat(decisionTabViewModel.first().title).isEqualTo("System")
         assertThat(decisionTabViewModel.last().title).isEqualTo("Some Container")
     }
+
+    @Test
+    fun `check container decisions tabs are filtered`() {
+        val context = generatorContext()
+        val softwareSystem = context.workspace.model.addSoftwareSystem("Software system")
+        softwareSystem.addContainer("Some Container").documentation.addDecision(createDecision("2", "Proposed"))
+        softwareSystem.addContainer("Another Container")
+
+        val softwareSystemPageViewModel = SoftwareSystemPageViewModel(context, softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
+        val decisionTabViewModel = softwareSystemPageViewModel.createDecisionsTabViewModel(softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
+
+        assertThat(decisionTabViewModel.size).isEqualTo(1)
+        assertThat(decisionTabViewModel.last().title).isEqualTo("Some Container")
+    }
 }
