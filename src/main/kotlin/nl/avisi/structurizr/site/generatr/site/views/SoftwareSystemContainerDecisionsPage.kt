@@ -12,7 +12,6 @@ fun HTML.softwareSystemContainerDecisionsPage(viewModel: SoftwareSystemContainer
             div(classes = "tabs") {
                 ul(classes = "m-0") {
                     viewModel.decisionTabs
-                            .filter { it.visible }
                             .forEach {
                                 li(classes = if (it.link.active) "is-active" else null) {
                                     link(it.link)

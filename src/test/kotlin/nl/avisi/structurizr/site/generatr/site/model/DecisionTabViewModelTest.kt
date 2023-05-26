@@ -14,8 +14,7 @@ class DecisionTabViewModelTest : ViewModelTest() {
         val softwareSystemPageViewModel = SoftwareSystemPageViewModel(context, softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
         val decisionTabViewModel = softwareSystemPageViewModel.createDecisionsTabViewModel(softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
 
-        assertThat(decisionTabViewModel.size).isEqualTo(1)
-        assertThat(decisionTabViewModel[0].visible).isEqualTo(false)
+        assertThat(decisionTabViewModel.size).isEqualTo(0)
     }
 
     @Test
@@ -28,7 +27,7 @@ class DecisionTabViewModelTest : ViewModelTest() {
         val decisionTabViewModel = softwareSystemPageViewModel.createDecisionsTabViewModel(softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
 
         assertThat(decisionTabViewModel.size).isEqualTo(1)
-        assertThat(decisionTabViewModel[0].visible).isEqualTo(true)
+        assertThat(decisionTabViewModel.first().title).isEqualTo("System")
     }
 
     @Test
@@ -40,11 +39,12 @@ class DecisionTabViewModelTest : ViewModelTest() {
         val softwareSystemPageViewModel = SoftwareSystemPageViewModel(context, softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
         val decisionTabViewModel = softwareSystemPageViewModel.createDecisionsTabViewModel(softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
 
-        assertThat(decisionTabViewModel.size).isEqualTo(2)
-        assertThat(decisionTabViewModel[1].visible).isEqualTo(true)
+        assertThat(decisionTabViewModel.size).isEqualTo(1)
+        assertThat(decisionTabViewModel.first().title).isEqualTo("Some Container")
+
     }
     @Test
-    fun `container & system decision tabs available `() {
+    fun `container & system decision tabs available`() {
         val context = generatorContext()
         val softwareSystem = context.workspace.model.addSoftwareSystem("Software system")
         softwareSystem.documentation.addDecision(createDecision("1", "Accepted"))
@@ -54,6 +54,7 @@ class DecisionTabViewModelTest : ViewModelTest() {
         val decisionTabViewModel = softwareSystemPageViewModel.createDecisionsTabViewModel(softwareSystem, SoftwareSystemPageViewModel.Tab.DECISIONS)
 
         assertThat(decisionTabViewModel.size).isEqualTo(2)
-        assertThat(decisionTabViewModel.all { it.visible }).isEqualTo(true)
+        assertThat(decisionTabViewModel.first().title).isEqualTo("System")
+        assertThat(decisionTabViewModel.last().title).isEqualTo("Some Container")
     }
 }
