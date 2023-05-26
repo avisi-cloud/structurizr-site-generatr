@@ -2,8 +2,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import java.time.LocalDate
-import java.time.Month
 import kotlin.test.Test
 
 class DecisionTabViewModelTest : ViewModelTest() {
