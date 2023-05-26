@@ -27,6 +27,16 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             href = "./" + "/style-branding.css".asUrlToFile(viewModel.url)
         )
 
+        if (viewModel.includeAdmonition) 
+            markdownAdmonitionStylesheet(viewModel)
+
+        if (viewModel.includeKatex)
+            katexStylesheet()
+        if (viewModel.includeKatex)
+            katexScript()
+        if (viewModel.includeKatex)
+            katexFonts()
+
         if (viewModel.favicon.includeFavicon)
             favicon(viewModel.favicon)
 
@@ -52,5 +62,9 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
 
         if (viewModel.includeAutoReloading)
             updateSiteErrorHero()
+        if (viewModel.includeAdmonition)
+            markdownAdmonitionScript(viewModel)
+        if (viewModel.includeMermaid)
+            mermaidScript()
     }
 }
