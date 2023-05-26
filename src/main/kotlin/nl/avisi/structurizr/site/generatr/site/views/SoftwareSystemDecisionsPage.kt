@@ -9,7 +9,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemDecisionsPage
 fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewModel) {
     if (viewModel.visibleOnlyContainersDecisions) {
         redirectRelative(
-                viewModel.decisionTabs.filter { it.visible }.first().link.relativeHref
+            viewModel.decisionTabs.first { it.visible }.link.relativeHref
         )
     }
     else if (viewModel.visible) {
