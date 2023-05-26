@@ -2,7 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.Container
 
-fun PageViewModel.createContainerTableViewModel(containers: Collection<Container>, hrefFactory: (Container) -> String) =
+fun PageViewModel.createContainerDecisionsTableViewModel(containers: Collection<Container>, hrefFactory: (Container) -> String) =
     TableViewModel.create {
         headerRow(headerCell("#"), headerCell("Container Decisions"))
         containers
@@ -11,7 +11,7 @@ fun PageViewModel.createContainerTableViewModel(containers: Collection<Container
             .forEachIndexed { index, container ->
                 bodyRow(
                     cellWithIndex((index+1).toString()),
-                    cellWithLink(this@createContainerTableViewModel, container.name, hrefFactory(container))
+                    cellWithLink(this@createContainerDecisionsTableViewModel, container.name, hrefFactory(container))
                 )
             }
     }

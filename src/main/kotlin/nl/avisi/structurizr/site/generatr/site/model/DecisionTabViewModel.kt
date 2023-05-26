@@ -1,7 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
-import nl.avisi.structurizr.site.generatr.*
+import nl.avisi.structurizr.site.generatr.hasDecisions
 
 data class DecisionTabViewModel(val pageViewModel: SoftwareSystemPageViewModel, val title: String, val visible: Boolean, val url: String) {
     val link = LinkViewModel(pageViewModel, title, url, true)

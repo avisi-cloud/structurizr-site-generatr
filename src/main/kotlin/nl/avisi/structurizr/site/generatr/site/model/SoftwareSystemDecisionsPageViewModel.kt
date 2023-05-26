@@ -3,7 +3,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.hasContainerDecisions
 import nl.avisi.structurizr.site.generatr.hasDecisions
-import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemDecisionsPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
@@ -13,11 +12,11 @@ class SoftwareSystemDecisionsPageViewModel(generatorContext: GeneratorContext, s
         "$url/${it.id}"
     }
 
-    private val visibleContainerDecisions = softwareSystem.hasContainerDecisions()
-    val visibleSoftwareSystemDecisions = softwareSystem.hasDecisions()
+    private val containerDecisionsVisible = softwareSystem.hasContainerDecisions()
+    val softwareSystemDecisionsVisible = softwareSystem.hasDecisions()
 
-    val visible = visibleSoftwareSystemDecisions or visibleContainerDecisions
-    val visibleOnlyContainersDecisions = !visibleSoftwareSystemDecisions and visibleContainerDecisions
+    val visible = softwareSystemDecisionsVisible or containerDecisionsVisible
+    val onlyContainersDecisionsVisible = !softwareSystemDecisionsVisible and containerDecisionsVisible
 
     val decisionTabs = createDecisionsTabViewModel(softwareSystem, Tab.DECISIONS)
 

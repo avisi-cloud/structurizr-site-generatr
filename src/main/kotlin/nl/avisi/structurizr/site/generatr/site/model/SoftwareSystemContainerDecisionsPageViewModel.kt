@@ -1,9 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import com.structurizr.documentation.Decision
 import com.structurizr.model.Container
-import com.structurizr.model.SoftwareSystem
-import nl.avisi.structurizr.site.generatr.hasContainerDecisions
 import nl.avisi.structurizr.site.generatr.hasDecisions
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
