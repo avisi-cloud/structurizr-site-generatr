@@ -1,4 +1,4 @@
-# 1. Record Internet Banking System architecture decisions
+# 1. Record API Application architecture decision records
 
 Date: 2022-06-21
 

@@ -4,15 +4,10 @@ import kotlinx.html.HTML
 import kotlinx.html.div
 import kotlinx.html.li
 import kotlinx.html.ul
-import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemDecisionsPageViewModel
+import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerDecisionsPageViewModel
 
-fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewModel) {
-    if (viewModel.onlyContainersDecisionsVisible) {
-        redirectRelative(
-            viewModel.decisionTabs.first().link.relativeHref
-        )
-    }
-    else if (viewModel.visible) {
+fun HTML.softwareSystemContainerDecisionsPage(viewModel: SoftwareSystemContainerDecisionsPageViewModel) {
+    if (viewModel.visible)
         softwareSystemPage(viewModel) {
             div(classes = "tabs") {
                 ul(classes = "m-0") {
@@ -24,11 +19,8 @@ fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewM
                             }
                 }
             }
-            if (viewModel.softwareSystemDecisionsVisible) {
-                table(viewModel.decisionsTable)
-            }
+            table(viewModel.decisionsTable)
         }
-    }
     else
         redirectUpPage()
 }
