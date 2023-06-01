@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en" class="has-background-light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markdown features | Big Bank plc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+    <link href="../../style.css" rel="stylesheet">
+    <link href="./../style-branding.css" rel="stylesheet">
+    <link href="../../admonition.css" rel="stylesheet">
+
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/katex.min.css" integrity="sha384-mXD7x5S50Ko38scHSnD4egvoExgMPbrseZorkbE49evAfv9nNcbrXJ8LLNsDgh9d" crossorigin="anonymous">
+        
+            <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/katex.min.js" integrity="sha384-j/ZricySXBnNMJy9meJCtyXTKMhIJ42heyr7oAdxTDBy/CYA9hzpMo+YTNV5C+1X" crossorigin="anonymous"></script>
+        
+            <script>
+            window.WebFontConfig = {
+                custom: {
+                families: ['KaTeX_AMS', 'KaTeX_Caligraphic:n4,n7', 'KaTeX_Fraktur:n4,n7',
+                    'KaTeX_Main:n4,n7,i4,i7', 'KaTeX_Math:i4,i7', 'KaTeX_Script',
+                    'KaTeX_SansSerif:n4,n7,i4', 'KaTeX_Size1', 'KaTeX_Size2', 'KaTeX_Size3',
+                    'KaTeX_Size4', 'KaTeX_Typewriter'],
+                },
+            };
+            </script>
+            <script defer src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+            <link href="../site/favicon.ico" rel="icon" type="image/ico">
+  </head>
+  <body>
+    <script type="text/javascript" src="../../header.js"></script>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand has-site-branding"><a href="../" class="navbar-item"><img alt="Big Bank plc" src="../site/logo.png"></a><a href="../" class="navbar-item"><span class="has-text-weight-semibold has-site-branding">Big Bank plc</span></a></div>
+      <div class="navbar-menu has-site-branding">
+        <div class="navbar-end">
+          <div class="navbar-item"><input class="input is-small is-rounded has-site-branding" id="search" type="search" size="30" maxlength="50" placeholder="Search (requires 3 characters)..." onkeyup="redirect(event, value, '../search/')"></div>
+          <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
+            <div class="navbar-dropdown is-right"><a href="../../main" class="navbar-item">main</a>
+              <hr class="navbar-divider">
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.2</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="site-layout" id="site">
+      <aside class="menu p-3">
+        <p class="menu-label">General</p>
+        <ul class="menu-list has-site-branding">
+          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a><a href="./" class="is-active">Markdown features</a></li>
+        </ul>
+        <p class="menu-label">Software systems</p>
+        <ul class="menu-list has-site-branding">
+          <li><a href="../atm/" class="">ATM</a><a href="../e-mail-system/" class="">E-mail System</a><a href="../internet-banking-system/" class="">Internet Banking System</a><a href="../mainframe-banking-system/" class="">Mainframe Banking System</a></li>
+        </ul>
+      </aside>
+      <div class="container is-fluid has-background-white">
+        <div class="content p-3">
+          <div><svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+ <symbol id="adm-faq">
+  <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+   <path d="m20.4 12.2c0 4.5-3.7 8.2-8.2 8.2s-8.2-3.7-8.2-8.2 3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2zm-4.2-2.9c-.1-1.3-1-2.5-2.3-2.9-.8-.2-1.6-.1-2.4.1-.6.1-1.5.2-1.8.6-.4.5.2 1 .6 1.3.6.4 1.1-.1 1.8-.3s3-.7 2.4.8c-.5 1.1-2 1.9-3 2.6-.4.3-.9.6-1.2 1-.5.6.1 1 .7 1.4.4.3.9.2 1.2-.1.5-.5 1-.9 1.6-1.3 1.1-.7 2.5-1.6 2.4-3.2-.2-1.3 0 .7 0 0zm-2.8 6.8c-.3-.5-1.3-1.3-1.9-1.1-.4.1-.4.4-.5.8-.1.2-.4.6-.3.8.1.4 1.5 1.3 1.9 1 .1-.1.9-1.4.8-1.5 0-.1.1.1 0 0z" fill="currentColor" />
+  </svg>
+ </symbol> <symbol id="adm-info">
+  <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+   <path d="m20.5 11.8c0 4.5-3.7 8.2-8.2 8.2s-8.2-3.7-8.2-8.2 3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2zm-6.7 4c-.1-.1-.2-.2-.2-.3v-4.5c0-.1.1-.2.2-.4s.2-.3.2-.3 0-.1-.1-.1c-.1-.1-.5-.2-1.2-.4-.7-.1-1.2-.2-1.5-.2-.5 0-.7 0-.7.1s.1.3.2.6v4.7c0 .3-.1.5-.2.6-.2.2-.2.3-.2.3.1.1.5.3 1.2.4.6.1 1.2.2 1.6.2h.3c.4-.1.5-.2.5-.5.1 0 .1-.1-.1-.2zm-.9-8.6c-.7-.1-1.2-.2-1.5-.2-.2 0-.5.2-.7.4s-.3.4-.3.6c0 .1 0 .1.1.2s.6.2 1.5.4c1 .3 1.5.4 1.6.3.1 0 .2-.2.3-.5s.2-.5.2-.6v-.1c-.1-.1-.5-.3-1.2-.5z" fill="currentColor" />
+  </svg>
+ </symbol>
+</svg>
+<h2 id="markdown-features"><a href="#markdown-features" id="markdown-features">Markdown features</a></h2>
+<p>This page showcases the ability to use extended markdown formating features in workspace documentation files.</p>
+<h3 id="tableofcontents"><a href="#tableofcontents" id="tableofcontents">TableOfContents</a></h3>
+<p><code>[TOC]</code> element which renders a table of contents</p>
+<pre><code class="language-markdown">[TOC]
+</code></pre>
+<p>will render into</p>
+<ul>
+ <li><a href="#markdown-features">Markdown features</a>
+  <ul>
+   <li><a href="#tableofcontents">TableOfContents</a></li>
+   <li><a href="#render-tables">Render Tables</a></li>
+   <li><a href="#admonition-blocks">Admonition Blocks</a></li>
+   <li><a href="#gitlab-flavored-markdown-extensions">GitLab flavored markdown extensions</a></li>
+   <li><a href="#anchorlink">AnchorLink</a></li>
+   <li><a href="#definitionlists">DefinitionLists</a></li>
+   <li><a href="#emoji">Emoji</a></li>
+   <li><a href="#gfmtasklist">GfmTaskList</a></li>
+  </ul></li>
+</ul>
+<h3 id="render-tables"><a href="#render-tables" id="render-tables">Render Tables</a></h3>
+<p>Standard tables can be embedded in markdown text syntax:</p>
+<pre><code class="language-markdown">| header1 | header2 |
+| ------- | ------- |
+| content | content |
+</code></pre>
+<p>This will be rendered as</p>
+<table>
+ <thead>
+  <tr>
+   <th>header1</th>
+   <th>header2</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>content</td>
+   <td>content</td>
+  </tr>
+ </tbody>
+</table>
+<h3 id="admonition-blocks"><a href="#admonition-blocks" id="admonition-blocks">Admonition Blocks</a></h3>
+<p>Admonitions create block-styled side content.</p>
+<pre><code class="language-markdown">!!! faq "FAQ"
+    This is a FAQ.
+!!! attention "Warning"
+    This is a warning message
+
+!!! info "information"
+    this is an additional information
+</code></pre>
+<p>This will be rendered as</p>
+<div class="adm-block adm-faq">
+ <div class="adm-heading">
+  <svg class="adm-icon">
+   <use xlink:href="#adm-faq" />
+  </svg><span>FAQ</span>
+ </div>
+ <div class="adm-body">
+  <p>This is a FAQ.</p>
+  <div class="adm-block adm-warning">
+   <div class="adm-heading">
+    <svg class="adm-icon">
+     <use xlink:href="#adm-warning" />
+    </svg><span>Warning</span>
+   </div>
+   <div class="adm-body">
+    <p>This is a warning message</p>
+   </div>
+  </div>
+ </div>
+</div>
+<div class="adm-block adm-info">
+ <div class="adm-heading">
+  <svg class="adm-icon">
+   <use xlink:href="#adm-info" />
+  </svg><span>information</span>
+ </div>
+ <div class="adm-body">
+  <p>this is an additional information</p>
+ </div>
+</div>
+<h3 id="gitlab-flavored-markdown-extensions"><a href="#gitlab-flavored-markdown-extensions" id="gitlab-flavored-markdown-extensions">GitLab flavored markdown extensions</a></h3>
+<p>Please see <a href="https://docs.gitlab.com/ee/user/markdown.html?tab=Rendered+Markdown">GitLab flavored markdown features</a> for a detailed description. Unfortunately only the following features are supported by Flexmark markdown renderer, that is used here.</p>
+<h4 id="mermaid-diagram-support"><a href="#mermaid-diagram-support" id="mermaid-diagram-support">Mermaid diagram support</a></h4>
+<pre><code class="language-markdown">```mermaid
+graph TD;
+  A--&gt;B;
+  A--&gt;C;
+  B--&gt;D;
+  C--&gt;D;
+```
+</code></pre>
+<div class="mermaid">
+ graph TD; A--&gt;B; A--&gt;C; B--&gt;D; C--&gt;D;
+</div>
+<h4 id="multiline-block-quote-delimiters"><a href="#multiline-block-quote-delimiters" id="multiline-block-quote-delimiters">Multiline Block quote delimiters</a></h4>
+<pre><code class="language-markdown">&gt;&gt;&gt;
+If you paste a message from somewhere else
+
+that spans multiple lines,
+
+you can quote that without having to manually prepend `&gt;` to every line!
+&gt;&gt;&gt;
+</code></pre>
+<blockquote>
+ <p>If you paste a message from somewhere else</p>
+ <p>that spans multiple lines,</p>
+ <p>you can quote that without having to manually prepend <code>&gt;</code> to every line!</p>
+</blockquote>
+<h4 id="inline-diff-deletions-and-additions"><a href="#inline-diff-deletions-and-additions" id="inline-diff-deletions-and-additions">Inline diff (deletions and additions)</a></h4>
+<p>With inline diff tags, you can display <code>{+ additions +}</code> or <code>[- deletions -]</code>.</p>
+<p>The wrapping tags can be either curly braces or square brackets:</p>
+<pre><code class="language-markdown">- {+ addition 1 +}
+- [+ addition 2 +]
+- {- deletion 3 -}
+- [- deletion 4 -]
+</code></pre>
+<ul>
+ <li>
+  <ins>addition 1</ins></li>
+ <li>
+  <ins>addition 2</ins></li>
+ <li>
+  <del>deletion 3</del></li>
+ <li>
+  <del>deletion 4</del></li>
+</ul>
+<h4 id="math"><a href="#math" id="math">Math</a></h4>
+<p>Math written in LaTeX syntax is rendered with <a href="https://github.com/KaTeX/KaTeX">KaTeX</a>. <em>KaTeX only supports a <a href="https://katex.org/docs/supported.html">subset</a> of LaTeX.</em></p>
+<p>Math written between dollar signs with backticks (<code>$`...`$</code>) or single dollar signs (<code>$...$</code>) is rendered inline with the text.</p>
+<p>Math written between double dollar signs (<code>$$...$$</code>) or in a code block with the language declared as <code>math</code> is rendered on a separate line:</p>
+<pre><code class="language-markdown">This math is inline: $`a^2+b^2=c^2`$.
+
+This math is on a separate line using a ```` ```math ```` block:
+
+```math
+a^2+b^2=c^2
+```
+</code></pre>
+<p>This math is inline: <span class="katex">a^2+b^2=c^2</span>.</p>
+<p>This math is on a separate line using a <code>```math</code> block:</p>
+<div class="katex">
+ a^2+b^2=c^2
+</div>
+<h3 id="anchorlink"><a href="#anchorlink" id="anchorlink">AnchorLink</a></h3>
+<p>Automatically adds anchor links to heading, using GitHub id generation algorithm</p>
+<h3 id="definitionlists"><a href="#definitionlists" id="definitionlists">DefinitionLists</a></h3>
+<p>Converts definition syntax of Php Markdown Extra Definition List to <code>&lt;dl&gt;&lt;/dl&gt;</code> HTML and corresponding AST nodes.</p>
+<pre><code class="language-markdown">Definition Term
+: Definition of above term
+: Another definition of above term
+</code></pre>
+<dl>
+ <dt>
+  Definition Term
+ </dt>
+ <dd>
+  Definition of above term
+ </dd>
+ <dd>
+  Another definition of above term
+ </dd>
+</dl>
+<h3 id="emoji"><a href="#emoji" id="emoji">Emoji</a></h3>
+<p>Allows to create image link to emoji images from emoji shortcuts using <a href="https://www.webfx.com/tools/emoji-cheat-sheet">Emoji-Cheat-Sheet.com</a> and optionally to replace with its unicode equivalent character with mapping by Mark Wunsch found at <a href="https://github.com/mwunsch/rumoji">mwunsch/rumoji</a></p>
+<pre><code class="language-markdown">thumbsup :thumbsup:  
+calendar :calendar:  
+warning :warning:  
+</code></pre>
+<p>thumbsup 👍<br>
+  calendar 📆<br>
+  warning ⚠</p>
+<h3 id="gfmtasklist"><a href="#gfmtasklist" id="gfmtasklist">GfmTaskList</a></h3>
+<p>Enables list items based task lists whose text begins with: <code>[ ]</code>, <code>[x]</code> or <code>[X]</code></p>
+<pre><code class="language-markdown">- [x] Completed task
+- [ ] Incomplete task
+  - [x] Sub-task 1
+  - [ ] Sub-task 3
+
+1. [x] Completed task
+1. [ ] Incomplete task
+   1. [x] Sub-task 1
+   1. [ ] Sub-task 3
+</code></pre>
+<p>will be rendered as</p>
+<ul>
+ <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked disabled readonly>&nbsp;Completed task</li>
+ <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled readonly>&nbsp;Incomplete task 
+  <ul>
+   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked disabled readonly>&nbsp;Sub-task 1</li>
+   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled readonly>&nbsp;Sub-task 3</li>
+  </ul></li>
+</ul>
+<ol>
+ <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked disabled readonly>&nbsp;Completed task</li>
+ <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled readonly>&nbsp;Incomplete task 
+  <ol>
+   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked disabled readonly>&nbsp;Sub-task 1</li>
+   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled readonly>&nbsp;Sub-task 3</li>
+  </ol></li>
+</ol></div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="../../admonition.js"></script>
+    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';</script>
+  </body>
+</html>
