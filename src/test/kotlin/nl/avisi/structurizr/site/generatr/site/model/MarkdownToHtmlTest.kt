@@ -201,9 +201,48 @@ class MarkdownToHtmlTest : ViewModelTest() {
         assertThat(html).isEqualTo(
             """
             <h2>Mermaid</h2>
-            <div class="mermaid">
-             graph TD; A--&gt;B; A--&gt;C; B--&gt;D; C--&gt;D;
-            </div>
+            <pre><code class="language-mermaid">graph TD;
+            A--&gt;B;
+            A--&gt;C;
+            B--&gt;D;
+            C--&gt;D;
+            </code></pre>
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `translates mermaid graphings in markdown without extension property containing GitLab`() {
+        val generatorContext = generatorContext().apply {
+            workspace.views.configuration.addProperty("generatr.markdown.flexmark.extensions", "Admonition, Tables")
+        }
+        val viewModel = HomePageViewModel(generatorContext)
+
+        val html = markdownToHtml(
+            viewModel,
+            """
+                ## Mermaid
+
+                ```mermaid
+                graph TD;
+                A-->B;
+                A-->C;
+                B-->D;
+                C-->D;
+                ```
+            """.trimIndent(),
+            svgFactory
+        )
+
+        assertThat(html).isEqualTo(
+            """
+            <h2>Mermaid</h2>
+            <pre><code class="language-mermaid">graph TD;
+            A--&gt;B;
+            A--&gt;C;
+            B--&gt;D;
+            C--&gt;D;
+            </code></pre>
             """.trimIndent()
         )
     }
