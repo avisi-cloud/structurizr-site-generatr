@@ -21,7 +21,9 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     }
     val includeAdmonition = flexmarkConfig.selectedExtensionMap.containsKey("Admonition")
     val includeKatex = flexmarkConfig.selectedExtensionMap.containsKey("GitLab")
-    val includeMermaid = flexmarkConfig.selectedExtensionMap.containsKey("GitLab")
+
+    val configuration = generatorContext.workspace.views.configuration.properties
+    val includeMermaid = configuration.getOrDefault("generatr.markdown.mermaid.enabled", "true").toBoolean()
 
     abstract val url: String
     abstract val pageSubTitle: String

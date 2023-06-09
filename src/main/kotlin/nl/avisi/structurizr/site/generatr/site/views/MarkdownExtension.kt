@@ -55,7 +55,12 @@ fun HEAD.katexFonts() {
     }
 }
 
-fun BODY.mermaidScript() {
+fun BODY.mermaidScript(viewModel: PageViewModel) {
+    // Fix to support mermaid diagrams in markdown:
+    script(
+        type = ScriptType.textJavaScript,
+        src = "../" + "/reformat-mermaid.js".asUrlToFile(viewModel.url)
+    ) { }
     // Simple full example, how to include Mermaid: https://mermaid.js.org/config/usage.html#simple-full-example
     script(type = "module") {
         unsafe {
