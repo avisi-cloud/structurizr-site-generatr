@@ -61,6 +61,23 @@ Unfortunately only the following features are supported by Flexmark markdown ren
 
 #### Mermaid diagram support
 
+structurizr-site-generatr is using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
+
+* flowchart
+* sequence diagram
+* class diagram
+* state diagram
+* entity-relationship diagram
+* user journey
+* gantt chart
+* pie chart
+* requirement diagram
+* some more
+
+Please find the full list of supported chart types on [mermaid.js.org/intro](https://mermaid.js.org/intro/#diagram-types)
+
+##### Flowchart Diagram Example
+
 ````markdown
 ```mermaid
 graph TD;
@@ -77,6 +94,38 @@ graph TD;
   A-->C;
   B-->D;
   C-->D;
+```
+
+##### Sequence Diagram Example
+
+````markdown
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+```
+````
+
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
 ```
 
 #### Multiline Block quote delimiters
