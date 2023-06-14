@@ -39,7 +39,7 @@ class GenerateSiteCommand : Subcommand(
     )
     private val branches by option(
         ArgType.String, "branches", "b",
-        "Comma-separated list of branches to include in the generated site"
+        "Comma-separated list of branches to include in the generated site. Not used if '--allBranches' option is set to true"
     ).default("master")
     private val defaultBranch by option(
         ArgType.String, "default-branch", "d",
@@ -53,6 +53,15 @@ class GenerateSiteCommand : Subcommand(
         ArgType.String, "output-dir", "o",
         "Directory where the generated site will be stored. Will be created if it doesn't exist yet."
     ).default("build/site")
+
+    private val allBranches by option(
+        ArgType.Boolean, "allBranches", "all",
+        "When set to TRUE will generate a site for every branch in the git repository"
+    ).default(value = false)
+    private val excludeBranches by option(
+        ArgType.String, "excludeBranches", "ex",
+        "Comma-separated list of branches to exclude from the generated site"
+    ).default("gh-pages")
 
     override fun execute() {
         val siteDir = File(outputDir).apply { mkdirs() }
@@ -73,7 +82,12 @@ class GenerateSiteCommand : Subcommand(
             refreshLocalClone()
         }
 
-        val branchNames = branches.split(",")
+        val branchNames:List<String> = if (allBranches){
+            clonedRepository.getBranchNames(excludeBranches.split(","))
+        } else {
+            branches.split(",")
+        }
+
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
         branchNames.forEach { branch ->
             println("Generating site for branch $branch")

@@ -2,6 +2,8 @@ package nl.avisi.structurizr.site.generatr
 
 import org.eclipse.jgit.api.CreateBranchCommand
 import org.eclipse.jgit.api.Git
+import org.eclipse.jgit.api.ListBranchCommand
+import org.eclipse.jgit.lib.Ref
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
@@ -47,5 +49,18 @@ class ClonedRepository(
         git.checkout()
             .setName(branch)
             .call()
+    }
+
+    fun getBranchNames(excludeBranches: List<String>): List<String> {
+        val branches:List<Ref> = Git(repo).branchList().setListMode(ListBranchCommand.ListMode.ALL).call()
+        val branchNames:MutableList<String> = mutableListOf()
+        for (branch:Ref in branches){
+            val shortBranchName: String = branch.name.toString().substringAfterLast("/")
+            println("Found the following Branch $shortBranchName")
+            if(!excludeBranches.contains(shortBranchName)){
+                branchNames.add(shortBranchName)
+            }
+        }
+        return branchNames
     }
 }
