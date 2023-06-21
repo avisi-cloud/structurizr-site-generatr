@@ -55,11 +55,11 @@ class GenerateSiteCommand : Subcommand(
     ).default("build/site")
 
     private val allBranches by option(
-        ArgType.Boolean, "allBranches", "all",
+        ArgType.Boolean, "all-branches", "all",
         "When set to TRUE will generate a site for every branch in the git repository"
     ).default(value = false)
     private val excludeBranches by option(
-        ArgType.String, "excludeBranches", "ex",
+        ArgType.String, "exclude-branches", "ex",
         "Comma-separated list of branches to exclude from the generated site"
     ).default("gh-pages")
 
