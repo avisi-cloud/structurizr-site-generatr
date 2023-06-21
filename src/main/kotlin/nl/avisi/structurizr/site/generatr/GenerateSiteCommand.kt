@@ -82,19 +82,40 @@ class GenerateSiteCommand : Subcommand(
             refreshLocalClone()
         }
 
-        val branchNames:List<String> = if (allBranches){
-            clonedRepository.getBranchNames(excludeBranches.split(","))
+        val branchNames: MutableList<String> = if (allBranches) {
+            clonedRepository.getBranchNames(excludeBranches.split(",")).toMutableList()
         } else {
-            branches.split(",")
+            branches.split(",").toMutableList()
         }
 
+        println("Branches : $branchNames")
+
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
+        val errorBranches: MutableList<String> = emptyList<String>().toMutableList()
+
+        branchNames.forEach { branch ->
+            try {
+                println("Generating diagrams for branch $branch")
+                clonedRepository.checkoutBranch(branch)
+
+                val workspace = createStructurizrWorkspace(workspaceFileInRepo)
+                generateDiagrams(workspace, File(siteDir, branch))
+
+            } catch (e: Exception) {
+                println("Error Generating diagrams for branch $branch")
+                errorBranches.add(branch)
+            }
+        }
+
+        println("Branches with diagram errors : $errorBranches")
+        branchNames.removeAll(errorBranches)
+
+        println("Generating sites for the following branches : $branchNames")
         branchNames.forEach { branch ->
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
 
             val workspace = createStructurizrWorkspace(workspaceFileInRepo)
-            generateDiagrams(workspace, File(siteDir, branch))
             generateSite(
                 version,
                 workspace,
