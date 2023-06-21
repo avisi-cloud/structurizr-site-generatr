@@ -61,7 +61,7 @@ Unfortunately only the following features are supported by Flexmark markdown ren
 
 #### Mermaid diagram support
 
-structurizr-site-generatr is using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
+Structurizr Site Generatr is using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
 
 * flowchart
 * sequence diagram
