@@ -40,7 +40,7 @@ class C4PlantUmlExporterWithElementLinksTest {
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
-            System(System1, "System 1", "", ${'$'}tags="")
+            System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -54,7 +54,7 @@ class C4PlantUmlExporterWithElementLinksTest {
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
-            System(System1, "System 1", "", ${'$'}tags="")[[../system-1/container/]]
+            System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/container/")
             """.trimIndent()
         )
     }
@@ -68,10 +68,10 @@ class C4PlantUmlExporterWithElementLinksTest {
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
-            System(System1, "System 1", "", ${'$'}tags="")[[../system-1/container/]]
-            System(System2, "System 2", "", ${'$'}tags="")[[../system-2/context/]]
+            System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/container/")
+            System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-2/context/")
 
-            Rel_D(System2, System1, "uses", ${'$'}tags="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -87,7 +87,7 @@ class C4PlantUmlExporterWithElementLinksTest {
             """
             skinparam preserveAspectRatio meet
             System_Boundary("System1_boundary", "System 1", ${'$'}tags="") {
-              Container(System1.Container1, "Container 1", "", ${'$'}tags="")[[../system-1/component/]]
+              Container(System1.Container1, "Container 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/component/")
             }
             """.trimIndent()
         )
@@ -102,7 +102,7 @@ class C4PlantUmlExporterWithElementLinksTest {
         container1.addComponent("Component 1").apply { uses(container2, "uses") }
         container2.addComponent("Component 2")
 
-        val view = workspace.views.createComponentView(container1,"Component2","")
+        val view = workspace.views.createComponentView(container1, "Component2", "")
             .apply { addAllElements() }
 
         val diagram = C4PlantUmlExporterWithElementLinks("/system-1/component/")
@@ -112,13 +112,13 @@ class C4PlantUmlExporterWithElementLinksTest {
             """
             skinparam svgDimensionStyle false
             skinparam preserveAspectRatio meet
-            Container(System1.Container2, "Container 2", "", ${'$'}tags="")
+            Container(System1.Container2, "Container 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
 
             Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
-              Component(System1.Container1.Component1, "Component 1", "", ${'$'}tags="")
+              Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             }
 
-            Rel_D(System1.Container1.Component1, System1.Container2, "uses", ${'$'}tags="")
+            Rel_D(System1.Container1.Component1, System1.Container2, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -132,10 +132,10 @@ class C4PlantUmlExporterWithElementLinksTest {
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
-            System(System1, "System 1", "", ${'$'}tags="")
-            System(System2, "System 2", "", ${'$'}tags="")[[../system-2/context/]]
+            System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+            System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-2/context/")
 
-            Rel_D(System2, System1, "uses", ${'$'}tags="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -149,10 +149,10 @@ class C4PlantUmlExporterWithElementLinksTest {
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
             """
-            System(System1, "System 1", "", ${'$'}tags="")
-            System(System2, "System 2", "", ${'$'}tags="")[[../../system-2/context/]]
+            System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+            System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../../system-2/context/")
 
-            Rel_D(System2, System1, "uses", ${'$'}tags="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -203,7 +203,7 @@ class C4PlantUmlExporterWithElementLinksTest {
         workspace.views.createSystemContextView(system, "Context 1", "")
             .apply { addAllElements() }
 
-        workspace.views.createComponentView(container,"Component1","")
+        workspace.views.createComponentView(container, "Component1", "")
 
         return workspace.views.createContainerView(system, "Container1", "")
             .apply { addAllElements() }
