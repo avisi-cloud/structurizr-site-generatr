@@ -39,7 +39,7 @@ class GenerateSiteCommand : Subcommand(
     )
     private val branches by option(
         ArgType.String, "branches", "b",
-        "Comma-separated list of branches to include in the generated site. Not used if '--allBranches' option is set to true"
+        "Comma-separated list of branches to include in the generated site. Not used if '--all-branches' option is set to true"
     ).default("master")
     private val defaultBranch by option(
         ArgType.String, "default-branch", "d",
@@ -91,7 +91,7 @@ class GenerateSiteCommand : Subcommand(
         println("Branches : $branchNames")
 
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
-        val errorBranches: MutableList<String> = emptyList<String>().toMutableList()
+        val errorBranches: MutableList<String> = mutableListOf()
 
         branchNames.forEach { branch ->
             try {
@@ -102,7 +102,7 @@ class GenerateSiteCommand : Subcommand(
                 generateDiagrams(workspace, File(siteDir, branch))
 
             } catch (e: Exception) {
-                println("Error generating diagrams for branch $branch")
+                println("Error Generating diagrams for branch $branch")
                 errorBranches.add(branch)
             }
         }

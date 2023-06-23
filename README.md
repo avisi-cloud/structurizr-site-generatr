@@ -207,18 +207,18 @@ structurizr-site-generatr generate-site
     --default-branch main
 ```
 
-or you can choose to build all branches that are found in the repository and exclude specific ones by using the --allBranches and --excludeBranches options.
+or you can choose to build all branches that are found in the repository and exclude specific ones by using the --all-branches and --exclude-branches options.
 
 ```shell
 structurizr-site-generatr generate-site
     --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
     --workspace-file docs/example/workspace.dsl
-    --allBranches
-    --excludeBranches gh-pages
+    --all-branches
+    --exclude-branches gh-pages
     --default-branch main
 ```
 
-Both the --branches and --excludeBranches options are comma separated lists and can contain multiple branch names.
+Both the --branches and --exclude-branches options are comma separated lists and can contain multiple branch names.
 
 ### Start a development web server around the generated website
 
