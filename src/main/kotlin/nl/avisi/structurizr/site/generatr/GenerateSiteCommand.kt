@@ -39,7 +39,7 @@ class GenerateSiteCommand : Subcommand(
     )
     private val branches by option(
         ArgType.String, "branches", "b",
-        "Comma-separated list of branches to include in the generated site. Not used if '--allBranches' option is set to true"
+        "Comma-separated list of branches to include in the generated site. Not used if '--all-branches' option is set to true"
     ).default("master")
     private val defaultBranch by option(
         ArgType.String, "default-branch", "d",
