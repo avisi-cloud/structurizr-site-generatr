@@ -213,8 +213,8 @@ or you can choose to build all branches that are found in the repository and exc
 structurizr-site-generatr generate-site
     --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
     --workspace-file docs/example/workspace.dsl
-    --allBranches
-    --excludeBranches gh-pages
+    --all-branches
+    --exclude-branches gh-pages
     --default-branch main
 ```
 
