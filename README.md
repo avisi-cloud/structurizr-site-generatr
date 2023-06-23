@@ -218,7 +218,7 @@ structurizr-site-generatr generate-site
     --default-branch main
 ```
 
-Both the --branches and --excludeBranches options are comma separated lists and can contain multiple branch names.
+Both the --branches and --exclude-branches options are comma separated lists and can contain multiple branch names.
 
 ### Start a development web server around the generated website
 
