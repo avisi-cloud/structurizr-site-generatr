@@ -97,10 +97,7 @@ class GenerateSiteCommand : Subcommand(
             try {
                 println("Generating diagrams for branch $branch")
                 clonedRepository.checkoutBranch(branch)
-
-                val workspace = createStructurizrWorkspace(workspaceFileInRepo)
-                generateDiagrams(workspace, File(siteDir, branch))
-
+                createStructurizrWorkspace(workspaceFileInRepo)
             } catch (e: Exception) {
                 println("Error Generating diagrams for branch $branch")
                 errorBranches.add(branch)
@@ -116,6 +113,7 @@ class GenerateSiteCommand : Subcommand(
             clonedRepository.checkoutBranch(branch)
 
             val workspace = createStructurizrWorkspace(workspaceFileInRepo)
+            generateDiagrams(workspace, File(siteDir, branch))
             generateSite(
                 version,
                 workspace,
