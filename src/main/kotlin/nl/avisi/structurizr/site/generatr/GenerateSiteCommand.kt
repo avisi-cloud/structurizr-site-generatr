@@ -95,16 +95,15 @@ class GenerateSiteCommand : Subcommand(
 
         branchNames.forEach { branch ->
             try {
-                println("Generating diagrams for branch $branch")
+                println("Checking branch $branch")
                 clonedRepository.checkoutBranch(branch)
                 createStructurizrWorkspace(workspaceFileInRepo)
             } catch (e: Exception) {
-                println("Error Generating diagrams for branch $branch")
                 errorBranches.add(branch)
             }
         }
 
-        println("Branches with diagram errors : $errorBranches")
+        println("Branches with workspace errors : $errorBranches")
         branchNames.removeAll(errorBranches)
 
         println("Generating sites for the following branches : $branchNames")
