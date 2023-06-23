@@ -91,7 +91,7 @@ class GenerateSiteCommand : Subcommand(
         println("Branches : $branchNames")
 
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
-        val errorBranches: MutableList<String> = emptyList<String>().toMutableList()
+        val errorBranches: MutableList<String> = mutableListOf()
 
         branchNames.forEach { branch ->
             try {
