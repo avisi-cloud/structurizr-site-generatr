@@ -207,7 +207,7 @@ structurizr-site-generatr generate-site
     --default-branch main
 ```
 
-or you can choose to build all branches that are found in the repository and exclude specific ones by using the --allBranches and --excludeBranches options.
+or you can choose to build all branches that are found in the repository and exclude specific ones by using the --all-branches and --exclude-branches options.
 
 ```shell
 structurizr-site-generatr generate-site
