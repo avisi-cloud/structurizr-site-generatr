@@ -59,6 +59,7 @@ This will be rendered as
 Please see [GitLab flavored markdown features](https://docs.gitlab.com/ee/user/markdown.html?tab=Rendered+Markdown) for a detailed description.
 Unfortunately only the following features are supported by Flexmark markdown renderer, that is used here.
 
+<<<<<<< HEAD
 #### Mermaid diagram support
 
 Structurizr Site Generatr is using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
@@ -128,6 +129,8 @@ sequenceDiagram
     Bob-->>John: Jolly good!
 ```
 
+=======
+>>>>>>> moved mermaid samples to Embedding diagrams page
 #### Multiline Block quote delimiters
 
 ```markdown
