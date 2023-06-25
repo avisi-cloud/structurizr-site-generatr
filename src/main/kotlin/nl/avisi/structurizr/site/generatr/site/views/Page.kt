@@ -64,7 +64,6 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
             updateSiteErrorHero()
         if (viewModel.includeAdmonition)
             markdownAdmonitionScript(viewModel)
-        if (viewModel.includeMermaid)
-            mermaidScript(viewModel)
+        mermaidScript(viewModel)
     }
 }
