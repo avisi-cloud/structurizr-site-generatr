@@ -1,6 +1,31 @@
-## Markdown features
+## Extended markdown features
 
-This page showcases the ability to use extended markdown formating features in workspace documentation files.
+This page showcases the ability to use extended markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki [Extensions page](https://github.com/vsch/flexmark-java/wiki/Extensions).
+
+Most of these extended features have to be activated in your architecture model as a property in workspace views.
+
+```DSL
+workspace {
+    ...
+    views {
+        ...
+        properties {
+            ...
+            // full list of available "generatr.markdown.flexmark.extensions"
+            // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"
+            // see https://github.com/vsch/flexmark-java/wiki/Extensions
+            // ATTENTION:
+            // * "generatr.markdown.flexmark.extensions" values must be separated by comma
+            // * it's not possible to use "GitLab" and "ResizableImage" extensions together
+            // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
+            "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
+            ...
+        }
+        ...
+    }
+    ...
+}
+```
 
 ### TableOfContents
 
@@ -13,6 +38,14 @@ This page showcases the ability to use extended markdown formating features in w
 will render into
 
 [TOC]
+
+#### Usage info
+
+"TableOfContents" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "TableOfContents"
+```
 
 ### Render Tables
 
@@ -29,6 +62,14 @@ This will be rendered as
 | header1 | header2 |
 | ------- | ------- |
 | content | content |
+
+#### Usage info
+
+"Render Tables" is an optional feature, that is enabled by default. If other optional markdown features are activated in workspace views properties, than you have to ensure, that Tables is listed in the extension list as well.
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "Tables"
+```
 
 ### Admonition Blocks
 
@@ -54,83 +95,19 @@ This will be rendered as
 !!! info "information"
     this is an additional information
 
+#### Usage info
+
+"Admonition Blocks" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "Admonition"
+```
+
 ### GitLab flavored markdown extensions
 
 Please see [GitLab flavored markdown features](https://docs.gitlab.com/ee/user/markdown.html?tab=Rendered+Markdown) for a detailed description.
 Unfortunately only the following features are supported by Flexmark markdown renderer, that is used here.
 
-<<<<<<< HEAD
-#### Mermaid diagram support
-
-Structurizr Site Generatr is using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
-
-* flowchart
-* sequence diagram
-* class diagram
-* state diagram
-* entity-relationship diagram
-* user journey
-* gantt chart
-* pie chart
-* requirement diagram
-* some more
-
-Please find the full list of supported chart types on [mermaid.js.org/intro](https://mermaid.js.org/intro/#diagram-types)
-
-##### Flowchart Diagram Example
-
-````markdown
-```mermaid
-graph TD;
-  A-->B;
-  A-->C;
-  B-->D;
-  C-->D;
-```
-````
-
-```mermaid
-graph TD;
-  A-->B;
-  A-->C;
-  B-->D;
-  C-->D;
-```
-
-##### Sequence Diagram Example
-
-````markdown
-```mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-```
-````
-
-```mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-```
-
-=======
->>>>>>> moved mermaid samples to Embedding diagrams page
 #### Multiline Block quote delimiters
 
 ```markdown
@@ -198,11 +175,27 @@ This math is on a separate line using a ```` ```math ```` block:
 a^2+b^2=c^2
 ```
 
+#### Usage info
+
+"GitLab Flavored Markdown" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "GitLab"
+```
+
 ### AnchorLink
 
-Automatically adds anchor links to heading, using GitHub id generation algorithm
+Automatically adds anchor links to headings, using GitHub id generation algorithm
 
-### DefinitionLists
+#### Usage info
+
+"AnchorLink" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "AnchorLink"
+```
+
+### Definition Lists
 
 Converts definition syntax of Php Markdown Extra Definition List to `<dl></dl>` HTML and corresponding AST nodes.
 
@@ -215,6 +208,14 @@ Definition Term
 Definition Term
 : Definition of above term
 : Another definition of above term
+
+#### Usage info
+
+"Definition Lists" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "Definition"
+```
 
 ### Emoji
 
@@ -229,6 +230,14 @@ warning :warning:
 thumbsup :thumbsup:  
 calendar :calendar:  
 warning :warning:  
+
+#### Usage info
+
+"Emoji" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "Emoji"
+```
 
 ### GfmTaskList
 
@@ -257,3 +266,11 @@ will be rendered as
 1. [ ] Incomplete task
    1. [x] Sub-task 1
    1. [ ] Sub-task 3
+
+#### Usage info
+
+"GfmTaskList" is an optional feature, that has to be activated in workspace views properties
+
+```DSL
+    "generatr.markdown.flexmark.extensions" "GfmTaskList"
+```
