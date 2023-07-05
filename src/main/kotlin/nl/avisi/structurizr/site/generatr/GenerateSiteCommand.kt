@@ -61,7 +61,7 @@ class GenerateSiteCommand : Subcommand(
     private val excludeBranches by option(
         ArgType.String, "exclude-branches", "ex",
         "Comma-separated list of branches to exclude from the generated site"
-    ).default("gh-pages")
+    ).default("")
 
     override fun execute() {
         val siteDir = File(outputDir).apply { mkdirs() }
