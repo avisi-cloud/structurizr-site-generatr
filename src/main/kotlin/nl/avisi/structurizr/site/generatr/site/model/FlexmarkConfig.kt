@@ -7,6 +7,7 @@ import com.vladsch.flexmark.util.data.DataHolder
 import com.vladsch.flexmark.util.data.MutableDataSet
 import com.vladsch.flexmark.ext.emoji.EmojiExtension
 import com.vladsch.flexmark.ext.emoji.EmojiImageType
+import com.vladsch.flexmark.ext.gitlab.GitLabExtension
 import com.vladsch.flexmark.parser.Parser
 
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
@@ -78,6 +79,9 @@ fun buildFlexmarkConfig(context: GeneratorContext): FlexmarkConfig {
 
     if (selectedExtensionMap.containsKey("Emoji")) {
         flexmarkOptions.set(EmojiExtension.USE_IMAGE_TYPE, EmojiImageType.UNICODE_ONLY)
+    }
+    if (selectedExtensionMap.containsKey("GitLab")) {
+        flexmarkOptions.set(GitLabExtension.RENDER_BLOCK_MERMAID, false)
     }
 
     return FlexmarkConfig(flexmarkExtensionString, selectedExtensionMap, flexmarkOptions)
