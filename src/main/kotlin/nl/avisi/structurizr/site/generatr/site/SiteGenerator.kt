@@ -18,6 +18,7 @@ fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/js/auto-reload.js")
     copySiteWideAsset(exportDir, "/css/admonition.css")
     copySiteWideAsset(exportDir, "/js/admonition.js")
+    copySiteWideAsset(exportDir, "/js/reformat-mermaid.js")
 }
 
 private fun copySiteWideAsset(exportDir: File, asset: String) {
