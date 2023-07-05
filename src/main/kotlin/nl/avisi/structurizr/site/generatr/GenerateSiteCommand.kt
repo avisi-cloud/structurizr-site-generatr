@@ -82,32 +82,29 @@ class GenerateSiteCommand : Subcommand(
             refreshLocalClone()
         }
 
-        val branchNames: MutableList<String> = if (allBranches) {
-            clonedRepository.getBranchNames(excludeBranches.split(",")).toMutableList()
-        } else {
-            branches.split(",").toMutableList()
-        }
+        val branchNames = if (allBranches)
+            clonedRepository.getBranchNames(excludeBranches.split(","))
+        else
+            branches.split(",")
 
-        println("Branches : $branchNames")
+        println("The following branches will be checked for Structurizr Workspaces: $branchNames")
 
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
-        val errorBranches: MutableList<String> = mutableListOf()
-
-        branchNames.forEach { branch ->
+        val branchesToGenerate = branchNames.filter { branch ->
+            println("Checking branch $branch")
             try {
-                println("Checking branch $branch")
                 clonedRepository.checkoutBranch(branch)
                 createStructurizrWorkspace(workspaceFileInRepo)
+                true
             } catch (e: Exception) {
-                errorBranches.add(branch)
+                println("Bad Branch $branch")
+                false
             }
         }
 
-        println("Branches with workspace errors : $errorBranches")
-        branchNames.removeAll(errorBranches)
+        println("The following branches contain a valid Structurizr workspace: $branchesToGenerate")
 
-        println("Generating sites for the following branches : $branchNames")
-        branchNames.forEach { branch ->
+        branchesToGenerate.forEach { branch ->
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
 

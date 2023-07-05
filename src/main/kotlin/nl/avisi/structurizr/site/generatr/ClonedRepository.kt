@@ -51,16 +51,10 @@ class ClonedRepository(
             .call()
     }
 
-    fun getBranchNames(excludeBranches: List<String>): List<String> {
-        val branches:List<Ref> = Git(repo).branchList().setListMode(ListBranchCommand.ListMode.ALL).call()
-        val branchNames:MutableList<String> = mutableListOf()
-        for (branch:Ref in branches){
-            val shortBranchName: String = branch.name.toString().substringAfterLast("/")
-            println("Found the following Branch $shortBranchName")
-            if(!excludeBranches.contains(shortBranchName)){
-                branchNames.add(shortBranchName)
-            }
-        }
-        return branchNames
-    }
+    fun getBranchNames(excludeBranches: List<String>) =
+        Git(repo).branchList().setListMode(ListBranchCommand.ListMode.ALL).call()
+            .map { it.name.toString().substringAfterLast("/") }
+            .onEach { println("Found the following branch: $it") }
+            .filter { it !in excludeBranches }
+
 }
