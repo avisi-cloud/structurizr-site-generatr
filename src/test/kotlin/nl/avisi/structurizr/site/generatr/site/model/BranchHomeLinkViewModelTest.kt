@@ -19,7 +19,7 @@ class BranchHomeLinkViewModelTest : ViewModelTest() {
         val viewModel = BranchHomeLinkViewModel(pageViewModel("/master/decisions/1"), "branch-1")
 
         assertThat(viewModel.relativeHref)
-            .isEqualTo("../../../../branch-1")
+            .isEqualTo("../../../../branch-1/")
     }
 
     @Test
@@ -27,6 +27,6 @@ class BranchHomeLinkViewModelTest : ViewModelTest() {
         val viewModel = BranchHomeLinkViewModel(pageViewModel("/"), "master")
 
         assertThat(viewModel.relativeHref)
-            .isEqualTo("./../master")
+            .isEqualTo("./../master/")
     }
 }
