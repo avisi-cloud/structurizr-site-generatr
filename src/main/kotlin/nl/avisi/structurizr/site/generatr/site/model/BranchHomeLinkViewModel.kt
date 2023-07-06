@@ -7,5 +7,5 @@ data class BranchHomeLinkViewModel(
     private val branchName: String
 ) {
     val title get() = branchName
-    val relativeHref get() = HomePageViewModel.url().asUrlToDirectory(pageViewModel.url) + "../$branchName"
+    val relativeHref get() = HomePageViewModel.url().asUrlToDirectory(pageViewModel.url) + "../$branchName/"
 }
