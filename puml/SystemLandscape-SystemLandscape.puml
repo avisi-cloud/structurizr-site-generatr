@@ -12,33 +12,33 @@ skinparam preserveAspectRatio meet
 Enterprise_Boundary(enterprise, "Big Bank plc") {
   WithoutPropertyHeader()
   AddProperty("Location","Customer Services")
-  Person(CustomerServiceStaff, "Customer Service Staff", "Customer service staff within the bank.", $tags="")
+  Person(CustomerServiceStaff, "Customer Service Staff", $descr="Customer service staff within the bank.", $tags="", $link="")
   WithoutPropertyHeader()
   AddProperty("Location","Internal Services")
-  Person(BackOfficeStaff, "Back Office Staff", "Administration and support staff within the bank.", $tags="")
-  System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")[[../mainframe-banking-system/context/]]
-  System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")[[../e-mail-system/context/]]
-  System(ATM, "ATM", "Allows customers to withdraw cash.", $tags="")[[../atm/context/]]
+  Person(BackOfficeStaff, "Back Office Staff", $descr="Administration and support staff within the bank.", $tags="", $link="")
+  System(MainframeBankingSystem, "Mainframe Banking System", $descr="Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="", $link="../mainframe-banking-system/context/")
+  System(EmailSystem, "E-mail System", $descr="The internal Microsoft Exchange e-mail system.", $tags="", $link="../e-mail-system/context/")
+  System(ATM, "ATM", $descr="Allows customers to withdraw cash.", $tags="", $link="../atm/context/")
   WithoutPropertyHeader()
   AddProperty("Development Team","Dev/Internet Services")
   AddProperty("Owner","Customer Services")
   AddProperty("Url","https://en.wikipedia.org/wiki/Online_banking")
-  System(InternetBankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="")[[../internet-banking-system/context/]]
+  System(InternetBankingSystem, "Internet Banking System", $descr="Allows customers to view information about their bank accounts, and make payments.", $tags="", $link="../internet-banking-system/context/")
 }
 
-Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
-System_Ext(Acquirer, "Acquirer", "Facilitates PIN transactions for merchants.", $tags="")
+Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", $descr="A customer of the bank, with personal bank accounts.", $tags="", $link="")
+System_Ext(Acquirer, "Acquirer", $descr="Facilitates PIN transactions for merchants.", $tags="", $link="")
 
-Rel_D(PersonalBankingCustomer, InternetBankingSystem, "Views account balances, and makes payments using", $tags="")
-Rel_D(InternetBankingSystem, MainframeBankingSystem, "Gets account information from, and makes payments using", $tags="")
-Rel_D(InternetBankingSystem, EmailSystem, "Sends e-mail using", $tags="")
-Rel_D(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $tags="")
-Rel_D(PersonalBankingCustomer, CustomerServiceStaff, "Asks questions to", "Telephone", $tags="")
-Rel_D(CustomerServiceStaff, MainframeBankingSystem, "Uses", $tags="")
-Rel_D(PersonalBankingCustomer, ATM, "Withdraws cash using", $tags="")
-Rel_D(ATM, MainframeBankingSystem, "Uses", $tags="")
-Rel_D(BackOfficeStaff, MainframeBankingSystem, "Uses", $tags="")
-Rel_D(Acquirer, MainframeBankingSystem, "Peforms clearing and settlement", $tags="")
+Rel_D(PersonalBankingCustomer, InternetBankingSystem, "Views account balances, and makes payments using", $techn="", $tags="", $link="")
+Rel_D(InternetBankingSystem, MainframeBankingSystem, "Gets account information from, and makes payments using", $techn="", $tags="", $link="")
+Rel_D(InternetBankingSystem, EmailSystem, "Sends e-mail using", $techn="", $tags="", $link="")
+Rel_D(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $techn="", $tags="", $link="")
+Rel_D(PersonalBankingCustomer, CustomerServiceStaff, "Asks questions to", $techn="Telephone", $tags="", $link="")
+Rel_D(CustomerServiceStaff, MainframeBankingSystem, "Uses", $techn="", $tags="", $link="")
+Rel_D(PersonalBankingCustomer, ATM, "Withdraws cash using", $techn="", $tags="", $link="")
+Rel_D(ATM, MainframeBankingSystem, "Uses", $techn="", $tags="", $link="")
+Rel_D(BackOfficeStaff, MainframeBankingSystem, "Uses", $techn="", $tags="", $link="")
+Rel_D(Acquirer, MainframeBankingSystem, "Peforms clearing and settlement", $techn="", $tags="", $link="")
 
 SHOW_LEGEND(true)
 @enduml

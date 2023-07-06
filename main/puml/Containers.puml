@@ -8,28 +8,28 @@ top to bottom direction
 !include <C4/C4_Context>
 !include <C4/C4_Container>
 
-Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.", $tags="")
-System(MainframeBankingSystem, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="")
-System(EmailSystem, "E-mail System", "The internal Microsoft Exchange e-mail system.", $tags="")
+Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", $descr="A customer of the bank, with personal bank accounts.", $tags="", $link="")
+System(MainframeBankingSystem, "Mainframe Banking System", $descr="Stores all of the core banking information about customers, accounts, transactions, etc.", $tags="", $link="")
+System(EmailSystem, "E-mail System", $descr="The internal Microsoft Exchange e-mail system.", $tags="", $link="")
 
 System_Boundary("InternetBankingSystem_boundary", "Internet Banking System", $tags="") {
-  Container(InternetBankingSystem.MobileApp, "Mobile App", "Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="")
-  Container(InternetBankingSystem.WebApplication, "Web Application", "Java and Spring MVC", "Delivers the static content and the Internet banking single page application.", $tags="")
-  Container(InternetBankingSystem.APIApplication, "API Application", "Java and Spring MVC", "Provides Internet banking functionality via a JSON/HTTPS API.", $tags="")
-  ContainerDb(InternetBankingSystem.Database, "Database", "Oracle Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="")
-  Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", "JavaScript and Angular", "Provides all of the Internet banking functionality to customers via their web browser.", $tags="")
+  Container(InternetBankingSystem.MobileApp, "Mobile App", $techn="Xamarin", $descr="Provides a limited subset of the Internet banking functionality to customers via their mobile device.", $tags="", $link="")
+  Container(InternetBankingSystem.WebApplication, "Web Application", $techn="Java and Spring MVC", $descr="Delivers the static content and the Internet banking single page application.", $tags="", $link="")
+  Container(InternetBankingSystem.APIApplication, "API Application", $techn="Java and Spring MVC", $descr="Provides Internet banking functionality via a JSON/HTTPS API.", $tags="", $link="")
+  ContainerDb(InternetBankingSystem.Database, "Database", $techn="Oracle Database Schema", $descr="Stores user registration information, hashed authentication credentials, access logs, etc.", $tags="", $link="")
+  Container(InternetBankingSystem.SinglePageApplication, "Single-Page Application", $techn="JavaScript and Angular", $descr="Provides all of the Internet banking functionality to customers via their web browser.", $tags="", $link="")
 }
 
-Rel_D(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $tags="")
-Rel_D(PersonalBankingCustomer, InternetBankingSystem.WebApplication, "Visits bigbank.com/ib using", "HTTPS", $tags="")
-Rel_D(PersonalBankingCustomer, InternetBankingSystem.SinglePageApplication, "Views account balances, and makes payments using", $tags="")
-Rel_D(PersonalBankingCustomer, InternetBankingSystem.MobileApp, "Views account balances, and makes payments using", $tags="")
-Rel_D(InternetBankingSystem.WebApplication, InternetBankingSystem.SinglePageApplication, "Delivers to the customer's web browser", $tags="")
-Rel_D(InternetBankingSystem.SinglePageApplication, InternetBankingSystem.APIApplication, "Makes API calls to", "JSON/HTTPS", $tags="")
-Rel_D(InternetBankingSystem.MobileApp, InternetBankingSystem.APIApplication, "Makes API calls to", "JSON/HTTPS", $tags="")
-Rel_D(InternetBankingSystem.APIApplication, InternetBankingSystem.Database, "Reads from and writes to", "JDBC", $tags="")
-Rel_D(InternetBankingSystem.APIApplication, MainframeBankingSystem, "Makes API calls to", "XML/HTTPS", $tags="")
-Rel_D(InternetBankingSystem.APIApplication, EmailSystem, "Sends e-mail using", $tags="")
+Rel_D(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $techn="", $tags="", $link="")
+Rel_D(PersonalBankingCustomer, InternetBankingSystem.WebApplication, "Visits bigbank.com/ib using", $techn="HTTPS", $tags="", $link="")
+Rel_D(PersonalBankingCustomer, InternetBankingSystem.SinglePageApplication, "Views account balances, and makes payments using", $techn="", $tags="", $link="")
+Rel_D(PersonalBankingCustomer, InternetBankingSystem.MobileApp, "Views account balances, and makes payments using", $techn="", $tags="", $link="")
+Rel_D(InternetBankingSystem.WebApplication, InternetBankingSystem.SinglePageApplication, "Delivers to the customer's web browser", $techn="", $tags="", $link="")
+Rel_D(InternetBankingSystem.SinglePageApplication, InternetBankingSystem.APIApplication, "Makes API calls to", $techn="JSON/HTTPS", $tags="", $link="")
+Rel_D(InternetBankingSystem.MobileApp, InternetBankingSystem.APIApplication, "Makes API calls to", $techn="JSON/HTTPS", $tags="", $link="")
+Rel_D(InternetBankingSystem.APIApplication, InternetBankingSystem.Database, "Reads from and writes to", $techn="JDBC", $tags="", $link="")
+Rel_D(InternetBankingSystem.APIApplication, MainframeBankingSystem, "Makes API calls to", $techn="XML/HTTPS", $tags="", $link="")
+Rel_D(InternetBankingSystem.APIApplication, EmailSystem, "Sends e-mail using", $techn="", $tags="", $link="")
 
 SHOW_LEGEND(true)
 @enduml

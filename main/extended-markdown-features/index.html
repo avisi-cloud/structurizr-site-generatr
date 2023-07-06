@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Markdown features | Big Bank plc</title>
+    <title>Extended markdown features | Big Bank plc</title>
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
     <link href="../../style.css" rel="stylesheet">
     <link href="./../style-branding.css" rel="stylesheet">
@@ -34,9 +34,9 @@
         <div class="navbar-end">
           <div class="navbar-item"><input class="input is-small is-rounded has-site-branding" id="search" type="search" size="30" maxlength="50" placeholder="Search (requires 3 characters)..." onkeyup="redirect(event, value, '../search/')"></div>
           <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
-            <div class="navbar-dropdown is-right"><a href="../../main" class="navbar-item">main</a>
+            <div class="navbar-dropdown is-right"><a href="../../main/" class="navbar-item">main</a>
               <hr class="navbar-divider">
-              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.2</span></div>
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.3</span></div>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
       <aside class="menu p-3">
         <p class="menu-label">General</p>
         <ul class="menu-list has-site-branding">
-          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a><a href="./" class="is-active">Markdown features</a></li>
+          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a><a href="./" class="is-active">Extended markdown features</a></li>
         </ul>
         <p class="menu-label">Software systems</p>
         <ul class="menu-list has-site-branding">
@@ -66,26 +66,52 @@
   </svg>
  </symbol>
 </svg>
-<h2 id="markdown-features"><a href="#markdown-features" id="markdown-features">Markdown features</a></h2>
-<p>This page showcases the ability to use extended markdown formating features in workspace documentation files.</p>
+<h2 id="extended-markdown-features"><a href="#extended-markdown-features" id="extended-markdown-features">Extended markdown features</a></h2>
+<p>This page showcases the ability to use extended markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki <a href="https://github.com/vsch/flexmark-java/wiki/Extensions">Extensions page</a>.</p>
+<p>Most of these extended features have to be activated in your architecture model as a property in workspace views.</p>
+<pre><code class="language-DSL">workspace {
+    ...
+    views {
+        ...
+        properties {
+            ...
+            // full list of available "generatr.markdown.flexmark.extensions"
+            // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"
+            // see https://github.com/vsch/flexmark-java/wiki/Extensions
+            // ATTENTION:
+            // * "generatr.markdown.flexmark.extensions" values must be separated by comma
+            // * it's not possible to use "GitLab" and "ResizableImage" extensions together
+            // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
+            "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
+            ...
+        }
+        ...
+    }
+    ...
+}
+</code></pre>
 <h3 id="tableofcontents"><a href="#tableofcontents" id="tableofcontents">TableOfContents</a></h3>
 <p><code>[TOC]</code> element which renders a table of contents</p>
 <pre><code class="language-markdown">[TOC]
 </code></pre>
 <p>will render into</p>
 <ul>
- <li><a href="#markdown-features">Markdown features</a>
+ <li><a href="#extended-markdown-features">Extended markdown features</a>
   <ul>
    <li><a href="#tableofcontents">TableOfContents</a></li>
    <li><a href="#render-tables">Render Tables</a></li>
    <li><a href="#admonition-blocks">Admonition Blocks</a></li>
    <li><a href="#gitlab-flavored-markdown-extensions">GitLab flavored markdown extensions</a></li>
    <li><a href="#anchorlink">AnchorLink</a></li>
-   <li><a href="#definitionlists">DefinitionLists</a></li>
+   <li><a href="#definition-lists">Definition Lists</a></li>
    <li><a href="#emoji">Emoji</a></li>
    <li><a href="#gfmtasklist">GfmTaskList</a></li>
   </ul></li>
 </ul>
+<h4 id="usage-info"><a href="#usage-info" id="usage-info">Usage info</a></h4>
+<p>“TableOfContents” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "TableOfContents"
+</code></pre>
 <h3 id="render-tables"><a href="#render-tables" id="render-tables">Render Tables</a></h3>
 <p>Standard tables can be embedded in markdown text syntax:</p>
 <pre><code class="language-markdown">| header1 | header2 |
@@ -107,6 +133,10 @@
   </tr>
  </tbody>
 </table>
+<h4 id="usage-info-1"><a href="#usage-info-1" id="usage-info-1">Usage info</a></h4>
+<p>“Render Tables” is an optional feature, that is enabled by default. If other optional markdown features are activated in workspace views properties, than you have to ensure, that Tables is listed in the extension list as well.</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "Tables"
+</code></pre>
 <h3 id="admonition-blocks"><a href="#admonition-blocks" id="admonition-blocks">Admonition Blocks</a></h3>
 <p>Admonitions create block-styled side content.</p>
 <pre><code class="language-markdown">!!! faq "FAQ"
@@ -148,20 +178,12 @@
   <p>this is an additional information</p>
  </div>
 </div>
+<h4 id="usage-info-2"><a href="#usage-info-2" id="usage-info-2">Usage info</a></h4>
+<p>“Admonition Blocks” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "Admonition"
+</code></pre>
 <h3 id="gitlab-flavored-markdown-extensions"><a href="#gitlab-flavored-markdown-extensions" id="gitlab-flavored-markdown-extensions">GitLab flavored markdown extensions</a></h3>
 <p>Please see <a href="https://docs.gitlab.com/ee/user/markdown.html?tab=Rendered+Markdown">GitLab flavored markdown features</a> for a detailed description. Unfortunately only the following features are supported by Flexmark markdown renderer, that is used here.</p>
-<h4 id="mermaid-diagram-support"><a href="#mermaid-diagram-support" id="mermaid-diagram-support">Mermaid diagram support</a></h4>
-<pre><code class="language-markdown">```mermaid
-graph TD;
-  A--&gt;B;
-  A--&gt;C;
-  B--&gt;D;
-  C--&gt;D;
-```
-</code></pre>
-<div class="mermaid">
- graph TD; A--&gt;B; A--&gt;C; B--&gt;D; C--&gt;D;
-</div>
 <h4 id="multiline-block-quote-delimiters"><a href="#multiline-block-quote-delimiters" id="multiline-block-quote-delimiters">Multiline Block quote delimiters</a></h4>
 <pre><code class="language-markdown">&gt;&gt;&gt;
 If you paste a message from somewhere else
@@ -211,9 +233,17 @@ a^2+b^2=c^2
 <div class="katex">
  a^2+b^2=c^2
 </div>
+<h4 id="usage-info-3"><a href="#usage-info-3" id="usage-info-3">Usage info</a></h4>
+<p>“GitLab Flavored Markdown” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "GitLab"
+</code></pre>
 <h3 id="anchorlink"><a href="#anchorlink" id="anchorlink">AnchorLink</a></h3>
-<p>Automatically adds anchor links to heading, using GitHub id generation algorithm</p>
-<h3 id="definitionlists"><a href="#definitionlists" id="definitionlists">DefinitionLists</a></h3>
+<p>Automatically adds anchor links to headings, using GitHub id generation algorithm</p>
+<h4 id="usage-info-4"><a href="#usage-info-4" id="usage-info-4">Usage info</a></h4>
+<p>“AnchorLink” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "AnchorLink"
+</code></pre>
+<h3 id="definition-lists"><a href="#definition-lists" id="definition-lists">Definition Lists</a></h3>
 <p>Converts definition syntax of Php Markdown Extra Definition List to <code>&lt;dl&gt;&lt;/dl&gt;</code> HTML and corresponding AST nodes.</p>
 <pre><code class="language-markdown">Definition Term
 : Definition of above term
@@ -230,6 +260,10 @@ a^2+b^2=c^2
   Another definition of above term
  </dd>
 </dl>
+<h4 id="usage-info-5"><a href="#usage-info-5" id="usage-info-5">Usage info</a></h4>
+<p>“Definition Lists” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "Definition"
+</code></pre>
 <h3 id="emoji"><a href="#emoji" id="emoji">Emoji</a></h3>
 <p>Allows to create image link to emoji images from emoji shortcuts using <a href="https://www.webfx.com/tools/emoji-cheat-sheet">Emoji-Cheat-Sheet.com</a> and optionally to replace with its unicode equivalent character with mapping by Mark Wunsch found at <a href="https://github.com/mwunsch/rumoji">mwunsch/rumoji</a></p>
 <pre><code class="language-markdown">thumbsup :thumbsup:  
@@ -239,6 +273,10 @@ warning :warning:
 <p>thumbsup 👍<br>
   calendar 📆<br>
   warning ⚠</p>
+<h4 id="usage-info-6"><a href="#usage-info-6" id="usage-info-6">Usage info</a></h4>
+<p>“Emoji” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "Emoji"
+</code></pre>
 <h3 id="gfmtasklist"><a href="#gfmtasklist" id="gfmtasklist">GfmTaskList</a></h3>
 <p>Enables list items based task lists whose text begins with: <code>[ ]</code>, <code>[x]</code> or <code>[X]</code></p>
 <pre><code class="language-markdown">- [x] Completed task
@@ -267,11 +305,16 @@ warning :warning:
    <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked disabled readonly>&nbsp;Sub-task 1</li>
    <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled readonly>&nbsp;Sub-task 3</li>
   </ol></li>
-</ol></div>
+</ol>
+<h4 id="usage-info-7"><a href="#usage-info-7" id="usage-info-7">Usage info</a></h4>
+<p>“GfmTaskList” is an optional feature, that has to be activated in workspace views properties</p>
+<pre><code class="language-DSL">    "generatr.markdown.flexmark.extensions" "GfmTaskList"
+</code></pre></div>
         </div>
       </div>
     </div>
     <script type="text/javascript" src="../../admonition.js"></script>
+    <script type="text/javascript" src="../../reformat-mermaid.js"></script>
     <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';</script>
   </body>
 </html>

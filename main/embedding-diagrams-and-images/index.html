@@ -34,9 +34,9 @@
         <div class="navbar-end">
           <div class="navbar-item"><input class="input is-small is-rounded has-site-branding" id="search" type="search" size="30" maxlength="50" placeholder="Search (requires 3 characters)..." onkeyup="redirect(event, value, '../search/')"></div>
           <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
-            <div class="navbar-dropdown is-right"><a href="../../main" class="navbar-item">main</a>
+            <div class="navbar-dropdown is-right"><a href="../../main/" class="navbar-item">main</a>
               <hr class="navbar-divider">
-              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.2</span></div>
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.3</span></div>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
       <aside class="menu p-3">
         <p class="menu-label">General</p>
         <ul class="menu-list has-site-branding">
-          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="./" class="is-active">Embedding diagrams and images</a><a href="../markdown-features/" class="">Markdown features</a></li>
+          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="./" class="is-active">Embedding diagrams and images</a><a href="../extended-markdown-features/" class="">Extended markdown features</a></li>
         </ul>
         <p class="menu-label">Software systems</p>
         <ul class="menu-list has-site-branding">
@@ -84,7 +84,7 @@
       </g><!--entity CustomerServiceStaff-->
       <g id="elem_CustomerServiceStaff">
        <rect fill="#08427B" height="174.4375" rx="2.5" ry="2.5" style="stroke:#073B6F;stroke-width:0.5;" width="246" x="288" y="347.2969" />
-       <image height="48" width="48" x="387" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAACD0lEQVR4Xu2YoU4EMRCGT+4j8Ai8AhaH4QHgAUjQuFMECUgMIUgwJAgMhgQsAYUiJCiQIBBY+EITsjfTdme6V24v4c8vyGbb+ZjOtN0bNcvjQXmkH83WvYBWto6PLm6v7p7uH1/w2fXD+PBycX1Pv2l3IdDm/vn7x+dXQiAubRzoURa7gRZWd0iGRIiJbOnhnfYBQZNJjNbuyY2eJG8fkDE3bbG4ep6MHUAsgYxmE3nVs6VsBWJSGccsOlFPmLIViMzLOB7pCVO2AtHJMohH7Fh6zqitQK7m0rJvAVYgGcEpe//PLdDz65sM4pF9N7ICcXDKIB5Nv6j7tD0NoSdM2QrU9Gg0ewE1LqBhHR3BBdvj2vapnidjHxD/q6vd7Pvhr31AwcY8eXMTXAKECZZJFXuEq27aLgQK5uLMohCenGGuGewOxSjBvYBqeG6B+Nqiblggdjnc+ZXDy+FNFpFzw76O3UBAROuXh6FoiAcf5g9eTvUgzy0nWg6I8cXHRUpg5bOVBCo+KDpFajOf23GgPme7RSQ+lacIENUgJ6gg1k6HjgOlqnLqip4tEuhv0hNEMXUD0clyXE3p6pZA0S2nnvTlXwLJEZWlb7cTQH1+USgTN4VhAenm/wea1OCAOmqo6fE1WCb9WSKBah+rbUWPWAmE2Rvk0ApiB45eOyNAzU8xcTvj8KvkKEoOaIYeHNA3ZuygAvFMUO0AAAAASUVORK5CYII=" y="357.2969" />
+       <image height="48" width="48" x="387" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACMElEQVR4Xu2YvUrFQBCFb+kj+Ai+gq3Y2PgA+gCCtZ2V2AhqaSNiqY1gYWMjaCvXykoEKy21sLCNfELgMscksz8mWfDAB3Kuye7sTmYnmcwtbU9KRozSECOVla3T6uTqvrqZPlcPT68/XNw+VtvH19XC+sGe/f9UxIhl8/Cy+vj8qrpEYIsbR1N7fSxihDK/urvMKoeKHbH3ikGMEJi8Z9WbtH92lxyEGCHErLwVqWfvG4IYXkiBXGIn7f29iOGBAe0kUkTVsmN4EcMD255bdgwvYnigFOYW54cdx4MYHlIqT5Niy6oYHuzgORRbUsXwYAfPoV4DeHl7t+MnK/Y8EMMDzVlu9foQ5y6jFAU7hhcxvOSsRLH5D2J4KbqVqMlxoK3tnEevPogRAiuXUpFiD69ZxIghZidSV75GjFiYkGc3KMEpOW8RIxXed0kNJsrOAO0ypTfnxGvEKA0xSkMMD3zfIedJFQ4hCPlUwrX1daQWbURseonRBhNue1D5rc53JkVQwN9c21Wt+D20JxLjN7hpztahSwTi3RExLDlbhhCxm55PkWLMkrvrDBW73rUTYtSQu/aGQ4h0snNzBdD1wPWptrZDDBjL6tfiebBzbA2AUjg2NT3QYkBbrR9KTS/9YoC9eAxqeu0UI/eH21yiu7VzLSqApnIqxn8Af6TiA3A/A9Bn5+lV0xcMMWDoJs6qrakTo4a6OwZxqLa97YkxC1HzMkMzNQRtE3cFUAJilMY3OGTNL0NDLqIAAAAASUVORK5CYII=" y="357.2969" />
        <text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthadjust="spacing" textlength="87" x="332" y="420.1484">
         Customer
        </text>
@@ -144,7 +144,7 @@
       </g><!--entity BackOfficeStaff-->
       <g id="elem_BackOfficeStaff">
        <rect fill="#08427B" height="155.8125" rx="2.5" ry="2.5" style="stroke:#073B6F;stroke-width:0.5;" width="229" x="23.5" y="356.2969" />
-       <image height="48" width="48" x="114" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAACD0lEQVR4Xu2YoU4EMRCGT+4j8Ai8AhaH4QHgAUjQuFMECUgMIUgwJAgMhgQsAYUiJCiQIBBY+EITsjfTdme6V24v4c8vyGbb+ZjOtN0bNcvjQXmkH83WvYBWto6PLm6v7p7uH1/w2fXD+PBycX1Pv2l3IdDm/vn7x+dXQiAubRzoURa7gRZWd0iGRIiJbOnhnfYBQZNJjNbuyY2eJG8fkDE3bbG4ep6MHUAsgYxmE3nVs6VsBWJSGccsOlFPmLIViMzLOB7pCVO2AtHJMohH7Fh6zqitQK7m0rJvAVYgGcEpe//PLdDz65sM4pF9N7ICcXDKIB5Nv6j7tD0NoSdM2QrU9Gg0ewE1LqBhHR3BBdvj2vapnidjHxD/q6vd7Pvhr31AwcY8eXMTXAKECZZJFXuEq27aLgQK5uLMohCenGGuGewOxSjBvYBqeG6B+Nqiblggdjnc+ZXDy+FNFpFzw76O3UBAROuXh6FoiAcf5g9eTvUgzy0nWg6I8cXHRUpg5bOVBCo+KDpFajOf23GgPme7RSQ+lacIENUgJ6gg1k6HjgOlqnLqip4tEuhv0hNEMXUD0clyXE3p6pZA0S2nnvTlXwLJEZWlb7cTQH1+USgTN4VhAenm/wea1OCAOmqo6fE1WCb9WSKBah+rbUWPWAmE2Rvk0ApiB45eOyNAzU8xcTvj8KvkKEoOaIYeHNA3ZuygAvFMUO0AAAAASUVORK5CYII=" y="366.2969" />
+       <image height="48" width="48" x="114" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACMElEQVR4Xu2YvUrFQBCFb+kj+Ai+gq3Y2PgA+gCCtZ2V2AhqaSNiqY1gYWMjaCvXykoEKy21sLCNfELgMscksz8mWfDAB3Kuye7sTmYnmcwtbU9KRozSECOVla3T6uTqvrqZPlcPT68/XNw+VtvH19XC+sGe/f9UxIhl8/Cy+vj8qrpEYIsbR1N7fSxihDK/urvMKoeKHbH3ikGMEJi8Z9WbtH92lxyEGCHErLwVqWfvG4IYXkiBXGIn7f29iOGBAe0kUkTVsmN4EcMD255bdgwvYnigFOYW54cdx4MYHlIqT5Niy6oYHuzgORRbUsXwYAfPoV4DeHl7t+MnK/Y8EMMDzVlu9foQ5y6jFAU7hhcxvOSsRLH5D2J4KbqVqMlxoK3tnEevPogRAiuXUpFiD69ZxIghZidSV75GjFiYkGc3KMEpOW8RIxXed0kNJsrOAO0ypTfnxGvEKA0xSkMMD3zfIedJFQ4hCPlUwrX1daQWbURseonRBhNue1D5rc53JkVQwN9c21Wt+D20JxLjN7hpztahSwTi3RExLDlbhhCxm55PkWLMkrvrDBW73rUTYtSQu/aGQ4h0snNzBdD1wPWptrZDDBjL6tfiebBzbA2AUjg2NT3QYkBbrR9KTS/9YoC9eAxqeu0UI/eH21yiu7VzLSqApnIqxn8Af6TiA3A/A9Bn5+lV0xcMMWDoJs6qrakTo4a6OwZxqLa97YkxC1HzMkMzNQRtE3cFUAJilMY3OGTNL0NDLqIAAAAASUVORK5CYII=" y="366.2969" />
        <text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthadjust="spacing" textlength="43" x="62.5" y="429.1484">
         Back
        </text>
@@ -385,7 +385,7 @@
       </g><!--entity PersonalBankingCustomer-->
       <g id="elem_PersonalBankingCustomer">
        <rect fill="#686868" height="154.1406" rx="2.5" ry="2.5" style="stroke:#8A8A8A;stroke-width:0.5;" width="217" x="775.5" y="44.2969" />
-       <image height="48" width="48" x="860" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAB6ElEQVR4Xu2YLY+EMBCG9+dWr0aj0Wg0Go1Go0+j8Xdv2uTCvv1gpt0ebHKPuhDaeW4605Z9mJvx4AdXUyTUdd08z+u6flmWZRnHsWkafk9DptAwDPu+f0eAYtu2PEaGWuj5fCIZrBAC2eLBAnRCsEkkxmeaJp7iDJ2QMDdHsLg8SxKFEJaAo8lAXnmuOFIhTMpxxKATebo4UiFknuNo4OniSIXQyRxEA3YsnjGCVEjVXD7yLUAqxBGUyPv/Y4W2beMgGuS7kVQIBycH0fD+oi5pezQETxdHKmQKGk1eQEYldK+jw5GxPfZ9z7Mk0Qnhf1W1m3w//EUn5BDmSZsbR44QQLBEqrBHqOrmSKaQAxdnLArCrxZcM7A7ZKs4ioRq8LFC+NpC3WCBJsvpVw5edm9iEXFuyNfxXAgSwfrFQ1c0iNda8AdejvUgnktOtJQQxmcfFzGglc5WVCj7oDgFqU18boeFSs52CUh8LE8BIVQDT1ABrB0HtgSEYlX5doJnCwv9TXocKCaKbnwhdDKPq4lf3SwU3HLq4V/+WYhHVMa/3b4IlfyikAduCkcBc7mQ3/z/Qq/cTuikhkzB12Ae/mcJC9U+Vo8Ej1gWAtgbeGgFsAMHr50BIWOLCbezvhpBFUdY6EJuJ/QDW0XoMX60zZ0AAAAASUVORK5CYII=" y="54.2969" />
+       <image height="48" width="48" x="860" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACE0lEQVR4Xu2YMW/CMBCF++P6Y5iZmVFHZmZmZmbmzMzMzOypvkqW0L3GOdvXEEt90idVjyb22ZfzJR+bzeajZ8ToDTFaORwO4/V6HW+323i/338YhmE8n8/jbrf7sv/fihi1nE6n8fl8jnMisP1+P9jraxGjlO12+8kql4odsfeqQYwSmLxn1ad0uVyagxCjhJqVtyL17H1LEMMLKRAldtLe34sYHhjQTqJFVC07hhcxPLDt0bJjeBHDA6UwWpwfdhwPYnhoqTxTqi2rYniwg0eotqSK4cEOHqFFA3g8Hnb8ZtWeB2J4oDmL1qIPcXQZpSjYMbyI4SWyEtXmP4jhpetWIhFxoB2Px+rVBzFKYOVaKlLt4fWKGDXU7ETryifEqIUJeXaDEtyS8xYxWuF9l9RgouwM0C5TeiMnnhCjN8ToDTE88H2HnCdVOISg5FMJ16brSC3aiNr0EiMHE849qPyW8p1JERTwN9fOVSt+L+2JxPgNbhrZOsyJQLw7IoYlsmUoEbvp+RQpxivRXWep2PW5nRAjQe7aG75DpJOdmyuAuQduSeXaDjFgLaufxPNg55gNgFK4Nk090GJArta/S1Mv/WKAvXgNmnrtFCP6w22U6G7tXLsKYKqcivEfwB+p+wDczwAs2Xl6NfUFQwx4dxNnlWvqxEhQd9cgDtXc254YrxA1LzM0U+8gN3FXAD0gRm98A/FFFW2vidUFAAAAAElFTkSuQmCC" y="54.2969" />
        <text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthadjust="spacing" textlength="77" x="807.5" y="117.1484">
         Personal
        </text>
@@ -693,7 +693,7 @@
       <text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="4" x="1493" y="855.5889">
        &nbsp;
       </text>
-      <image height="12" width="12" x="1497" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAjUlEQVR4XmPgcKpGRtGNy/0qFqIJMiBz/iMB7IpOXXuErGjK2mNYFH3/+RtZ0d6zd7Aoim9ZiaxIN64fiyIg6liyH6IivnUlsjhCkWpkt1nqZAjbLnuGbFAbuiJki+AA6EqEoq3HbqDLw0DLwr1QRegySODW49dQRb///EWXhIFT1x4j3GSYNBErgsgCADsg9+PJKhUuAAAAAElFTkSuQmCC" y="846.8906" />
+      <image height="12" width="12" x="1497" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAApklEQVR4XmPgcKpmQMfRjcsb/CoWNqCLgzCGwH80gC6Pwjl17RG6+v9T1h47gFPD95+/0dX/33v2DootKBriW1Y2oGvQjesPxKkBhDuW7D8AUxzfunIiujwKRzWyO8ksdXIxjG+XPaNBNqgNuw3IzkAHIL+haNh67MZndEXooGXh3kVwDeiS2MCtx6/BtoA1/P7zF10eA5y69hihAYQNkyY24MMwdQBvKDvWFDAX9QAAAABJRU5ErkJggg==" y="846.8906" />
       <text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="1517" y="855.5889">
        person
       </text>
@@ -720,7 +720,7 @@
       <text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="4" x="1493" y="888.1826">
        &nbsp;
       </text>
-      <image height="12" width="12" x="1497" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAg0lEQVR4XnWQMQ7AEBiFe9xewGKRJhazTeIWYnQIi83sDBJpJahX0W/ivU/+P47zi1JKSrmEB15uAPMpxRhRcs5tpJwzSiGEjaS1RokxtpEq1tpm1AeYT4lSyjlvZyEEIeStuoSDXuqWU/Ler/3AGNOltQFSSl0qpazloH7e3On6obUPLdEc2ubhBIMAAAAASUVORK5CYII=" y="879.4844" />
+      <image height="12" width="12" x="1497" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAo0lEQVR4Xn1RsQrDIBTML/YXOmUvLi4quDgWN8Gl3xAcJd+QJZuzezdBbA0Y6iXpwQ3v3d17PhzGcRyQxhiutebYrzw0CgD1rgghoL947+fLQEoJ/WVd125LF7DWcgwwxm6XgUrn3NzM3wFP1LuCUnqXUj5arZTihJDzDb/PQNTbusCyLG80IaZpeu0BFM8QY9y2bIGcM+oH1D/qbhBC8H9svg8Q8WC+Ogq6XQAAAABJRU5ErkJggg==" y="879.4844" />
       <text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="111" x="1517" y="888.1826">
        external_person
       </text>
@@ -780,11 +780,69 @@
 </code></pre>
 <h4 id="example-embedded-picture"><a href="#example-embedded-picture" id="example-embedded-picture">Example: Embedded picture</a></h4>
 <p><a href="https://www.flickr.com/photos/schmollmolch/4937297813/">Sun</a>, by Christian Scheja</p>
-<p><img src="../pictures/nice-picture.png" alt="A nice picture"></p></div>
+<p><img src="../pictures/nice-picture.png" alt="A nice picture"></p>
+<h3 id="embedding-mermaid-diagrams"><a href="#embedding-mermaid-diagrams" id="embedding-mermaid-diagrams">Embedding mermaid diagrams</a></h3>
+<p>Structurizr Site Generatr is supporting mermaid diagrams in markdown pages using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.</p>
+<ul>
+ <li>flowchart</li>
+ <li>sequence diagram</li>
+ <li>class diagram</li>
+ <li>state diagram</li>
+ <li>entity-relationship diagram</li>
+ <li>user journey</li>
+ <li>gantt chart</li>
+ <li>pie chart</li>
+ <li>requirement diagram</li>
+ <li>and some more</li>
+</ul>
+<p>Please find the full list of supported chart types on <a href="https://mermaid.js.org/intro/#diagram-types">mermaid.js.org/intro</a></p>
+<h4 id="flowchart-diagram-example"><a href="#flowchart-diagram-example" id="flowchart-diagram-example">Flowchart Diagram Example</a></h4>
+<pre><code class="language-markdown">```mermaid
+graph TD;
+  A--&gt;B;
+  A--&gt;C;
+  B--&gt;D;
+  C--&gt;D;
+```
+</code></pre>
+<pre><code class="language-mermaid">graph TD;
+  A--&gt;B;
+  A--&gt;C;
+  B--&gt;D;
+  C--&gt;D;
+</code></pre>
+<h4 id="sequence-diagram-example"><a href="#sequence-diagram-example" id="sequence-diagram-example">Sequence Diagram Example</a></h4>
+<pre><code class="language-markdown">```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&gt;&gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&gt;&gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &lt;br/&gt;prevail!
+    John--&gt;&gt;Alice: Great!
+    John-&gt;&gt;Bob: How about you?
+    Bob--&gt;&gt;John: Jolly good!
+```
+</code></pre>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&gt;&gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&gt;&gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &lt;br/&gt;prevail!
+    John--&gt;&gt;Alice: Great!
+    John-&gt;&gt;Bob: How about you?
+    Bob--&gt;&gt;John: Jolly good!
+</code></pre></div>
         </div>
       </div>
     </div>
     <script type="text/javascript" src="../../admonition.js"></script>
+    <script type="text/javascript" src="../../reformat-mermaid.js"></script>
     <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';</script>
   </body>
 </html>
