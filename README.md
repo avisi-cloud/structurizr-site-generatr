@@ -197,13 +197,28 @@ example?
 Instead of relying on local .dsl files only, the `generate-site` command can also retrieve input files from a
 Git repository as follows. This is particularly advantageous for demos, documentation, or CI/CD pipelines.
 
+To explicitly name the branches that you want to build sites from you can use the --branches option.
+
 ```shell
 structurizr-site-generatr generate-site
     --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
     --workspace-file docs/example/workspace.dsl
-    --branches main
+    --branches main,future,old
     --default-branch main
 ```
+
+or you can choose to build all branches that are found in the repository and exclude specific ones by using the --all-branches and --exclude-branches options.
+
+```shell
+structurizr-site-generatr generate-site
+    --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
+    --workspace-file docs/example/workspace.dsl
+    --all-branches
+    --exclude-branches gh-pages
+    --default-branch main
+```
+
+Both the --branches and --exclude-branches options are comma separated lists and can contain multiple branch names.
 
 ### Start a development web server around the generated website
 

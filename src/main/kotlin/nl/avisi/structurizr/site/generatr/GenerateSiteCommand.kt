@@ -39,7 +39,7 @@ class GenerateSiteCommand : Subcommand(
     )
     private val branches by option(
         ArgType.String, "branches", "b",
-        "Comma-separated list of branches to include in the generated site"
+        "Comma-separated list of branches to include in the generated site. Not used if '--all-branches' option is set to true"
     ).default("master")
     private val defaultBranch by option(
         ArgType.String, "default-branch", "d",
@@ -53,6 +53,15 @@ class GenerateSiteCommand : Subcommand(
         ArgType.String, "output-dir", "o",
         "Directory where the generated site will be stored. Will be created if it doesn't exist yet."
     ).default("build/site")
+
+    private val allBranches by option(
+        ArgType.Boolean, "all-branches", "all",
+        "When set to TRUE will generate a site for every branch in the git repository"
+    ).default(value = false)
+    private val excludeBranches by option(
+        ArgType.String, "exclude-branches", "ex",
+        "Comma-separated list of branches to exclude from the generated site"
+    ).default("")
 
     override fun execute() {
         val siteDir = File(outputDir).apply { mkdirs() }
@@ -73,9 +82,29 @@ class GenerateSiteCommand : Subcommand(
             refreshLocalClone()
         }
 
-        val branchNames = branches.split(",")
+        val branchNames = if (allBranches)
+            clonedRepository.getBranchNames(excludeBranches.split(","))
+        else
+            branches.split(",")
+
+        println("The following branches will be checked for Structurizr Workspaces: $branchNames")
+
         val workspaceFileInRepo = File(clonedRepository.cloneDir, workspaceFile)
-        branchNames.forEach { branch ->
+        val branchesToGenerate = branchNames.filter { branch ->
+            println("Checking branch $branch")
+            try {
+                clonedRepository.checkoutBranch(branch)
+                createStructurizrWorkspace(workspaceFileInRepo)
+                true
+            } catch (e: Exception) {
+                println("Bad Branch $branch")
+                false
+            }
+        }
+
+        println("The following branches contain a valid Structurizr workspace: $branchesToGenerate")
+
+        branchesToGenerate.forEach { branch ->
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
 
