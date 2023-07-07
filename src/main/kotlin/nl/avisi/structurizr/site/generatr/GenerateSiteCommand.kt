@@ -115,7 +115,7 @@ class GenerateSiteCommand : Subcommand(
                 workspace,
                 assetsDir?.let { File(cloneDir, it) },
                 siteDir,
-                branchNames,
+                branchesToGenerate,
                 branch
             )
         }
