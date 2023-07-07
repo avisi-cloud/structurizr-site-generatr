@@ -104,6 +104,10 @@ class GenerateSiteCommand : Subcommand(
 
         println("The following branches contain a valid Structurizr workspace: $branchesToGenerate")
 
+        if (!branchesToGenerate.contains(defaultBranch)) {
+            throw Exception("$defaultBranch does not contain a valid structurizr workspace. Site generation halted.")
+        }
+
         branchesToGenerate.forEach { branch ->
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
