@@ -151,6 +151,7 @@ Subcommands:
 Options:
     --help, -h -> Usage info
 ```
+It supports hot-reloading, so your changes in the dsl will be reflected immediately.
 
 ### Version
 
