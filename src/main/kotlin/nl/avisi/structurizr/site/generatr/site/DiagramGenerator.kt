@@ -88,8 +88,8 @@ private fun readSvg(svgDir: File, name: String): String {
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
     val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url)
 
-    if (workspace.views.configuration.properties.containsKey("generatr.link.target")) {
-        plantUMLExporter.addSkinParam("svgLinkTarget", workspace.views.configuration.properties.getValue("generatr.link.target"))
+    if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
+        plantUMLExporter.addSkinParam("svgLinkTarget", workspace.views.configuration.properties.getValue("generatr.svglink.target"))
     }
 
     return plantUMLExporter.export(view)
