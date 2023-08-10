@@ -161,6 +161,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             "generatr.style.colors.secondary" "#ffffff"
             "generatr.style.faviconPath" "site/favicon.ico"
             "generatr.style.logoPath" "site/logo.png"
+            "generatr.link.target" "_self"
 
             // full list of available "generatr.markdown.flexmark.extensions"
             // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"

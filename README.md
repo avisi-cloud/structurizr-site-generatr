@@ -262,6 +262,7 @@ architecture model:
 | `generatr.style.logoPath`               | Site favicon location relative to the configured `assets` folder. When configured, the favicon will be set for all generated pages. This requires the `--assets-dir` switch when generating the site and the corresponding file to be available in the `assets` folder.              |           | `site/logo.png`     |
 | `generatr.search.language`              | Indexing/stemming language for the search index. See [Lunr language support](https://github.com/olivernn/lunr-languages)                                                                                                                                                             | `en`      | `nl`                |
 | `generatr.markdown.flexmark.extensions` | Additional extentions to the markdown generator to add new markdown capabilities. [More Details](https://avisi-cloud.github.io/structurizr-site-generatr/main/extended-markdown-features/)                                                                                           | Tables    | `Tables,Admonition` |
+| `generatr.link.target`                  | Specifies the link target for element links in the exported svg                                                                                                                                                                                                                      | `_top`    | `_self`             |
 
 
 See the included example for usage of some those properties in the
