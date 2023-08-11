@@ -9,7 +9,12 @@ class SoftwareSystemDecisionPageViewModel(
 ) : SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.DECISIONS) {
     override val url = url(softwareSystem, decision)
 
-    val content = markdownToHtml(this, decision.content, generatorContext.svgFactory)
+    val content = markdownToHtml(this, fixADRLinks(decision.content, softwareSystem), generatorContext.svgFactory)
+
+    private fun fixADRLinks(content: String, softwareSystem: SoftwareSystem) =
+        content.replace("\\[(.*)]\\(#(\\d+)\\)".toRegex()) {
+            "[${it.groupValues[1]}](${url(softwareSystem, Tab.DECISIONS)}/${it.groupValues[2]})"
+        }
 
     companion object {
         fun url(softwareSystem: SoftwareSystem, decision: Decision) =
