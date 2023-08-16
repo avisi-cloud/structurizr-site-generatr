@@ -98,6 +98,7 @@ class GenerateSiteCommand : Subcommand(
                 true
             } catch (e: Exception) {
                 println("Bad Branch $branch")
+                e.printStackTrace()
                 false
             }
         }
