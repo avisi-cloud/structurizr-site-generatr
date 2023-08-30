@@ -52,7 +52,7 @@ class ClonedRepository(
 
     fun getBranchNames(excludeBranches: List<String>) =
         Git(repo).branchList().setListMode(ListBranchCommand.ListMode.REMOTE).call()
-            .map { it.name.toString().substringAfterLast("/") }
+            .map { it.name.toString().substringAfter("/") }
             .onEach { println("Found the following branch: $it") }
             .filter { it !in excludeBranches }
 
