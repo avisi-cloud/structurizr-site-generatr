@@ -97,7 +97,7 @@ class GenerateSiteCommand : Subcommand(
                 createStructurizrWorkspace(workspaceFileInRepo)
                 true
             } catch (e: Exception) {
-                errorMessage = e.message ?: "Unknown error"
+                val errorMessage = e.message ?: "Unknown error"
                 println("Bad Branch $branch: $errorMessage")
                 false
             }
