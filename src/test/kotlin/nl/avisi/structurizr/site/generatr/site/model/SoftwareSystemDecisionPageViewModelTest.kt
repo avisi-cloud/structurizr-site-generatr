@@ -3,6 +3,8 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import nl.avisi.structurizr.site.generatr.normalize
+import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemPageViewModel.Companion.url
+import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemPageViewModel.Tab
 import kotlin.test.Test
 
 class SoftwareSystemDecisionPageViewModelTest : ViewModelTest() {
@@ -25,7 +27,7 @@ class SoftwareSystemDecisionPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemDecisionPageViewModel(generatorContext, softwareSystem, createDecision())
 
         assertThat(viewModel.tabs.single { it.link.active }.tab)
-            .isEqualTo(SoftwareSystemPageViewModel.Tab.DECISIONS)
+            .isEqualTo(Tab.DECISIONS)
     }
 
     @Test
@@ -34,5 +36,29 @@ class SoftwareSystemDecisionPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemDecisionPageViewModel(generatorContext, softwareSystem, decision)
 
         assertThat(viewModel.content).isEqualTo(markdownToHtml(viewModel, decision.content, svgFactory))
+    }
+
+
+    @Test
+    fun `link to other ADR`() {
+        val decision = createDecision().apply {
+            content = """
+                Decision with [link to other ADR](#2).
+                [Web link](https://google.com)
+                [Internal link](#other-section)
+            """.trimIndent()
+        }
+        val viewModel = SoftwareSystemDecisionPageViewModel(generatorContext, softwareSystem, decision)
+
+        assertThat(viewModel.content).isEqualTo(
+            markdownToHtml(
+                viewModel, """
+                    Decision with [link to other ADR](${url(softwareSystem, Tab.DECISIONS)}/2).
+                    [Web link](https://google.com)
+                    [Internal link](#other-section)
+                """.trimIndent(),
+                svgFactory
+            )
+        )
     }
 }
