@@ -33,7 +33,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     implementation("org.eclipse.jetty:jetty-server:11.0.16")
-    implementation("org.eclipse.jetty:jetty-servlet:11.0.15")
+    implementation("org.eclipse.jetty:jetty-servlet:11.0.16")
     implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.16")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.7")
