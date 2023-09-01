@@ -8,6 +8,7 @@ inputs:
     default: ${{ github.repositoryUrl }}
   workspace-file:
     description: Relative path within the Git repository of the workspace file (always required)
+    required: true
   default-branch:
     description: The default branch
     required: true
