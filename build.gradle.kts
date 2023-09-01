@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.9.0"
-    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.10"
     application
 }
 
@@ -20,9 +20,9 @@ dependencies {
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.6.0.202305301015-r")
 
-    implementation("com.structurizr:structurizr-core:1.24.1")
-    implementation("com.structurizr:structurizr-dsl:1.30.3")
-    implementation("com.structurizr:structurizr-export:1.15.0")
+    implementation("com.structurizr:structurizr-core:1.26.1")
+    implementation("com.structurizr:structurizr-dsl:1.32.0")
+    implementation("com.structurizr:structurizr-export:1.16.1")
 
     implementation("net.sourceforge.plantuml:plantuml:1.2023.10")
 
@@ -30,15 +30,15 @@ dependencies {
     implementation("org.jsoup:jsoup:1.16.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-    implementation("org.eclipse.jetty:jetty-server:11.0.15")
-    implementation("org.eclipse.jetty:jetty-servlet:11.0.15")
-    implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.15")
+    implementation("org.eclipse.jetty:jetty-server:11.0.16")
+    implementation("org.eclipse.jetty:jetty-servlet:11.0.16")
+    implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.16")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.7")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.0")
-    runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.18")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.10")
+    runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.19")
     runtimeOnly("org.jruby:jruby-core:9.4.3.0")
 
     testImplementation(kotlin("test"))

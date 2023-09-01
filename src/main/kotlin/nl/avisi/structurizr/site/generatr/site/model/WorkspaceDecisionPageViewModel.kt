@@ -8,7 +8,12 @@ class WorkspaceDecisionPageViewModel(generatorContext: GeneratorContext, decisio
     override val url = url(decision)
     override val pageSubTitle: String = decision.title
 
-    val content = markdownToHtml(this, decision.content, generatorContext.svgFactory)
+    val content = markdownToHtml(this, transformADRLinks(decision.content), generatorContext.svgFactory)
+
+    private fun transformADRLinks(content: String) =
+        content.replace("\\[(.*)]\\(#(\\d+)\\)".toRegex()) {
+            "[${it.groupValues[1]}](decisions/${it.groupValues[2]})"
+        }
 
     companion object {
         fun url(decision: Decision) = "/decisions/${decision.id}"
