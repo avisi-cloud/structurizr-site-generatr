@@ -1,0 +1,39 @@
+name: 'Build Repo Site'
+description: >
+  Structurizr static site generator.
+  Outputs to: `build/site`
+inputs:
+  repository:
+    description: 'Repository name with owner. For example, actions/checkout'
+    default: ${{ github.repository }}
+  all-branches:
+    type: choice
+    description: When set to TRUE will generate a site for every branch in the git repository 
+    options:
+      - true
+      - false
+  workspace-file:
+    description: Relative path within the Git repository of the workspace file (always required)
+  default-branch:
+    description: The default branch
+    required: true
+  branches:
+    description: Comma-separated list of branches to include in the generated site. Not used if 'all-branches' option is set to true
+  exclude-branches:
+    description: Comma-separated list of branches to exclude from the generated site
+  token:
+    description: Personal access token (PAT) used to fetch the repository.
+    default: ${{ github.token }}
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    GITHUB_TOKEN: ${{ inputs.token }}
+  args:
+    - generate-site
+    - --git-url ${{ inputs.repository }}
+    - --workspace-file ${{ inputs.workspace-file }}
+    - --all-branches ${{ inputs.all-branches }}
+    - --branches ${{ inputs.all-branches }}
+    - --exclude-branches gh-pages,${{ inputs.exclude-branches }}
+    - --default-branch ${{ inputs.default-branch }}
