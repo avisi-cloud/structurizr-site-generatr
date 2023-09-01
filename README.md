@@ -244,8 +244,8 @@ Generatr container. So
 is needed to expose the container's port 8080 to the host (web browser). In the example above, the
 `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
 
-#### Simplify using Docker-Compose
-Using Docker-Compose we can simplify the process.
+#### Simplify using Docker Compose
+Using [Docker Compose](https://docs.docker.com/compose) we can simplify the process.
 Add a docker-compose.yml next to your workspace.dsl.
 Add contents
 ```
@@ -255,7 +255,6 @@ services:
     image: ghcr.io/avisi-cloud/structurizr-site-generatr
     volumes:
       - .:/var/model
-    # command: generate-site -w workspace.dsl
     command: serve -w workspace.dsl
     working_dir: /var/model
     ports:
@@ -266,6 +265,8 @@ from your workspace folder, run
 docker-compose up
 ```
 This will host your pages at `localhost:8080`
+
+You can adjust the command to tailor it to your needs, for example by including `--assets-dir` option to including an assets-folder. Also you can change the port number used to host the site: `<my_port>:8080`
 
 ## Customizing the generated website
 
