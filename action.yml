@@ -24,6 +24,8 @@ runs:
     - generate-site
     - --git-username
     - ${{ inputs.token }}
+    - --git-password
+    - ""
     - --git-url
     - ${{ inputs.repository }}
     - --workspace-file
