@@ -26,7 +26,7 @@ inputs:
     default: ${{ github.token }}
 runs:
   using: 'docker'
-  image: 'ghcr.io/avisi-cloud/structurizr-site-generatr'
+  image: 'ghcr.io/avisi-cloud/structurizr-site-generatr:latest'
   env:
     GITHUB_TOKEN: ${{ inputs.token }}
   args:
