@@ -12,8 +12,9 @@ inputs:
   default-branch:
     description: The default branch
     required: true
-  exclude-branches:
-    description: Comma-separated list of branches to exclude from the generated site
+  branches:
+    description: Comma-separated list of branches to injclude in the generated site
+    required: true
   token:
     description: Personal access token (PAT) used to fetch the repository.
     default: ${{ github.token }}
@@ -30,8 +31,7 @@ runs:
     - ${{ inputs.repository }}
     - --workspace-file
     - ${{ inputs.workspace-file }}
-    - --all-branches
-    - --exclude-branches
-    - gh-pages,${{ inputs.exclude-branches }}
+    - --branches
+    - ${{ inputs.branches }}
     - --default-branch
     - ${{ inputs.default-branch }}
