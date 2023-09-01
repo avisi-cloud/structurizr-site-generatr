@@ -39,8 +39,8 @@ runs:
     - --all-branches
     - ${{ inputs.all-branches }}
     - --branches
-    - ${{ inputs.all-branches }}
+    - ${{ inputs.branches }}
     - --exclude-branches
     - gh-pages,${{ inputs.exclude-branches }}
-    - --default-branch-
+    - --default-branch
     - ${{ inputs.default-branch }}
