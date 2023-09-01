@@ -5,13 +5,14 @@ description: >
 inputs:
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
-    default: ${{ github.repository }}
+    default: ${{ github.repositoryUrl }}
   all-branches:
     type: choice
     description: When set to TRUE will generate a site for every branch in the git repository 
     options:
       - true
       - false
+    default: 'true'
   workspace-file:
     description: Relative path within the Git repository of the workspace file (always required)
   default-branch:
