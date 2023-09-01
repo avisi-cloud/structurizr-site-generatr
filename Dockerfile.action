@@ -1,3 +1,4 @@
 FROM ghcr.io/avisi-cloud/structurizr-site-generatr
 
+USER root
 WORKDIR /github/workspace
