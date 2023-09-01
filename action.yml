@@ -6,20 +6,11 @@ inputs:
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repositoryUrl }}
-  all-branches:
-    type: choice
-    description: When set to TRUE will generate a site for every branch in the git repository 
-    options:
-      - true
-      - false
-    default: 'true'
   workspace-file:
     description: Relative path within the Git repository of the workspace file (always required)
   default-branch:
     description: The default branch
     required: true
-  branches:
-    description: Comma-separated list of branches to include in the generated site. Not used if 'all-branches' option is set to true
   exclude-branches:
     description: Comma-separated list of branches to exclude from the generated site
   token:
@@ -37,9 +28,6 @@ runs:
     - --workspace-file
     - ${{ inputs.workspace-file }}
     - --all-branches
-    - ${{ inputs.all-branches }}
-    - --branches
-    - ${{ inputs.branches }}
     - --exclude-branches
     - gh-pages,${{ inputs.exclude-branches }}
     - --default-branch
