@@ -32,9 +32,15 @@ runs:
     GITHUB_TOKEN: ${{ inputs.token }}
   args:
     - generate-site
-    - --git-url ${{ inputs.repository }}
-    - --workspace-file ${{ inputs.workspace-file }}
-    - --all-branches ${{ inputs.all-branches }}
-    - --branches ${{ inputs.all-branches }}
-    - --exclude-branches gh-pages,${{ inputs.exclude-branches }}
-    - --default-branch ${{ inputs.default-branch }}
+    - --git-url
+    - ${{ inputs.repository }}
+    - --workspace-file
+    - ${{ inputs.workspace-file }}
+    - --all-branches
+    - ${{ inputs.all-branches }}
+    - --branches
+    - ${{ inputs.all-branches }}
+    - --exclude-branches
+    - gh-pages,${{ inputs.exclude-branches }}
+    - --default-branch-
+    - ${{ inputs.default-branch }}
