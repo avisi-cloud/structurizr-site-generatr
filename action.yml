@@ -20,10 +20,10 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile.action'
-  env:
-    GITHUB_TOKEN: ${{ inputs.token }}
   args:
     - generate-site
+    - --git-username
+    - ${{ inputs.token }}
     - --git-url
     - ${{ inputs.repository }}
     - --workspace-file
