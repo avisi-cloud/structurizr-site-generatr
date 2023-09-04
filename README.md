@@ -1,23 +1,24 @@
 <!-- TOC -->
-* [Structurizr Site Generatr](#structurizr-site-generatr)
-  * [Features](#features)
-  * [Getting Started](#getting-started)
-    * [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
-    * [Manual installation](#manual-installation)
-    * [Docker](#docker)
-      * [[Optional] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
-  * [Usage](#usage)
-    * [Help](#help)
-    * [Version](#version)
-    * [Generate a website](#generate-a-website)
-      * [From a C4 Workspace](#from-a-c4-workspace)
-      * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
-      * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
-    * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
-      * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
-  * [Customizing the generated website](#customizing-the-generated-website)
-  * [Contributing](#contributing)
-  * [Background](#background)
+- [Structurizr Site Generatr](#structurizr-site-generatr)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Installation using Homebrew - Recommended](#installation-using-homebrew---recommended)
+    - [Manual installation](#manual-installation)
+    - [Docker](#docker)
+      - [\[Optional\] Verify the Structurizr Site Generatr image with CoSign](#optional-verify-the-structurizr-site-generatr-image-with-cosign)
+  - [Usage](#usage)
+    - [Help](#help)
+    - [Version](#version)
+    - [Generate a website](#generate-a-website)
+      - [From a C4 Workspace](#from-a-c4-workspace)
+      - [For those taking the Docker approach](#for-those-taking-the-docker-approach)
+      - [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
+    - [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
+      - [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
+  - [Customizing the generated website](#customizing-the-generated-website)
+  - [Running as a github action](#running-as-a-github-action)
+  - [Contributing](#contributing)
+  - [Background](#background)
 <!-- TOC -->
 
 # Structurizr Site Generatr
@@ -267,6 +268,84 @@ architecture model:
 
 See the included example for usage of some those properties in the
 [C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L159).
+
+## Running as a github action
+
+To generate the site, for a set of branches you can use the builtin [action.yml](action.yml) directly from your own worflow:
+```yaml
+jobs:
+  ...
+  steps:
+    - name: Build docs
+      uses: HYBR-Student-Housing/structurizr-site-generatr@action
+      with:
+        repository: https://github.com/MY_ORG/MY_REPO.git
+        default-branch: develop
+        branches: main,develop
+        workspace-file: path/to/workspace.dsl
+        token: ${{ secrets.GH_ACCESS_TOKEN }}
+```
+
+The action will use the github workspace, rather that `/var/model`.
+Additionally, you will need to generate a personal acess token with, at least, read access to your repository.
+
+Here's a complete example of publishing main, deveop and PR docs to github pages (the token also will need readfor PRs and write for pages):
+
+```yaml
+# Simple workflow for deploying static content to GitHub Pages
+name: Build & Deploy Docs to Pages
+
+on:
+  # Runs on pushes targeting the design folder...
+  push:
+    paths:
+      - 'docs/**'
+  # ... and in pull requests when they are introduced or removed
+  pull_request:
+    types: [opened, reopened, closed]
+  workflow_dispatch: 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR head refs
+        id: prs
+        run: (echo -n 'LIST='; gh pr list --json headRefName |jq -r '[.[] | .headRefName] | join(",")') >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+      - name: Build
+        uses: HYBR-Student-Housing/structurizr-site-generatr@action
+        with:
+          repository: https://github.com/HYBR-Student-Housing/app.git
+          default-branch: develop
+          branches: main,develop,${{ steps.prs.outputs.LIST }}
+          workspace-file: docs/workspace.dsl
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: "build/site"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+```
 
 ## Contributing
 
