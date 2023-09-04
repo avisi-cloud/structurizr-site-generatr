@@ -277,7 +277,7 @@ jobs:
   ...
   steps:
     - name: Build docs
-      uses: HYBR-Student-Housing/structurizr-site-generatr@action
+      uses: avisi-cloud/structurizr-site-generatr@action
       with:
         repository: https://github.com/MY_ORG/MY_REPO.git
         default-branch: develop
@@ -331,9 +331,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           GH_REPO: ${{ github.repository }}
       - name: Build
-        uses: HYBR-Student-Housing/structurizr-site-generatr@action
+        uses: avisi-cloud/structurizr-site-generatr@action
         with:
-          repository: https://github.com/HYBR-Student-Housing/app.git
+          repository: https://github.com/MY_ORG/MY_REPO.git
           default-branch: develop
           branches: main,develop,${{ steps.prs.outputs.LIST }}
           workspace-file: docs/workspace.dsl
