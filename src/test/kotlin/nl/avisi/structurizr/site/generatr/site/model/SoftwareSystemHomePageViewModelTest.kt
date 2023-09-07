@@ -29,9 +29,10 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.content)
             .isEqualTo(
-                markdownToHtml(
+                toHtml(
                     viewModel,
                     "# Description${System.lineSeparator()}${softwareSystem.description}",
+                    Format.Markdown,
                     svgFactory
                 )
             )
@@ -48,7 +49,7 @@ class SoftwareSystemHomePageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.content)
             .isEqualTo(
-                markdownToHtml(viewModel, softwareSystem.documentation.sections.single().content, svgFactory)
+                toHtml(viewModel, softwareSystem.documentation.sections.single().content, Format.Markdown, svgFactory)
             )
     }
 

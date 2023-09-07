@@ -9,21 +9,19 @@ import com.vladsch.flexmark.parser.Parser
 
 private val parser = Parser.builder().build()
 
-fun Decision.contentText(): String {
-    if (format != Format.Markdown)
-        return ""
-
-    return extractText(content)
+fun Decision.contentText(): String = when (format) {
+    Format.Markdown -> markdownText(content)
+    Format.AsciiDoc -> asciidocText(content)
+    else -> ""
 }
 
-fun Section.contentText(): String {
-    if (format != Format.Markdown)
-        return ""
-
-    return extractText(content)
+fun Section.contentText() = when (format) {
+    Format.Markdown -> markdownText(content)
+    Format.AsciiDoc -> asciidocText(content)
+    else -> ""
 }
 
-private fun extractText(content: String): String {
+private fun markdownText(content: String): String {
     val document = parser.parse(content)
     if (!document.hasChildren())
         return ""
@@ -42,3 +40,5 @@ private fun extractText(content: String): String {
         )
         .trim()
 }
+
+private fun asciidocText(content: String): String = TODO("Content extraction is not implemented yet for AsciiDoc")

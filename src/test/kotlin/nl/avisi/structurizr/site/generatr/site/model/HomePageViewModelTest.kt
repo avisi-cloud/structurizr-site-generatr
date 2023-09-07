@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
+import com.structurizr.documentation.Format
 import nl.avisi.structurizr.site.generatr.site.model.HomePageViewModel.Companion.DEFAULT_HOMEPAGE_CONTENT
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -21,7 +22,7 @@ class HomePageViewModelTest : ViewModelTest() {
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.content)
-            .isEqualTo(markdownToHtml(viewModel, DEFAULT_HOMEPAGE_CONTENT, svgFactory))
+            .isEqualTo(toHtml(viewModel, DEFAULT_HOMEPAGE_CONTENT, Format.Markdown, svgFactory))
     }
 
     @Test
@@ -33,7 +34,7 @@ class HomePageViewModelTest : ViewModelTest() {
         val viewModel = HomePageViewModel(generatorContext)
 
         assertThat(viewModel.content)
-            .isEqualTo(markdownToHtml(viewModel, "Section content", svgFactory))
+            .isEqualTo(toHtml(viewModel, "Section content", Format.Markdown, svgFactory))
     }
 
     @ParameterizedTest

@@ -1,6 +1,6 @@
-## Extended markdown features
+## Extended Markdown features
 
-This page showcases the ability to use extended markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki [Extensions page](https://github.com/vsch/flexmark-java/wiki/Extensions).
+This page showcases the ability to use extended Markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki [Extensions page](https://github.com/vsch/flexmark-java/wiki/Extensions).
 
 Most of these extended features have to be activated in your architecture model as a property in workspace views.
 
@@ -27,7 +27,7 @@ workspace {
 }
 ```
 
-### TableOfContents
+### Table of Contents
 
 `[TOC]` element which renders a table of contents
 

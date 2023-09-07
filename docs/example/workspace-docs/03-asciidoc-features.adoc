@@ -1,0 +1,170 @@
+= AsciiDoc features
+:toc: macro
+:imagesdir: ../assets
+:tip-caption: 💡Tip
+
+== AsciiDoc features 📌
+
+This page showcases the ability to use AsciiDoc formating features in workspace documentation files. The full list of AsciiDoc features is documented in the https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[Asciidoctor Syntax Reerence].
+
+toc::[]
+
+=== Embedding diagrams
+
+Diagrams can be embedded using the `embed:` syntax:
+
+[source, asciidoc]
+----
+image::embed:SystemLandscape[System Landscape Diagram]
+----
+
+See also: https://www.structurizr.com/help/documentation/diagrams
+
+==== Example: Embedded diagram
+
+image::embed:SystemLandscape[System Landscape Diagram]
+
+=== Embedding static images
+
+==== Example Embedded picture
+
+When, for example, you would like to embed a nice picture which is located in the `pictures` directory under the assets directory, you can do that as follows:
+
+[source, asciidoc]
+----
+image::/pictures/nice-picture.png[A nice picture]
+----
+
+https://www.flickr.com/photos/schmollmolch/4937297813/[Sun], by Christian Scheja
+
+image::/pictures/nice-picture.png[A nice picture]
+
+=== Embedding mermaid diagrams
+
+==== Flowchart Diagram Example
+
+[source, asciidoc]
+-----
+[source, mermaid]
+----
+graph TD;
+A-->B;
+A-->C;
+B-->D;
+C-->D;
+----
+-----
+
+[source, mermaid]
+----
+graph TD;
+  A-->B;
+  A-->C;
+  B-->D;
+  C-->D;
+----
+
+==== Sequence Diagram Example
+
+[source, asciidoc]
+-----
+[source, mermaid]
+----
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+----
+-----
+
+[source, mermaid]
+----
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+----
+
+=== Tables
+
+[source, asciidoc]
+----
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+----
+
+This will be rendered as
+
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+
+=== Admonition Blocks
+
+Admonitions create block-styled side content.
+
+NOTE: This is a note.
+
+[TIP]
+.Info
+=====
+Go to this URL to learn more about it:
+
+* https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
+
+CAUTION: This is Caution message!
+
+WARNING: This is a Warning message!
+=====
+
+[IMPORTANT]
+One more thing. Happy documenting!
+
+=== Block quotes
+
+[quote,attribution,citation title and information]
+Quote or excerpt text
+
+=== Checklist
+
+[source, asciidoc]
+----
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item
+----
+
+will be rendered as:
+
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item

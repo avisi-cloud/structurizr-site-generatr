@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import com.structurizr.documentation.Format
 import kotlin.test.Test
 
 class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
@@ -38,6 +39,6 @@ class WorkspaceDocumentationSectionPageViewModelTest : ViewModelTest() {
         val section = createSection()
         val viewModel = WorkspaceDocumentationSectionPageViewModel(generatorContext, section)
 
-        assertThat(viewModel.content).isEqualTo(markdownToHtml(viewModel, section.content, svgFactory))
+        assertThat(viewModel.content).isEqualTo(toHtml(viewModel, section.content, Format.Markdown, svgFactory))
     }
 }
