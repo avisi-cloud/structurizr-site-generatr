@@ -263,3 +263,27 @@
     color: #fcbb6a;
 }
 
+/* Assciidoc adaptions */
+.admonitionblock .icon > .title {
+    word-break: normal;
+    font-size: 1em;
+}
+
+.admonitionblock table,
+.admonitionblock thead,
+.admonitionblock tbody,
+.admonitionblock th,
+.admonitionblock td,
+.admonitionblock tr {
+    display: block;
+}
+
+.admonitionblock td.icon {
+    width: initial;
+    height: initial;
+    margin-left: -10px;
+}
+
+.admonitionblock .title {
+    font-size: 1.5em;
+}

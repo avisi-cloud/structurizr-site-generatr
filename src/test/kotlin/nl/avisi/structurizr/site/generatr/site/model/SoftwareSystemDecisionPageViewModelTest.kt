@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import com.structurizr.documentation.Format
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemPageViewModel.Companion.url
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemPageViewModel.Tab
@@ -35,7 +36,7 @@ class SoftwareSystemDecisionPageViewModelTest : ViewModelTest() {
         val decision = createDecision()
         val viewModel = SoftwareSystemDecisionPageViewModel(generatorContext, softwareSystem, decision)
 
-        assertThat(viewModel.content).isEqualTo(markdownToHtml(viewModel, decision.content, svgFactory))
+        assertThat(viewModel.content).isEqualTo(toHtml(viewModel, decision.content, Format.Markdown, svgFactory))
     }
 
 
@@ -51,12 +52,13 @@ class SoftwareSystemDecisionPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemDecisionPageViewModel(generatorContext, softwareSystem, decision)
 
         assertThat(viewModel.content).isEqualTo(
-            markdownToHtml(
+            toHtml(
                 viewModel, """
                     Decision with [link to other ADR](${url(softwareSystem, Tab.DECISIONS)}/2).
                     [Web link](https://google.com)
                     [Internal link](#other-section)
                 """.trimIndent(),
+                Format.Markdown,
                 svgFactory
             )
         )
