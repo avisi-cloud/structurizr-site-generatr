@@ -26,8 +26,12 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             rel = "stylesheet",
             href = "./" + "/style-branding.css".asUrlToFile(viewModel.url)
         )
+        script(
+            type = ScriptType.textJavaScript,
+            src = "../" + "/svg-pan-zoom.js".asUrlToFile(viewModel.url)
+        ) { }
 
-        if (viewModel.includeAdmonition) 
+        if (viewModel.includeAdmonition)
             markdownAdmonitionStylesheet(viewModel)
 
         if (viewModel.includeKatex)
