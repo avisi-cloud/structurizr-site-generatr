@@ -34,6 +34,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
                 "Software system - Backend - Components",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
+                900,
                 ImageViewModel(viewModel, "/svg/component-1.svg"),
                 ImageViewModel(viewModel, "/png/component-1.png"),
                 ImageViewModel(viewModel, "/puml/component-1.puml")
@@ -43,6 +44,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
                 "Software system - Backend - Components",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
+                900,
                 ImageViewModel(viewModel, "/svg/component-2.svg"),
                 ImageViewModel(viewModel, "/png/component-2.png"),
                 ImageViewModel(viewModel, "/puml/component-2.puml")
