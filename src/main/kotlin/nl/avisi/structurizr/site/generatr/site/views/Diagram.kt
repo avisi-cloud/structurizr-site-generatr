@@ -18,21 +18,20 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
 
             script(type = ScriptType.textJavaScript) {
                 unsafe {
-                    raw(
-                        """
+                    raw("""
                     var elm = document.getElementById("${diagramId}");
-                    elm.setAttribute("style", "overflow:hidden;");
-                    var panZoomBox_${diagramId} = panzoom(elm, {
-                        maxZoom: 5,
+                    elm.setAttribute("style","width: min(100%, ${viewModel.diagramWidthInPixels}px); height: ${viewModel.diagramHeightInPixels}px;");
+                    var svgElement = elm.firstElementChild;
+                    svgElement.setAttribute("style","display: inline; width: inherit; min-width: inherit; max-width: inherit; height: inherit; min-height: inherit; max-height: inherit; ");
+                    var panZoomBox_${diagramId} = svgPanZoom(svgElement, {
+                        zoomEnabled: true,
+                        controlIconsEnabled: true,
+                        fit: true,
+                        center: true,
                         minZoom: 1,
-                        transformOrigin: {x: 0.5, y: 0.5},
-                        beforeWheel: function(e) {
-                            var shouldIgnore = !e.ctrlKey;
-                            return shouldIgnore;
-                        }
+                        maxZoom: 5
                     });
-            """
-                    )
+                    """)
                 }
             }
             figcaption {
