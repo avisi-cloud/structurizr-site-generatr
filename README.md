@@ -12,6 +12,7 @@
     * [Generate a website](#generate-a-website)
       * [From a C4 Workspace](#from-a-c4-workspace)
       * [For those taking the Docker approach](#for-those-taking-the-docker-approach)
+      * [Simplify using Docker Compose](#simplify-using-docker-compose )
       * [Generate a website from a Git repository](#generate-a-website-from-a-git-repository)
     * [Start a development web server around the generated website](#start-a-development-web-server-around-the-generated-website)
       * [For those taking the Docker approach](#for-those-taking-the-docker-approach-1)
