@@ -10,8 +10,10 @@ import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
 import nl.avisi.structurizr.site.generatr.site.C4PlantUmlExporterWithElementLinks.Companion.export
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URL
+import java.util.concurrent.ConcurrentHashMap
 
 fun generateDiagrams(workspace: Workspace, exportDir: File) {
     val pumlDir = pumlDir(exportDir)
@@ -34,22 +36,19 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
         }
 }
 
-fun generateDiagramWithElementLinks(workspace: Workspace, view: View, url: String, exportDir: File): String {
-    val pumlDir = pumlDir(exportDir)
-    val svgDir = svgDir(exportDir)
+private val diagramCache = ConcurrentHashMap<String, String>()
 
+fun generateDiagramWithElementLinks(workspace: Workspace, view: View, url: String): String {
     val diagram = generatePlantUMLDiagramWithElementLinks(workspace, view, url)
 
     val name = "${diagram.key}-${view.key}"
-    val plantUMLFile = File(pumlDir, "$name.puml")
-    if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
-        saveAsSvg(diagram, svgDir, name)
-        saveAsPUML(diagram, plantUMLFile)
-    } else {
-        println("$name UP-TO-DATE")
-    }
+    return diagramCache.getOrPut(name) {
+        val reader = SourceStringReader(diagram.withCachedIncludes().definition)
+        val stream = ByteArrayOutputStream()
 
-    return readSvg(svgDir, name)
+        reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
+        stream.toString(Charsets.UTF_8)
+    }
 }
 
 private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
@@ -80,16 +79,14 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
     }
 }
 
-private fun readSvg(svgDir: File, name: String): String {
-    val svgFile = File(svgDir, "$name.svg")
-    return svgFile.readText()
-}
-
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
     val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url)
 
     if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
-        plantUMLExporter.addSkinParam("svgLinkTarget", workspace.views.configuration.properties.getValue("generatr.svglink.target"))
+        plantUMLExporter.addSkinParam(
+            "svgLinkTarget",
+            workspace.views.configuration.properties.getValue("generatr.svglink.target")
+        )
     }
 
     return plantUMLExporter.export(view)
