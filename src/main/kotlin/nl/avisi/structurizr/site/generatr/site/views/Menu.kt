@@ -1,13 +1,14 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
-fun DIV.menu(viewModel: MenuViewModel) {
+fun DIV.menu(viewModel: MenuViewModel, nestGroups:Boolean) {
     aside(classes = "menu p-3") {
         generalSection(viewModel.generalItems)
-        softwareSystemsSection(viewModel.softwareSystemItems)
+        softwareSystemsSection(viewModel, nestGroups)
     }
 }
 
@@ -16,9 +17,18 @@ private fun ASIDE.generalSection(items: List<LinkViewModel>) {
     menuItemLinks(items)
 }
 
-private fun ASIDE.softwareSystemsSection(items: List<LinkViewModel>) {
+private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups:Boolean) {
     p(classes = "menu-label") { +"Software systems" }
-    menuItemLinks(items)
+    if(nestGroups){
+        // Display SoftwareSystems as a nested lists
+        val rootNode = MenuViewModel.Node("", viewModel.buildTree(viewModel.nestedSoftwareSystems, "/".toCharArray()[0]))
+        ul(classes = "listree menu-list has-site-branding"){
+            buildHtmlTree(rootNode, viewModel).invoke(this)
+        }
+    } else {
+        // Display SoftwareSystems as a flat list
+        menuItemLinks(viewModel.softwareSystemItems)
+    }
 }
 
 private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
@@ -29,4 +39,44 @@ private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
             }
         }
     }
+}
+
+private fun buildHtmlTree(node: MenuViewModel.Node, viewModel: MenuViewModel): UL.() -> Unit = {
+
+    if (node.name.isNotEmpty() && node.children.isEmpty()) {
+        val itemLink = viewModel.softwareSystemItems.find { it.title == node.name }
+        li {
+            if (itemLink != null) {
+                link(itemLink)
+            }
+        }
+    }
+
+    if (node.name.isNotEmpty()  && node.children.isNotEmpty()) {
+        li {
+            if(node.name == "null"){
+                div(classes = "listree-submenu-heading") {
+                    +"No Group"
+                }
+            } else {
+                div(classes = "listree-submenu-heading") {
+                    +node.name
+                }
+            }
+
+            ul(classes = "listree-submenu-items") {
+                for (child in node.children) {
+                    buildHtmlTree(child,viewModel).invoke(this)
+                }
+            }
+        }
+    }
+    if (node.name.isEmpty() && node.children.isNotEmpty()) {
+        ul(classes = "listree-submenu-items") {
+            for (child in node.children) {
+                buildHtmlTree(child, viewModel).invoke(this)
+            }
+        }
+    }
+
 }

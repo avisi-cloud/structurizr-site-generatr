@@ -27,4 +27,30 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
 
     private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
         LinkViewModel(pageViewModel, title, href, exact)
+
+    data class Node(val name: String, val children: MutableList<Node>)
+
+    val nestedSoftwareSystems = generatorContext.workspace.model.includedSoftwareSystems
+        .map {it.group + "/" + it.name}
+        .sortedBy {it.lowercase()}
+
+    fun buildTree(data: List<String>, delimiter: Char):MutableList<Node> {
+        val rootNode = Node("", mutableListOf())
+        for (path in data) {
+            val parts = path.split(delimiter)
+            var currentNode = rootNode
+
+            for (part in parts) {
+                val existingNode = currentNode.children.find { it.name == part }
+                currentNode = if (existingNode == null) {
+                    val newNode = Node(part, mutableListOf())
+                    currentNode.children.add(newNode)
+                    newNode
+                } else {
+                    existingNode
+                }
+            }
+        }
+        return rootNode.children
+    }
 }
