@@ -13,7 +13,7 @@ inputs:
     description: The default branch
     required: true
   branches:
-    description: Comma-separated list of branches to injclude in the generated site
+    description: Comma-separated list of branches to include in the generated site
     required: true
   token:
     description: Personal access token (PAT) used to fetch the repository.
