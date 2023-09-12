@@ -289,7 +289,7 @@ jobs:
 The action will use the github workspace, rather that `/var/model`.
 Additionally, you will need to generate a personal acess token with, at least, read access to your repository.
 
-Here's a complete example of publishing main, deveop and PR docs to github pages (the token also will need readfor PRs and write for pages):
+Here's a complete example of publishing main, deveop and PR docs to github pages (the token also will need read for PRs and write for pages):
 
 ```yaml
 # Simple workflow for deploying static content to GitHub Pages
