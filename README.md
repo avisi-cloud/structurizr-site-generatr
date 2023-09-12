@@ -286,7 +286,7 @@ jobs:
         token: ${{ secrets.GH_ACCESS_TOKEN }}
 ```
 
-The action will use the github workspace, rather that `/var/model`.
+The action will use the github workspace, rather than `/var/model`.
 Additionally, you will need to generate a personal acess token with, at least, read access to your repository.
 
 Here's a complete example of publishing main, deveop and PR docs to github pages (the token also will need read for PRs and write for pages):
