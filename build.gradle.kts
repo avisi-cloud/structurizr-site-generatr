@@ -16,9 +16,9 @@ repositories {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.6")
 
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.6.0.202305301015-r")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
 
     implementation("com.structurizr:structurizr-core:1.26.1")
     implementation("com.structurizr:structurizr-dsl:1.32.0")
@@ -36,7 +36,7 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-servlet:11.0.16")
     implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.16")
 
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.7")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.9")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.10")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.19")
     runtimeOnly("org.jruby:jruby-core:9.4.3.0")
