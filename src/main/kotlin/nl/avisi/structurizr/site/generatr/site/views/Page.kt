@@ -4,7 +4,7 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
-fun HTML.page(viewModel: PageViewModel, block: DIV.() -> Unit) {
+fun HTML.page(viewModel: PageViewModel, block: HtmlBlockTag.() -> Unit) {
     attributes["lang"] = "en"
     classes = setOf("has-background-light")
 
@@ -45,7 +45,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
     }
 }
 
-private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
+private fun HTML.bodyFragment(viewModel: PageViewModel, block: HtmlBlockTag.() -> Unit) {
     body {
         if (viewModel.includeAutoReloading)
             updatingSiteProgressBar()
@@ -55,7 +55,7 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
         div(classes = "site-layout") {
             id = "site"
             menu(viewModel.menu)
-            div(classes = "container is-fluid has-background-white") {
+            main(classes = "container is-fluid has-background-white") {
                 block()
             }
         }
