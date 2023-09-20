@@ -1,0 +1,12 @@
+svg g g[id^="link"]:hover path {
+    stroke:#FF0000 !important;
+    stroke-width: 2.0;
+}
+
+svg g g[id^="link"]:hover polygon {
+    stroke:#FF0000 !important;
+}
+
+svg g g[id^="link"]:hover text {
+    fill:#FF0000 !important;
+}

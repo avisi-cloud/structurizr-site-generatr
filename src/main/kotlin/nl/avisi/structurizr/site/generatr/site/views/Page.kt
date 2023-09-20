@@ -18,16 +18,14 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         meta(name = "viewport", content = "width=device-width, initial-scale=1")
         title { +viewModel.pageTitle }
         link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css")
-        link(
-            rel = "stylesheet",
-            href = "../" + "/style.css".asUrlToFile(viewModel.url)
-        )
-        link(
-            rel = "stylesheet",
-            href = "./" + "/style-branding.css".asUrlToFile(viewModel.url)
-        )
+        link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
+        link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
 
-        if (viewModel.includeAdmonition) 
+        if (viewModel.customCSS.includecustomCSS){
+            link(rel = "stylesheet", href = "./" + viewModel.customCSS.url)
+        }
+
+        if (viewModel.includeAdmonition)
             markdownAdmonitionStylesheet(viewModel)
 
         if (viewModel.includeKatex)
