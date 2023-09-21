@@ -162,7 +162,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             "generatr.style.faviconPath" "site/favicon.ico"
             "generatr.style.logoPath" "site/logo.png"
             "generatr.style.customCSSPath" "site/custom.css"
-
             "generatr.svglink.target" "_self"
 
             // full list of available "generatr.markdown.flexmark.extensions"

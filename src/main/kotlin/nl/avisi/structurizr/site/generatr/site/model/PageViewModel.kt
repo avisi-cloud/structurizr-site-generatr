@@ -16,13 +16,9 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     val headerBar by lazy { HeaderBarViewModel(this, generatorContext) }
     val menu by lazy { MenuViewModel(generatorContext, this) }
     val includeAutoReloading = generatorContext.serving
-
-    val flexmarkConfig by lazy {
-        buildFlexmarkConfig(generatorContext)
-    }
+    val flexmarkConfig by lazy { buildFlexmarkConfig(generatorContext) }
     val includeAdmonition = flexmarkConfig.selectedExtensionMap.containsKey("Admonition")
     val includeKatex = flexmarkConfig.selectedExtensionMap.containsKey("GitLab")
-
     val configuration = generatorContext.workspace.views.configuration.properties
 
     abstract val url: String
