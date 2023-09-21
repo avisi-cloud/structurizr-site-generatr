@@ -1,5 +1,6 @@
 .listree-submenu-heading {
-    cursor: pointer
+    cursor: pointer;
+    padding: .5em .75em;
 }
 
 ul.listree {
