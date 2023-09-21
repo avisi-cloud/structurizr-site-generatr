@@ -23,7 +23,7 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     val includeKatex = flexmarkConfig.selectedExtensionMap.containsKey("GitLab")
 
     val configuration = generatorContext.workspace.views.configuration.properties
-    val includeTreeview = configuration.getOrDefault("generatr.nav.nestGroups", "false").toBoolean()
+    val includeTreeview = configuration.getOrDefault("generatr.nav.nestgroups", "false").toBoolean()
 
     abstract val url: String
     abstract val pageSubTitle: String
