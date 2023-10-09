@@ -21,3 +21,7 @@
 svg a:hover {
     opacity: 90%;
 }
+
+.modal-content {
+    width: calc(100vw - 100px);
+}

@@ -24,7 +24,7 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
 
     val configuration = generatorContext.workspace.views.configuration.properties
 
-    val includeZoom = configuration.getOrDefault("generatr.nav.enableZoom", "false").toBoolean()
+    val includeZoom = configuration.getOrDefault("generatr.site.enableZoom", "false").toBoolean()
 
     abstract val url: String
     abstract val pageSubTitle: String

@@ -1,10 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Functions to open and close a modal
   function openModal($el) {
+    document.documentElement.classList.add('is-clipped');
     $el.classList.add('is-active');
+
+    console.log($el.id);
+    const elm = document.getElementById($el.id + "-svg");
+    elm.setAttribute("style","width: 100%; height: calc(100vh - 80px);");
+    var svgElement = elm.firstElementChild;
+    svgElement.setAttribute("style","display: inline; width: inherit; min-width: inherit; max-width: inherit; height: inherit; min-height: inherit; max-height: inherit; ");
+    svgPanZoom(svgElement, {
+        zoomEnabled: true,
+        controlIconsEnabled: true,
+        fit: true,
+        center: true,
+        minZoom: 1,
+        maxZoom: 5
+    });
   }
 
   function closeModal($el) {
+    document.documentElement.classList.remove('is-clipped');
     $el.classList.remove('is-active');
   }
 

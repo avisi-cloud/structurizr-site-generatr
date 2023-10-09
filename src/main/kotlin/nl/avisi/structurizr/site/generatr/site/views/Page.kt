@@ -42,6 +42,13 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
 
         if (viewModel.includeAutoReloading)
             autoReloadScript(viewModel)
+
+        if (viewModel.includeZoom) {
+            script(
+                type = ScriptType.textJavaScript,
+                src = "../" + "/svg-pan-zoom.js".asUrlToFile(viewModel.url)
+            ) { }
+        }
     }
 }
 
@@ -70,10 +77,6 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
             script(
                 type = ScriptType.textJavaScript,
                 src = "../" + "/svg-pan-zoom-modal.js".asUrlToFile(viewModel.url)
-            ) { }
-            script(
-                type = ScriptType.textJavaScript,
-                src = "../" + "/svg-pan-zoom.js".asUrlToFile(viewModel.url)
             ) { }
         }
 

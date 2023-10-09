@@ -171,6 +171,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             // * it's not possible to use "GitLab" and "ResizableImage" extensions together
             // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
             "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
+            "generatr.site.enableZoom" "true"
         }
 
         systemlandscape "SystemLandscape" {

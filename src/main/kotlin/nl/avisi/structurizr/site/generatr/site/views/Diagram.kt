@@ -10,30 +10,12 @@ fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
         .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
         .joinToString("")
 
-    if (viewModel.svg != null)
+    if (viewModel.svg != null) {
         figure {
             style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
 
-            rawHtml(viewModel.svg, diagramId)
+            rawHtml(viewModel.svg)
 
-            script(type = ScriptType.textJavaScript) {
-                unsafe {
-                    raw("""
-                    var elm = document.getElementById("${diagramId}");
-                    elm.setAttribute("style","width: min(100%, ${viewModel.diagramWidthInPixels}px); height: ${viewModel.diagramHeightInPixels}px;");
-                    var svgElement = elm.firstElementChild;
-                    svgElement.setAttribute("style","display: inline; width: inherit; min-width: inherit; max-width: inherit; height: inherit; min-height: inherit; max-height: inherit; ");
-                    var panZoomBox_${diagramId} = svgPanZoom(svgElement, {
-                        zoomEnabled: true,
-                        controlIconsEnabled: true,
-                        fit: true,
-                        center: true,
-                        minZoom: 1,
-                        maxZoom: 5
-                    });
-                    """)
-                }
-            }
             figcaption {
                 +viewModel.name
                 +" ["
@@ -45,27 +27,29 @@ fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
                 +"]"
             }
 
-            if (includeZoom){
-                div(classes = "modal") {
-                    attributes["id"] = viewModel.name + "_modal"
-                    div(classes = "modal-background") {}
-                    div(classes = "modal-content") {
-                        div(classes = "box") {
-                            p{+"hello world"}
-                        }
-                    }
-                    button(classes = "modal-close is-large") {
-                        attributes["aria-label"] = "close"
+
+        }
+        if (includeZoom) {
+            div(classes = "modal") {
+                attributes["id"] = diagramId
+                div(classes = "modal-background") {}
+                div(classes = "modal-content") {
+                    div(classes = "box") {
+                        rawHtml(viewModel.svg, "$diagramId-svg")
                     }
                 }
-
-                button(classes = "js-modal-trigger") {
-                    attributes["data-target"] = viewModel.name + "_modal"
-                    +"Zoom SVG"
+                button(classes = "modal-close is-large") {
+                    attributes["aria-label"] = "close"
                 }
             }
 
+            button(classes = "js-modal-trigger") {
+                attributes["data-target"] = diagramId
+                +"Zoom SVG"
+            }
+
         }
+    }
     else
         div(classes = "notification is-danger") {
             +"No view with key"
