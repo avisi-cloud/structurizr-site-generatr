@@ -3,7 +3,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
-import kotlin.random.Random
 
 class MarkdownToHtmlTest : ViewModelTest() {
 
@@ -266,20 +265,6 @@ class MarkdownToHtmlTest : ViewModelTest() {
                    <div id="$randomId">
                     <svg viewbox="0 0 800 900"></svg>
                    </div>
-                   <script type="text/javascript">
-                                    var elm = document.getElementById("$randomId");
-                                    elm.setAttribute("style","width: min(100%, 800px); height: 900px;");
-                                    var svgElement = elm.firstElementChild;
-                                    svgElement.setAttribute("style","display: inline; width: inherit; min-width: inherit; max-width: inherit; height: inherit; min-height: inherit; max-height: inherit; ");
-                                    var panZoomBox_${randomId} = svgPanZoom(svgElement, {
-                                        zoomEnabled: true,
-                                        controlIconsEnabled: true,
-                                        fit: true,
-                                        center: true,
-                                        minZoom: 1,
-                                        maxZoom: 5
-                                    });
-                                    </script>
                    <figcaption>
                     System Landscape Diagram [<a href="svg/SystemLandscape.svg">svg</a>|<a href="png/SystemLandscape.png">png</a>|<a href="puml/SystemLandscape.puml">puml</a>]
                    </figcaption>
