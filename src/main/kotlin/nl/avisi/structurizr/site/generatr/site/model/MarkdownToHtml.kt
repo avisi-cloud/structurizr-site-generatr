@@ -18,7 +18,7 @@ import org.jsoup.nodes.Element
 fun markdownToHtml(pageViewModel: PageViewModel, markdown: String, svgFactory: (key: String, url: String) -> String?): String {
     val flexmarkConfig = pageViewModel.flexmarkConfig
     val options = flexmarkConfig.flexmarkOptions
-    
+
     val parser = Parser.builder(options).build()
     val renderer = HtmlRenderer.builder(options)
         .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
@@ -69,7 +69,7 @@ private fun Element.transformEmbeddedDiagramElements(
         val key = it.attr("src").substring(embedPrefix.length)
         val name = it.attr("alt").ifBlank { key }
         val html = createHTML().div {
-            diagram(DiagramViewModel.forView(pageViewModel, key, name, svgFactory))
+            diagram(DiagramViewModel.forView(pageViewModel, key, name, svgFactory), pageViewModel.includeZoom)
         }
 
         it.parent()?.append(html)

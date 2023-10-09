@@ -4,7 +4,7 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
 import kotlin.random.Random
 
-fun FlowContent.diagram(viewModel: DiagramViewModel) {
+fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
     val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
     val diagramId = (1..15)
         .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
@@ -44,6 +44,27 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 a(href = viewModel.pumlLocation.relativeHref) { +"puml" }
                 +"]"
             }
+
+            if (includeZoom){
+                div(classes = "modal") {
+                    attributes["id"] = viewModel.name + "_modal"
+                    div(classes = "modal-background") {}
+                    div(classes = "modal-content") {
+                        div(classes = "box") {
+                            p{+"hello world"}
+                        }
+                    }
+                    button(classes = "modal-close is-large") {
+                        attributes["aria-label"] = "close"
+                    }
+                }
+
+                button(classes = "js-modal-trigger") {
+                    attributes["data-target"] = viewModel.name + "_modal"
+                    +"Zoom SVG"
+                }
+            }
+
         }
     else
         div(classes = "notification is-danger") {

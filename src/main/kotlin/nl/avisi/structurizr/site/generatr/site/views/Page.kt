@@ -26,10 +26,6 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             rel = "stylesheet",
             href = "./" + "/style-branding.css".asUrlToFile(viewModel.url)
         )
-        script(
-            type = ScriptType.textJavaScript,
-            src = "../" + "/svg-pan-zoom.js".asUrlToFile(viewModel.url)
-        ) { }
 
         if (viewModel.includeAdmonition)
             markdownAdmonitionStylesheet(viewModel)
@@ -69,5 +65,17 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
         if (viewModel.includeAdmonition)
             markdownAdmonitionScript(viewModel)
         mermaidScript(viewModel)
+
+        if (viewModel.includeZoom) {
+            script(
+                type = ScriptType.textJavaScript,
+                src = "../" + "/svg-pan-zoom-modal.js".asUrlToFile(viewModel.url)
+            ) { }
+            script(
+                type = ScriptType.textJavaScript,
+                src = "../" + "/svg-pan-zoom.js".asUrlToFile(viewModel.url)
+            ) { }
+        }
+
     }
 }

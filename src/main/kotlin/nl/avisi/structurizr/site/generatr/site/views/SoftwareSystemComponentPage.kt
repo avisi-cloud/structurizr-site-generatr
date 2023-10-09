@@ -7,7 +7,7 @@ fun HTML.softwareSystemComponentPage(viewModel: SoftwareSystemComponentPageViewM
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
             viewModel.diagrams.forEach {
-                diagram(it)
+                diagram(it,viewModel.includeZoom)
             }
         }
     else
