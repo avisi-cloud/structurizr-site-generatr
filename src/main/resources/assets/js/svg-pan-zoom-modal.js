@@ -9,14 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     elm.setAttribute("style","width: 100%; height: calc(100vh - 80px);");
     var svgElement = elm.firstElementChild;
     svgElement.setAttribute("style","display: inline; width: inherit; min-width: inherit; max-width: inherit; height: inherit; min-height: inherit; max-height: inherit; ");
-    svgPanZoom(svgElement, {
-        zoomEnabled: true,
-        controlIconsEnabled: true,
-        fit: true,
-        center: true,
-        minZoom: 1,
-        maxZoom: 5
-    });
+    eval('var pz' + $el.id + ' = svgPanZoom(svgElement, {zoomEnabled: true,controlIconsEnabled: true,fit: true,center: true,minZoom: 1,maxZoom: 5});');
+    eval('pz' + $el.id + '.reset();');
   }
 
   function closeModal($el) {

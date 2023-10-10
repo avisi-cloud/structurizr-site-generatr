@@ -18,13 +18,20 @@ fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
 
             figcaption {
                 +viewModel.name
-                +" ["
-                a(href = viewModel.svgLocation.relativeHref) { +"svg" }
-                +"|"
-                a(href = viewModel.pngLocation.relativeHref) { +"png" }
-                +"|"
-                a(href = viewModel.pumlLocation.relativeHref) { +"puml" }
-                +"]"
+                br {  }
+                a(classes="button is-white is-small", href = viewModel.svgLocation.relativeHref) { +"svg" }
+                +" - "
+                a(classes="button is-white is-small", href = viewModel.pngLocation.relativeHref) { +"png" }
+                +" - "
+                a(classes="button is-white is-small", href = viewModel.pumlLocation.relativeHref) { +"puml" }
+
+                if (includeZoom) {
+                    +" - "
+                    button(classes = "js-modal-trigger button is-white is-small") {
+                        attributes["data-target"] = diagramId
+                        +"Pan / Zoom"
+                    }
+                }
             }
 
 
@@ -42,12 +49,6 @@ fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
                     attributes["aria-label"] = "close"
                 }
             }
-
-            button(classes = "js-modal-trigger") {
-                attributes["data-target"] = diagramId
-                +"Zoom SVG"
-            }
-
         }
     }
     else
