@@ -263,7 +263,7 @@ architecture model:
 | `generatr.search.language`              | Indexing/stemming language for the search index. See [Lunr language support](https://github.com/olivernn/lunr-languages)                                                                                                                                                             | `en`      | `nl`                |
 | `generatr.markdown.flexmark.extensions` | Additional extensions to the markdown generator to add new markdown capabilities. [More Details](https://avisi-cloud.github.io/structurizr-site-generatr/main/extended-markdown-features/)                                                                                           | Tables    | `Tables,Admonition` |
 | `generatr.svglink.target`               | Specifies the link target for element links in the exported svg                                                                                                                                                                                                                      | `_top`    | `_self`             |
-
+| 'generatr.site.enableZoom'              | Enables the ability to zoom and pan on displayed diagrams.                                                                                                                                                                                                                           | 'false'   | 'true'              |
 
 See the included example for usage of some those properties in the
 [C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L159).
