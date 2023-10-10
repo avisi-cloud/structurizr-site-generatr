@@ -266,7 +266,8 @@ class MarkdownToHtmlTest : ViewModelTest() {
                     <svg viewbox="0 0 800 900"></svg>
                    </div>
                    <figcaption>
-                    System Landscape Diagram [<a href="svg/SystemLandscape.svg">svg</a>|<a href="png/SystemLandscape.png">png</a>|<a href="puml/SystemLandscape.puml">puml</a>]
+                    System Landscape Diagram
+                    <br><a href="svg/SystemLandscape.svg" class="button is-white is-small">svg</a> - <a href="png/SystemLandscape.png" class="button is-white is-small">png</a> - <a href="puml/SystemLandscape.puml" class="button is-white is-small">puml</a>
                    </figcaption>
                   </figure>
                  </div></p>
