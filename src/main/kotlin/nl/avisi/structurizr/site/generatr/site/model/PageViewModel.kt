@@ -12,7 +12,7 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
             pageSubTitle
     }
     val favicon by lazy { FaviconViewModel(generatorContext, this) }
-    val customCSS by lazy { CustomCSSViewModel(generatorContext, this) }
+    val customStylesheet by lazy { CustomStylesheetViewModel(generatorContext, this) }
     val headerBar by lazy { HeaderBarViewModel(this, generatorContext) }
     val menu by lazy { MenuViewModel(generatorContext, this) }
     val includeAutoReloading = generatorContext.serving

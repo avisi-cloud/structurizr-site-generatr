@@ -3,15 +3,15 @@ package nl.avisi.structurizr.site.generatr.site.model
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 
-class CustomCSSViewModel(generatorContext: GeneratorContext, pageViewModel: PageViewModel) {
-    val url = customCSSPath(generatorContext)?.let { "/$it".asUrlToFile(pageViewModel.url) }
+class CustomStylesheetViewModel(generatorContext: GeneratorContext, pageViewModel: PageViewModel) {
+    val url = customStylesheetPath(generatorContext)?.let { "/$it".asUrlToFile(pageViewModel.url) }
     val type = extractType()
-    val includecustomCSS = url != null
+    val includeCustomStylesheet = url != null
 
-    private fun customCSSPath(generatorContext: GeneratorContext) =
+    private fun customStylesheetPath(generatorContext: GeneratorContext) =
         generatorContext.workspace.views.configuration.properties
             .getOrDefault(
-                "generatr.style.customCSS",
+                "generatr.style.customStylesheet",
                 null
             )
 

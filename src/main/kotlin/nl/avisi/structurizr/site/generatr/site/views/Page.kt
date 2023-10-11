@@ -37,10 +37,10 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         if (viewModel.includeAutoReloading)
             autoReloadScript(viewModel)
 
-        if (viewModel.customCSS.includecustomCSS){
-            when (viewModel.customCSS.type) {
-                "FILE" -> link(rel = "stylesheet", href = "./" + viewModel.customCSS.url)
-                "URI" -> link(rel = "stylesheet", href = viewModel.customCSS.url)
+        if (viewModel.customStylesheet.includeCustomStylesheet){
+            when (viewModel.customStylesheet.type) {
+                "FILE" -> link(rel = "stylesheet", href = "./" + viewModel.customStylesheet.url)
+                "URI" -> link(rel = "stylesheet", href = viewModel.customStylesheet.url)
             }
         }
 
