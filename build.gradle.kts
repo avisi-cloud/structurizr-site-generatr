@@ -24,7 +24,7 @@ dependencies {
     implementation("com.structurizr:structurizr-dsl:1.32.0")
     implementation("com.structurizr:structurizr-export:1.16.1")
 
-    implementation("net.sourceforge.plantuml:plantuml:1.2023.10")
+    implementation("net.sourceforge.plantuml:plantuml:1.2023.11")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
     implementation("org.jsoup:jsoup:1.16.1")
