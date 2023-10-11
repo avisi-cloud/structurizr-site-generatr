@@ -24,7 +24,7 @@ dependencies {
     implementation("com.structurizr:structurizr-dsl:1.32.0")
     implementation("com.structurizr:structurizr-export:1.16.1")
 
-    implementation("net.sourceforge.plantuml:plantuml:1.2023.10")
+    implementation("net.sourceforge.plantuml:plantuml:1.2023.11")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
     implementation("org.jsoup:jsoup:1.16.1")
@@ -32,9 +32,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-    implementation("org.eclipse.jetty:jetty-server:11.0.16")
-    implementation("org.eclipse.jetty:jetty-servlet:11.0.16")
-    implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.16")
+    implementation("org.eclipse.jetty:jetty-server:11.0.17")
+    implementation("org.eclipse.jetty:jetty-servlet:11.0.17")
+    implementation("org.eclipse.jetty.websocket:websocket-jetty-server:11.0.17")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.9")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.10")
