@@ -37,13 +37,8 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         if (viewModel.includeAutoReloading)
             autoReloadScript(viewModel)
 
-        if (viewModel.customStylesheet.includeCustomStylesheet){
-            when (viewModel.customStylesheet.type) {
-                "FILE" -> link(rel = "stylesheet", href = "./" + viewModel.customStylesheet.url)
-                "URI" -> link(rel = "stylesheet", href = viewModel.customStylesheet.url)
-            }
-        }
-
+        if (viewModel.customStylesheet.includeCustomStylesheet)
+            link(rel = "stylesheet", href = "./" + viewModel.customStylesheet.resourceURI)
     }
 }
 
