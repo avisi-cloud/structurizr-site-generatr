@@ -38,8 +38,12 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             autoReloadScript(viewModel)
 
         if (viewModel.customCSS.includecustomCSS){
-            link(rel = "stylesheet", href = "./" + viewModel.customCSS.url)
+            when (viewModel.customCSS.type) {
+                "FILE" -> link(rel = "stylesheet", href = "./" + viewModel.customCSS.url)
+                "URI" -> link(rel = "stylesheet", href = viewModel.customCSS.url)
+            }
         }
+
     }
 }
 
