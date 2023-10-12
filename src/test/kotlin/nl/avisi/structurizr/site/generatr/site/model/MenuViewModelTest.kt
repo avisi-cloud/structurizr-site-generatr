@@ -136,6 +136,27 @@ class MenuViewModelTest : ViewModelTest() {
             }
     }
 
+    @Test
+    fun `show nested groups in software systems list`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups","true")
+        generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
+        generatorContext.workspace.model.addSoftwareSystem("System 2").group = "Group 1"
+        generatorContext.workspace.model.addSoftwareSystem("System 3").group = "Group 2"
+        generatorContext.workspace.model.addSoftwareSystem("System 4").group = "Group 1/Group 3"
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemNodes().children).hasSize(2)
+                assertThat(it.softwareSystemNodes().children[0].name).isEqualTo("Group 1")
+                assertThat(it.softwareSystemNodes().children[0].children).hasSize(3)
+                assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("Group 3")
+                assertThat(it.softwareSystemNodes().children[0].children[0].children[0].name).isEqualTo("System 4")
+            }
+
+
+    }
+
     private fun createPageViewModel(generatorContext: GeneratorContext, url: String = "/master/page"): PageViewModel {
         return object : PageViewModel(generatorContext) {
             override val url = url
