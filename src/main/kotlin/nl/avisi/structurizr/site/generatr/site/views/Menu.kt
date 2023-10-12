@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.views
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
+import nl.avisi.structurizr.site.generatr.site.model.MenuNodeViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
 fun DIV.menu(viewModel: MenuViewModel, nestGroups:Boolean) {
@@ -20,13 +21,10 @@ private fun ASIDE.generalSection(items: List<LinkViewModel>) {
 private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups:Boolean) {
     p(classes = "menu-label") { +"Software systems" }
     if(nestGroups){
-        // Display SoftwareSystems as a nested lists
-        val rootNode = MenuViewModel.Node("", viewModel.buildTree(viewModel.nestedSoftwareSystems, "/".toCharArray()[0]))
         ul(classes = "listree menu-list has-site-branding"){
-            buildHtmlTree(rootNode, viewModel).invoke(this)
+            buildHtmlTree(viewModel.softwareSystemNodes(), viewModel).invoke(this)
         }
     } else {
-        // Display SoftwareSystems as a flat list
         menuItemLinks(viewModel.softwareSystemItems)
     }
 }
@@ -41,7 +39,7 @@ private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
     }
 }
 
-private fun buildHtmlTree(node: MenuViewModel.Node, viewModel: MenuViewModel): UL.() -> Unit = {
+private fun buildHtmlTree(node: MenuNodeViewModel, viewModel: MenuViewModel): UL.() -> Unit = {
 
     if (node.name.isNotEmpty() && node.children.isEmpty()) {
         val itemLink = viewModel.softwareSystemItems.find { it.title == node.name }

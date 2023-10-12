@@ -21,7 +21,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
 
-        if(viewModel.includeTreeview)
+        if (viewModel.includeTreeview)
             link(rel = "stylesheet", href = "../" + "/treeview.css".asUrlToFile(viewModel.url))
 
         if (viewModel.includeAdmonition)

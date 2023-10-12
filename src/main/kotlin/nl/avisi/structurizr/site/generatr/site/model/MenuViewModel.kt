@@ -28,22 +28,19 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
     private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
         LinkViewModel(pageViewModel, title, href, exact)
 
-    data class Node(val name: String, val children: MutableList<Node>)
+    fun softwareSystemNodes(): MenuNodeViewModel {
+        data class MutableMenuNode(val name: String, val children: MutableList<MutableMenuNode>) {
+            fun toMenuNode(): MenuNodeViewModel = MenuNodeViewModel(name, children.map { it.toMenuNode() })
+        }
 
-    val nestedSoftwareSystems = generatorContext.workspace.model.includedSoftwareSystems
-        .map {it.group + "/" + it.name}
-        .sortedBy {it.lowercase()}
+        val rootNode = MutableMenuNode("", mutableListOf())
 
-    fun buildTree(data: List<String>, delimiter: Char):MutableList<Node> {
-        val rootNode = Node("", mutableListOf())
-        for (path in data) {
-            val parts = path.split(delimiter)
+        softwareSystemPaths.forEach { path ->
             var currentNode = rootNode
-
-            for (part in parts) {
+            path.split(delimiter).forEach { part ->
                 val existingNode = currentNode.children.find { it.name == part }
                 currentNode = if (existingNode == null) {
-                    val newNode = Node(part, mutableListOf())
+                    val newNode = MutableMenuNode(part, mutableListOf())
                     currentNode.children.add(newNode)
                     newNode
                 } else {
@@ -51,6 +48,14 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
                 }
             }
         }
-        return rootNode.children
+
+        return rootNode.toMenuNode()
     }
+
+    private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
+        .map { it.group + "/" + it.name }
+        .sortedBy { it.lowercase() }
+
+    private val delimiter = '/'
+
 }
