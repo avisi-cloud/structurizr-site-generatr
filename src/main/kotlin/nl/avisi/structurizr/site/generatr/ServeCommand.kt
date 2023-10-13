@@ -3,20 +3,23 @@
 package nl.avisi.structurizr.site.generatr
 
 import com.sun.nio.file.SensitivityWatchEventModifier
-import jakarta.servlet.ServletContext
 import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.copySiteWideAssets
 import nl.avisi.structurizr.site.generatr.site.generateDiagrams
 import nl.avisi.structurizr.site.generatr.site.generateRedirectingIndexPage
 import nl.avisi.structurizr.site.generatr.site.generateSite
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.servlet.DefaultServlet
-import org.eclipse.jetty.servlet.ServletContextHandler
-import org.eclipse.jetty.servlet.ServletHolder
+import org.eclipse.jetty.server.handler.ContextHandler
+import org.eclipse.jetty.server.handler.ContextHandlerCollection
+import org.eclipse.jetty.server.handler.ResourceHandler
+import org.eclipse.jetty.util.resource.ResourceFactory
+import org.eclipse.jetty.websocket.api.Callback
 import org.eclipse.jetty.websocket.api.Session
-import org.eclipse.jetty.websocket.api.WebSocketAdapter
-import org.eclipse.jetty.websocket.server.JettyWebSocketServerContainer
-import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketOpen
+import org.eclipse.jetty.websocket.api.annotations.WebSocket
+import org.eclipse.jetty.websocket.server.WebSocketUpgradeHandler
 import java.io.File
 import java.nio.file.*
 import java.time.Duration
@@ -104,33 +107,34 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         Server(port).also { server ->
             println("Starting server...")
 
-            server.handler = createServletContextHandler()
+            server.handler = createRootContextHandler(server)
             server.start()
 
             println("Server started")
             println("Open http://localhost:$port in your browser to view the site")
         }
 
-    private fun createServletContextHandler() =
-        ServletContextHandler().apply {
-            contextPath = "/"
-            addServlet(createStaticResourceServlet(), "/*")
-            addWebSocketServlet(this, "/_events")
+    private fun createRootContextHandler(server: Server) = ContextHandlerCollection(
+        ContextHandler(createStaticResourceHandler(), "/"),
+        ContextHandler("/").apply {
+            handler = createWebSocketHandler(server, this, "/_events")
+        }
+    )
+
+    private fun createStaticResourceHandler() =
+        ResourceHandler().apply {
+            baseResource = ResourceFactory.of(this).newResource(siteDir)
         }
 
-    private fun createStaticResourceServlet() =
-        ServletHolder("default", DefaultServlet()).apply {
-            setInitParameter("resourceBase", siteDir)
-        }
-
-    private fun addWebSocketServlet(
-        context: ServletContextHandler,
+    private fun createWebSocketHandler(
+        server: Server,
+        context: ContextHandler,
         @Suppress("SameParameterValue") pathSpec: String
     ) =
-        JettyWebSocketServletContainerInitializer
-            .configure(context) { _: ServletContext?, container: JettyWebSocketServerContainer ->
+        WebSocketUpgradeHandler.from(server, context)
+            .configure { container ->
                 container.idleTimeout = Duration.ZERO
-                container.addMapping(pathSpec) { _, _ -> EventSocket() }
+                container.addMapping(pathSpec) { _, _, _ -> EventSocket() }
             }
 
     private fun startWatchService(): WatchService {
@@ -199,24 +203,34 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         eventSockets.forEach { it.send(message) }
     }
 
-    private inner class EventSocket : WebSocketAdapter() {
-        override fun onWebSocketConnect(sess: Session?) {
-            super.onWebSocketConnect(sess)
+    @WebSocket
+    inner class EventSocket {
+        private var session: Session? = null
+
+        @OnWebSocketOpen
+        fun onWebSocketConnect(session: Session?) {
             synchronized(eventSocketsLock) { eventSockets.add(this) }
+            this.session = session
             updateSiteError?.let { send(it) }
         }
 
-        override fun onWebSocketClose(statusCode: Int, reason: String?) {
+        @OnWebSocketClose
+        fun onWebSocketClose(statusCode: Int, reason: String?) {
+            session = null
             synchronized(eventSocketsLock) { eventSockets.remove(this) }
         }
 
-        override fun onWebSocketError(cause: Throwable?) {
+        @OnWebSocketError
+        fun onWebSocketError(cause: Throwable?) {
+            session = null
             synchronized(eventSocketsLock) { eventSockets.remove(this) }
         }
 
         fun send(message: String) {
-            if (session != null && session.isOpen)
-                this.session.remote?.sendString(message)
+            session?.let {
+                if (it.isOpen)
+                    it.sendText(message, Callback.NOOP)
+            }
         }
     }
 }
