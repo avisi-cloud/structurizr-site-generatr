@@ -82,7 +82,7 @@ class GenerateSiteCommand : Subcommand(
             refreshLocalClone()
         }
 
-        val branchNames = if (allBranches)
+        val branchNames: List<String> = if (allBranches)
             clonedRepository.getBranchNames(excludeBranches.split(","))
         else
             branches.split(",")
@@ -109,7 +109,12 @@ class GenerateSiteCommand : Subcommand(
             throw Exception("$defaultBranch does not contain a valid structurizr workspace. Site generation halted.")
         }
 
-        branchesToGenerate.forEach { branch ->
+        val sortedBranchNames = branchesToGenerate.toMutableList()
+        sortedBranchNames.sorted()
+        sortedBranchNames.remove(defaultBranch)
+        sortedBranchNames.add(0,defaultBranch)
+
+        sortedBranchNames.forEach { branch ->
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
 
@@ -120,7 +125,7 @@ class GenerateSiteCommand : Subcommand(
                 workspace,
                 assetsDir?.let { File(cloneDir, it) },
                 siteDir,
-                branchesToGenerate,
+                sortedBranchNames,
                 branch
             )
         }
