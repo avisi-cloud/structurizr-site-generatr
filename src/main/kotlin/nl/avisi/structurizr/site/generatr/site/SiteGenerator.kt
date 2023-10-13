@@ -21,6 +21,8 @@ fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/js/reformat-mermaid.js")
     copySiteWideAsset(exportDir, "/js/svg-pan-zoom.js")
     copySiteWideAsset(exportDir, "/js/svg-pan-zoom-modal.js")
+    copySiteWideAsset(exportDir, "/css/treeview.css")
+    copySiteWideAsset(exportDir, "/js/treeview.js")
 }
 
 private fun copySiteWideAsset(exportDir: File, asset: String) {

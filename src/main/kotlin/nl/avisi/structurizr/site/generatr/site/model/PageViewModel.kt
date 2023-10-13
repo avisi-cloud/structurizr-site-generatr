@@ -20,6 +20,7 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     val includeAdmonition = flexmarkConfig.selectedExtensionMap.containsKey("Admonition")
     val includeKatex = flexmarkConfig.selectedExtensionMap.containsKey("GitLab")
     val configuration = generatorContext.workspace.views.configuration.properties
+    val includeTreeview = configuration.getOrDefault("generatr.site.nestGroups", "false").toBoolean()
 
     val includeZoom = configuration.getOrDefault("generatr.site.enableZoom", "false").toBoolean()
 

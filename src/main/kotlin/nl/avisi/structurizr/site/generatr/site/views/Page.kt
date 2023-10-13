@@ -21,6 +21,9 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
 
+        if (viewModel.includeTreeview)
+            link(rel = "stylesheet", href = "../" + "/treeview.css".asUrlToFile(viewModel.url))
+
         if (viewModel.includeAdmonition)
             markdownAdmonitionStylesheet(viewModel)
 
@@ -58,7 +61,7 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
 
         div(classes = "site-layout") {
             id = "site"
-            menu(viewModel.menu)
+            menu(viewModel.menu, viewModel.includeTreeview)
             div(classes = "container is-fluid has-background-white") {
                 block()
             }
@@ -68,7 +71,13 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
             updateSiteErrorHero()
         if (viewModel.includeAdmonition)
             markdownAdmonitionScript(viewModel)
+
         mermaidScript(viewModel)
+
+        if (viewModel.includeTreeview){
+            script(type = ScriptType.textJavaScript,src = "../" + "/treeview.js".asUrlToFile(viewModel.url)) { }
+            script(type = ScriptType.textJavaScript) { unsafe { +"listree();" } }
+        }
 
         if (viewModel.includeZoom) {
             script(
