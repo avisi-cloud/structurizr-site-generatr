@@ -69,6 +69,7 @@ private fun buildHtmlTree(node: MenuNodeViewModel, viewModel: MenuViewModel): UL
             }
         }
     }
+
     if (node.name.isEmpty() && node.children.isNotEmpty()) {
         ul(classes = "listree-submenu-items") {
             for (child in node.children) {
@@ -76,5 +77,4 @@ private fun buildHtmlTree(node: MenuNodeViewModel, viewModel: MenuViewModel): UL
             }
         }
     }
-
 }

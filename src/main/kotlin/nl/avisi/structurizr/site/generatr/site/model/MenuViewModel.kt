@@ -57,5 +57,4 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         .sortedBy { it.lowercase() }
 
     private val delimiter = '/'
-
 }
