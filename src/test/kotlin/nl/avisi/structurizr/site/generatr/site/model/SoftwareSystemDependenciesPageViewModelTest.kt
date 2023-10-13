@@ -80,9 +80,15 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         backend2.uses(softwareSystem1, "Uses from container 2 to system 1", "REST")
         softwareSystem1.uses(backend2, "Uses from system 1 to container 2", "REST")
 
-        assertThat { SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1) }
-            .isSuccess()
+        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+        // Inbound Table
+        assertThat(viewModel.dependenciesInboundTable.bodyRows.extractTitle())
+            .containsExactly("Software system 2")
+        // Outbound Table
+        assertThat(viewModel.dependenciesOutboundTable.bodyRows.extractTitle())
+            .containsExactly("Software system 2")
     }
+
 
     @Test
     fun `dependencies from and to external systems`() {
@@ -107,31 +113,11 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
 
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
         // Inbound Table
-        assertThat(
-            viewModel.dependenciesInboundTable.bodyRows
-                .map {
-                    when (val source = it.columns[0]) {
-                        is TableViewModel.TextCellViewModel -> source.title
-                        is TableViewModel.LinkCellViewModel -> source.link.title
-                        is TableViewModel.ExternalLinkCellViewModel -> source.link.title
-                    }
-                }
-        ).containsExactly(
-            "Software system 2", "Software system 3"
-        )
+        assertThat(viewModel.dependenciesInboundTable.bodyRows.extractTitle())
+            .containsExactly("Software system 2", "Software system 3")
         // Outbound Table
-        assertThat(
-            viewModel.dependenciesInboundTable.bodyRows
-                .map {
-                    when (val source = it.columns[0]) {
-                        is TableViewModel.TextCellViewModel -> source.title
-                        is TableViewModel.LinkCellViewModel -> source.link.title
-                        is TableViewModel.ExternalLinkCellViewModel -> source.link.title
-                    }
-                }
-        ).containsExactly(
-            "Software system 2", "Software system 3"
-        )
+        assertThat(viewModel.dependenciesInboundTable.bodyRows.extractTitle())
+            .containsExactly("Software system 2", "Software system 3")
     }
 
     private fun TableViewModel.TableViewInitializerContext.dependenciesTableHeader() {
@@ -140,5 +126,13 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
             headerCell("Description"),
             headerCell("Technology"),
         )
+    }
+
+    private fun List<TableViewModel.RowViewModel>.extractTitle() = map {
+        when (val source = it.columns[0]) {
+            is TableViewModel.TextCellViewModel -> source.title
+            is TableViewModel.LinkCellViewModel -> source.link.title
+            is TableViewModel.ExternalLinkCellViewModel -> source.link.title
+        }
     }
 }

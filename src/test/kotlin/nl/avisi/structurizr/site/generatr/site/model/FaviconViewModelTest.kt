@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import assertk.assertFailure
 import assertk.assertThat
 import assertk.assertions.*
 import kotlin.test.Test
@@ -27,7 +28,7 @@ class FaviconViewModelTest : ViewModelTest() {
             "favicon"
         )
 
-        assertThat { faviconViewModel() }.isFailure().hasMessage("Favicon must be a valid *.ico, *.png of *.gif file")
+        assertFailure { faviconViewModel() }.hasMessage("Favicon must be a valid *.ico, *.png of *.gif file")
     }
 
     @Test
