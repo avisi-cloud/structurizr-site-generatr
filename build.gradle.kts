@@ -43,7 +43,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26.1")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.27.0")
 }
 
 application {
