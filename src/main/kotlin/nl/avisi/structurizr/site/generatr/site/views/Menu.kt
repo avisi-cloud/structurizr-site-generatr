@@ -40,7 +40,6 @@ private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
 }
 
 private fun buildHtmlTree(node: MenuNodeViewModel, viewModel: MenuViewModel): UL.() -> Unit = {
-
     if (node.name.isNotEmpty() && node.children.isEmpty()) {
         val itemLink = viewModel.softwareSystemItems.find { it.title == node.name }
         li {

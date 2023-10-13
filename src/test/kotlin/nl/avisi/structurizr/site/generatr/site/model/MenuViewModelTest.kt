@@ -153,7 +153,6 @@ class MenuViewModelTest : ViewModelTest() {
                 assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("Group 3")
                 assertThat(it.softwareSystemNodes().children[0].children[0].children[0].name).isEqualTo("System 4")
             }
-
     }
 
     private fun createPageViewModel(generatorContext: GeneratorContext, url: String = "/master/page"): PageViewModel {
