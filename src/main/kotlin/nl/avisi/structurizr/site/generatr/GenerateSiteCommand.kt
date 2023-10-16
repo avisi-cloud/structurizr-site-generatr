@@ -101,7 +101,7 @@ class GenerateSiteCommand : Subcommand(
                 println("Bad Branch $branch: $errorMessage")
                 false
             }
-        }
+        }.sortedWith(branchComparator(defaultBranch))
 
         println("The following branches contain a valid Structurizr workspace: $branchesToGenerate")
 
@@ -109,12 +109,7 @@ class GenerateSiteCommand : Subcommand(
             throw Exception("$defaultBranch does not contain a valid structurizr workspace. Site generation halted.")
         }
 
-        val sortedBranchNames = branchesToGenerate.toMutableList()
-        sortedBranchNames.sorted()
-        sortedBranchNames.remove(defaultBranch)
-        sortedBranchNames.add(0,defaultBranch)
-
-        sortedBranchNames.forEach { branch ->
+        branchesToGenerate.forEach { branch ->
             println("Generating site for branch $branch")
             clonedRepository.checkoutBranch(branch)
 
@@ -125,7 +120,7 @@ class GenerateSiteCommand : Subcommand(
                 workspace,
                 assetsDir?.let { File(cloneDir, it) },
                 siteDir,
-                sortedBranchNames,
+                branchesToGenerate,
                 branch
             )
         }
@@ -143,4 +138,10 @@ class GenerateSiteCommand : Subcommand(
             defaultBranch
         )
     }
+}
+
+fun branchComparator(defaultBranch: String) = Comparator<String> { a, b ->
+    if (a == defaultBranch) -1
+    else if (b == defaultBranch) 1
+    else a.compareTo(b)
 }
