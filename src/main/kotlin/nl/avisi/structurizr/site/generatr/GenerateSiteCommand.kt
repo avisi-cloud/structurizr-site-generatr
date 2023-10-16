@@ -82,7 +82,7 @@ class GenerateSiteCommand : Subcommand(
             refreshLocalClone()
         }
 
-        val branchNames: List<String> = if (allBranches)
+        val branchNames = if (allBranches)
             clonedRepository.getBranchNames(excludeBranches.split(","))
         else
             branches.split(",")
