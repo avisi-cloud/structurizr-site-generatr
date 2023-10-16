@@ -101,7 +101,7 @@ class GenerateSiteCommand : Subcommand(
                 println("Bad Branch $branch: $errorMessage")
                 false
             }
-        }
+        }.sortedWith(branchComparator(defaultBranch))
 
         println("The following branches contain a valid Structurizr workspace: $branchesToGenerate")
 
@@ -138,4 +138,10 @@ class GenerateSiteCommand : Subcommand(
             defaultBranch
         )
     }
+}
+
+fun branchComparator(defaultBranch: String) = Comparator<String> { a, b ->
+    if (a == defaultBranch) -1
+    else if (b == defaultBranch) 1
+    else a.compareTo(b)
 }
