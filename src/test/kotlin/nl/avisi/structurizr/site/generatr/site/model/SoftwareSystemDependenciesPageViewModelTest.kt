@@ -89,7 +89,6 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
             .containsExactly("Software system 2")
     }
 
-
     @Test
     fun `dependencies from and to external systems`() {
         val externalSystem = generatorContext.workspace.model
