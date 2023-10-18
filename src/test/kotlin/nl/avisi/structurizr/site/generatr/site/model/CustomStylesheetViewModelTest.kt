@@ -6,24 +6,25 @@ import org.junit.jupiter.api.Test
 
 class CustomStylesheetViewModelTest : ViewModelTest() {
     private val generatorContext = generatorContext()
+    private val viewModel = pageViewModel()
 
     @Test
-    fun `Configuration Property Missing`() {
-        val customStylesheetViewModel = CustomStylesheetViewModel(generatorContext)
+    fun `no custom stylesheet`() {
+        val customStylesheetViewModel = CustomStylesheetViewModel(generatorContext, viewModel)
         assertThat(customStylesheetViewModel.resourceURI).isEqualTo(null)
     }
 
     @Test
-    fun `Configuration Property Set To URL`() {
+    fun `custom stylesheet set to URL`() {
         generatorContext.workspace.views.configuration.addProperty("generatr.style.customStylesheet","http://example.uri/custom.css")
-        val customStylesheetViewModel = CustomStylesheetViewModel(generatorContext)
+        val customStylesheetViewModel = CustomStylesheetViewModel(generatorContext, viewModel)
         assertThat(customStylesheetViewModel.resourceURI).isEqualTo("http://example.uri/custom.css")
     }
 
     @Test
-    fun `Configuration Property Set To Local File`() {
-        generatorContext.workspace.views.configuration.addProperty("generatr.style.customStylesheet","custom.css")
-        val customStylesheetViewModel = CustomStylesheetViewModel(generatorContext)
-        assertThat(customStylesheetViewModel.resourceURI).isEqualTo("./custom.css")
+    fun `custom stylesheet set to local asset`() {
+        generatorContext.workspace.views.configuration.addProperty("generatr.style.customStylesheet","site/custom.css")
+        val customStylesheetViewModel = CustomStylesheetViewModel(generatorContext, viewModel)
+        assertThat(customStylesheetViewModel.resourceURI).isEqualTo("../site/custom.css")
     }
 }
