@@ -54,6 +54,11 @@ kotlin {
 }
 
 tasks {
+    copy {
+        from("package.json")
+        into("src/main/resources")
+    }
+
     test {
         useJUnitPlatform()
     }
