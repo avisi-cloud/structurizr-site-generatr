@@ -67,8 +67,8 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
 
         mermaidScript(viewModel)
 
-        if (viewModel.includeTreeview){
-            script(type = ScriptType.textJavaScript,src = "../" + "/treeview.js".asUrlToFile(viewModel.url)) { }
+        if (viewModel.includeTreeview) {
+            script(type = ScriptType.textJavaScript, src = "../" + "/treeview.js".asUrlToFile(viewModel.url)) { }
             script(type = ScriptType.textJavaScript) { unsafe { +"listree();" } }
         }
     }

@@ -12,6 +12,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
         it.addContainer("API Application")
     }
     private val container = softwareSystem.containers.first()
+
     @Test
     fun `active tab`() {
         val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)

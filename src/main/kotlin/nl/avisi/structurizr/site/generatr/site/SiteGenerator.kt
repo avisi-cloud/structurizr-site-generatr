@@ -143,13 +143,13 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             }
 
             it.containers
-                    .filter { container -> container.documentation.decisions.isNotEmpty() }
-                    .forEach { container ->
-                        add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionsPageViewModel(context, container)) }
-                        container.documentation.decisions.forEach { decision ->
-                            add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionPageViewModel(context, container, decision)) }
-                        }
+                .filter { container -> container.documentation.decisions.isNotEmpty() }
+                .forEach { container ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionsPageViewModel(context, container)) }
+                    container.documentation.decisions.forEach { decision ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionPageViewModel(context, container, decision)) }
                     }
+                }
 
             it.containers
                 .filter { container -> container.documentation.sections.isNotEmpty() }

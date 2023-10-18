@@ -11,6 +11,7 @@ class SoftwareSystemContainerDecisionPageViewModelTest : ViewModelTest() {
         it.addContainer("API Application")
     }
     private val container = softwareSystem.containers.first()
+
     @Test
     fun url() {
         val decision = createDecision()
