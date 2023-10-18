@@ -1,9 +1,11 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import assertk.all
 import assertk.assertThat
+import assertk.assertions.hasSize
+import assertk.assertions.index
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
-import nl.avisi.structurizr.site.generatr.normalize
 import kotlin.test.Test
 
 class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
@@ -26,12 +28,18 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
 
         val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
 
-        assertThat(viewModel.decisionsTable)
-            .isEqualTo(
-                viewModel.createDecisionsTableViewModel(container.documentation.decisions) {
-                    "/${softwareSystem.name.normalize()}/decisions/${container.name.normalize()}/1"
-                }
-            )
+        assertThat(viewModel.decisionsTable.bodyRows).all {
+            hasSize(1)
+            index(0).transform { (it.columns[3] as TableViewModel.LinkCellViewModel).link }
+                .isEqualTo(
+                    LinkViewModel(
+                        viewModel,
+                        "Decision 1",
+                        "/software-system/decisions/api-application/1",
+                        true
+                    )
+                )
+        }
     }
 
     @Test
