@@ -151,6 +151,15 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
                         }
                     }
 
+            it.containers
+                .filter { container -> container.documentation.sections.isNotEmpty() }
+                .forEach { container ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerSectionsPageViewModel(context, container)) }
+                    container.documentation.sections.forEach { section ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerSectionPageViewModel(context, container, section)) }
+                    }
+                }
+
             it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
                 add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
             }
@@ -173,6 +182,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerPageViewModel -> softwareSystemContainerPage(viewModel)
                 is SoftwareSystemContainerDecisionPageViewModel -> softwareSystemContainerDecisionPage(viewModel)
                 is SoftwareSystemContainerDecisionsPageViewModel -> softwareSystemContainerDecisionsPage(viewModel)
+                is SoftwareSystemContainerSectionPageViewModel -> softwareSystemContainerSectionPage(viewModel)
+                is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
                 is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
                 is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
                 is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
