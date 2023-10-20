@@ -50,6 +50,10 @@ class CDN {
         fun webfontloaderJs() = dependencies.single { it.name == "webfontloader" }.let {
             "${it.baseUrl()}/webfontloader.js"
         }
+
+        fun svgpanzoomJs() = dependencies.single { it.name == "svg-pan-zoom" }.let {
+            "${it.baseUrl()}/dist/svg-pan-zoom.min.js"
+        }
     }
 
     @Serializable

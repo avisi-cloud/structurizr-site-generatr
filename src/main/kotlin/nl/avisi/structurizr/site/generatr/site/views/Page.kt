@@ -46,7 +46,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         if (viewModel.includeZoom) {
             script(
                 type = ScriptType.textJavaScript,
-                src = "../" + "/svg-pan-zoom.js".asUrlToFile(viewModel.url)
+                src = CDN.svgpanzoomJs()
             ) { }
         }
     }
