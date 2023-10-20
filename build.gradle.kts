@@ -27,7 +27,7 @@ dependencies {
     implementation("net.sourceforge.plantuml:plantuml:1.2023.11")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
-    implementation("org.jsoup:jsoup:1.16.1")
+    implementation("org.jsoup:jsoup:1.16.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
@@ -38,7 +38,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:2.0.9")
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.10")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.19")
-    runtimeOnly("org.jruby:jruby-core:9.4.3.0")
+    runtimeOnly("org.jruby:jruby-core:9.4.4.0")
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
@@ -54,6 +54,11 @@ kotlin {
 }
 
 tasks {
+    copy {
+        from("package.json")
+        into("src/main/resources")
+    }
+
     test {
         useJUnitPlatform()
     }

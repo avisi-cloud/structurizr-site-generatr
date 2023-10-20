@@ -28,7 +28,6 @@ fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewM
                 table(viewModel.decisionsTable)
             }
         }
-    }
-    else
+    } else
         redirectUpPage()
 }

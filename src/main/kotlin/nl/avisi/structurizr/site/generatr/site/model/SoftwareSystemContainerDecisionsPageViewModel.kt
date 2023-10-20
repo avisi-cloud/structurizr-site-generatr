@@ -16,7 +16,6 @@ class SoftwareSystemContainerDecisionsPageViewModel(generatorContext: GeneratorC
     val decisionTabs = createDecisionsTabViewModel(container.softwareSystem, Tab.DECISIONS)
 
     companion object {
-        fun url(container: Container) =
-                "${url(container.softwareSystem, Tab.DECISIONS)}/${container.name.normalize()}"
+        fun url(container: Container) = "${url(container.softwareSystem, Tab.DECISIONS)}/${container.name.normalize()}"
     }
 }

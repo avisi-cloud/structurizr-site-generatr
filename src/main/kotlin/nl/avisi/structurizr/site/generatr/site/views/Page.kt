@@ -17,7 +17,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         meta(charset = "utf-8")
         meta(name = "viewport", content = "width=device-width, initial-scale=1")
         title { +viewModel.pageTitle }
-        link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css")
+        link(rel = "stylesheet", href = CDN.bulmaCss())
         link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
 
@@ -74,8 +74,8 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
 
         mermaidScript(viewModel)
 
-        if (viewModel.includeTreeview){
-            script(type = ScriptType.textJavaScript,src = "../" + "/treeview.js".asUrlToFile(viewModel.url)) { }
+        if (viewModel.includeTreeview) {
+            script(type = ScriptType.textJavaScript, src = "../" + "/treeview.js".asUrlToFile(viewModel.url)) { }
             script(type = ScriptType.textJavaScript) { unsafe { +"listree();" } }
         }
 

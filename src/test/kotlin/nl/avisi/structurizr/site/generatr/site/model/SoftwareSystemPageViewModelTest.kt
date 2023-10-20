@@ -204,6 +204,31 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isTrue()
     }
 
+    @Test
+    fun `sections views tab visible when container sections available in software system`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
+        softwareSystem.addContainer("Some Container").documentation.addSection(createSection())
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isTrue()
+    }
+
+    @Test
+    fun `sections views tab visible when container & software system sections are available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
+        softwareSystem.addContainer("Some Container").documentation.addSection(createSection())
+        repeat(2) { // the first section is shown in the software system home
+            softwareSystem.documentation.addSection(createSection())
+        }
+        assertThat(getTab(viewModel, Tab.SECTIONS).visible).isTrue()
+    }
+
     private fun getTab(viewModel: SoftwareSystemPageViewModel, tab: Tab) =
         viewModel.tabs.single { it.tab == tab }
 }
