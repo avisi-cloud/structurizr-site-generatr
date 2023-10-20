@@ -24,7 +24,6 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
                 "Software system - System Context",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
-                900,
                 ImageViewModel(viewModel, "/svg/context-1.svg"),
                 ImageViewModel(viewModel, "/png/context-1.png"),
                 ImageViewModel(viewModel, "/puml/context-1.puml")
@@ -34,7 +33,6 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
                 "Software system - System Context",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
-                900,
                 ImageViewModel(viewModel, "/svg/context-2.svg"),
                 ImageViewModel(viewModel, "/png/context-2.png"),
                 ImageViewModel(viewModel, "/puml/context-2.puml")

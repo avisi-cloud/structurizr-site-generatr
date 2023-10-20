@@ -33,7 +33,6 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
                 "Software system - Deployment - Default",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
-                900,
                 ImageViewModel(viewModel, "/svg/deployment-1.svg"),
                 ImageViewModel(viewModel, "/png/deployment-1.png"),
                 ImageViewModel(viewModel, "/puml/deployment-1.puml")
@@ -43,7 +42,6 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
                 "Software system - Deployment - Default",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
-                900,
                 ImageViewModel(viewModel, "/svg/deployment-2.svg"),
                 ImageViewModel(viewModel, "/png/deployment-2.png"),
                 ImageViewModel(viewModel, "/puml/deployment-2.puml")

@@ -7,7 +7,6 @@ data class DiagramViewModel(
     val name: String,
     val svg: String?,
     val diagramWidthInPixels: Int?,
-    val diagramHeightInPixels: Int?,
     val svgLocation: ImageViewModel,
     val pngLocation: ImageViewModel,
     val pumlLocation: ImageViewModel
@@ -27,7 +26,6 @@ data class DiagramViewModel(
                 name,
                 svg,
                 extractDiagramWidthInPixels(svg),
-                extractDiagramHeightInPixels(svg),
                 ImageViewModel(pageViewModel, "/svg/${key}.svg"),
                 ImageViewModel(pageViewModel, "/png/${key}.png"),
                 ImageViewModel(pageViewModel, "/puml/${key}.puml")
@@ -37,14 +35,6 @@ data class DiagramViewModel(
         private fun extractDiagramWidthInPixels(svg: String?) =
             if (svg != null)
                 "viewBox=\"\\d+ \\d+ (\\d+) \\d+\"".toRegex()
-                    .find(svg)
-                    ?.let { it.groupValues[1].toInt() }
-                    ?: throw IllegalStateException("No viewBox attribute found in SVG!")
-            else null
-
-        private fun extractDiagramHeightInPixels(svg: String?) =
-            if (svg != null)
-                "viewBox=\"\\d+ \\d+ \\d+ (\\d+)\"".toRegex()
                     .find(svg)
                     ?.let { it.groupValues[1].toInt() }
                     ?: throw IllegalStateException("No viewBox attribute found in SVG!")
