@@ -149,13 +149,13 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `dynamic views tab only visible when component diagrams available`() {
+    fun `dynamic views tab only visible when dynamic diagrams available`() {
         val generatorContext = generatorContext()
         val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val container = softwareSystem.addContainer("Backend")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
-        assertThat(getTab(viewModel, Tab.COMPONENT).visible).isFalse()
+        assertThat(getTab(viewModel, Tab.DYNAMIC).visible).isFalse()
         generatorContext.workspace.views.createDynamicView(container, "component", "description")
         assertThat(getTab(viewModel, Tab.DYNAMIC).visible).isTrue()
     }
