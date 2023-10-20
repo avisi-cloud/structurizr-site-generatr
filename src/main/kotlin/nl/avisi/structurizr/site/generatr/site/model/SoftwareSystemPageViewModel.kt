@@ -35,7 +35,7 @@ open class SoftwareSystemPageViewModel(
                 Tab.COMPONENT -> generatorContext.workspace.views.hasComponentViews(softwareSystem)
                 Tab.DEPLOYMENT -> generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
                 Tab.DECISIONS -> softwareSystem.hasDecisions() or softwareSystem.hasContainerDecisions()
-                Tab.SECTIONS -> softwareSystem.hasDocumentationSections()
+                Tab.SECTIONS -> softwareSystem.hasDocumentationSections() or softwareSystem.hasContainerDocumentationSections()
             }
     }
 

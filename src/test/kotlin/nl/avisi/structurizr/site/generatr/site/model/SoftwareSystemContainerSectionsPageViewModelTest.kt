@@ -6,9 +6,10 @@ import assertk.assertions.hasSize
 import assertk.assertions.index
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import nl.avisi.structurizr.site.generatr.normalize
 import kotlin.test.Test
 
-class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
+class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
     private val generatorContext = generatorContext()
     private val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system").also {
         it.addContainer("API Application")
@@ -17,25 +18,25 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `active tab`() {
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
         assertThat(viewModel.tabs.single { it.link.active }.tab)
-            .isEqualTo(SoftwareSystemPageViewModel.Tab.DECISIONS)
+            .isEqualTo(SoftwareSystemPageViewModel.Tab.SECTIONS)
     }
 
     @Test
-    fun `decisions table`() {
-        container.documentation.addDecision(createDecision("1", "Accepted"))
+    fun `sections table`() {
+        container.documentation.addSection(createSection())
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
-        assertThat(viewModel.decisionsTable.bodyRows).all {
+        assertThat(viewModel.sectionsTable.bodyRows).all {
             hasSize(1)
-            index(0).transform { (it.columns[3] as TableViewModel.LinkCellViewModel).link }
+            index(0).transform { (it.columns[1] as TableViewModel.LinkCellViewModel).link }
                 .isEqualTo(
                     LinkViewModel(
                         viewModel,
-                        "Decision 1",
-                        "/software-system/decisions/api-application/1",
+                        "Content",
+                        "/software-system/sections/api-application/1",
                         true
                     )
                 )
@@ -44,7 +45,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `hidden view`() {
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(
             generatorContext,
             softwareSystem.addContainer("Container 2")
         )

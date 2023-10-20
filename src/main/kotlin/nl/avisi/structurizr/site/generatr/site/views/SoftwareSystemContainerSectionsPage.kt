@@ -4,18 +4,14 @@ import kotlinx.html.HTML
 import kotlinx.html.div
 import kotlinx.html.li
 import kotlinx.html.ul
-import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemSectionsPageViewModel
+import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerSectionsPageViewModel
 
-fun HTML.softwareSystemSectionsPage(viewModel: SoftwareSystemSectionsPageViewModel) {
-    if (viewModel.onlyContainerSectionsVisible) {
-        redirectRelative(
-            viewModel.sectionTabs.first().link.relativeHref
-        )
-    } else if (viewModel.visible)
+fun HTML.softwareSystemContainerSectionsPage(viewModel: SoftwareSystemContainerSectionsPageViewModel) {
+    if (viewModel.visible)
         softwareSystemPage(viewModel) {
             div(classes = "tabs") {
                 ul(classes = "m-0") {
-                    viewModel.sectionTabs
+                    viewModel.sectionsTabs
                         .forEach {
                             li(classes = if (it.link.active) "is-active" else null) {
                                 link(it.link)
@@ -23,10 +19,7 @@ fun HTML.softwareSystemSectionsPage(viewModel: SoftwareSystemSectionsPageViewMod
                         }
                 }
             }
-
-            if (viewModel.softwareSystemSectionsVisible) {
-                table(viewModel.sectionsTable)
-            }
+            table(viewModel.sectionsTable)
         }
     else
         redirectUpPage()

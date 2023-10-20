@@ -27,7 +27,11 @@ fun SoftwareSystem.hasContainerDecisions() = containers.any { it.hasDecisions() 
 
 fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
 
+fun SoftwareSystem.hasContainerDocumentationSections() = containers.any { it.hasSections() }
+
 fun Container.hasDecisions() = documentation.decisions.isNotEmpty()
+
+fun Container.hasSections() = documentation.sections.isNotEmpty()
 
 fun ViewSet.hasSystemContextViews(softwareSystem: SoftwareSystem) =
     systemContextViews.any { it.softwareSystem == softwareSystem }

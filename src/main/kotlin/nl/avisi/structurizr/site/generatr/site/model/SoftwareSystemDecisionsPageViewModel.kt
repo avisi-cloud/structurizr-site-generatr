@@ -19,5 +19,4 @@ class SoftwareSystemDecisionsPageViewModel(generatorContext: GeneratorContext, s
     val onlyContainersDecisionsVisible = !softwareSystemDecisionsVisible and containerDecisionsVisible
 
     val decisionTabs = createDecisionsTabViewModel(softwareSystem, Tab.DECISIONS)
-
 }
