@@ -42,5 +42,8 @@ fun ViewSet.hasContainerViews(softwareSystem: SoftwareSystem) =
 fun ViewSet.hasComponentViews(softwareSystem: SoftwareSystem) =
     componentViews.any { it.softwareSystem == softwareSystem }
 
+fun ViewSet.hasDynamicViews(softwareSystem: SoftwareSystem) =
+    dynamicViews.any { it.softwareSystem == softwareSystem }
+
 fun ViewSet.hasDeploymentViews(softwareSystem: SoftwareSystem) =
     deploymentViews.any { it.softwareSystem == softwareSystem }
