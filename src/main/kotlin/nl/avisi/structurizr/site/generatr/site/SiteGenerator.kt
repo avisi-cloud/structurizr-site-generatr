@@ -133,6 +133,7 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             add { writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemComponentPageViewModel(context, it)) }
+            add { writeHtmlFile(branchDir, SoftwareSystemDynamicPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDecisionsPageViewModel(context, it)) }
@@ -185,6 +186,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerSectionPageViewModel -> softwareSystemContainerSectionPage(viewModel)
                 is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
                 is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
+                is SoftwareSystemDynamicPageViewModel -> softwareSystemDynamicPage(viewModel)
                 is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
                 is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)
                 is SoftwareSystemDecisionPageViewModel -> softwareSystemDecisionPage(viewModel)
