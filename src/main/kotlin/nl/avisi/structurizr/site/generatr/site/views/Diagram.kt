@@ -1,21 +1,17 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
+import nl.avisi.structurizr.site.generatr.randomId
 import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
-import kotlin.random.Random
 
 fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
-    val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
-    val diagramId = (1..15)
-        .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
-        .joinToString("")
+    val diagramId = randomId()
 
     if (viewModel.svg != null) {
         figure {
             style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
 
             rawHtml(viewModel.svg)
-
             figcaption {
                 +viewModel.name
                 br {  }
@@ -33,8 +29,6 @@ fun FlowContent.diagram(viewModel: DiagramViewModel, includeZoom: Boolean) {
                     }
                 }
             }
-
-
         }
         if (includeZoom) {
             div(classes = "modal") {
