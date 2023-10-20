@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.hasComponentViews
+import nl.avisi.structurizr.site.generatr.hasDynamicViews
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemDynamicPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
@@ -10,5 +11,5 @@ class SoftwareSystemDynamicPageViewModel(generatorContext: GeneratorContext, sof
         .filter { it.softwareSystem == softwareSystem }
         .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
-    val visible = generatorContext.workspace.views.hasComponentViews(softwareSystem)
+    val visible = generatorContext.workspace.views.hasDynamicViews(softwareSystem)
 }
