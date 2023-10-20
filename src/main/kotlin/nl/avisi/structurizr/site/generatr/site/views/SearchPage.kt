@@ -18,16 +18,16 @@ fun HTML.searchPage(viewModel: SearchViewModel) {
             h2 { +viewModel.pageSubTitle }
             script(
                 type = ScriptType.textJavaScript,
-                src = "https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"
+                src = CDN.lunrJs()
             ) { }
             script(
                 type = ScriptType.textJavaScript,
-                src = "https://cdn.jsdelivr.net/npm/lunr-languages@1.10.0/min/lunr.stemmer.support.min.js"
+                src = CDN.lunrLanguagesStemmerJs()
             ) { }
             if (language.isNotBlank())
                 script(
                     type = ScriptType.textJavaScript,
-                    src = "https://cdn.jsdelivr.net/npm/lunr-languages@1.10.0/min/lunr.$language.min.js"
+                    src = CDN.lunrLanguagesJs(language)
                 ) { }
 
             script(type = ScriptType.textJavaScript) {
