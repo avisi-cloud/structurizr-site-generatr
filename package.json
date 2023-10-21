@@ -6,6 +6,7 @@
         "lunr": "2.3.9",
         "lunr-languages": "1.14.0",
         "mermaid": "10.5.1",
+        "svg-pan-zoom": "3.6.1",
         "webfontloader": "1.6.28"
     }
 }

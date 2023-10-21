@@ -18,6 +18,7 @@ class CDNTest {
         CDN.lunrLanguagesStemmerJs() to "/min/lunr.stemmer.support.min.js",
         CDN.lunrLanguagesJs("en") to "/min/lunr.en.min.js",
         CDN.mermaidJs() to "/dist/mermaid.esm.min.mjs",
+        CDN.svgpanzoomJs() to "/dist/svg-pan-zoom.min.js",
         CDN.webfontloaderJs() to "/webfontloader.js"
     ).map { (url, suffix) ->
         DynamicTest.dynamicTest(url) {
