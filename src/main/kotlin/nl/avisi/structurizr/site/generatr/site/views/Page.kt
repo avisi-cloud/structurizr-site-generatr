@@ -20,6 +20,8 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         link(rel = "stylesheet", href = CDN.bulmaCss())
         link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
+        script(type = ScriptType.textJavaScript, src = "../" + "/svg-modal.js".asUrlToFile(viewModel.url)) { }
+        script(type = ScriptType.textJavaScript, src = CDN.svgpanzoomJs()) { }
 
         if (viewModel.includeTreeview)
             link(rel = "stylesheet", href = "../" + "/treeview.css".asUrlToFile(viewModel.url))
