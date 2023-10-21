@@ -14,6 +14,7 @@ import java.security.MessageDigest
 fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/css/style.css")
     copySiteWideAsset(exportDir, "/js/header.js")
+    copySiteWideAsset(exportDir, "/js/svg-modal.js")
     copySiteWideAsset(exportDir, "/js/search.js")
     copySiteWideAsset(exportDir, "/js/auto-reload.js")
     copySiteWideAsset(exportDir, "/css/admonition.css")

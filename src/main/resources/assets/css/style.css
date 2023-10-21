@@ -21,3 +21,22 @@
 svg a:hover {
     opacity: 90%;
 }
+
+.modal-content {
+    width: calc(100vw - 120px);
+}
+
+.modal-box-content {
+    width: 100%;
+    height: calc(100vh - 120px);
+}
+
+.modal-svg {
+    display: inline;
+    width: inherit;
+    min-width: inherit;
+    max-width: inherit;
+    height: inherit;
+    min-height: inherit;
+    max-height: inherit;
+}
