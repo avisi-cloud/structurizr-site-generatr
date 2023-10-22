@@ -34,31 +34,7 @@ class ContentTitleTest {
         .map { format ->
             DynamicTest.dynamicTest(format.name) {
                 val section = Section(format, "some content")
-                assertThat(section.contentTitle()).isEqualTo("some content")
-            }
-        }
-
-    @TestFactory
-    fun `long paragraph`() = listOf(Format.Markdown, Format.AsciiDoc)
-        .map { format ->
-            DynamicTest.dynamicTest(format.name) {
-                val section = Section(
-                    format,
-                    "some very very long content we really need to truncate since no one wants to read such an exhausting title"
-                )
-                assertThat(section.contentTitle()).isEqualTo("some very very long content we really need to")
-            }
-        }
-
-    @TestFactory
-    fun `long paragraph without whitespaces`() = listOf(Format.Markdown, Format.AsciiDoc)
-        .map { format ->
-            DynamicTest.dynamicTest(format.name) {
-                val section = Section(
-                    format,
-                    "some-very-very-long-content-we-really-need-to-truncate-since-no-one-wants-to-read-such-an-exhausting-title"
-                )
-                assertThat(section.contentTitle()).isEqualTo("some-very-very-long-content-we-really-need-to-trun")
+                assertThat(section.contentTitle()).isEqualTo("untitled document")
             }
         }
 

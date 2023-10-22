@@ -68,7 +68,7 @@ class MenuViewModelTest : ViewModelTest() {
         generatorContext.workspace.documentation.addSection(createSection("# Home"))
         val section1 = createSection("# Doc 1")
             .also { generatorContext.workspace.documentation.addSection(it) }
-        val section2 = createSection(" Doc Title 2")
+        val section2 = createSection("# Doc Title 2")
             .also { generatorContext.workspace.documentation.addSection(it) }
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)

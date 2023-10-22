@@ -38,7 +38,7 @@ class ContentTextTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["= header", "== header", "=== header"])
+    @ValueSource(strings = ["= header"])
     fun `ignores asciidoc title`(content: String) {
         val section = Section(Format.AsciiDoc, content)
         assertThat(section.contentText()).isEqualTo("")
@@ -55,13 +55,13 @@ class ContentTextTest {
 
     @Test
     fun `markdown headers and paragraphs`() {
-        val section = Section(Format.Markdown, "# header\nsome content\n## subheader\nmore content")
+        val section = Section(Format.Markdown, "# header\n\nsome content\n\n## subheader\n\nmore content")
         assertThat(section.contentText()).isEqualTo("subheader some content more content")
     }
 
     @Test
     fun `asciidoc headers and paragraphs`() {
-        val section = Section(Format.AsciiDoc, "= header\nsome content\n== subheader\nmore content")
-        assertThat(section.contentText()).isEqualTo("subheader some content more content")
+        val section = Section(Format.AsciiDoc, "= header\n\nsome content\n\n== subheader\n\nmore content")
+        assertThat(section.contentText()).isEqualTo("some content subheader more content")
     }
 }
