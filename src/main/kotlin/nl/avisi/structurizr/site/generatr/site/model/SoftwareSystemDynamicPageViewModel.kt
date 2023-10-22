@@ -1,7 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
-import nl.avisi.structurizr.site.generatr.hasComponentViews
 import nl.avisi.structurizr.site.generatr.hasDynamicViews
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
