@@ -14,7 +14,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
             rawHtml(viewModel.svg)
             figcaption {
                 a {
-                    onClick = "openModal(\"$dialogId\", \"$svgId\")"
+                    onClick = "openModal('$dialogId', '$svgId')"
                     +viewModel.name
                 }
             }
@@ -37,7 +37,7 @@ private fun FlowContent.svgModal(
         id = dialogId
 
         div(classes = "modal-background") {
-            onClick = "closeModal(\"$dialogId\")"
+            onClick = "closeModal('$dialogId')"
         }
         div(classes = "modal-content") {
             div(classes = "box") {
@@ -55,7 +55,7 @@ private fun FlowContent.svgModal(
         }
         button(classes = "modal-close is-large") {
             attributes["aria-label"] = "close"
-            onClick = "closeModal(\"$dialogId\")"
+            onClick = "closeModal('$dialogId')"
         }
     }
 }

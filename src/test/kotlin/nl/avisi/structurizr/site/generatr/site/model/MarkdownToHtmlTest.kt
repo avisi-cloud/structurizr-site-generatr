@@ -263,11 +263,11 @@ class MarkdownToHtmlTest : ViewModelTest() {
                     <svg viewBox="0 0 800 900"></svg>
                    </div>
                    <figcaption>
-                    <a onclick="openModal(&quot;SystemLandscape-modal&quot;, &quot;SystemLandscape-svg&quot;)">System Landscape Diagram</a>
+                    <a onclick="openModal('SystemLandscape-modal', 'SystemLandscape-svg')">System Landscape Diagram</a>
                    </figcaption>
                   </figure>
                   <div class="modal" id="SystemLandscape-modal">
-                   <div class="modal-background" onclick="closeModal(&quot;SystemLandscape-modal&quot;)"></div>
+                   <div class="modal-background" onclick="closeModal('SystemLandscape-modal')"></div>
                    <div class="modal-content">
                     <div class="box">
                      <div id="SystemLandscape-svg" class="modal-box-content">
@@ -277,7 +277,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                       [<a href="svg/SystemLandscape.svg" target="_blank">svg</a>|<a href="png/SystemLandscape.png" target="_blank">png</a>|<a href="puml/SystemLandscape.puml" target="_blank">puml</a>]
                      </div>
                     </div>
-                   </div><button class="modal-close is-large" aria-label="close" onclick="closeModal(&quot;SystemLandscape-modal&quot;)"></button>
+                   </div><button class="modal-close is-large" aria-label="close" onclick="closeModal('SystemLandscape-modal')"></button>
                   </div>
                  </div></p>
             """.trimIndent()
