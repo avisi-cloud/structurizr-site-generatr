@@ -61,6 +61,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
                 Tab.SYSTEM_CONTEXT,
                 Tab.CONTAINER,
                 Tab.COMPONENT,
+                Tab.DYNAMIC,
                 Tab.DEPLOYMENT,
                 Tab.DEPENDENCIES,
                 Tab.DECISIONS,
@@ -72,6 +73,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
                 "Context views",
                 "Container views",
                 "Component views",
+                "Dynamic views",
                 "Deployment views",
                 "Dependencies",
                 "Decisions",
@@ -144,6 +146,18 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         assertThat(getTab(viewModel, Tab.COMPONENT).visible).isFalse()
         generatorContext.workspace.views.createComponentView(container, "component", "description")
         assertThat(getTab(viewModel, Tab.COMPONENT).visible).isTrue()
+    }
+
+    @Test
+    fun `dynamic views tab only visible when dynamic diagrams available`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val container = softwareSystem.addContainer("Backend")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.DYNAMIC).visible).isFalse()
+        generatorContext.workspace.views.createDynamicView(container, "component", "description")
+        assertThat(getTab(viewModel, Tab.DYNAMIC).visible).isTrue()
     }
 
     @Test
