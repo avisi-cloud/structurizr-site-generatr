@@ -60,11 +60,11 @@ private fun asciidocToHtml(
 ): String {
     val options = Options.builder()
         .safe(SafeMode.SERVER)
-        // Docs dir needs to be exposed from structurizr, which is not the case at the moment.
+        // Docs dir needs to be exposed from structurizr using `.baseDir(File("./docs/example/workspace-docs"))`,
+        // which is not the case at the moment.
         // Needed for partial include `include::partial.adoc[]`, which structurizr also does not support.
         // see https://docs.asciidoctor.org/asciidoc/latest/directives/include/
         // another option could be https://docs.asciidoctor.org/asciidoctorj/latest/locating-files/#globdirectorywalker-class
-        // .baseDir(File("./docs/example/workspace-docs"))
         .backend("html5")
         .build()
     val html = asciidoctor.convert(asciidoc, options)
