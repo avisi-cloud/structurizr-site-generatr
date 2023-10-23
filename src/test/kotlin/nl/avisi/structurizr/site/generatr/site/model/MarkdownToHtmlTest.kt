@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import com.structurizr.documentation.Format
 import org.junit.jupiter.api.Test
 
 class MarkdownToHtmlTest : ViewModelTest() {
@@ -11,12 +12,13 @@ class MarkdownToHtmlTest : ViewModelTest() {
         val generatorContext = generatorContext()
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## header
                 content
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -33,7 +35,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         val generatorContext = generatorContext()
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## header
@@ -42,6 +44,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 | ------- | ------- |
                 | content | content |
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -73,7 +76,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         }
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## header
@@ -82,6 +85,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 | ------- | ------- |
                 | content | content |
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -100,7 +104,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         }
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## header
@@ -109,6 +113,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 | ------- | ------- |
                 | content | content |
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -140,7 +145,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         }
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## header
@@ -148,6 +153,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 !!! faq "FAQ"
                     This is a FAQ.
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -182,7 +188,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         }
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## Mermaid
@@ -195,6 +201,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 C-->D;
                 ```
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -218,7 +225,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         }
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(
+        val html = toHtml(
             viewModel,
             """
                 ## Mermaid
@@ -231,6 +238,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 C-->D;
                 ```
             """.trimIndent(),
+            Format.Markdown,
             svgFactory
         )
 
@@ -252,7 +260,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         val generatorContext = generatorContext()
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(viewModel, "![System Landscape Diagram](embed:SystemLandscape)", svgFactory)
+        val html = toHtml(viewModel, "![System Landscape Diagram](embed:SystemLandscape)", Format.Markdown, svgFactory)
 
         assertThat(html).isEqualTo(
             """
@@ -289,7 +297,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
         val generatorContext = generatorContext()
         val viewModel = HomePageViewModel(generatorContext)
 
-        val html = markdownToHtml(viewModel, "![Diagram](embed:non-existing)") { _, _ ->
+        val html = toHtml(viewModel, "![Diagram](embed:non-existing)", Format.Markdown) { _, _ ->
             null
         }
 

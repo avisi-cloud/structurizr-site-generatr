@@ -6,24 +6,24 @@ import com.structurizr.documentation.Section
 import com.vladsch.flexmark.ast.Heading
 import com.vladsch.flexmark.ast.Paragraph
 import com.vladsch.flexmark.parser.Parser
+import org.asciidoctor.Options
+import org.asciidoctor.SafeMode
 
 private val parser = Parser.builder().build()
 
-fun Decision.contentText(): String {
-    if (format != Format.Markdown)
-        return ""
-
-    return extractText(content)
+fun Decision.contentText(): String = when (format) {
+    Format.Markdown -> markdownText(content)
+    Format.AsciiDoc -> asciidocText(content)
+    else -> ""
 }
 
-fun Section.contentText(): String {
-    if (format != Format.Markdown)
-        return ""
-
-    return extractText(content)
+fun Section.contentText() = when (format) {
+    Format.Markdown -> markdownText(content)
+    Format.AsciiDoc -> asciidocText(content)
+    else -> ""
 }
 
-private fun extractText(content: String): String {
+private fun markdownText(content: String): String {
     val document = parser.parse(content)
     if (!document.hasChildren())
         return ""
@@ -41,4 +41,11 @@ private fun extractText(content: String): String {
                 .joinToString(" ") { it.chars.toString().trim() }
         )
         .trim()
+}
+
+private fun asciidocText(content: String): String {
+    val options = Options.builder().safe(SafeMode.SERVER).backend("text").build()
+    val text = asciidoctor.convert(content, options)
+
+    return text.lines().joinToString(" ")
 }

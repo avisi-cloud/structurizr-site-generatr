@@ -36,7 +36,7 @@ is generated from the example workspace in this repository.
 - Easy browsing through the site by clicking on software system and container elements in the diagrams.
 - Start a development server which generates a site, serves it and updates the site automatically whenever a file that's
   part of the Structurizr workspace changes.
-- Include documentation (in Markdown format) in the generated site. Both workspace level documentation and software
+- Include documentation (in Markdown or AsciiDoc format) in the generated site. Both workspace level documentation and software
   system level documentation are included in the site.
 - Include ADR's in the generated site. Again, both workspace level ADR's and software system level ADR's are included in
   the site.

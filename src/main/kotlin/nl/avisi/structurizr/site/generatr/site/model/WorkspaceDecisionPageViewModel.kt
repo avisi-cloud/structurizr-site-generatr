@@ -8,7 +8,12 @@ class WorkspaceDecisionPageViewModel(generatorContext: GeneratorContext, decisio
     override val url = url(decision)
     override val pageSubTitle: String = decision.title
 
-    val content = markdownToHtml(this, transformADRLinks(decision.content), generatorContext.svgFactory)
+    val content = toHtml(
+        this,
+        transformADRLinks(decision.content),
+        decision.format,
+        generatorContext.svgFactory
+    )
 
     private fun transformADRLinks(content: String) =
         content.replace("\\[(.*)]\\(#(\\d+)\\)".toRegex()) {
