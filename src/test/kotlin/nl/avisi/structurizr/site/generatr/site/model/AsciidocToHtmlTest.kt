@@ -6,6 +6,7 @@ import com.structurizr.documentation.Format
 import org.junit.jupiter.api.Test
 
 class AsciidocToHtmlTest : ViewModelTest() {
+
     @Test
     fun `translates asciidoc`() {
         val generatorContext = generatorContext()
