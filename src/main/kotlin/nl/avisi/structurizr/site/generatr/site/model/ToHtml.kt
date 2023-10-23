@@ -58,7 +58,6 @@ private fun asciidocToHtml(
     asciidoc: String,
     svgFactory: (key: String, url: String) -> String?
 ): String {
-    val asciidoctor = Asciidoctor.Factory.create()
     val options = Options.builder()
         .safe(SafeMode.SERVER)
         // Docs dir needs to be exposed from structurizr, which is not the case at the moment.
@@ -69,7 +68,7 @@ private fun asciidocToHtml(
         .backend("html5")
         .build()
     val html = asciidoctor.convert(asciidoc, options)
-    asciidoctor.shutdown()
+
     return Jsoup.parse(html)
         .apply {
             body().transformEmbeddedDiagramElements(pageViewModel, svgFactory)

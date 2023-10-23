@@ -50,12 +50,8 @@ private fun markdownText(content: String): String {
 }
 
 private fun asciidocText(content: String): String {
-    val asciidoctor = Asciidoctor.Factory.create()
-    asciidoctor.javaConverterRegistry().register(AsciiDocTextConverter::class.java)
-
     val options = Options.builder().safe(SafeMode.SERVER).backend("text").build()
     val text = asciidoctor.convert(content, options)
-    asciidoctor.shutdown()
 
     return text.lines().joinToString(" ")
 }

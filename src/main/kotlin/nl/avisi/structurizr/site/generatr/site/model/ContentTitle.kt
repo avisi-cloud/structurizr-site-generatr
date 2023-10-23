@@ -27,10 +27,9 @@ private fun Section.markdownTitle(): String {
 }
 
 private fun Section.asciidocTitle(): String {
-    val asciidoctor = Asciidoctor.Factory.create()
     val options = Options.builder().safe(SafeMode.SERVER).build()
     val document = asciidoctor.load(content, options)
-    asciidoctor.shutdown()
+
     if (document.title != null && document.title.isNotEmpty())
         return document.title
 
