@@ -4,10 +4,17 @@ import kotlinx.html.HTML
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemComponentPageViewModel
 
 fun HTML.softwareSystemComponentPage(viewModel: SoftwareSystemComponentPageViewModel) {
-    if (viewModel.visible)
+    if (viewModel.diagramsVisible || viewModel.imagesVisible)
         softwareSystemPage(viewModel) {
-            viewModel.diagrams.forEach {
-                diagram(it)
+            if (viewModel.diagramsVisible) {
+                viewModel.diagrams.forEach {
+                    diagram(it)
+                }
+            }
+            if (viewModel.imagesVisible) {
+                viewModel.images.forEach {
+                    rawImage(it.content)
+                }
             }
         }
     else

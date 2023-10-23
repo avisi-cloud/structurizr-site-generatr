@@ -176,6 +176,18 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
         }
 
+        image internetBankingSystem {
+            image internet-banking-system/images/system.png
+        }
+
+        image apiApplication {
+            image internet-banking-system/images/container.png
+        }
+
+        image accountsSummaryController {
+            image internet-banking-system/images/component.png
+        }
+
         systemlandscape "SystemLandscape" {
             include *
             autoLayout

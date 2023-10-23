@@ -47,3 +47,6 @@ fun ViewSet.hasDynamicViews(softwareSystem: SoftwareSystem) =
 
 fun ViewSet.hasDeploymentViews(softwareSystem: SoftwareSystem) =
     deploymentViews.any { it.softwareSystem == softwareSystem }
+
+fun ViewSet.hasElementImageViews(elementId: String) =
+    imageViews.any { it.elementId ==  elementId}

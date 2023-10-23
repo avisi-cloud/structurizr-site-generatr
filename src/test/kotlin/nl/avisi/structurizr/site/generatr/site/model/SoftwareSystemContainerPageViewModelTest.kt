@@ -56,6 +56,6 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
             generatorContext.workspace.model.addSoftwareSystem("Software system 2")
         )
 
-        assertThat(viewModel.visible).isFalse()
+        assertThat(viewModel.diagramsVisible).isFalse()
     }
 }
