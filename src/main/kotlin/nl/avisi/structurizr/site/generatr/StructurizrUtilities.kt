@@ -4,7 +4,9 @@ import com.structurizr.model.Container
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.view.ImageView
 import com.structurizr.view.ViewSet
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 val Model.includedSoftwareSystems: List<SoftwareSystem>
     get() = softwareSystems.filter { it.includedSoftwareSystem }
@@ -48,5 +50,28 @@ fun ViewSet.hasDynamicViews(softwareSystem: SoftwareSystem) =
 fun ViewSet.hasDeploymentViews(softwareSystem: SoftwareSystem) =
     deploymentViews.any { it.softwareSystem == softwareSystem }
 
-fun ViewSet.hasElementImageViews(elementId: String) =
-    imageViews.any { it.elementId ==  elementId}
+fun getImagesForSystem(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem): List<ImageView> {
+    return generatorContext.workspace.views.imageViews
+        .filter { it.elementId == softwareSystem.id }
+        .sortedBy { it.key }
+}
+
+fun getImagesForContainer(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem): List<ImageView> {
+    val images = mutableListOf<ImageView>()
+    softwareSystem.containers.forEach{ container ->
+        images += generatorContext.workspace.views.imageViews
+            .filter { it.elementId == container.id }
+    }
+    return images
+}
+
+fun getImagesForComponent(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem): List<ImageView> {
+    val images = mutableListOf<ImageView>()
+    softwareSystem.containers.forEach { container ->
+        container.components.forEach { component ->
+            images += generatorContext.workspace.views.imageViews
+                .filter { it.elementId == component.id }
+        }
+    }
+    return images
+}
