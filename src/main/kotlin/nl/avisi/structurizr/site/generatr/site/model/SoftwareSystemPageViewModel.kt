@@ -33,10 +33,9 @@ open class SoftwareSystemPageViewModel(
                 Tab.HOME -> true
                 Tab.DEPENDENCIES -> true
                 Tab.SYSTEM_CONTEXT -> generatorContext.workspace.views.hasSystemContextViews(softwareSystem)
-                Tab.CONTAINER -> generatorContext.workspace.views.hasContainerViews(softwareSystem)
-                Tab.COMPONENT -> generatorContext.workspace.views.hasComponentViews(softwareSystem)
-                //TODO
-                Tab.CODE -> true
+                Tab.CONTAINER -> generatorContext.workspace.views.hasContainerViews(generatorContext, softwareSystem)
+                Tab.COMPONENT -> generatorContext.workspace.views.hasComponentViews(generatorContext, softwareSystem)
+                Tab.CODE -> generatorContext.workspace.views.hasCodeViews(generatorContext, softwareSystem)
                 Tab.DYNAMIC -> generatorContext.workspace.views.hasDynamicViews(softwareSystem)
                 Tab.DEPLOYMENT -> generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
                 Tab.DECISIONS -> softwareSystem.hasDecisions() or softwareSystem.hasContainerDecisions()

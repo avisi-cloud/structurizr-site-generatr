@@ -38,11 +38,14 @@ fun Container.hasSections() = documentation.sections.isNotEmpty()
 fun ViewSet.hasSystemContextViews(softwareSystem: SoftwareSystem) =
     systemContextViews.any { it.softwareSystem == softwareSystem }
 
-fun ViewSet.hasContainerViews(softwareSystem: SoftwareSystem) =
-    containerViews.any { it.softwareSystem == softwareSystem }
+fun ViewSet.hasContainerViews(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) =
+    containerViews.any { it.softwareSystem == softwareSystem } || getImagesForSystem(generatorContext, softwareSystem).isNotEmpty()
 
-fun ViewSet.hasComponentViews(softwareSystem: SoftwareSystem) =
-    componentViews.any { it.softwareSystem == softwareSystem }
+fun ViewSet.hasComponentViews(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) =
+    componentViews.any { it.softwareSystem == softwareSystem } || getImagesForContainer(generatorContext, softwareSystem).isNotEmpty()
+
+fun ViewSet.hasCodeViews(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) =
+    componentViews.any { it.softwareSystem == softwareSystem } || getImagesForComponent(generatorContext, softwareSystem).isNotEmpty()
 
 fun ViewSet.hasDynamicViews(softwareSystem: SoftwareSystem) =
     dynamicViews.any { it.softwareSystem == softwareSystem }

@@ -12,7 +12,7 @@ class SoftwareSystemComponentPageViewModel(generatorContext: GeneratorContext, s
         .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
     val images = getImagesForContainer(generatorContext,softwareSystem)
-    val diagramsVisible = generatorContext.workspace.views.hasComponentViews(softwareSystem)
+    val diagramsVisible = generatorContext.workspace.views.hasComponentViews(generatorContext, softwareSystem)
     val imagesVisible = images.isNotEmpty()
 }
 
