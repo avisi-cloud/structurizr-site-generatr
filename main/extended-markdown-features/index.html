@@ -3,15 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Extended markdown features | Big Bank plc</title>
-    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+    <title>Extended Markdown features | Big Bank plc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
     <link href="../../style.css" rel="stylesheet">
     <link href="./../style-branding.css" rel="stylesheet">
+    <script type="text/javascript" src="../../svg-modal.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
     <link href="../../admonition.css" rel="stylesheet">
 
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/katex.min.css" integrity="sha384-mXD7x5S50Ko38scHSnD4egvoExgMPbrseZorkbE49evAfv9nNcbrXJ8LLNsDgh9d" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
         
-            <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/katex.min.js" integrity="sha384-j/ZricySXBnNMJy9meJCtyXTKMhIJ42heyr7oAdxTDBy/CYA9hzpMo+YTNV5C+1X" crossorigin="anonymous"></script>
+            <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
         
             <script>
             window.WebFontConfig = {
@@ -23,8 +25,9 @@
                 },
             };
             </script>
-            <script defer src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+            <script defer src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" crossorigin="anonymous"></script>
             <link href="../site/favicon.ico" rel="icon" type="image/ico">
+    <link href="../site/custom.css" rel="stylesheet">
   </head>
   <body>
     <script type="text/javascript" src="../../header.js"></script>
@@ -36,7 +39,7 @@
           <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
             <div class="navbar-dropdown is-right"><a href="../../main/" class="navbar-item">main</a>
               <hr class="navbar-divider">
-              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.4</span></div>
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.5</span></div>
             </div>
           </div>
         </div>
@@ -46,7 +49,7 @@
       <aside class="menu p-3">
         <p class="menu-label">General</p>
         <ul class="menu-list has-site-branding">
-          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a><a href="./" class="is-active">Extended markdown features</a></li>
+          <li><a href="../" class="">Home</a><a href="../decisions/" class="">Decisions</a><a href="../software-systems/" class="">Software Systems</a><a href="../embedding-diagrams-and-images/" class="">Embedding diagrams and images</a><a href="./" class="is-active">Extended Markdown features</a><a href="../asciidoc-features/" class="">AsciiDoc features</a></li>
         </ul>
         <p class="menu-label">Software systems</p>
         <ul class="menu-list has-site-branding">
@@ -57,17 +60,17 @@
         <div class="content p-3">
           <div><svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
  <symbol id="adm-faq">
-  <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
    <path d="m20.4 12.2c0 4.5-3.7 8.2-8.2 8.2s-8.2-3.7-8.2-8.2 3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2zm-4.2-2.9c-.1-1.3-1-2.5-2.3-2.9-.8-.2-1.6-.1-2.4.1-.6.1-1.5.2-1.8.6-.4.5.2 1 .6 1.3.6.4 1.1-.1 1.8-.3s3-.7 2.4.8c-.5 1.1-2 1.9-3 2.6-.4.3-.9.6-1.2 1-.5.6.1 1 .7 1.4.4.3.9.2 1.2-.1.5-.5 1-.9 1.6-1.3 1.1-.7 2.5-1.6 2.4-3.2-.2-1.3 0 .7 0 0zm-2.8 6.8c-.3-.5-1.3-1.3-1.9-1.1-.4.1-.4.4-.5.8-.1.2-.4.6-.3.8.1.4 1.5 1.3 1.9 1 .1-.1.9-1.4.8-1.5 0-.1.1.1 0 0z" fill="currentColor" />
   </svg>
  </symbol> <symbol id="adm-info">
-  <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
    <path d="m20.5 11.8c0 4.5-3.7 8.2-8.2 8.2s-8.2-3.7-8.2-8.2 3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2zm-6.7 4c-.1-.1-.2-.2-.2-.3v-4.5c0-.1.1-.2.2-.4s.2-.3.2-.3 0-.1-.1-.1c-.1-.1-.5-.2-1.2-.4-.7-.1-1.2-.2-1.5-.2-.5 0-.7 0-.7.1s.1.3.2.6v4.7c0 .3-.1.5-.2.6-.2.2-.2.3-.2.3.1.1.5.3 1.2.4.6.1 1.2.2 1.6.2h.3c.4-.1.5-.2.5-.5.1 0 .1-.1-.1-.2zm-.9-8.6c-.7-.1-1.2-.2-1.5-.2-.2 0-.5.2-.7.4s-.3.4-.3.6c0 .1 0 .1.1.2s.6.2 1.5.4c1 .3 1.5.4 1.6.3.1 0 .2-.2.3-.5s.2-.5.2-.6v-.1c-.1-.1-.5-.3-1.2-.5z" fill="currentColor" />
   </svg>
  </symbol>
 </svg>
-<h2 id="extended-markdown-features"><a href="#extended-markdown-features" id="extended-markdown-features">Extended markdown features</a></h2>
-<p>This page showcases the ability to use extended markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki <a href="https://github.com/vsch/flexmark-java/wiki/Extensions">Extensions page</a>.</p>
+<h2 id="extended-markdown-features"><a href="#extended-markdown-features" id="extended-markdown-features">Extended Markdown features</a></h2>
+<p>This page showcases the ability to use extended Markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki <a href="https://github.com/vsch/flexmark-java/wiki/Extensions">Extensions page</a>.</p>
 <p>Most of these extended features have to be activated in your architecture model as a property in workspace views.</p>
 <pre><code class="language-DSL">workspace {
     ...
@@ -90,15 +93,15 @@
     ...
 }
 </code></pre>
-<h3 id="tableofcontents"><a href="#tableofcontents" id="tableofcontents">TableOfContents</a></h3>
+<h3 id="table-of-contents"><a href="#table-of-contents" id="table-of-contents">Table of Contents</a></h3>
 <p><code>[TOC]</code> element which renders a table of contents</p>
 <pre><code class="language-markdown">[TOC]
 </code></pre>
 <p>will render into</p>
 <ul>
- <li><a href="#extended-markdown-features">Extended markdown features</a>
+ <li><a href="#extended-markdown-features">Extended Markdown features</a>
   <ul>
-   <li><a href="#tableofcontents">TableOfContents</a></li>
+   <li><a href="#table-of-contents">Table of Contents</a></li>
    <li><a href="#render-tables">Render Tables</a></li>
    <li><a href="#admonition-blocks">Admonition Blocks</a></li>
    <li><a href="#gitlab-flavored-markdown-extensions">GitLab flavored markdown extensions</a></li>
@@ -315,6 +318,6 @@ warning :warning:
     </div>
     <script type="text/javascript" src="../../admonition.js"></script>
     <script type="text/javascript" src="../../reformat-mermaid.js"></script>
-    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';</script>
+    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.5.1/dist/mermaid.esm.min.mjs';</script>
   </body>
 </html>

@@ -1,0 +1,38 @@
+.listree-submenu-heading {
+    cursor: pointer;
+    padding: .5em .75em;
+}
+
+ul.listree {
+    list-style: none
+}
+
+ul.listree-submenu-items {
+    list-style: none;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+div.listree-submenu-heading.collapsed:before {
+    content: "\25B6";
+    display: inline-block;
+    min-width: 20px;
+}
+
+div.listree-submenu-heading.expanded:before {
+    content: "\25BC";
+    display: inline-block;
+    min-width: 20px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-width: 800px;
+    overflow-y: hidden
+}
+
+.menu-list li ul {
+    border-left: 0;
+    margin: .25em;
+    padding-left: .75em;
+}
