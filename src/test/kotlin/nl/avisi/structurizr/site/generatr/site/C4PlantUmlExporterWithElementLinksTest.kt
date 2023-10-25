@@ -9,11 +9,21 @@ import com.structurizr.view.SystemContextView
 import kotlin.test.Test
 
 class C4PlantUmlExporterWithElementLinksTest {
+    private val svgFactory = { _: String, _: String -> """<svg viewBox="0 0 800 900"></svg>""" }
+    private val generatorContext = generatorContext()
+
+    protected fun generatorContext(
+        workspaceName: String = "Workspace name",
+        branches: List<String> = listOf("main"),
+        currentBranch: String = "main",
+        version: String = "1.0.0"
+    ) = GeneratorContext(version, Workspace(workspaceName, ""), branches, currentBranch, false, svgFactory)
+
     @Test
     fun `adds skinparam to remove explicit size from generated svg`() {
         val view = createWorkspaceWithOneSystem()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition)
@@ -24,7 +34,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `adds skinparam to preserve the aspect ratio of the generated svg`() {
         val view = createWorkspaceWithOneSystem()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition)
@@ -35,7 +45,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `renders diagram`() {
         val view = createWorkspaceWithOneSystem()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -49,7 +59,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `renders System Diagram with link to container`() {
         val view = createWorkspaceWithOneSystemWithContainers()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/container/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/container/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -63,7 +73,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `renders System Diagram with link to other system and link to container`() {
         val view = createWorkspaceWithTwoSystemWithContainers()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/container/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/container/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -80,7 +90,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `renders Container Diagram with link to component diagram`() {
         val view = createWorkspaceWithOneSystemWithContainersAndComponents()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/container/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/container/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -105,7 +115,7 @@ class C4PlantUmlExporterWithElementLinksTest {
         val view = workspace.views.createComponentView(container1, "Component2", "")
             .apply { addAllElements() }
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/system-1/component/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/system-1/component/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -127,7 +137,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `link to other software system`() {
         val view = createWorkspaceWithTwoSystems()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/landscape/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(
@@ -144,7 +154,7 @@ class C4PlantUmlExporterWithElementLinksTest {
     fun `link to other software system from two path segments deep`() {
         val view = createWorkspaceWithTwoSystems()
 
-        val diagram = C4PlantUmlExporterWithElementLinks("/system-1/context/")
+        val diagram = C4PlantUmlExporterWithElementLinks("/system-1/context/", generatorContext.workspace)
             .export(view)
 
         assertThat(diagram.definition.withoutHeaderAndFooter()).isEqualTo(

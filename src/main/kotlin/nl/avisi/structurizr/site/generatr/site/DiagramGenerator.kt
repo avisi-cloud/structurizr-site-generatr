@@ -80,7 +80,7 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
 }
 
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
-    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url)
+    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url, workspace)
 
     if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
         plantUMLExporter.addSkinParam(

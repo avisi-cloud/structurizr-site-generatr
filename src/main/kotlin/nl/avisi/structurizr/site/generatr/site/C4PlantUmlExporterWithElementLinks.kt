@@ -1,8 +1,10 @@
 package nl.avisi.structurizr.site.generatr.site
 
+import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.C4PlantUMLExporter
+import com.structurizr.model.Component
 import com.structurizr.model.Container
 import com.structurizr.model.Element
 import com.structurizr.model.SoftwareSystem
@@ -10,7 +12,8 @@ import com.structurizr.view.*
 import nl.avisi.structurizr.site.generatr.*
 
 class C4PlantUmlExporterWithElementLinks(
-    private val url: String
+    private val url: String,
+    private val workspace: Workspace
 ): C4PlantUMLExporter() {
     companion object {
         const val TEMP_URI = "https://will-be-changed-to-relative/"
@@ -35,9 +38,10 @@ class C4PlantUmlExporterWithElementLinks(
 
     override fun writeElement(view: ModelView?, element: Element?, writer: IndentingWriter?) {
         val url = when {
-            needsLinkToSoftwareSystem(element, view) -> getUrlToSoftwareSystem(element)
-            needsLinkToContainerViews(element, view) -> getUrlToContainerViews(element)
-            needsLinkToComponentViews(element, view) -> getUrlToComponentViews(element)
+            needsLinkToSoftwareSystem(element, view) -> getUrlToViewsPage(element?.name?.normalize(), "context")
+            needsLinkToContainerViews(element, view, workspace) -> getUrlToViewsPage(element?.name?.normalize(), "container")
+            needsLinkToComponentViews(element, view, workspace) -> getUrlToViewsPage(element?.parent?.name?.normalize(), "component")
+            needsLinkToCodeViews(element, workspace) -> getUrlToViewsPage(element?.parent?.parent?.name?.normalize(), "code")
             else -> null
         }
 
@@ -50,24 +54,24 @@ class C4PlantUmlExporterWithElementLinks(
     private fun needsLinkToSoftwareSystem(element: Element?, view: ModelView?) =
         element is SoftwareSystem && element.includedSoftwareSystem && element != view?.softwareSystem
 
-    private fun getUrlToSoftwareSystem(element: Element?): String {
-        val path = "/${element?.name?.normalize()}/context/".asUrlToDirectory(url)
-        return "$TEMP_URI$path"
-    }
+    private fun needsLinkToContainerViews(element: Element?, view: ModelView?, workspace: Workspace) =
+        element is SoftwareSystem
+                && element.includedSoftwareSystem
+                && element == view?.softwareSystem
+                && ( element.hasContainers || getImageViewsForId(workspace, element.id).isNotEmpty())
 
-    private fun needsLinkToContainerViews(element: Element?, view: ModelView?) =
-        element is SoftwareSystem && element.includedSoftwareSystem && element == view?.softwareSystem && element.hasContainers
+    private fun needsLinkToComponentViews(element: Element?, view: ModelView?, workspace: Workspace) =
+        element is Container
+                && ( element.hasComponents || getImageViewsForId(workspace, element.id).isNotEmpty())
+                && view !is ComponentView
 
-    private fun getUrlToContainerViews(element: Element?): String {
-        val path = "/${element?.name?.normalize()}/container/".asUrlToDirectory(url)
-        return "$TEMP_URI$path"
-    }
+    private fun needsLinkToCodeViews(element: Element?, workspace: Workspace) =
+        element is Component
+                && getImageViewsForId(workspace, element.id).isNotEmpty()
 
-    private fun needsLinkToComponentViews(element: Element?, view: ModelView?) =
-        element is Container && element.hasComponents && view !is ComponentView
 
-    private fun getUrlToComponentViews(element: Element?): String {
-        val path = "/${element?.parent?.name?.normalize()}/component/".asUrlToDirectory(url)
+    private fun getUrlToViewsPage(systemName: String?, page: String): String {
+        val path = "/$systemName/$page/".asUrlToDirectory(url)
         return "$TEMP_URI$path"
     }
 

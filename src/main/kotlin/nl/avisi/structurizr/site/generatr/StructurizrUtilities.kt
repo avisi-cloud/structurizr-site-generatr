@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr
 
+import com.structurizr.Workspace
 import com.structurizr.model.Container
 import com.structurizr.model.Location
 import com.structurizr.model.Model
@@ -39,10 +40,10 @@ fun ViewSet.hasSystemContextViews(softwareSystem: SoftwareSystem) =
     systemContextViews.any { it.softwareSystem == softwareSystem }
 
 fun ViewSet.hasContainerViews(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) =
-    containerViews.any { it.softwareSystem == softwareSystem } || getImagesForSystem(generatorContext, softwareSystem).isNotEmpty()
+    containerViews.any { it.softwareSystem == softwareSystem } || getImagesForSystem(generatorContext.workspace, softwareSystem).isNotEmpty()
 
 fun ViewSet.hasComponentViews(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) =
-    componentViews.any { it.softwareSystem == softwareSystem } || getImagesForContainer(generatorContext, softwareSystem).isNotEmpty()
+    componentViews.any { it.softwareSystem == softwareSystem } || getImagesForContainer(generatorContext.workspace, softwareSystem).isNotEmpty()
 
 fun ViewSet.hasCodeViews(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) =
     componentViews.any { it.softwareSystem == softwareSystem } || getImagesForComponent(generatorContext, softwareSystem).isNotEmpty()
@@ -53,16 +54,22 @@ fun ViewSet.hasDynamicViews(softwareSystem: SoftwareSystem) =
 fun ViewSet.hasDeploymentViews(softwareSystem: SoftwareSystem) =
     deploymentViews.any { it.softwareSystem == softwareSystem }
 
-fun getImagesForSystem(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem): List<ImageView> {
-    return generatorContext.workspace.views.imageViews
+fun getImageViewsForId(workspace: Workspace, id: String): List<ImageView> {
+    return workspace.views.imageViews
+        .filter { it.elementId == id }
+        .sortedBy { it.key }
+}
+
+fun getImagesForSystem(workspace: Workspace, softwareSystem: SoftwareSystem): List<ImageView> {
+    return workspace.views.imageViews
         .filter { it.elementId == softwareSystem.id }
         .sortedBy { it.key }
 }
 
-fun getImagesForContainer(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem): List<ImageView> {
+fun getImagesForContainer(workspace: Workspace, softwareSystem: SoftwareSystem): List<ImageView> {
     val images = mutableListOf<ImageView>()
     softwareSystem.containers.forEach{ container ->
-        images += generatorContext.workspace.views.imageViews
+        images += workspace.views.imageViews
             .filter { it.elementId == container.id }
     }
     return images
