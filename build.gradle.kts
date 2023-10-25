@@ -20,13 +20,14 @@ dependencies {
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
 
-    implementation("com.structurizr:structurizr-core:1.26.1")
+    implementation("com.structurizr:structurizr-core:1.27.0")
     implementation("com.structurizr:structurizr-dsl:1.32.0")
     implementation("com.structurizr:structurizr-export:1.16.1")
 
     implementation("net.sourceforge.plantuml:plantuml:1.2023.12")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
+    implementation("org.asciidoctor:asciidoctorj:2.5.10")
     implementation("org.jsoup:jsoup:1.16.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")

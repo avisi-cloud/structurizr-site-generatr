@@ -25,6 +25,13 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
             createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
         }
 
+    private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"]
+
+    private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
+        .filter { it.group != null }
+        .map { it.group + groupSeparator + it.name }
+        .sortedBy { it.lowercase() }
+
     private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
         LinkViewModel(pageViewModel, title, href, exact)
 
@@ -32,12 +39,14 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         data class MutableMenuNode(val name: String, val children: MutableList<MutableMenuNode>) {
             fun toMenuNode(): MenuNodeViewModel = MenuNodeViewModel(name, children.map { it.toMenuNode() })
         }
+        if (groupSeparator == null)
+            throw IllegalStateException("Property structurizr.groupSeparator not defined for model") // This is also validated earlier by structurizr when parsing the model
 
         val rootNode = MutableMenuNode("", mutableListOf())
 
         softwareSystemPaths.forEach { path ->
             var currentNode = rootNode
-            path.split(delimiter).forEach { part ->
+            path.split(groupSeparator).forEach { part ->
                 val existingNode = currentNode.children.find { it.name == part }
                 currentNode = if (existingNode == null) {
                     val newNode = MutableMenuNode(part, mutableListOf())
@@ -51,10 +60,4 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
 
         return rootNode.toMenuNode()
     }
-
-    private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
-        .map { it.group + "/" + it.name }
-        .sortedBy { it.lowercase() }
-
-    private val delimiter = '/'
 }

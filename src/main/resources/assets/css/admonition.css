@@ -86,6 +86,7 @@
     border-left-color: #48C4FF;
 }
 
+.adm-block .adm-block.adm-abstract .adm-heading,
 .adm-block.adm-abstract .adm-heading {
     background: #E8F7FF;
     color: #48C4FF;
@@ -102,6 +103,7 @@
     border-left-color: #F50057;
 }
 
+.adm-block .adm-block.adm-bug .adm-heading,
 .adm-block.adm-bug .adm-heading {
     background: #FEE7EE;
     color: #F50057;
@@ -117,6 +119,7 @@
     border-left-color: #FE1744;
 }
 
+.adm-block .adm-block.adm-danger .adm-heading,
 .adm-block.adm-danger .adm-heading {
     background: #FFE9ED;
     color: #FE1744;
@@ -132,6 +135,7 @@
     border-left-color: #7940ff;
 }
 
+.adm-block .adm-block.adm-example .adm-heading,
 .adm-block.adm-example .adm-heading {
     background: #EFEBFF;
     color: #7940ff;
@@ -147,6 +151,7 @@
     border-left-color: #FE5E5E;
 }
 
+.adm-block .adm-block.adm-fail .adm-heading,
 .adm-block.adm-fail .adm-heading {
     background: #FFEEEE;
     color: #Fe5e5e;
@@ -162,6 +167,7 @@
     border-left-color: #5ED116;
 }
 
+.adm-block .adm-block.adm-faq .adm-heading,
 .adm-block.adm-faq .adm-heading {
     background: #EEFAE8;
     color: #5ED116;
@@ -177,6 +183,7 @@
     border-left-color: #00B8D4;
 }
 
+.adm-block .adm-block.adm-info .adm-heading,
 .adm-block.adm-info .adm-heading {
     background: #E8F7FA;
     color: #00B8D4;
@@ -192,6 +199,7 @@
     border-left-color: #448AFF;
 }
 
+.adm-block.adm-block.adm-note .adm-heading,
 .adm-block.adm-note .adm-heading {
     background: #EDF4FF;
     color: #448AFF;
@@ -207,6 +215,7 @@
     border-left-color: #9E9E9E;
 }
 
+.adm-block .adm-block.adm-quote .adm-heading,
 .adm-block.adm-quote .adm-heading {
     background: #F4F4F4;
     color: #9E9E9E;
@@ -222,6 +231,7 @@
     border-left-color: #1DCD63;
 }
 
+.adm-block .adm-block.adm-success .adm-heading,
 .adm-block.adm-success .adm-heading {
     background: #E9F8EE;
     color: #1DCD63;
@@ -237,6 +247,7 @@
     border-left-color: #01BFA5;
 }
 
+.adm-block .adm-block.adm-tip .adm-heading,
 .adm-block.adm-tip .adm-heading {
     background: #E9F9F6;
     color: #01BFA5;
@@ -252,6 +263,7 @@
     border-left-color: #FF9001;
 }
 
+.adm-block .adm-block.adm-warning .adm-heading,
 .adm-block.adm-warning .adm-heading {
     background: #FEF3E8;
     color: #FF9001;
@@ -263,3 +275,27 @@
     color: #fcbb6a;
 }
 
+/* Assciidoc adaptions */
+.admonitionblock .icon > .title {
+    word-break: normal;
+    font-size: 1em;
+}
+
+.admonitionblock table,
+.admonitionblock thead,
+.admonitionblock tbody,
+.admonitionblock th,
+.admonitionblock td,
+.admonitionblock tr {
+    display: block;
+}
+
+.admonitionblock td.icon {
+    width: initial;
+    height: initial;
+    margin-left: -10px;
+}
+
+.admonitionblock .title {
+    font-size: 1.5em;
+}

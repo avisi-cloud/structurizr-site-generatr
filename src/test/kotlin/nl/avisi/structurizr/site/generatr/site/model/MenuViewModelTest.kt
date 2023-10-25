@@ -68,7 +68,7 @@ class MenuViewModelTest : ViewModelTest() {
         generatorContext.workspace.documentation.addSection(createSection("# Home"))
         val section1 = createSection("# Doc 1")
             .also { generatorContext.workspace.documentation.addSection(it) }
-        val section2 = createSection(" Doc Title 2")
+        val section2 = createSection("# Doc Title 2")
             .also { generatorContext.workspace.documentation.addSection(it) }
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
@@ -139,7 +139,8 @@ class MenuViewModelTest : ViewModelTest() {
     @Test
     fun `show nested groups in software systems list`() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
-        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups","true")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
+        generatorContext.workspace.model.addProperty("structurizr.groupSeparator", "/")
         generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
         generatorContext.workspace.model.addSoftwareSystem("System 2").group = "Group 1"
         generatorContext.workspace.model.addSoftwareSystem("System 3").group = "Group 2"

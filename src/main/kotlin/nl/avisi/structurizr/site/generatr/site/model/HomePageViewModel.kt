@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import com.structurizr.documentation.Format
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import org.intellij.lang.annotations.Language
 
@@ -7,10 +8,12 @@ class HomePageViewModel(generatorContext: GeneratorContext) : PageViewModel(gene
     override val pageSubTitle = if (generatorContext.workspace.name.isNotBlank()) "" else "Home"
     override val url = url()
 
-    val content = markdownToHtml(
+    val content = toHtml(
         this,
-        markdown = generatorContext.workspace.documentation.sections
+        content = generatorContext.workspace.documentation.sections
             .firstOrNull { it.order == 1 }?.content ?: DEFAULT_HOMEPAGE_CONTENT,
+        format = generatorContext.workspace.documentation.sections
+            .firstOrNull { it.order == 1 }?.format ?: Format.Markdown,
         svgFactory = generatorContext.svgFactory
     )
 

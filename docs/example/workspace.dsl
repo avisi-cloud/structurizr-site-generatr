@@ -11,7 +11,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     model {
         customer = person "Personal Banking Customer" "A customer of the bank, with personal bank accounts." "Customer"
 
-        acquirer = softwaresystem "Acquirer" "Facilitates PIN transactions for merchants."
+        acquirer = softwaresystem "Acquirer" "Facilitates PIN transactions for merchants." "External System"
 
         enterprise "Big Bank plc" {
             supportStaff = person "Customer Service Staff" "Customer service staff within the bank." "Bank Staff" {
@@ -158,15 +158,18 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     views {
         properties {
             "c4plantuml.elementProperties" "true"
+            "c4plantuml.tags" "true"
             "generatr.style.colors.primary" "#485fc7"
             "generatr.style.colors.secondary" "#ffffff"
             "generatr.style.faviconPath" "site/favicon.ico"
             "generatr.style.logoPath" "site/logo.png"
+
+            // Absolute URL's like "https://example.com/custom.css" are also supported
             "generatr.style.customStylesheet" "site/custom.css"
-            //"generatr.style.customStylesheet" "https://example.com/custom.css"
+
             "generatr.svglink.target" "_self"
 
-            // full list of available "generatr.markdown.flexmark.extensions"
+            // Full list of available "generatr.markdown.flexmark.extensions"
             // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"
             // see https://github.com/vsch/flexmark-java/wiki/Extensions
             // ATTENTION:
@@ -267,14 +270,17 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 shape Person
             }
             element "Customer" {
-                background #08427b
+                background #686868
             }
             element "Bank Staff" {
-                background #999999
+                background #08427B
             }
             element "Software System" {
                 background #1168bd
                 color #ffffff
+            }
+            element "External System" {
+                background #686868
             }
             element "Existing System" {
                 background #999999
