@@ -139,7 +139,8 @@ class MenuViewModelTest : ViewModelTest() {
     @Test
     fun `show nested groups in software systems list`() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
-        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups","true")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
+        generatorContext.workspace.model.addProperty("structurizr.groupSeparator", "/")
         generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
         generatorContext.workspace.model.addSoftwareSystem("System 2").group = "Group 1"
         generatorContext.workspace.model.addSoftwareSystem("System 3").group = "Group 2"
