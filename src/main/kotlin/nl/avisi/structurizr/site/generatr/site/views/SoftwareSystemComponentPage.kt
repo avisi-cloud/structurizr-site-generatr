@@ -13,7 +13,7 @@ fun HTML.softwareSystemComponentPage(viewModel: SoftwareSystemComponentPageViewM
             }
             if (viewModel.imagesVisible) {
                 viewModel.images.forEach {
-                    rawImage(it.content)
+                    image(it)
                 }
             }
         }

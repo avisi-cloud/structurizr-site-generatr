@@ -7,7 +7,7 @@ fun HTML.softwareSystemCodePage(viewModel: SoftwareSystemCodePageViewModel) {
     if (viewModel.imagesVisible) {
         softwareSystemPage(viewModel) {
             viewModel.images.forEach {
-                rawImage(it.content)
+                image(it)
             }
         }
     } else

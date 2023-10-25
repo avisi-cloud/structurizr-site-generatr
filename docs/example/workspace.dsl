@@ -181,14 +181,26 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         image internetBankingSystem {
             image internet-banking-system/images/system.png
+            title "Sample ImageView - System"
+            description "This is a sample imageView for containers of a softwareSystem"
         }
 
         image apiApplication {
             image internet-banking-system/images/container.png
+            title "Sample ImageView - System"
+            description "This is a sample imageView for components of a container"
         }
 
         image accountsSummaryController {
             image internet-banking-system/images/component.png
+            title "Sample ImageView - accountsSummaryController Component"
+            description "This is a sample imageView for code of a component"
+        }
+
+        image resetPasswordController {
+            image internet-banking-system/images/component.png
+            title "Sample ImageView - resetPasswordController Component"
+            description "This is a sample imageView for code of a component"
         }
 
         systemlandscape "SystemLandscape" {
