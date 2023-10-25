@@ -4,11 +4,11 @@ import com.structurizr.view.ImageView
 import kotlinx.html.*
 
 fun FlowContent.image(image: ImageView) {
-    div {
+    div(classes = "has-text-centered") {
+        p(classes = "has-text-weight-bold"){+image.title}
         img {
             src = image.content
         }
-        p{image.title}
-        p{image.description}
+        p{+image.description}
     }
 }
