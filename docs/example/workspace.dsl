@@ -10,7 +10,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
     model {
         customer = person "Personal Banking Customer" "A customer of the bank, with personal bank accounts." "Customer"
-
         acquirer = softwaresystem "Acquirer" "Facilitates PIN transactions for merchants." "External System"
 
         enterprise "Big Bank plc" {
@@ -111,7 +110,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     softwareSystemInstance mainframe
                 }
             }
-
         }
 
         deploymentEnvironment "Live" {
@@ -123,7 +121,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     liveSinglePageApplicationInstance = containerInstance singlePageApplication
                 }
             }
-
             deploymentNode "Big Bank plc" "" "Big Bank plc data center" {
                 deploymentNode "bigbank-web***" "" "Ubuntu 16.04 LTS" "" 4 {
                     deploymentNode "Apache Tomcat" "" "Apache Tomcat 8.x" {
@@ -135,7 +132,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                         liveApiApplicationInstance = containerInstance apiApplication
                     }
                 }
-
                 deploymentNode "bigbank-db01" "" "Ubuntu 16.04 LTS" {
                     primaryDatabaseServer = deploymentNode "Oracle - Primary" "" "Oracle 12c" {
                         livePrimaryDatabaseInstance = containerInstance database
@@ -150,7 +146,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     softwareSystemInstance mainframe
                 }
             }
-
             primaryDatabaseServer -> secondaryDatabaseServer "Replicates data to"
         }
     }
@@ -163,83 +158,37 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             "generatr.style.colors.secondary" "#ffffff"
             "generatr.style.faviconPath" "site/favicon.ico"
             "generatr.style.logoPath" "site/logo.png"
-
-            // Absolute URL's like "https://example.com/custom.css" are also supported
             "generatr.style.customStylesheet" "site/custom.css"
-
+            "generatr.search.language" "en"
             "generatr.svglink.target" "_self"
-
-            // Full list of available "generatr.markdown.flexmark.extensions"
-            // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"
-            // see https://github.com/vsch/flexmark-java/wiki/Extensions
-            // ATTENTION:
-            // * "generatr.markdown.flexmark.extensions" values must be separated by comma
-            // * it's not possible to use "GitLab" and "ResizableImage" extensions together
-            // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
+            "generatr.site.nestGroups" "false"
             "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
         }
 
-        image internetBankingSystem {
-            image internet-banking-system/images/system.png
-            title "Sample ImageView - System"
-            description "This is a sample imageView for containers of a softwareSystem"
+        !script groovy {
+            workspace.views.createDefaultViews()
         }
 
-        image apiApplication {
-            image internet-banking-system/images/container.png
-            title "Sample ImageView - System"
-            description "This is a sample imageView for components of a container"
+        image atm {
+            image atm/atm-example.png
+            title "ATM System"
+            description "Image View to show how the ATM system works internally"
+        }
+
+        image database {
+            image internet-banking-system/database-erd-example.jpg
+            title "Database Entity Relationship Diagram"
+            description "Image View to show the ERD diagram for the database container"
         }
 
         image accountsSummaryController {
-            image internet-banking-system/images/component.png
+            image internet-banking-system/uml-class-diagram.png
             title "Sample ImageView - accountsSummaryController Component"
-            description "This is a sample imageView for code of a component"
-        }
-
-        image resetPasswordController {
-            image internet-banking-system/images/component.png
-            title "Sample ImageView - resetPasswordController Component"
             description "This is a sample imageView for code of a component"
         }
 
         systemlandscape "SystemLandscape" {
             include *
-            autoLayout
-        }
-
-        systemcontext internetBankingSystem "SystemContext" {
-            include *
-            animation {
-                internetBankingSystem
-                customer
-                mainframe
-                email
-            }
-            autoLayout
-        }
-
-        container internetBankingSystem "Containers" {
-            include *
-            animation {
-                customer mainframe email
-                webApplication
-                singlePageApplication
-                mobileApp
-                apiApplication
-                database
-            }
-            autoLayout
-        }
-
-        component apiApplication "Components" {
-            include *
-            animation {
-                singlePageApplication mobileApp database email mainframe
-                signinController securityComponent
-                accountsSummaryController mainframeBankingSystemFacade
-                resetPasswordController emailComponent
-            }
             autoLayout
         }
 
@@ -250,28 +199,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             database -> securityComponent "Returns user data to"
             securityComponent -> signinController "Returns true if the hashed password matches"
             signinController -> singlePageApplication "Sends back an authentication token to"
-            autoLayout
-        }
-
-        deployment internetBankingSystem "Development" "DevelopmentDeployment" {
-            include *
-            animation {
-                developerSinglePageApplicationInstance
-                developerWebApplicationInstance developerApiApplicationInstance
-                developerDatabaseInstance
-            }
-            autoLayout
-        }
-
-        deployment internetBankingSystem "Live" "LiveDeployment" {
-            include *
-            animation {
-                liveSinglePageApplicationInstance
-                liveMobileAppInstance
-                liveWebApplicationInstance liveApiApplicationInstance
-                livePrimaryDatabaseInstance
-                liveSecondaryDatabaseInstance
-            }
             autoLayout
         }
 
