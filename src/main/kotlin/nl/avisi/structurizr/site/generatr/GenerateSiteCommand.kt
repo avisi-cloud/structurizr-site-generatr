@@ -143,5 +143,5 @@ class GenerateSiteCommand : Subcommand(
 fun branchComparator(defaultBranch: String) = Comparator<String> { a, b ->
     if (a == defaultBranch) -1
     else if (b == defaultBranch) 1
-    else a.compareTo(b)
+    else a.compareTo(b, ignoreCase = true)
 }
