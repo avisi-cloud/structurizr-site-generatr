@@ -1,12 +1,11 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
-import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuNodeViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
-fun DIV.menu(viewModel: MenuViewModel, nestGroups:Boolean) {
+fun DIV.menu(viewModel: MenuViewModel, nestGroups: Boolean) {
     aside(classes = "menu p-3") {
         generalSection(viewModel.generalItems)
         softwareSystemsSection(viewModel, nestGroups)
@@ -18,10 +17,10 @@ private fun ASIDE.generalSection(items: List<LinkViewModel>) {
     menuItemLinks(items)
 }
 
-private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups:Boolean) {
+private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: Boolean) {
     p(classes = "menu-label") { +"Software systems" }
-    if(nestGroups){
-        ul(classes = "listree menu-list has-site-branding"){
+    if (nestGroups) {
+        ul(classes = "listree menu-list has-site-branding") {
             buildHtmlTree(viewModel.softwareSystemNodes(), viewModel).invoke(this)
         }
     } else {
@@ -49,21 +48,14 @@ private fun buildHtmlTree(node: MenuNodeViewModel, viewModel: MenuViewModel): UL
         }
     }
 
-    if (node.name.isNotEmpty()  && node.children.isNotEmpty()) {
+    if (node.name.isNotEmpty() && node.children.isNotEmpty()) {
         li {
-            if(node.name == "null"){
-                div(classes = "listree-submenu-heading") {
-                    +"No Group"
-                }
-            } else {
-                div(classes = "listree-submenu-heading") {
-                    +node.name
-                }
+            div(classes = "listree-submenu-heading") {
+                +node.name
             }
-
             ul(classes = "listree-submenu-items") {
                 for (child in node.children) {
-                    buildHtmlTree(child,viewModel).invoke(this)
+                    buildHtmlTree(child, viewModel).invoke(this)
                 }
             }
         }
