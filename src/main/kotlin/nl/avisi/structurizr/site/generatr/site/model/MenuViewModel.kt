@@ -28,8 +28,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
     private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"] ?: "/"
 
     private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
-        .filter { it.group != null }
-        .map { it.group + groupSeparator + it.name }
+        .map { "${it.group ?: ""}$groupSeparator${it.name}" }
         .sortedBy { it.lowercase() }
 
     private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
