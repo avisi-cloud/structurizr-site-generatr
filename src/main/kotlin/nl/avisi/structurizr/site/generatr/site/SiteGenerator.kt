@@ -10,6 +10,7 @@ import java.io.File
 import java.math.BigInteger
 import java.nio.file.Path
 import java.security.MessageDigest
+import java.util.concurrent.ConcurrentHashMap
 
 fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/css/style.css")
@@ -62,8 +63,9 @@ fun generateSite(
     serving: Boolean = false
 ) {
     val generatorContext = GeneratorContext(version, workspace, branches, currentBranch, serving) { key, url ->
+        val diagramCache = ConcurrentHashMap<String, String>()
         workspace.views.views.singleOrNull { view -> view.key == key }
-            ?.let { generateDiagramWithElementLinks(workspace, it, url) }
+            ?.let { generateDiagramWithElementLinks(workspace, it, url, diagramCache) }
     }
 
     val branchDir = File(exportDir, currentBranch)

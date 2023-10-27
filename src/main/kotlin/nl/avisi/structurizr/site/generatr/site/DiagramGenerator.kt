@@ -36,9 +36,12 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
         }
 }
 
-private val diagramCache = ConcurrentHashMap<String, String>()
-
-fun generateDiagramWithElementLinks(workspace: Workspace, view: View, url: String): String {
+fun generateDiagramWithElementLinks(
+    workspace: Workspace,
+    view: View,
+    url: String,
+    diagramCache: ConcurrentHashMap<String, String>
+): String {
     val diagram = generatePlantUMLDiagramWithElementLinks(workspace, view, url)
 
     val name = "${diagram.key}-${view.key}"
