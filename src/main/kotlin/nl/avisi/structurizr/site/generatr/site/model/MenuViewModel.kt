@@ -25,7 +25,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
             createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
         }
 
-    private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"]
+    private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"] ?: "/"
 
     private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
         .filter { it.group != null }
@@ -39,8 +39,6 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         data class MutableMenuNode(val name: String, val children: MutableList<MutableMenuNode>) {
             fun toMenuNode(): MenuNodeViewModel = MenuNodeViewModel(name, children.map { it.toMenuNode() })
         }
-        if (groupSeparator == null)
-            throw IllegalStateException("Property structurizr.groupSeparator not defined for model") // This is also validated earlier by structurizr when parsing the model
 
         val rootNode = MutableMenuNode("", mutableListOf())
 
