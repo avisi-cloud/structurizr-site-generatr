@@ -33,7 +33,9 @@ is generated from the example workspace in this repository.
 
 - Generate a static HTML site, based on a Structurizr DSL workspace.
 - Generates diagrams in SVG, PNG and PlantUML format, which can be viewed and downloaded from the generated site.
-- Easy browsing through the site by clicking on software system and container elements in the diagrams.
+- Easy browsing through the site by clicking on software system and container elements in the diagrams. Note that
+  external software systems are excluded from the menu. A software system is considered external when it lives outside
+  the (deprecated) enterprise boundary or when groups are used and the software system is outside of any group.   
 - Start a development server which generates a site, serves it and updates the site automatically whenever a file that's
   part of the Structurizr workspace changes.
 - Include documentation (in Markdown or AsciiDoc format) in the generated site. Both workspace level documentation and software
@@ -268,7 +270,7 @@ architecture model:
 
 
 See the included example for usage of some those properties in the
-[C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L159).
+[C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L163).
 
 ## Contributing
 

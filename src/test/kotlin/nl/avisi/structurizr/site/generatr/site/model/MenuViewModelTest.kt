@@ -181,6 +181,22 @@ class MenuViewModelTest : ViewModelTest() {
             }
     }
 
+    @Test
+    fun `do not show menu items of software systems outside of groups when groups are used`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
+        generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
+        generatorContext.workspace.model.addSoftwareSystem("External system")
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemNodes().children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].name).isEqualTo("Group 1")
+                assertThat(it.softwareSystemNodes().children[0].children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("System 1")
+            }
+    }
+
     private fun createPageViewModel(generatorContext: GeneratorContext, url: String = "/master/page"): PageViewModel {
         return object : PageViewModel(generatorContext) {
             override val url = url

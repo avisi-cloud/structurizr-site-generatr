@@ -7,10 +7,10 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
 val Model.includedSoftwareSystems: List<SoftwareSystem>
-    get() = softwareSystems.filter { it.includedSoftwareSystem }
-
-val SoftwareSystem.includedSoftwareSystem
-    get() = this.location != Location.External
+    get() = if (softwareSystems.any { it.group != null })
+        softwareSystems.filter { it.group != null }
+    else
+        softwareSystems.filter { it.location != Location.External }
 
 val Container.hasComponents
     get() = this.components.isNotEmpty()
