@@ -1,6 +1,5 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class MenuViewModel(generatorContext: GeneratorContext, private val pageViewModel: PageViewModel) {
@@ -19,7 +18,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
             .forEach { yield(createMenuItem(it.contentTitle(), WorkspaceDocumentationSectionPageViewModel.url(it))) }
     }.toList()
 
-    val softwareSystemItems = generatorContext.workspace.model.includedSoftwareSystems
+    val softwareSystemItems = pageViewModel.includedSoftwareSystems
         .sortedBy { it.name.lowercase() }
         .map {
             createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
@@ -27,7 +26,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
 
     private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"] ?: "/"
 
-    private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
+    private val softwareSystemPaths = pageViewModel.includedSoftwareSystems
         .map { "${it.group ?: ""}$groupSeparator${it.name}" }
         .sortedBy { it.lowercase() }
 
