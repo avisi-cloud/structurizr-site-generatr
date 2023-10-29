@@ -90,9 +90,23 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `dependencies from and to external systems`() {
+    fun `dependencies from and to external systems (outside enterprise boundary)`() {
         val externalSystem = generatorContext.workspace.model
             .addSoftwareSystem(Location.External, "External system", "")
+        externalSystem.uses(softwareSystem1, "Uses", "REST")
+        softwareSystem1.uses(externalSystem, "Uses", "REST")
+
+        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+        assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+        assertThat(viewModel.dependenciesOutboundTable.bodyRows[0].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+    }
+
+    @Test
+    fun `dependencies from and to external systems (outside of any group when using groups)`() {
+        softwareSystem1.group = "Group 1"
+        val externalSystem = generatorContext.workspace.model.addSoftwareSystem("External system")
         externalSystem.uses(softwareSystem1, "Uses", "REST")
         softwareSystem1.uses(externalSystem, "Uses", "REST")
 

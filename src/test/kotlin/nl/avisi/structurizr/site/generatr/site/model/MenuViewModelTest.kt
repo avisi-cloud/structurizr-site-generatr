@@ -136,7 +136,7 @@ class MenuViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `do not show menu entries for software systems with an external location`() {
+    fun `do not show menu entries for software systems with an external location (outside enterprise boundary)`() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
         generatorContext.workspace.model.addSoftwareSystem(Location.External, "System 1", "")
 
@@ -147,10 +147,25 @@ class MenuViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show software systems from single group in software systems list`() {
+    fun `do not show menu entries for software systems with an external location (outside of any group when using groups)`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
+        generatorContext.workspace.model.addSoftwareSystem("External system")
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemNodes().children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].name).isEqualTo("Group 1")
+                assertThat(it.softwareSystemNodes().children[0].children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("System 1")
+            }
+    }
+
+    @Test
+    fun `show software systems in nested groups from single group in software systems list`() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
         generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
-        generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
+        generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
 
         MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let {
@@ -166,10 +181,10 @@ class MenuViewModelTest : ViewModelTest() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
         generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
         generatorContext.workspace.model.addProperty("structurizr.groupSeparator", "/")
-        generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
-        generatorContext.workspace.model.addSoftwareSystem("System 2").group = "Group 1"
-        generatorContext.workspace.model.addSoftwareSystem("System 3").group = "Group 2"
-        generatorContext.workspace.model.addSoftwareSystem("System 4").group = "Group 1/Group 3"
+        generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
+        generatorContext.workspace.model.addSoftwareSystem("System 2").apply { group = "Group 1" }
+        generatorContext.workspace.model.addSoftwareSystem("System 3").apply { group = "Group 2" }
+        generatorContext.workspace.model.addSoftwareSystem("System 4").apply { group = "Group 1/Group 3" }
 
         MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let {
@@ -178,22 +193,6 @@ class MenuViewModelTest : ViewModelTest() {
                 assertThat(it.softwareSystemNodes().children[0].children).hasSize(3)
                 assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("Group 3")
                 assertThat(it.softwareSystemNodes().children[0].children[0].children[0].name).isEqualTo("System 4")
-            }
-    }
-
-    @Test
-    fun `do not show menu items of software systems outside of groups when groups are used`() {
-        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
-        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
-        generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
-        generatorContext.workspace.model.addSoftwareSystem("External system")
-
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
-            .let {
-                assertThat(it.softwareSystemNodes().children).hasSize(1)
-                assertThat(it.softwareSystemNodes().children[0].name).isEqualTo("Group 1")
-                assertThat(it.softwareSystemNodes().children[0].children).hasSize(1)
-                assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("System 1")
             }
     }
 
