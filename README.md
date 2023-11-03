@@ -35,7 +35,7 @@ is generated from the example workspace in this repository.
 - Generates diagrams in SVG, PNG and PlantUML format, which can be viewed and downloaded from the generated site.
 - Easy browsing through the site by clicking on software system and container elements in the diagrams. Note that
   external software systems are excluded from the menu. A software system is considered external when it lives outside
-  the (deprecated) enterprise boundary or when groups are used and the software system is outside of any group.   
+  the (deprecated) enterprise boundary or when it contains a specific tag, see [Customizing the generated website](#customizing-the-generated-website). 
 - Start a development server which generates a site, serves it and updates the site automatically whenever a file that's
   part of the Structurizr workspace changes.
 - Include documentation (in Markdown or AsciiDoc format) in the generated site. Both workspace level documentation and software
@@ -266,8 +266,8 @@ architecture model:
 | `generatr.search.language`              | Indexing/stemming language for the search index. See [Lunr language support](https://github.com/olivernn/lunr-languages)                                                                                                                                                                                                                         | `en`      | `nl`                                                 |
 | `generatr.markdown.flexmark.extensions` | Additional extensions to the markdown generator to add new markdown capabilities. [More Details](https://avisi-cloud.github.io/structurizr-site-generatr/main/extended-markdown-features/)                                                                                                                                                       | Tables    | `Tables,Admonition`                                  |
 | `generatr.svglink.target`               | Specifies the link target for element links in the exported svg                                                                                                                                                                                                                                                                                  | `_top`    | `_self`                                              |
-| `generatr.site.nestGroups`              | Will show software systems in the left side navigator in collapsable groups                                                                                                                                                                                                                                                                      | `false`   | `true`                                               |
-
+| `generatr.site.externalTag`             | Software systems containing this tag will be considered external                                                                                                                                                                                                                                                                                 |           |                                                      |
+| `generatr.site.nestGroups`              | Will show software systems in the left side navigator in collapsable ~~~~groups                                                                                                                                                                                                                                                                  | `false`   | `true`                                               |
 
 See the included example for usage of some those properties in the
 [C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L163).

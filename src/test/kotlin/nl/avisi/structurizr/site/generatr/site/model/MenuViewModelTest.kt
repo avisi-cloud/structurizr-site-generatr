@@ -147,10 +147,11 @@ class MenuViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `do not show menu entries for software systems with an external location (outside of any group when using groups)`() {
+    fun `do not show menu entries for software systems with an external location (declared external by tag)`() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
         generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
-        generatorContext.workspace.model.addSoftwareSystem("External system")
+        generatorContext.workspace.model.addSoftwareSystem("External system").apply { addTags("External System") }
 
         MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let {

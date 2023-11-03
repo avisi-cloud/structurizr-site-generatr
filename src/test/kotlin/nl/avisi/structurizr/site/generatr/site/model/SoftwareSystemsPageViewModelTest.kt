@@ -79,10 +79,12 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `external systems have grey text (outside of any group when using groups)`() {
+    fun `external systems have grey text (declared external by tag)`() {
         val generatorContext = generatorContext()
-        generatorContext.workspace.model.addSoftwareSystem("system 1", "System 1 description").apply { group = "Group 1" }
-        generatorContext.workspace.model.addSoftwareSystem("system 2", "System 2 description")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
+        generatorContext.workspace.model.addSoftwareSystem("system 1", "System 1 description")
+        generatorContext.workspace.model.addSoftwareSystem("system 2", "System 2 description").apply { addTags("External System") }
+
         val viewModel = SoftwareSystemsPageViewModel(generatorContext)
 
         assertThat(viewModel.softwareSystemsTable.bodyRows[1].columns[0])
