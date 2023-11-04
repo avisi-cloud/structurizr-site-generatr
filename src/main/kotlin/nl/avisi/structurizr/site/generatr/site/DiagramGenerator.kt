@@ -9,6 +9,7 @@ import com.structurizr.view.View
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
+import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.C4PlantUmlExporterWithElementLinks.Companion.export
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -83,7 +84,7 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
 }
 
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
-    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url)
+    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(workspace, url)
 
     if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
         plantUMLExporter.addSkinParam(

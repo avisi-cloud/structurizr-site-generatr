@@ -1,6 +1,5 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystem
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.model.indexing.home
 import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemComponents
@@ -25,8 +24,7 @@ class SearchViewModel(generatorContext: GeneratorContext) : PageViewModel(genera
         addAll(workspaceDecisions(generatorContext.workspace.documentation, this@SearchViewModel))
         addAll(workspaceSections(generatorContext.workspace.documentation, this@SearchViewModel))
         addAll(
-            generatorContext.workspace.model.softwareSystems
-                .filter { it.includedSoftwareSystem }
+            includedSoftwareSystems
                 .flatMap {
                     buildList {
                         add(softwareSystemHome(it, this@SearchViewModel))

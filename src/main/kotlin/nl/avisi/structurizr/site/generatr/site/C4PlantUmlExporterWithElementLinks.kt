@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site
 
+import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.C4PlantUMLExporter
@@ -10,8 +11,9 @@ import com.structurizr.view.*
 import nl.avisi.structurizr.site.generatr.*
 
 class C4PlantUmlExporterWithElementLinks(
+    private val workspace: Workspace,
     private val url: String
-): C4PlantUMLExporter() {
+) : C4PlantUMLExporter() {
     companion object {
         const val TEMP_URI = "https://will-be-changed-to-relative/"
 
@@ -48,7 +50,7 @@ class C4PlantUmlExporterWithElementLinks(
     }
 
     private fun needsLinkToSoftwareSystem(element: Element?, view: ModelView?) =
-        element is SoftwareSystem && element.includedSoftwareSystem && element != view?.softwareSystem
+        element is SoftwareSystem && workspace.includedSoftwareSystems.contains(element) && element != view?.softwareSystem
 
     private fun getUrlToSoftwareSystem(element: Element?): String {
         val path = "/${element?.name?.normalize()}/context/".asUrlToDirectory(url)
@@ -56,7 +58,7 @@ class C4PlantUmlExporterWithElementLinks(
     }
 
     private fun needsLinkToContainerViews(element: Element?, view: ModelView?) =
-        element is SoftwareSystem && element.includedSoftwareSystem && element == view?.softwareSystem && element.hasContainers
+        element is SoftwareSystem && workspace.includedSoftwareSystems.contains(element) && element == view?.softwareSystem && element.hasContainers
 
     private fun getUrlToContainerViews(element: Element?): String {
         val path = "/${element?.name?.normalize()}/container/".asUrlToDirectory(url)
@@ -88,5 +90,4 @@ class C4PlantUmlExporterWithElementLinks(
             .split(System.lineSeparator())
             .forEach { line -> writer?.writeLine(line) }
     }
-
 }

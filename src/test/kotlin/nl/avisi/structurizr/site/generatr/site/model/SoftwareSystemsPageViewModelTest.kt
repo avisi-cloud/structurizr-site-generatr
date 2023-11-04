@@ -69,12 +69,25 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `external systems have grey text`() {
+    fun `external systems have grey text (outside enterprise boundary)`() {
         val generatorContext = generatorContext()
         generatorContext.workspace.model.addSoftwareSystem(Location.External, "system 1", "System 1 description")
         val viewModel = SoftwareSystemsPageViewModel(generatorContext)
 
         assertThat(viewModel.softwareSystemsTable.bodyRows[0].columns[0])
             .isEqualTo(TableViewModel.TextCellViewModel("system 1 (External)", isHeader = true, greyText = true))
+    }
+
+    @Test
+    fun `external systems have grey text (declared external by tag)`() {
+        val generatorContext = generatorContext()
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
+        generatorContext.workspace.model.addSoftwareSystem("system 1", "System 1 description")
+        generatorContext.workspace.model.addSoftwareSystem("system 2", "System 2 description").apply { addTags("External System") }
+
+        val viewModel = SoftwareSystemsPageViewModel(generatorContext)
+
+        assertThat(viewModel.softwareSystemsTable.bodyRows[1].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("system 2 (External)", isHeader = true, greyText = true))
     }
 }

@@ -9,11 +9,15 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     !adrs workspace-adrs
 
     model {
+        properties {
+            "structurizr.groupSeparator" "/"
+        }
+
         customer = person "Personal Banking Customer" "A customer of the bank, with personal bank accounts." "Customer"
 
         acquirer = softwaresystem "Acquirer" "Facilitates PIN transactions for merchants." "External System"
 
-        enterprise "Big Bank plc" {
+        group "Big Bank plc" {
             supportStaff = person "Customer Service Staff" "Customer service staff within the bank." "Bank Staff" {
                 properties {
                     "Location" "Customer Services"
@@ -177,6 +181,9 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             // * it's not possible to use "GitLab" and "ResizableImage" extensions together
             // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
             "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
+
+            "generatr.site.externalTag" "External System"
+            "generatr.site.nestGroups" "false"
         }
 
         systemlandscape "SystemLandscape" {

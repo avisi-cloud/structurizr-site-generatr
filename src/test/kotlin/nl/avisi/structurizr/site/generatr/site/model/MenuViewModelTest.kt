@@ -22,7 +22,7 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems).containsExactly(
-            LinkViewModel(pageViewModel, "Home", HomePageViewModel.url()),
+            LinkViewModel(pageViewModel, "Home", HomePageViewModel.url())
         )
     }
 
@@ -83,9 +83,8 @@ class MenuViewModelTest : ViewModelTest() {
     @ValueSource(strings = ["main", "branch-2"])
     fun `links to software system pages sorted alphabetically case insensitive`(currentBranch: String) {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
-        val system2 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 2", "")
-        val system1 = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "system 1", "")
-        generatorContext.workspace.model.addSoftwareSystem(Location.External, "External", "")
+        val system2 = generatorContext.workspace.model.addSoftwareSystem("System 2", "")
+        val system1 = generatorContext.workspace.model.addSoftwareSystem("system 1", "")
         val pageViewModel = createPageViewModel(generatorContext)
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
@@ -101,7 +100,7 @@ class MenuViewModelTest : ViewModelTest() {
                 "System 2",
                 SoftwareSystemPageViewModel.url(system2, SoftwareSystemPageViewModel.Tab.HOME),
                 false
-            ),
+            )
         )
     }
 
@@ -109,7 +108,7 @@ class MenuViewModelTest : ViewModelTest() {
     @ValueSource(strings = ["main", "branch-2"])
     fun `active links`(currentBranch: String) {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = currentBranch)
-        val system = generatorContext.workspace.model.addSoftwareSystem(Location.Internal, "System 1", "")
+        val system = generatorContext.workspace.model.addSoftwareSystem("System 1", "")
 
         MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let { assertThat(it.generalItems[0].active).isTrue() }
@@ -137,14 +136,56 @@ class MenuViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `do not show menu entries for software systems with an external location (outside enterprise boundary)`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.model.addSoftwareSystem(Location.External, "System 1", "")
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemItems).hasSize(0)
+            }
+    }
+
+    @Test
+    fun `do not show menu entries for software systems with an external location (declared external by tag)`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
+        generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
+        generatorContext.workspace.model.addSoftwareSystem("External system").apply { addTags("External System") }
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemNodes().children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].name).isEqualTo("Group 1")
+                assertThat(it.softwareSystemNodes().children[0].children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("System 1")
+            }
+    }
+
+    @Test
+    fun `show software systems in nested groups from single group in software systems list`() {
+        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
+        generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
+
+        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
+            .let {
+                assertThat(it.softwareSystemNodes().children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].name).isEqualTo("Group 1")
+                assertThat(it.softwareSystemNodes().children[0].children).hasSize(1)
+                assertThat(it.softwareSystemNodes().children[0].children[0].name).isEqualTo("System 1")
+            }
+    }
+
+    @Test
     fun `show nested groups in software systems list`() {
         val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
         generatorContext.workspace.views.configuration.addProperty("generatr.site.nestGroups", "true")
         generatorContext.workspace.model.addProperty("structurizr.groupSeparator", "/")
-        generatorContext.workspace.model.addSoftwareSystem("System 1").group = "Group 1"
-        generatorContext.workspace.model.addSoftwareSystem("System 2").group = "Group 1"
-        generatorContext.workspace.model.addSoftwareSystem("System 3").group = "Group 2"
-        generatorContext.workspace.model.addSoftwareSystem("System 4").group = "Group 1/Group 3"
+        generatorContext.workspace.model.addSoftwareSystem("System 1").apply { group = "Group 1" }
+        generatorContext.workspace.model.addSoftwareSystem("System 2").apply { group = "Group 1" }
+        generatorContext.workspace.model.addSoftwareSystem("System 3").apply { group = "Group 2" }
+        generatorContext.workspace.model.addSoftwareSystem("System 4").apply { group = "Group 1/Group 3" }
 
         MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
             .let {

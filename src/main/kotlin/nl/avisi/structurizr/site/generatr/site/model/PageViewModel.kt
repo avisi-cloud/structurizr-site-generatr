@@ -1,5 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
@@ -19,6 +20,7 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     val flexmarkConfig by lazy { buildFlexmarkConfig(generatorContext) }
     val includeAdmonition = flexmarkConfig.selectedExtensionMap.containsKey("Admonition")
     val includeKatex = flexmarkConfig.selectedExtensionMap.containsKey("GitLab")
+    val includedSoftwareSystems = generatorContext.workspace.includedSoftwareSystems
     val configuration = generatorContext.workspace.views.configuration.properties
     val includeTreeview = configuration.getOrDefault("generatr.site.nestGroups", "false").toBoolean()
 
