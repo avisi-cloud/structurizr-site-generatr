@@ -37,4 +37,4 @@ ij_kotlin_allow_trailing_comma = false
 
 ktlint_standard_no-wildcard-imports = disabled
 ktlint_standard_argument-list-wrapping = disabled
-ktlint_standard_multiline_if_else = disabled
+ktlint_standard_multiline-if-else = disabled
