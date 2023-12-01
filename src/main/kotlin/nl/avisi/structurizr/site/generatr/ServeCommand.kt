@@ -44,6 +44,10 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     private val port by option(
         ArgType.Int, "port", "p", "Port the site is served on"
     ).default(8080)
+    private val exporterType by option(
+            ArgType.String, "exporter-type", "exp",
+            "Set diagram exporter type. (C4 and Structurizr are supported)."
+    ).default(value = "C4")
 
     private val eventSockets = mutableListOf<EventSocket>()
     private val eventSocketsLock = Any()
@@ -80,7 +84,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
                 println("Copying assets...")
                 copySiteWideAssets(File(siteDir))
                 println("Generating diagrams...")
-                generateDiagrams(workspace, exportDir)
+                generateDiagrams(workspace, exportDir, exporterType)
                 println("Generating site...")
                 generateSite(
                     "0.0.0",
@@ -89,6 +93,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
                     File(siteDir),
                     listOf(branch),
                     branch,
+                    exporterType,
                     serving = true
                 )
 

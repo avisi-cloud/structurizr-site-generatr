@@ -62,7 +62,10 @@ class GenerateSiteCommand : Subcommand(
         ArgType.String, "exclude-branches", "ex",
         "Comma-separated list of branches to exclude from the generated site"
     ).default("")
-
+    private val exporterType by option(
+            ArgType.String, "exporter-type", "exp",
+            "Set diagram exporter type. (C4 and Structurizr are supported)."
+    ).default(value = "C4")
     override fun execute() {
         val siteDir = File(outputDir).apply { mkdirs() }
         val gitUrl = gitUrl
@@ -114,28 +117,30 @@ class GenerateSiteCommand : Subcommand(
             clonedRepository.checkoutBranch(branch)
 
             val workspace = createStructurizrWorkspace(workspaceFileInRepo)
-            generateDiagrams(workspace, File(siteDir, branch))
+            generateDiagrams(workspace, File(siteDir, branch), exporterType)
             generateSite(
                 version,
                 workspace,
                 assetsDir?.let { File(cloneDir, it) },
                 siteDir,
                 branchesToGenerate,
-                branch
+                branch,
+                exporterType
             )
         }
     }
 
     private fun generateSiteForModel(siteDir: File) {
         val workspace = createStructurizrWorkspace(File(workspaceFile))
-        generateDiagrams(workspace, File(siteDir, defaultBranch))
+        generateDiagrams(workspace, File(siteDir, defaultBranch), exporterType)
         generateSite(
             version,
             workspace,
             assetsDir?.let { File(it) },
             siteDir,
             listOf(defaultBranch),
-            defaultBranch
+            defaultBranch,
+            exporterType
         )
     }
 }

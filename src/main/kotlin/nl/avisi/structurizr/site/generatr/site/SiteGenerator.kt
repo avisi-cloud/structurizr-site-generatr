@@ -60,12 +60,13 @@ fun generateSite(
     exportDir: File,
     branches: List<String>,
     currentBranch: String,
+    exporterType: String,
     serving: Boolean = false
 ) {
     val generatorContext = GeneratorContext(version, workspace, branches, currentBranch, serving) { key, url ->
         val diagramCache = ConcurrentHashMap<String, String>()
         workspace.views.views.singleOrNull { view -> view.key == key }
-            ?.let { generateDiagramWithElementLinks(workspace, it, url, diagramCache) }
+            ?.let { generateDiagramWithElementLinks(workspace, it, url, exporterType, diagramCache) }
     }
 
     val branchDir = File(exportDir, currentBranch)

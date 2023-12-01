@@ -4,17 +4,17 @@ import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.IndentingWriter
 import com.structurizr.export.plantuml.AbstractPlantUMLExporter
-import com.structurizr.export.plantuml.C4PlantUMLExporter
+import com.structurizr.export.plantuml.StructurizrPlantUMLExporter
 import com.structurizr.model.Container
 import com.structurizr.model.Element
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.*
 import nl.avisi.structurizr.site.generatr.*
 
-class C4PlantUmlExporterWithElementLinks(
+class StructurizrPlantUmlExporterWithElementLinks(
     private val workspace: Workspace,
     private val url: String
-) : C4PlantUMLExporter() {
+) : StructurizrPlantUMLExporter() {
     companion object {
         const val TEMP_URI = "https://will-be-changed-to-relative/"
 
