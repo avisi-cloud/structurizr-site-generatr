@@ -245,6 +245,14 @@ Generatr container. So
 is needed to expose the container's port 8080 to the host (web browser). In the example above, the
 `-p 8080:8080` argument tells Docker to bind the local machine / host's port 8080 to the container's port 8080.
 
+### Customize the diagram exporter
+
+To customize the exported diagrams the paramater `--exporter-type` or `-exp` can be used.
+
+Currently supported exporters:
+* `c4` uses the `C4PlantUMLExporter` (default)
+* `structurizr` uses the `StructurizrPlantUMLExporter`
+
 ## Customizing the generated website
 
 The site generator use the
