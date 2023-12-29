@@ -28,7 +28,7 @@ dependencies {
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
     implementation("org.asciidoctor:asciidoctorj:2.5.11")
-    implementation("org.jsoup:jsoup:1.17.1")
+    implementation("org.jsoup:jsoup:1.17.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.10.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
