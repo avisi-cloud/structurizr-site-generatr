@@ -16,10 +16,10 @@ class GenerateSiteCommand : Subcommand(
     private val gitUrl by option(
         ArgType.String, "git-url", "g",
         "The URL of the Git repository which contains the Structurizr model. " +
-                "If a Git repository is provided, it will be cloned and" +
-                "--workspace-file and --assets-dir will be treated as paths within the cloned repository. " +
-                "If no Git repository is provided, --workspace-file and --assets-dir will be used as-is, and the site" +
-                "will only contain one branch, named after the --default-branch option."
+            "If a Git repository is provided, it will be cloned and" +
+            "--workspace-file and --assets-dir will be treated as paths within the cloned repository. " +
+            "If no Git repository is provided, --workspace-file and --assets-dir will be used as-is, and the site" +
+            "will only contain one branch, named after the --default-branch option."
     )
     private val gitUsername by option(
         ArgType.String, "git-username", "u",
