@@ -2,15 +2,12 @@ package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
 import com.structurizr.export.Diagram
-import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.export.plantuml.PlantUMLDiagram
 import com.structurizr.view.ModelView
 import com.structurizr.view.View
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
-import nl.avisi.structurizr.site.generatr.site.C4PlantUmlExporterWithElementLinks.Companion.export
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URL
@@ -56,9 +53,9 @@ fun generateDiagramWithElementLinks(
 }
 
 private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
-    val plantUMLExporter = C4PlantUMLExporter()
+    val plantUMLExporter = PlantUmlExporter(workspace)
 
-    return plantUMLExporter.export(workspace)
+    return plantUMLExporter.export()
 }
 
 private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
@@ -84,14 +81,7 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
 }
 
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
-    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(workspace, url)
-
-    if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
-        plantUMLExporter.addSkinParam(
-            "svgLinkTarget",
-            workspace.views.configuration.properties.getValue("generatr.svglink.target")
-        )
-    }
+    val plantUMLExporter = PlantUmlExporterWithElementLinks(workspace, url)
 
     return plantUMLExporter.export(view)
 }
