@@ -17,11 +17,11 @@ fun HTML.softwareSystemDecisionsPage(viewModel: SoftwareSystemDecisionsPageViewM
             div(classes = "tabs") {
                 ul(classes = "m-0") {
                     viewModel.decisionTabs
-                            .forEach {
-                                li(classes = if (it.link.active) "is-active" else null) {
-                                    link(it.link)
-                                }
+                        .forEach {
+                            li(classes = if (it.link.active) "is-active" else null) {
+                                link(it.link)
                             }
+                        }
                 }
             }
             if (viewModel.softwareSystemDecisionsVisible) {
