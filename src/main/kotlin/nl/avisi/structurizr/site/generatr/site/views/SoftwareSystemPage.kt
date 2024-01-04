@@ -9,7 +9,7 @@ fun HTML.softwareSystemPage(viewModel: SoftwareSystemPageViewModel, block: FlowC
         h2(classes = "subtitle") { +viewModel.description }
 
         div(classes = "tabs mt-3") {
-            ul {
+            ul(classes = "is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {
                 viewModel.tabs
                     .filter { it.visible }
                     .forEach {
