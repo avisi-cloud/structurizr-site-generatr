@@ -55,9 +55,8 @@ kotlin {
 }
 
 tasks {
-    copy {
+    processResources {
         from("package.json")
-        into("src/main/resources")
     }
 
     test {
