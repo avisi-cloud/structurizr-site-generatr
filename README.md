@@ -247,7 +247,7 @@ is needed to expose the container's port 8080 to the host (web browser). In the 
 
 ## Customizing the generated website
 
-The site generator use by default the
+By default, the site generator uses the
 [C4PlantUmlExporter](https://github.com/structurizr/export/tree/main/src/main/java/com/structurizr/export/plantuml#c4plantumlexporter)
 to generate the diagrams. When using this exporter, all properties available for the C4PlantUMLExporter, e.g. `c4plantuml.tags`, can be applied
 and affect the diagrams in the generate site. See also [Diagram notation](https://docs.structurizr.com/export/comparison) for an overview of supported features
