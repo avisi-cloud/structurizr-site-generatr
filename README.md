@@ -247,10 +247,10 @@ is needed to expose the container's port 8080 to the host (web browser). In the 
 
 ## Customizing the generated website
 
-The site generator use the
+By default, the site generator uses the
 [C4PlantUmlExporter](https://github.com/structurizr/export/tree/main/src/main/java/com/structurizr/export/plantuml#c4plantumlexporter)
-to generate the diagrams. All properties available for the C4PlantUMLExporter, e.g. `c4plantuml.tags`, can be applied
-and affect the diagrams in the generate site. See also [Diagram notation](https://github.com/structurizr/export/tree/main#diagram-notation) for an overview of supported features
+to generate the diagrams. When using this exporter, all properties available for the C4PlantUMLExporter, e.g. `c4plantuml.tags`, can be applied
+and affect the diagrams in the generate site. See also [Diagram notation](https://docs.structurizr.com/export/comparison) for an overview of supported features
 and limitations for this exporter.
 
 The look and feel of the generated site can be customized with several additional view properties in the C4
@@ -266,6 +266,7 @@ architecture model:
 | `generatr.search.language`              | Indexing/stemming language for the search index. See [Lunr language support](https://github.com/olivernn/lunr-languages)                                                                                                                                                                                                                         | `en`      | `nl`                                                 |
 | `generatr.markdown.flexmark.extensions` | Additional extensions to the markdown generator to add new markdown capabilities. [More Details](https://avisi-cloud.github.io/structurizr-site-generatr/main/extended-markdown-features/)                                                                                                                                                       | Tables    | `Tables,Admonition`                                  |
 | `generatr.svglink.target`               | Specifies the link target for element links in the exported svg                                                                                                                                                                                                                                                                                  | `_top`    | `_self`                                              |
+| `generatr.site.exporter`                | Specifies the UML exporter, can be `c4` (uses the `C4PlantUMLExporter`) or `structurizr` (uses the `StructurizrPlantUMLExporter`)                                                                                                                                                                                                                | `c4`      | `structurizr`                                        |
 | `generatr.site.externalTag`             | Software systems containing this tag will be considered external                                                                                                                                                                                                                                                                                 |           |                                                      |
 | `generatr.site.nestGroups`              | Will show software systems in the left side navigator in collapsable groups                                                                                                                                                                                                                                                                      | `false`   | `true`                                               |
 
