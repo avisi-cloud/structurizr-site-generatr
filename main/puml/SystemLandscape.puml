@@ -7,15 +7,16 @@ top to bottom direction
 !include <C4/C4>
 !include <C4/C4_Context>
 
-AddElementTag("Software System,External System", $bgColor="#686868", $borderColor="#484848", $fontColor="#ffffff", $sprite="", $shadowing="")
-AddElementTag("Software System", $bgColor="#1168bd", $borderColor="#0b4884", $fontColor="#ffffff", $sprite="", $shadowing="")
-AddElementTag("Person,Bank Staff", $bgColor="#08427b", $borderColor="#052e56", $fontColor="#ffffff", $sprite="", $shadowing="")
-AddElementTag("Software System,Existing System", $bgColor="#999999", $borderColor="#6b6b6b", $fontColor="#ffffff", $sprite="", $shadowing="")
-AddElementTag("Person,Customer", $bgColor="#686868", $borderColor="#484848", $fontColor="#ffffff", $sprite="", $shadowing="")
+AddElementTag("Software System,External System", $bgColor="#686868", $borderColor="#484848", $fontColor="#ffffff", $sprite="", $shadowing="", $borderStyle="Solid", $borderThickness="1")
+AddElementTag("Software System", $bgColor="#1168bd", $borderColor="#0b4884", $fontColor="#ffffff", $sprite="", $shadowing="", $borderStyle="Solid", $borderThickness="1")
+AddElementTag("Person,Bank Staff", $bgColor="#08427b", $borderColor="#052e56", $fontColor="#ffffff", $sprite="", $shadowing="", $borderStyle="Solid", $borderThickness="1")
+AddElementTag("Software System,Existing System", $bgColor="#999999", $borderColor="#6b6b6b", $fontColor="#ffffff", $sprite="", $shadowing="", $borderStyle="Solid", $borderThickness="1")
+AddElementTag("Person,Customer", $bgColor="#686868", $borderColor="#484848", $fontColor="#ffffff", $sprite="", $shadowing="", $borderStyle="Solid", $borderThickness="1")
 
 AddRelTag("Relationship", $textColor="#707070", $lineColor="#707070", $lineStyle = "")
 
-Enterprise_Boundary(enterprise, "Big Bank plc") {
+AddBoundaryTag("Big Bank plc", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="Dashed", $borderThickness="1")
+Boundary(group_1, "Big Bank plc", $tags="Big Bank plc") {
   WithoutPropertyHeader()
   AddProperty("Location","Customer Services")
   Person(CustomerServiceStaff, "Customer Service Staff", $descr="Customer service staff within the bank.", $tags="Person,Bank Staff", $link="")
@@ -32,19 +33,19 @@ Enterprise_Boundary(enterprise, "Big Bank plc") {
   System(InternetBankingSystem, "Internet Banking System", $descr="Allows customers to view information about their bank accounts, and make payments.", $tags="Software System", $link="")
 }
 
-Person_Ext(PersonalBankingCustomer, "Personal Banking Customer", $descr="A customer of the bank, with personal bank accounts.", $tags="Person,Customer", $link="")
-System_Ext(Acquirer, "Acquirer", $descr="Facilitates PIN transactions for merchants.", $tags="Software System,External System", $link="")
+Person(PersonalBankingCustomer, "Personal Banking Customer", $descr="A customer of the bank, with personal bank accounts.", $tags="Person,Customer", $link="")
+System(Acquirer, "Acquirer", $descr="Facilitates PIN transactions for merchants.", $tags="Software System,External System", $link="")
 
-Rel_D(PersonalBankingCustomer, InternetBankingSystem, "Views account balances, and makes payments using", $techn="", $tags="Relationship", $link="")
-Rel_D(InternetBankingSystem, MainframeBankingSystem, "Gets account information from, and makes payments using", $techn="", $tags="Relationship", $link="")
-Rel_D(InternetBankingSystem, EmailSystem, "Sends e-mail using", $techn="", $tags="Relationship", $link="")
-Rel_D(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $techn="", $tags="Relationship", $link="")
-Rel_D(PersonalBankingCustomer, CustomerServiceStaff, "Asks questions to", $techn="Telephone", $tags="Relationship", $link="")
-Rel_D(CustomerServiceStaff, MainframeBankingSystem, "Uses", $techn="", $tags="Relationship", $link="")
-Rel_D(PersonalBankingCustomer, ATM, "Withdraws cash using", $techn="", $tags="Relationship", $link="")
-Rel_D(ATM, MainframeBankingSystem, "Uses", $techn="", $tags="Relationship", $link="")
-Rel_D(BackOfficeStaff, MainframeBankingSystem, "Uses", $techn="", $tags="Relationship", $link="")
-Rel_D(Acquirer, MainframeBankingSystem, "Peforms clearing and settlement", $techn="", $tags="Relationship", $link="")
+Rel(PersonalBankingCustomer, InternetBankingSystem, "Views account balances, and makes payments using", $techn="", $tags="Relationship", $link="")
+Rel(InternetBankingSystem, MainframeBankingSystem, "Gets account information from, and makes payments using", $techn="", $tags="Relationship", $link="")
+Rel(InternetBankingSystem, EmailSystem, "Sends e-mail using", $techn="", $tags="Relationship", $link="")
+Rel(EmailSystem, PersonalBankingCustomer, "Sends e-mails to", $techn="", $tags="Relationship", $link="")
+Rel(PersonalBankingCustomer, CustomerServiceStaff, "Asks questions to", $techn="Telephone", $tags="Relationship", $link="")
+Rel(CustomerServiceStaff, MainframeBankingSystem, "Uses", $techn="", $tags="Relationship", $link="")
+Rel(PersonalBankingCustomer, ATM, "Withdraws cash using", $techn="", $tags="Relationship", $link="")
+Rel(ATM, MainframeBankingSystem, "Uses", $techn="", $tags="Relationship", $link="")
+Rel(BackOfficeStaff, MainframeBankingSystem, "Uses", $techn="", $tags="Relationship", $link="")
+Rel(Acquirer, MainframeBankingSystem, "Peforms clearing and settlement", $techn="", $tags="Relationship", $link="")
 
 SHOW_LEGEND(true)
 @enduml
