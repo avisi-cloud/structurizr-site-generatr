@@ -131,7 +131,7 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
                 add { writeHtmlFile(branchDir, WorkspaceDecisionPageViewModel(context, it)) }
             }
 
-        context.workspace.model.includedSoftwareSystems.forEach {
+        context.workspace.includedSoftwareSystems.forEach {
             add { writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it)) }

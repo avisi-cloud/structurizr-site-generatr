@@ -10,13 +10,13 @@ fun HTML.softwareSystemContainerDecisionsPage(viewModel: SoftwareSystemContainer
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
             div(classes = "tabs") {
-                ul(classes = "m-0") {
+                ul(classes = "m-0 is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {
                     viewModel.decisionTabs
-                            .forEach {
-                                li(classes = if (it.link.active) "is-active" else null) {
-                                    link(it.link)
-                                }
+                        .forEach {
+                            li(classes = if (it.link.active) "is-active" else null) {
+                                link(it.link)
                             }
+                        }
                 }
             }
             table(viewModel.decisionsTable)

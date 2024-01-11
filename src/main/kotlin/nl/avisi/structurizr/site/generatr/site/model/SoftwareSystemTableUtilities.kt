@@ -6,11 +6,11 @@ import com.structurizr.model.SoftwareSystem
 fun TableViewModel.TableViewInitializerContext.softwareSystemCell(
     pageViewModel: PageViewModel,
     system: SoftwareSystem
-) = if (system.location == Location.External)
-    headerCell("${system.name} (External)", greyText = true)
-else
+) = if (pageViewModel.includedSoftwareSystems.contains(system))
     headerCellWithLink(
         pageViewModel,
         system.name,
         SoftwareSystemPageViewModel.url(system, SoftwareSystemPageViewModel.Tab.HOME)
     )
+else
+    headerCell("${system.name} (External)", greyText = true)

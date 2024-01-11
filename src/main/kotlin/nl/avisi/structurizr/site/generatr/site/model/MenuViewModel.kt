@@ -1,6 +1,5 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class MenuViewModel(generatorContext: GeneratorContext, private val pageViewModel: PageViewModel) {
@@ -19,17 +18,16 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
             .forEach { yield(createMenuItem(it.contentTitle(), WorkspaceDocumentationSectionPageViewModel.url(it))) }
     }.toList()
 
-    val softwareSystemItems = generatorContext.workspace.model.includedSoftwareSystems
+    val softwareSystemItems = pageViewModel.includedSoftwareSystems
         .sortedBy { it.name.lowercase() }
         .map {
             createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
         }
 
-    private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"]
+    private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"] ?: "/"
 
-    private val softwareSystemPaths = generatorContext.workspace.model.includedSoftwareSystems
-        .filter { it.group != null }
-        .map { it.group + groupSeparator + it.name }
+    private val softwareSystemPaths = pageViewModel.includedSoftwareSystems
+        .map { "${it.group ?: ""}$groupSeparator${it.name}" }
         .sortedBy { it.lowercase() }
 
     private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
@@ -39,8 +37,6 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         data class MutableMenuNode(val name: String, val children: MutableList<MutableMenuNode>) {
             fun toMenuNode(): MenuNodeViewModel = MenuNodeViewModel(name, children.map { it.toMenuNode() })
         }
-        if (groupSeparator == null)
-            throw IllegalStateException("Property structurizr.groupSeparator not defined for model") // This is also validated earlier by structurizr when parsing the model
 
         val rootNode = MutableMenuNode("", mutableListOf())
 

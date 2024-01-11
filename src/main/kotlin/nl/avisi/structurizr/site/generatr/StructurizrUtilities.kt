@@ -3,26 +3,25 @@ package nl.avisi.structurizr.site.generatr
 import com.structurizr.Workspace
 import com.structurizr.model.Container
 import com.structurizr.model.Location
-import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ImageView
 import com.structurizr.view.ViewSet
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
-val Model.includedSoftwareSystems: List<SoftwareSystem>
-    get() = softwareSystems.filter { it.includedSoftwareSystem }
-
-val SoftwareSystem.includedSoftwareSystem
-    get() = this.location != Location.External
-
-val Container.hasComponents
-    get() = this.components.isNotEmpty()
+val Workspace.includedSoftwareSystems: List<SoftwareSystem>
+    get() = model.softwareSystems.filter {
+        val externalTag = views.configuration.properties.getOrDefault("generatr.site.externalTag", null)
+        it.location != Location.External && if (externalTag != null) !it.tags.contains(externalTag) else true
+    }
 
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 
 val SoftwareSystem.includedProperties
     get() = this.properties.filterNot { (name, _) -> name == "structurizr.dsl.identifier" }
+
+val Container.hasComponents
+    get() = this.components.isNotEmpty()
 
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 

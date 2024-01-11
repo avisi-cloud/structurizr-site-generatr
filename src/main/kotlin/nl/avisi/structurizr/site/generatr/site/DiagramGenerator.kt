@@ -2,7 +2,6 @@ package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
 import com.structurizr.export.Diagram
-import com.structurizr.export.plantuml.C4PlantUMLExporter
 import com.structurizr.export.plantuml.PlantUMLDiagram
 import com.structurizr.view.ModelView
 import com.structurizr.view.View
@@ -55,9 +54,9 @@ fun generateDiagramWithElementLinks(
 }
 
 private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
-    val plantUMLExporter = C4PlantUMLExporter()
+    val plantUMLExporter = PlantUmlExporter(workspace)
 
-    return plantUMLExporter.export(workspace)
+    return plantUMLExporter.export()
 }
 
 private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
@@ -83,7 +82,7 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
 }
 
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
-    val plantUMLExporter = C4PlantUmlExporterWithElementLinks(url, workspace)
+    val plantUMLExporter = PlantUmlExporterWithElementLinks(workspace, url)
 
     if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
         plantUMLExporter.addSkinParam(
@@ -91,6 +90,7 @@ private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: 
             workspace.views.configuration.properties.getValue("generatr.svglink.target")
         )
     }
+
 
     return plantUMLExporter.export(view)
 }

@@ -81,6 +81,7 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         softwareSystem1.uses(backend2, "Uses from system 1 to container 2", "REST")
 
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+
         // Inbound Table
         assertThat(viewModel.dependenciesInboundTable.bodyRows.extractTitle())
             .containsExactly("Software system 2")
@@ -90,13 +91,28 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `dependencies from and to external systems`() {
+    fun `dependencies from and to external systems (outside enterprise boundary)`() {
         val externalSystem = generatorContext.workspace.model
             .addSoftwareSystem(Location.External, "External system", "")
         externalSystem.uses(softwareSystem1, "Uses", "REST")
         softwareSystem1.uses(externalSystem, "Uses", "REST")
+        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+
+        assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+        assertThat(viewModel.dependenciesOutboundTable.bodyRows[0].columns[0])
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+    }
+
+    @Test
+    fun `dependencies from and to external systems (declared external by tag)`() {
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
+        val externalSystem = generatorContext.workspace.model.addSoftwareSystem("External system").apply { addTags("External System") }
+        externalSystem.uses(softwareSystem1, "Uses", "REST")
+        softwareSystem1.uses(externalSystem, "Uses", "REST")
 
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+
         assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
             .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
         assertThat(viewModel.dependenciesOutboundTable.bodyRows[0].columns[0])
@@ -109,8 +125,8 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         system.uses(softwareSystem1, "Uses", "REST")
         softwareSystem1.uses(softwareSystem2, "Uses REST", "REST")
         softwareSystem2.uses(softwareSystem1, "Uses SOAP", "SOAP")
-
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
+
         // Inbound Table
         assertThat(viewModel.dependenciesInboundTable.bodyRows.extractTitle())
             .containsExactly("Software system 2", "Software system 3")

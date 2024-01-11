@@ -5,4 +5,3 @@ out
 *.md_
 .vscode
 bin
-src/main/resources/package.json

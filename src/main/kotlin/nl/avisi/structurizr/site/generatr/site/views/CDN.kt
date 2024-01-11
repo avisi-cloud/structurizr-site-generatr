@@ -36,7 +36,7 @@ class CDN {
         }
 
         fun lunrLanguagesStemmerJs() = dependencies.single { it.name == "lunr-languages" }.let {
-            "${it.baseUrl()}@${it.version}/min/lunr.stemmer.support.min.js"
+            "${it.baseUrl()}/min/lunr.stemmer.support.min.js"
         }
 
         fun lunrLanguagesJs(language: String) = dependencies.single { it.name == "lunr-languages" }.let {
