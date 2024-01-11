@@ -110,7 +110,7 @@ class PlantUmlExporterTest {
             System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/container/")
             System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-2/context/")
 
-            Rel(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -187,7 +187,7 @@ class PlantUmlExporterTest {
               Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             }
 
-            Rel(System1.Container1.Component1, System1.Container2, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
+            Rel_D(System1.Container1.Component1, System1.Container2, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -232,7 +232,7 @@ class PlantUmlExporterTest {
             System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-2/context/")
 
-            Rel(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -267,7 +267,7 @@ class PlantUmlExporterTest {
             System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             System_Ext(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
 
-            Rel(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -305,7 +305,7 @@ class PlantUmlExporterTest {
             System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
 
-            Rel(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
@@ -342,7 +342,7 @@ class PlantUmlExporterTest {
             System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             System(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../../system-2/context/")
 
-            Rel(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
+            Rel_D(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
             """.trimIndent()
         )
     }
