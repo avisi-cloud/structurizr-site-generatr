@@ -34,9 +34,66 @@ directory, you can do that as follows:
 
 ![A nice picture](/pictures/nice-picture.png)
 
+### Embedding PlantUML diagrams
+
+Structurizr Site Generatr supports rendering PlantUML embedded in Markdown files.
+
+#### Sequence diagram example
+
+````markdown
+```puml
+@startuml
+Foo -> Bar: doSomething()
+@enduml
+```
+````
+
+```puml
+@startuml
+Foo -> Bar: doSomething()
+@enduml
+```
+
+### Class diagram example
+
+````markdown
+```puml
+@startuml
+class Foo {
+    +property: String
+    +foo()
+}
+
+class Bar {
+    -privateProperty: String
+    +bar()
+}
+
+Foo ..> Bar: Uses
+@enduml
+```
+````
+
+```puml
+@startuml
+class Foo {
+    +property: String
+    +foo()
+}
+
+class Bar {
+    -privateProperty: String
+    +bar()
+}
+
+Foo ..> Bar: Uses
+@enduml
+```
+
 ### Embedding mermaid diagrams
 
-Structurizr Site Generatr is supporting mermaid diagrams in markdown pages using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
+Structurizr Site Generatr is supporting mermaid diagrams in markdown pages using the actual mermaid.js version.
+Therefore every diagram type, supported by mermaid may be used in markdown documentation files.
 
 * flowchart
 * sequence diagram
@@ -49,7 +106,8 @@ Structurizr Site Generatr is supporting mermaid diagrams in markdown pages using
 * requirement diagram
 * and some more
 
-Please find the full list of supported chart types on [mermaid.js.org/intro](https://mermaid.js.org/intro/#diagram-types)
+Please find the full list of supported chart types
+on [mermaid.js.org/intro](https://mermaid.js.org/intro/#diagram-types)
 
 #### Flowchart Diagram Example
 

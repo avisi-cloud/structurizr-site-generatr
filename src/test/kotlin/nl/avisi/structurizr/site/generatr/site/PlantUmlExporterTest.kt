@@ -37,9 +37,9 @@ class PlantUmlExporterTest {
 
     private fun exporters() = listOf(
         ExporterType.C4.name.lowercase() to
-            { workspace: Workspace, url: String -> C4PlantUmlExporterWithElementLinks(workspace, url) },
+                { workspace: Workspace, url: String -> C4PlantUmlExporterWithElementLinks(workspace, url) },
         ExporterType.STRUCTURIZR.name.lowercase() to
-            { workspace: Workspace, url: String -> StructurizrPlantUmlExporterWithElementLinks(workspace, url) }
+                { workspace: Workspace, url: String -> StructurizrPlantUmlExporterWithElementLinks(workspace, url) }
     )
 
     @Test
