@@ -57,6 +57,23 @@ private fun markdownToHtml(
         .html()
 }
 
+private class FencedCodeBlockRenderer : NodeRenderer {
+    override fun getNodeRenderingHandlers(): MutableSet<NodeRenderingHandler<*>> =
+        mutableSetOf(NodeRenderingHandler(FencedCodeBlock::class.java, this::render))
+
+    private fun render(fencedCodeBlock: FencedCodeBlock, nodeRendererContext: NodeRendererContext, htmlWriter: HtmlWriter) {
+        if (fencedCodeBlock.info.toString() == "puml") {
+            htmlWriter.tag("div") {
+                val reader = SourceStringReader(fencedCodeBlock.contentChars.toString())
+                val stream = ByteArrayOutputStream()
+                reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
+                htmlWriter.raw(stream.toString())
+            }
+        } else
+            nodeRendererContext.delegateRender()
+    }
+}
+
 private fun asciidocToHtml(
     pageViewModel: PageViewModel,
     asciidoc: String,
@@ -149,20 +166,3 @@ fun Element.transformEmbeddedDiagramElements(
         it.parent()?.append(html)
         it.remove()
     }
-
-class FencedCodeBlockRenderer : NodeRenderer {
-    override fun getNodeRenderingHandlers(): MutableSet<NodeRenderingHandler<*>> =
-        mutableSetOf(NodeRenderingHandler(FencedCodeBlock::class.java, this::render))
-
-    private fun render(fencedCodeBlock: FencedCodeBlock, nodeRendererContext: NodeRendererContext, htmlWriter: HtmlWriter) {
-        if (fencedCodeBlock.info.toString() == "puml") {
-            htmlWriter.tag("div") {
-                val reader = SourceStringReader(fencedCodeBlock.contentChars.toString())
-                val stream = ByteArrayOutputStream()
-                reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
-                htmlWriter.raw(stream.toString())
-            }
-        } else
-            nodeRendererContext.delegateRender()
-    }
-}
