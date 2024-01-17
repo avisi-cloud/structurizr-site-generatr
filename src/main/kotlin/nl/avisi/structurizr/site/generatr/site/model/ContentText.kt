@@ -45,7 +45,7 @@ private fun markdownText(content: String): String {
 
 private fun asciidocText(content: String): String {
     val options = Options.builder().safe(SafeMode.SERVER).backend("text").build()
-    val text = asciidoctor.convert(content, options)
+    val text = asciidoctorWithTextConverter.convert(content, options)
 
     return text.lines().joinToString(" ")
 }

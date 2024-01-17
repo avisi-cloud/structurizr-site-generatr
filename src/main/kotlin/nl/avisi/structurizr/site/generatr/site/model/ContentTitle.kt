@@ -4,7 +4,6 @@ import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
 import com.vladsch.flexmark.ast.Heading
 import com.vladsch.flexmark.parser.Parser
-import org.asciidoctor.Asciidoctor
 import org.asciidoctor.Options
 import org.asciidoctor.SafeMode
 
@@ -28,7 +27,7 @@ private fun Section.markdownTitle(): String {
 
 private fun Section.asciidocTitle(): String {
     val options = Options.builder().safe(SafeMode.SERVER).build()
-    val document = asciidoctor.load(content, options)
+    val document = asciidoctorWithTextConverter.load(content, options)
 
     if (document.title != null && document.title.isNotEmpty())
         return document.title

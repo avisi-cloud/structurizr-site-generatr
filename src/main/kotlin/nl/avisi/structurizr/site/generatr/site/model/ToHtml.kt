@@ -88,7 +88,7 @@ private fun asciidocToHtml(
         // another option could be https://docs.asciidoctor.org/asciidoctorj/latest/locating-files/#globdirectorywalker-class
         .backend("html5")
         .build()
-    val html = asciidoctor.convert(asciidoc, options)
+    val html = asciidoctorWithPUMLRenderer.convert(asciidoc, options)
 
     return Jsoup.parse(html)
         .apply {

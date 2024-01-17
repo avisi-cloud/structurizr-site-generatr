@@ -39,6 +39,66 @@ https://www.flickr.com/photos/schmollmolch/4937297813/[Sun], by Christian Scheja
 
 image::/pictures/nice-picture.png[A nice picture]
 
+=== Embedding PlantUML diagrams
+
+==== Sequence Diagram Example
+
+[source, asciidoc]
+-----
+[plantuml]
+----
+@startuml
+Foo -> Bar: doSomething()
+@enduml
+----
+-----
+
+[plantuml]
+----
+@startuml
+Foo -> Bar: doSomething()
+@enduml
+----
+
+==== Class Diagram Example
+
+[source, asciidoc]
+-----
+[plantuml]
+----
+@startuml
+class Foo {
+    +property: String
+    +foo()
+}
+
+class Bar {
+    -privateProperty: String
+    +bar()
+}
+
+Foo ..> Bar: Uses
+@enduml
+----
+-----
+
+[plantuml]
+----
+@startuml
+class Foo {
+    +property: String
+    +foo()
+}
+
+class Bar {
+    -privateProperty: String
+    +bar()
+}
+
+Foo ..> Bar: Uses
+@enduml
+----
+
 === Embedding mermaid diagrams
 
 ==== Flowchart Diagram Example
