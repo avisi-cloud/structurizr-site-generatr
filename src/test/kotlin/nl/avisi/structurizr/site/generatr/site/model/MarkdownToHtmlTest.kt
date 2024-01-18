@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.matches
 import com.structurizr.documentation.Format
 import org.junit.jupiter.api.Test
 
@@ -179,6 +180,27 @@ class MarkdownToHtmlTest : ViewModelTest() {
                 </div>
             """.trimIndent()
         )
+    }
+
+    @Test
+    fun `renders PlantUML code to SVG`() {
+        val generatorContext = generatorContext()
+        val viewModel = HomePageViewModel(generatorContext)
+
+        val html = toHtml(
+            viewModel,
+            """
+                ```puml
+                @startuml
+                class Foo
+                @enduml
+                ```
+            """.trimIndent(),
+            Format.Markdown,
+            svgFactory
+        )
+
+        assertThat(html).matches("<div>.*<svg.*Foo.*</svg>.*</div>".toRegex(RegexOption.DOT_MATCHES_ALL))
     }
 
     @Test

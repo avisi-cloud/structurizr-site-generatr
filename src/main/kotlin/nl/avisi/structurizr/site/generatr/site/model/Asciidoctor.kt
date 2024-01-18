@@ -53,6 +53,6 @@ class PlantUMLBlockProcessor : BlockProcessor() {
         val plantUMLReader = SourceStringReader(plantUMLCode)
         val stream = ByteArrayOutputStream()
         plantUMLReader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
-        return createBlock(parent, "pass", "$stream")
+        return createBlock(parent, "pass", "<div>$stream</div>")
     }
 }
