@@ -1,23 +1,26 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Format
+import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.html.HtmlWriter
 import com.vladsch.flexmark.html.LinkResolver
 import com.vladsch.flexmark.html.LinkResolverFactory
-import com.vladsch.flexmark.html.renderer.LinkResolverBasicContext
-import com.vladsch.flexmark.html.renderer.LinkStatus
-import com.vladsch.flexmark.html.renderer.ResolvedLink
+import com.vladsch.flexmark.html.renderer.*
 import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.util.ast.Node
 import kotlinx.html.div
 import kotlinx.html.stream.createHTML
+import net.sourceforge.plantuml.FileFormat
+import net.sourceforge.plantuml.FileFormatOption
+import net.sourceforge.plantuml.SourceStringReader
 import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.views.diagram
-import org.asciidoctor.Asciidoctor
 import org.asciidoctor.Options
 import org.asciidoctor.SafeMode
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import java.io.ByteArrayOutputStream
 
 const val embedPrefix = "embed:"
 
@@ -43,6 +46,7 @@ private fun markdownToHtml(
     val parser = Parser.builder(options).build()
     val renderer = HtmlRenderer.builder(options)
         .linkResolverFactory(CustomLinkResolver.Factory(pageViewModel))
+        .nodeRendererFactory { FencedCodeBlockRenderer() }
         .build()
     val markDownDocument = parser.parse(markdown)
     val html = renderer.render(markDownDocument)
@@ -51,6 +55,23 @@ private fun markdownToHtml(
         .apply { body().transformEmbeddedDiagramElements(pageViewModel, svgFactory) }
         .body()
         .html()
+}
+
+private class FencedCodeBlockRenderer : NodeRenderer {
+    override fun getNodeRenderingHandlers(): MutableSet<NodeRenderingHandler<*>> =
+        mutableSetOf(NodeRenderingHandler(FencedCodeBlock::class.java, this::render))
+
+    private fun render(fencedCodeBlock: FencedCodeBlock, nodeRendererContext: NodeRendererContext, htmlWriter: HtmlWriter) {
+        if (fencedCodeBlock.info.toString() == "puml") {
+            htmlWriter.tag("div") {
+                val reader = SourceStringReader(fencedCodeBlock.contentChars.toString())
+                val stream = ByteArrayOutputStream()
+                reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
+                htmlWriter.raw(stream.toString())
+            }
+        } else
+            nodeRendererContext.delegateRender()
+    }
 }
 
 private fun asciidocToHtml(
@@ -67,7 +88,7 @@ private fun asciidocToHtml(
         // another option could be https://docs.asciidoctor.org/asciidoctorj/latest/locating-files/#globdirectorywalker-class
         .backend("html5")
         .build()
-    val html = asciidoctor.convert(asciidoc, options)
+    val html = asciidoctorWithPUMLRenderer.convert(asciidoc, options)
 
     return Jsoup.parse(html)
         .apply {
