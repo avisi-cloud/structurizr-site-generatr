@@ -4,10 +4,7 @@ package nl.avisi.structurizr.site.generatr
 
 import com.sun.nio.file.SensitivityWatchEventModifier
 import kotlinx.cli.*
-import nl.avisi.structurizr.site.generatr.site.copySiteWideAssets
-import nl.avisi.structurizr.site.generatr.site.generateDiagrams
-import nl.avisi.structurizr.site.generatr.site.generateRedirectingIndexPage
-import nl.avisi.structurizr.site.generatr.site.generateSite
+import nl.avisi.structurizr.site.generatr.site.*
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.handler.ContextHandler
 import org.eclipse.jetty.server.handler.ContextHandlerCollection
@@ -79,6 +76,8 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
                 generateRedirectingIndexPage(File(siteDir), branch)
                 println("Copying assets...")
                 copySiteWideAssets(File(siteDir))
+                println("Generating Json Export...")
+                writeStructurizrJson(workspace, exportDir)
                 println("Generating diagrams...")
                 generateDiagrams(workspace, exportDir)
                 println("Generating site...")

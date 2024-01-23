@@ -3,10 +3,7 @@
 package nl.avisi.structurizr.site.generatr
 
 import kotlinx.cli.*
-import nl.avisi.structurizr.site.generatr.site.copySiteWideAssets
-import nl.avisi.structurizr.site.generatr.site.generateDiagrams
-import nl.avisi.structurizr.site.generatr.site.generateRedirectingIndexPage
-import nl.avisi.structurizr.site.generatr.site.generateSite
+import nl.avisi.structurizr.site.generatr.site.*
 import java.io.File
 
 class GenerateSiteCommand : Subcommand(
@@ -114,6 +111,7 @@ class GenerateSiteCommand : Subcommand(
             clonedRepository.checkoutBranch(branch)
 
             val workspace = createStructurizrWorkspace(workspaceFileInRepo)
+            writeStructurizrJson(workspace, File(siteDir, branch))
             generateDiagrams(workspace, File(siteDir, branch))
             generateSite(
                 version,
@@ -128,6 +126,7 @@ class GenerateSiteCommand : Subcommand(
 
     private fun generateSiteForModel(siteDir: File) {
         val workspace = createStructurizrWorkspace(File(workspaceFile))
+        writeStructurizrJson(workspace, File(siteDir, defaultBranch))
         generateDiagrams(workspace, File(siteDir, defaultBranch))
         generateSite(
             version,

@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
+import com.structurizr.util.WorkspaceUtils
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
 import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
@@ -51,6 +52,12 @@ fun generateRedirectingIndexPage(exportDir: File, defaultBranch: String) {
             }
         }
     )
+}
+
+fun writeStructurizrJson(workspace: Workspace, exportDir: File){
+    val jsonFile = File(exportDir, "workspace.json")
+    val x = WorkspaceUtils.toJson(workspace,true)
+    jsonFile.writeText(x)
 }
 
 fun generateSite(
