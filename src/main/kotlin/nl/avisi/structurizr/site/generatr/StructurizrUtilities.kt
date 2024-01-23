@@ -12,6 +12,8 @@ val Workspace.includedSoftwareSystems: List<SoftwareSystem>
         it.location != Location.External && if (externalTag != null) !it.tags.contains(externalTag) else true
     }
 
+fun Workspace.hasImageViews(id: String) = views.imageViews.any { it.elementId == id }
+
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 
@@ -36,11 +38,17 @@ fun Container.hasSections() = documentation.sections.isNotEmpty()
 fun ViewSet.hasSystemContextViews(softwareSystem: SoftwareSystem) =
     systemContextViews.any { it.softwareSystem == softwareSystem }
 
-fun ViewSet.hasContainerViews(softwareSystem: SoftwareSystem) =
-    containerViews.any { it.softwareSystem == softwareSystem }
+fun ViewSet.hasContainerViews(workspace: Workspace, softwareSystem: SoftwareSystem) =
+    containerViews.any { it.softwareSystem == softwareSystem } ||
+        workspace.views.imageViews.any { it.elementId == softwareSystem.id }
 
-fun ViewSet.hasComponentViews(softwareSystem: SoftwareSystem) =
-    componentViews.any { it.softwareSystem == softwareSystem }
+fun ViewSet.hasComponentViews(workspace: Workspace, softwareSystem: SoftwareSystem) =
+    componentViews.any { it.softwareSystem == softwareSystem } ||
+        workspace.views.imageViews.any { it.elementId in softwareSystem.containers.map { cn -> cn.id } }
+
+fun ViewSet.hasCodeViews(workspace: Workspace, softwareSystem: SoftwareSystem) =
+    componentViews.any { it.softwareSystem == softwareSystem } &&
+        workspace.views.imageViews.any { it.elementId in softwareSystem.containers.flatMap { cn -> cn.components.map { com -> com.id } } }
 
 fun ViewSet.hasDynamicViews(softwareSystem: SoftwareSystem) =
     dynamicViews.any { it.softwareSystem == softwareSystem }

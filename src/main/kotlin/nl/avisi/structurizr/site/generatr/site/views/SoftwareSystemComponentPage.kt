@@ -6,9 +6,8 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemComponentPage
 fun HTML.softwareSystemComponentPage(viewModel: SoftwareSystemComponentPageViewModel) {
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
-            viewModel.diagrams.forEach {
-                diagram(it)
-            }
+            viewModel.diagrams.forEach { diagram(it) }
+            viewModel.images.forEach { image(it) }
         }
     else
         redirectUpPage()
