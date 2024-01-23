@@ -2,8 +2,10 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
+import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -15,6 +17,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
             generatorContext.workspace.views.createComponentView(backend, "component-1", "Component view 1")
             generatorContext.workspace.views.createComponentView(backend, "component-2", "Component view 2")
         }
+    private val imageView = createImageView(generatorContext.workspace, softwareSystem.containers.single())
 
     @Test
     fun `active tab`() {
@@ -28,6 +31,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
     fun `diagrams sorted by key`() {
         val viewModel = SoftwareSystemComponentPageViewModel(generatorContext, softwareSystem)
 
+        assertThat(viewModel.visible).isTrue()
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "component-1",
@@ -48,6 +52,15 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
                 ImageViewModel(viewModel, "/puml/component-2.puml")
             )
         )
+    }
+
+    @Test
+    fun `has image`() {
+        val viewModel = SoftwareSystemComponentPageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel.visible).isTrue()
+        assertThat(viewModel.images).hasSize(1)
+        assertThat(viewModel.images.single()).isEqualTo(imageView)
     }
 
     @Test
