@@ -10,5 +10,8 @@ class SoftwareSystemContainerPageViewModel(generatorContext: GeneratorContext, s
         .filter { it.softwareSystem == softwareSystem }
         .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
-    val visible = generatorContext.workspace.views.hasContainerViews(softwareSystem)
+    val images = generatorContext.workspace.views.imageViews
+        .filter { it.elementId == softwareSystem.id }
+        .sortedBy { it.key }
+    val visible = generatorContext.workspace.views.hasContainerViews(generatorContext.workspace, softwareSystem) || images.isNotEmpty()
 }

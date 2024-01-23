@@ -11,7 +11,6 @@ import com.structurizr.model.Location
 import org.junit.jupiter.api.Test
 
 class SearchViewModelTest : ViewModelTest() {
-
     @Test
     fun `no index language configured`() {
         val viewModel = SearchViewModel(generatorContext())

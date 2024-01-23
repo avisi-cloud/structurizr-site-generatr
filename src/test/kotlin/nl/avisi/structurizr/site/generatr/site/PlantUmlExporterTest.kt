@@ -37,9 +37,9 @@ class PlantUmlExporterTest {
 
     private fun exporters() = listOf(
         ExporterType.C4.name.lowercase() to
-                { workspace: Workspace, url: String -> C4PlantUmlExporterWithElementLinks(workspace, url) },
+            { workspace: Workspace, url: String -> C4PlantUmlExporterWithElementLinks(workspace, url) },
         ExporterType.STRUCTURIZR.name.lowercase() to
-                { workspace: Workspace, url: String -> StructurizrPlantUmlExporterWithElementLinks(workspace, url) }
+            { workspace: Workspace, url: String -> StructurizrPlantUmlExporterWithElementLinks(workspace, url) }
     )
 
     @Test
@@ -159,6 +159,42 @@ class PlantUmlExporterTest {
             """
             rectangle "System 1\n<size:10>[Software System]</size>" <<System1>> {
               rectangle "==Container 1\n<size:10>[Container]</size>" <<System1.Container1>> as System1.Container1 [[../system-1/component/]]
+            }
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `renders Container Diagram with link to code view (c4)`() {
+        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage()
+
+        val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/container/")
+            .export(workspace.views.componentViews.first())
+
+        assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
+            """
+            Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
+              Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/code/")
+              Component(System1.Container1.Component2, "Component 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+              Component(System1.Container1.Component3, "Component 3", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+            }
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `renders Container Diagram with link to code view (structurizr)`() {
+        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage()
+
+        val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/container/")
+            .export(workspace.views.componentViews.first())
+
+        assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
+            """
+            rectangle "Container 1\n<size:10>[Container]</size>" <<System1.Container1>> {
+              rectangle "==Component 1\n<size:10>[Component]</size>" <<System1.Container1.Component1>> as System1.Container1.Component1 [[../system-1/code/]]
+              rectangle "==Component 2\n<size:10>[Component]</size>" <<System1.Container1.Component2>> as System1.Container1.Component2
+              rectangle "==Component 3\n<size:10>[Component]</size>" <<System1.Container1.Component3>> as System1.Container1.Component3
             }
             """.trimIndent()
         )
@@ -382,10 +418,10 @@ class PlantUmlExporterTest {
         system.addContainer("Container 1")
         system.addContainer("Container 2")
 
-        workspace.views.createContainerView(system, "Container1", "")
+        workspace.views.createSystemContextView(system, "Context 1", "")
             .apply { addAllElements() }
 
-        workspace.views.createSystemContextView(system, "Context 1", "")
+        workspace.views.createContainerView(system, "Container1", "")
             .apply { addAllElements() }
 
         return workspace
@@ -398,10 +434,10 @@ class PlantUmlExporterTest {
         system.addContainer("Container 1")
         system.addContainer("Container 2")
 
-        workspace.views.createContainerView(system, "Container1", "")
+        workspace.views.createSystemContextView(system, "Context 1", "")
             .apply { addAllElements() }
 
-        workspace.views.createSystemContextView(system, "Context 1", "")
+        workspace.views.createContainerView(system, "Container1", "")
             .apply { addAllElements() }
 
         return workspace
@@ -418,12 +454,22 @@ class PlantUmlExporterTest {
         workspace.views.createSystemContextView(system, "Context 1", "")
             .apply { addAllElements() }
 
-        workspace.views.createComponentView(container, "Component1", "")
-
         workspace.views.createContainerView(system, "Container1", "")
             .apply { addAllElements() }
 
+        workspace.views.createComponentView(container, "Component1", "")
+            .apply { addAllElements() }
+
         return workspace
+    }
+
+    private fun createWorkspaceWithOneSystemWithContainersComponentAndImage() = createWorkspaceWithOneSystemWithContainersAndComponents().apply {
+        views.createImageView(model.softwareSystems.single().containers.single().components.single { it.name == "Component 1" }, "imageview-001").also {
+            it.description = "Image View Description"
+            it.title = "Image View Title"
+            it.contentType = "image/png"
+            it.content = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        }
     }
 
     private fun createWorkspaceWithTwoSystems(): Workspace {

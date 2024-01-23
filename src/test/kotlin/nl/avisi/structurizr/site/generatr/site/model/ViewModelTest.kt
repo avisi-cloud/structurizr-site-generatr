@@ -4,6 +4,8 @@ import com.structurizr.Workspace
 import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
+import com.structurizr.model.Element
+import com.structurizr.view.ImageView
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import java.time.LocalDate
 import java.time.ZoneId
@@ -38,4 +40,11 @@ abstract class ViewModelTest {
         }
 
     protected fun createSection(content: String = "# Content") = Section(Format.Markdown, content)
+
+    protected fun createImageView(workspace: Workspace, element: Element): ImageView = workspace.views.createImageView(element, "imageview-001").also {
+        it.description = "Image View Description"
+        it.title = "Image View Title"
+        it.contentType = "image/png"
+        it.content = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+    }
 }
