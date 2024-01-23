@@ -17,7 +17,8 @@ data class DiagramViewModel(
 
         fun forView(
             pageViewModel: PageViewModel,
-            key: String, name: String,
+            key: String,
+            name: String,
             svgFactory: (key: String, url: String) -> String?
         ): DiagramViewModel {
             val svg = svgFactory(key, pageViewModel.url)
@@ -26,9 +27,9 @@ data class DiagramViewModel(
                 name,
                 svg,
                 extractDiagramWidthInPixels(svg),
-                ImageViewModel(pageViewModel, "/svg/${key}.svg"),
-                ImageViewModel(pageViewModel, "/png/${key}.png"),
-                ImageViewModel(pageViewModel, "/puml/${key}.puml")
+                ImageViewModel(pageViewModel, "/svg/$key.svg"),
+                ImageViewModel(pageViewModel, "/png/$key.png"),
+                ImageViewModel(pageViewModel, "/puml/$key.puml")
             )
         }
 
