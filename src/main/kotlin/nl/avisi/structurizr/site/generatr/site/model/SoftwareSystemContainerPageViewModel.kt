@@ -13,5 +13,6 @@ class SoftwareSystemContainerPageViewModel(generatorContext: GeneratorContext, s
     val images = generatorContext.workspace.views.imageViews
         .filter { it.elementId == softwareSystem.id }
         .sortedBy { it.key }
+        .map { ImageViewViewModel(it) }
     val visible = generatorContext.workspace.views.hasContainerViews(generatorContext.workspace, softwareSystem) || images.isNotEmpty()
 }

@@ -16,6 +16,10 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 a {
                     onClick = "openModal('$dialogId', '$svgId')"
                     +viewModel.name
+                    if (!viewModel.description.isNullOrBlank()) {
+                        br
+                        +viewModel.description
+                    }
                 }
             }
         }

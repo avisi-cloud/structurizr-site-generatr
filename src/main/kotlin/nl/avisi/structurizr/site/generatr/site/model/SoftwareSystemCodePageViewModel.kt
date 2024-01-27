@@ -8,5 +8,6 @@ class SoftwareSystemCodePageViewModel(generatorContext: GeneratorContext, softwa
     val images = generatorContext.workspace.views.imageViews
         .filter { it.elementId in softwareSystem.containers.flatMap { c -> c.components.map { com -> com.id } } }
         .sortedBy { it.key }
+        .map { ImageViewViewModel(it) }
     val visible = images.isNotEmpty()
 }

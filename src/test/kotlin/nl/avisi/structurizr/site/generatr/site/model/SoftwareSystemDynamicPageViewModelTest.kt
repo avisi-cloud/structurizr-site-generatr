@@ -33,6 +33,7 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "backend-dynamic",
                 "Backend - Dynamic",
+                "Dynamic view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
                 ImageViewModel(viewModel, "/svg/backend-dynamic.svg"),
@@ -42,6 +43,7 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "frontend-dynamic",
                 "Frontend - Dynamic",
+                "Dynamic view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
                 ImageViewModel(viewModel, "/svg/frontend-dynamic.svg"),
