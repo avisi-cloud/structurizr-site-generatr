@@ -6,6 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemCodePageViewM
 fun HTML.softwareSystemCodePage(viewModel: SoftwareSystemCodePageViewModel) {
     if (viewModel.visible) {
         softwareSystemPage(viewModel) {
+            // TODO: group by containers / components
             viewModel.images.forEach { image(it) }
         }
     } else

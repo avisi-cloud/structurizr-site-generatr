@@ -41,6 +41,7 @@ private fun FlowContent.svgModal(
         }
         div(classes = "modal-content") {
             div(classes = "box") {
+                // TODO: no links in this SVG
                 rawHtml(viewModel.svg!!, svgId, "modal-box-content")
                 div(classes = "has-text-centered") {
                     +" ["
