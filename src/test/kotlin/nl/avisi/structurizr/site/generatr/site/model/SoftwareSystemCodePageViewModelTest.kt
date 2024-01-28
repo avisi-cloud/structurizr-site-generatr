@@ -29,7 +29,7 @@ class SoftwareSystemCodePageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.visible).isTrue()
         assertThat(viewModel.images).hasSize(1)
-        assertThat(viewModel.images.single()).isEqualTo(imageView)
+        assertThat(viewModel.images.single().imageView).isEqualTo(imageView)
     }
 
     @Test

@@ -31,6 +31,7 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "deployment-1",
                 "Software system - Deployment - Default",
+                "Deployment view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
                 ImageViewModel(viewModel, "/svg/deployment-1.svg"),
@@ -40,6 +41,7 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "deployment-2",
                 "Software system - Deployment - Default",
+                "Deployment view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
                 ImageViewModel(viewModel, "/svg/deployment-2.svg"),

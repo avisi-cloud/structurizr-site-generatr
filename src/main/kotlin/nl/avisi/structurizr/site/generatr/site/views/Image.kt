@@ -1,20 +1,33 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
-import com.structurizr.view.ImageView
-import kotlinx.html.FlowContent
-import kotlinx.html.figcaption
-import kotlinx.html.figure
-import kotlinx.html.img
-import kotlinx.html.p
+import kotlinx.html.*
+import nl.avisi.structurizr.site.generatr.site.model.ImageViewViewModel
 
-fun FlowContent.image(image: ImageView) {
+fun FlowContent.image(viewModel: ImageViewViewModel) {
+    val dialogId = "${viewModel.key}-modal"
+
     figure {
-        p(classes = "has-text-weight-bold") { +image.title }
-        img {
-            src = image.content
-        }
+        style = "width: fit-content;"
+
+        p(classes = "has-text-weight-bold") { +viewModel.title }
+        img { src = viewModel.content }
         figcaption {
-            +image.description
+            a {
+                onClick = "openModal('$dialogId')"
+                +viewModel.name
+                if (!viewModel.description.isNullOrBlank()) {
+                    br
+                    +viewModel.description
+                }
+            }
+        }
+    }
+    modal(dialogId) {
+        img(classes = "modal-box-content modal-image") { src = viewModel.content }
+        div(classes = "has-text-centered") {
+            +" ["
+            a(href = viewModel.content, target = "_blank") { +"raw" }
+            +"]"
         }
     }
 }

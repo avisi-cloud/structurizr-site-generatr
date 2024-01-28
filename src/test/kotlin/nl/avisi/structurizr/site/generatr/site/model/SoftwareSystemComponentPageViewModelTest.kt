@@ -36,6 +36,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "component-1",
                 "Software system - Backend - Components",
+                "Component view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
                 ImageViewModel(viewModel, "/svg/component-1.svg"),
@@ -45,6 +46,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "component-2",
                 "Software system - Backend - Components",
+                "Component view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
                 ImageViewModel(viewModel, "/svg/component-2.svg"),
@@ -60,7 +62,7 @@ class SoftwareSystemComponentPageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.visible).isTrue()
         assertThat(viewModel.images).hasSize(1)
-        assertThat(viewModel.images.single()).isEqualTo(imageView)
+        assertThat(viewModel.images.single().imageView).isEqualTo(imageView)
     }
 
     @Test

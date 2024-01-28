@@ -8,11 +8,11 @@ function resetPz() {
   }
 }
 
-function openModal(id, svgId) {
-  document.getElementById(id).classList.add('is-active')
+function openSvgModal(id, svgId) {
+  openModal(id);
 
   const svgElement = document.getElementById(svgId).firstElementChild;
-  svgElement.classList.add('modal-svg')
+  svgElement.classList.add('modal-svg');
 
   pz = svgPanZoom(svgElement, {
     zoomEnabled: true,
@@ -28,21 +28,9 @@ function openModal(id, svgId) {
   window.addEventListener('resize', resetPz);
 }
 
-function closeModal(id) {
+function closeSvgModal(id) {
   if (pz) {
     pz.destroy();
   }
-  window.removeEventListener('resize', resetPz);
-  document.getElementById(id).classList.remove('is-active');
+  closeModal(id);
 }
-
-// Add a keyboard event to close all modals
-document.addEventListener('keydown', (event) => {
-  if (event.code === 'Escape') {
-    (document.querySelectorAll('.modal') || []).forEach((modal) => {
-      if (modal.classList.contains('is-active')) {
-        closeModal(modal.id);
-      }
-    });
-  }
-});

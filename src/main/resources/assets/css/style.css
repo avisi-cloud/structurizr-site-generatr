@@ -40,3 +40,7 @@ svg a:hover {
     min-height: inherit;
     max-height: inherit;
 }
+
+.modal-image {
+    object-fit: contain;
+}

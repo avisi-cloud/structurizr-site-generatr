@@ -207,6 +207,8 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 email
             }
             autoLayout
+            title "System Context of Internet Banking System"
+            description "Describes the overall context"
         }
 
         container internetBankingSystem "Containers" {
@@ -235,13 +237,13 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         image database {
             image internet-banking-system/database-erd-example.jpg
-            title "Internet Banking System - Database - Entity Relationship Diagram"
+            title "Entity Relationship Diagram"
             description "Image View to show the ERD diagram for the database container"
         }
 
         image accountsSummaryController {
             image internet-banking-system/uml-class-diagram.png
-            title "Internet Banking System - API Application - AccountsSummaryController Zoom-In"
+            title "AccountsSummaryController Zoom-In"
             description "This is a sample imageView for code of a component"
         }
 
