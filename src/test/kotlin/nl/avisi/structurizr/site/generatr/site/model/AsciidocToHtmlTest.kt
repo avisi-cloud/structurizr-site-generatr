@@ -211,7 +211,7 @@ class AsciidocToHtmlTest : ViewModelTest() {
                  <svg viewBox="0 0 800 900"></svg>
                 </div>
                 <figcaption>
-                 <a onclick="openModal('SystemLandscape-modal', 'SystemLandscape-svg')">System Landscape Diagram</a>
+                 <a onclick="openSvgModal('SystemLandscape-modal', 'SystemLandscape-svg')">System Landscape Diagram</a>
                 </figcaption>
                </figure>
                <div class="modal" id="SystemLandscape-modal">

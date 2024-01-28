@@ -6,7 +6,8 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ImageView
 
 data class ImageViewViewModel(val imageView: ImageView) {
-    val name: String get() = generateName()
+    val key: String = imageView.key
+    val name: String = generateName()
     val title: String = imageView.title
     val description: String? = imageView.description
     val content: String = imageView.content

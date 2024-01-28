@@ -14,7 +14,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
             rawHtml(viewModel.svg)
             figcaption {
                 a {
-                    onClick = "openModal('$dialogId', '$svgId')"
+                    onClick = "openSvgModal('$dialogId', '$svgId')"
                     +viewModel.name
                     if (!viewModel.description.isNullOrBlank()) {
                         br
@@ -23,44 +23,23 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 }
             }
         }
-        svgModal(dialogId, svgId, viewModel)
+        modal(dialogId) {
+            // TODO: no links in this SVG
+            rawHtml(viewModel.svg, svgId, "modal-box-content")
+            div(classes = "has-text-centered") {
+                +" ["
+                a(href = viewModel.svgLocation.relativeHref, target = "_blank") { +"svg" }
+                +"|"
+                a(href = viewModel.pngLocation.relativeHref, target = "_blank") { +"png" }
+                +"|"
+                a(href = viewModel.pumlLocation.relativeHref, target = "_blank") { +"puml" }
+                +"]"
+            }
+        }
     } else
         div(classes = "notification is-danger") {
             +"No view with key"
             span(classes = "has-text-weight-bold") { +" ${viewModel.key} " }
             +"found!"
         }
-}
-
-private fun FlowContent.svgModal(
-    dialogId: String,
-    svgId: String,
-    viewModel: DiagramViewModel
-) {
-    div(classes = "modal") {
-        id = dialogId
-
-        div(classes = "modal-background") {
-            onClick = "closeModal('$dialogId')"
-        }
-        div(classes = "modal-content") {
-            div(classes = "box") {
-                // TODO: no links in this SVG
-                rawHtml(viewModel.svg!!, svgId, "modal-box-content")
-                div(classes = "has-text-centered") {
-                    +" ["
-                    a(href = viewModel.svgLocation.relativeHref, target = "_blank") { +"svg" }
-                    +"|"
-                    a(href = viewModel.pngLocation.relativeHref, target = "_blank") { +"png" }
-                    +"|"
-                    a(href = viewModel.pumlLocation.relativeHref, target = "_blank") { +"puml" }
-                    +"]"
-                }
-            }
-        }
-        button(classes = "modal-close is-large") {
-            attributes["aria-label"] = "close"
-            onClick = "closeModal('$dialogId')"
-        }
-    }
 }
