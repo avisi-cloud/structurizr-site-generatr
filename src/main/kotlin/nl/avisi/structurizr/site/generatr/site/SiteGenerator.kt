@@ -54,10 +54,9 @@ fun generateRedirectingIndexPage(exportDir: File, defaultBranch: String) {
     )
 }
 
-fun writeStructurizrJson(workspace: Workspace, exportDir: File){
-    val jsonFile = File(exportDir, "workspace.json")
-    val x = WorkspaceUtils.toJson(workspace,true)
-    jsonFile.writeText(x)
+fun writeStructurizrJson(workspace: Workspace, exportDir: File) {
+    val json = WorkspaceUtils.toJson(workspace, true)
+    File(exportDir, "workspace.json").writeText(json)
 }
 
 fun generateSite(
