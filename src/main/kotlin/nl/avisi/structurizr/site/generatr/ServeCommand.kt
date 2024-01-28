@@ -76,7 +76,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
                 generateRedirectingIndexPage(File(siteDir), branch)
                 println("Copying assets...")
                 copySiteWideAssets(File(siteDir))
-                println("Generating Json Export...")
+                println("Writing workspace.json...")
                 writeStructurizrJson(workspace, exportDir)
                 println("Generating diagrams...")
                 generateDiagrams(workspace, exportDir)
