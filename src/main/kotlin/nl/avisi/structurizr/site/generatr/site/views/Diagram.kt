@@ -27,6 +27,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
             // TODO: no links in this SVG
             rawHtml(viewModel.svg, svgId, "modal-box-content")
             div(classes = "has-text-centered") {
+                +viewModel.name
                 +" ["
                 a(href = viewModel.svgLocation.relativeHref, target = "_blank") { +"svg" }
                 +"|"

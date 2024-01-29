@@ -304,7 +304,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
                       <svg viewBox="0 0 800 900"></svg>
                      </div>
                      <div class="has-text-centered">
-                      [<a href="svg/SystemLandscape.svg" target="_blank">svg</a>|<a href="png/SystemLandscape.png" target="_blank">png</a>|<a href="puml/SystemLandscape.puml" target="_blank">puml</a>]
+                      System Landscape Diagram [<a href="svg/SystemLandscape.svg" target="_blank">svg</a>|<a href="png/SystemLandscape.png" target="_blank">png</a>|<a href="puml/SystemLandscape.puml" target="_blank">puml</a>]
                      </div>
                     </div>
                    </div><button class="modal-close is-large" aria-label="close" onclick="closeModal('SystemLandscape-modal')"></button>

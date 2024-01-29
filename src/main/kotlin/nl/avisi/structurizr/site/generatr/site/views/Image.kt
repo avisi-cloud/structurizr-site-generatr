@@ -24,10 +24,6 @@ fun FlowContent.image(viewModel: ImageViewViewModel) {
     }
     modal(dialogId) {
         img(classes = "modal-box-content modal-image") { src = viewModel.content }
-        div(classes = "has-text-centered") {
-            +" ["
-            a(href = viewModel.content, target = "_blank") { +"raw" }
-            +"]"
-        }
+        div(classes = "has-text-centered") { +viewModel.name }
     }
 }
