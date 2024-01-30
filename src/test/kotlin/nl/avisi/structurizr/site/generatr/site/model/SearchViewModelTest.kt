@@ -107,6 +107,7 @@ class SearchViewModelTest : ViewModelTest() {
                 "Context views",
                 "Container views",
                 "Component views",
+                "Component views",                
                 "Decision",
                 "Documentation"
             )
