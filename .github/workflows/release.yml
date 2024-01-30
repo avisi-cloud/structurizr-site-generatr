@@ -1,8 +1,6 @@
 name: release
 on:
-  push:
-    tags:
-      - '*'
+  workflow_dispatch:
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
