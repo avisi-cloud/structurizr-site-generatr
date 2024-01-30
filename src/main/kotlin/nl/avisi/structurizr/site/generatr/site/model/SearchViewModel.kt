@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.model.indexing.home
 import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemComponents
+import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemComponentsComponent
 import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemContainers
 import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemContext
 import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemDecisions
