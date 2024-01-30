@@ -26,3 +26,23 @@ fun softwareSystemComponents(softwareSystem: SoftwareSystem, viewModel: PageView
             it
         )
     }
+
+    fun softwareSystemComponentsComponent(softwareSystem: SoftwareSystem, viewModel: PageViewModel) : List<Document> {
+
+    var components = softwareSystem.containers
+            .sortedBy { it.name }
+            .flatMap { container -> container.components }
+
+    var documents = emptyList<Document>().toMutableList()
+
+    components.forEach {
+        documents += Document(
+                SoftwareSystemPageViewModel.url(softwareSystem, SoftwareSystemPageViewModel.Tab.COMPONENT)
+                        .asUrlToDirectory(viewModel.url),
+                "Component views",
+                "${softwareSystem.name} | Component views | ${it.container.name}",
+                it.name)
+    }
+
+    return documents
+}
