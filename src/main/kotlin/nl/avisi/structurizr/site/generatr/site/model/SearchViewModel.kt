@@ -31,6 +31,7 @@ class SearchViewModel(generatorContext: GeneratorContext) : PageViewModel(genera
                         add(softwareSystemContext(it, this@SearchViewModel))
                         add(softwareSystemContainers(it, this@SearchViewModel))
                         add(softwareSystemComponents(it, this@SearchViewModel))
+                        addAll(softwareSystemComponentsComponent(it, this@SearchViewModel))                        
                         add(softwareSystemRelationships(it, this@SearchViewModel))
                         addAll(softwareSystemDecisions(it, this@SearchViewModel))
                         addAll(softwareSystemSections(it, this@SearchViewModel))
