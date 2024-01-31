@@ -79,3 +79,10 @@ jobs:
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ github.ref_name }}
+      - name: sign container image
+        run: |
+          cosign sign --yes --key env://COSIGN_KEY glocrmsregistry.azurecr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}@${{ steps.build_push.outputs.digest }}
+        shell: bash
+        env:
+          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
+          COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
