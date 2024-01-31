@@ -126,7 +126,7 @@ class GenerateSiteCommand : Subcommand(
 
     private fun generateSiteForModel(siteDir: File) {
         val workspace = createStructurizrWorkspace(File(workspaceFile))
-        var dir = File(siteDir, branch).apply { mkdirs() }
+        var dir = File(siteDir, defaultBranch).apply { mkdirs() }
         writeStructurizrJson(workspace, File(siteDir, defaultBranch))
         generateDiagrams(workspace, File(siteDir, defaultBranch))
         generateSite(
