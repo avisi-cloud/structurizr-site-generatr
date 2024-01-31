@@ -13,7 +13,7 @@ window.onpageshow = function() {
 
 function search(terms) {
   const results = idx.search(terms).map(item => {
-    const document = documents.find(post => item.ref === post.href);
+    const document = documents.find(post => item.ref === post.id);
     return { score: item.score, href: document.href, type: document.type, title: document.title };
   });
 
