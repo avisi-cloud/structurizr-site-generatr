@@ -37,7 +37,7 @@ fun HTML.searchPage(viewModel: SearchViewModel) {
                     if (viewModel.language.isNotBlank())
                         +"this.use(lunr.${viewModel.language});"
                     +"""
-                        this.ref('href')
+                        this.ref('id')
                         this.field('text')
 
                         documents.forEach(function (doc) {
