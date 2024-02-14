@@ -57,7 +57,9 @@ fun generateRedirectingIndexPage(exportDir: File, defaultBranch: String) {
 
 fun writeStructurizrJson(workspace: Workspace, exportDir: File) {
     val json = WorkspaceUtils.toJson(workspace, true)
-    File(exportDir, "workspace.json").writeText(json)
+    File(exportDir, "workspace.json")
+        .apply { mkdirs() }
+        .writeText(json)
 }
 
 fun generateSite(
