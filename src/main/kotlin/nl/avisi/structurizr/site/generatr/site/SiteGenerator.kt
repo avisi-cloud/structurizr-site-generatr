@@ -25,6 +25,7 @@ fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/js/reformat-mermaid.js")
     copySiteWideAsset(exportDir, "/css/treeview.css")
     copySiteWideAsset(exportDir, "/js/treeview.js")
+    copySiteWideAsset(exportDir, "/js/katex-render.js")
 }
 
 private fun copySiteWideAsset(exportDir: File, asset: String) {
