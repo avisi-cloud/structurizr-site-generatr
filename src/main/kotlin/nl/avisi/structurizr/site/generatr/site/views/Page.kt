@@ -74,5 +74,8 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
             script(type = ScriptType.textJavaScript, src = "../" + "/treeview.js".asUrlToFile(viewModel.url)) { }
             script(type = ScriptType.textJavaScript) { unsafe { +"listree();" } }
         }
+
+        if (viewModel.includeKatex)
+            katexRenderScript(viewModel)
     }
 }

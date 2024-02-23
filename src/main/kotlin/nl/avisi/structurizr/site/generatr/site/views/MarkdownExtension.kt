@@ -55,6 +55,14 @@ fun HEAD.katexFonts() {
     }
 }
 
+fun BODY.katexRenderScript(viewModel: PageViewModel) {
+    // Fix to support math rendering in markdown:
+    script(
+        type = ScriptType.textJavaScript,
+        src = "../" + "/katex-render.js".asUrlToFile(viewModel.url)
+    ) { }
+}
+
 fun BODY.mermaidScript(viewModel: PageViewModel) {
     // Fix to support mermaid diagrams in markdown:
     script(
