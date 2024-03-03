@@ -20,7 +20,7 @@ dependencies {
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
 
-    implementation("com.structurizr:structurizr-core:1.29.0")
+    implementation("com.structurizr:structurizr-core:2.1.1")
     implementation("com.structurizr:structurizr-dsl:1.35.0")
     implementation("com.structurizr:structurizr-export:1.19.0")
 
