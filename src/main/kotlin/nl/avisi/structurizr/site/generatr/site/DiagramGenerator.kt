@@ -10,7 +10,7 @@ import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.net.URL
+import java.net.URI
 import java.util.concurrent.ConcurrentHashMap
 
 fun generateDiagrams(workspace: Workspace, exportDir: File) {
@@ -119,7 +119,7 @@ private object IncludeCache {
     }
 
     private fun downloadIncludedFile(includedFile: String, cachedFile: File) {
-        URL(includedFile).openStream().use { inputStream ->
+        URI(includedFile).toURL().openStream().use { inputStream ->
             cachedFile.outputStream().use { outputStream ->
                 inputStream.copyTo(outputStream)
             }
