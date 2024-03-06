@@ -9,7 +9,7 @@ import com.structurizr.view.ViewSet
 val Workspace.includedSoftwareSystems: List<SoftwareSystem>
     get() = model.softwareSystems.filter {
         val externalTag = views.configuration.properties.getOrDefault("generatr.site.externalTag", null)
-        it.location != Location.External && if (externalTag != null) !it.tags.contains(externalTag) else true
+        if (externalTag != null) !it.tags.contains(externalTag) else true
     }
 
 fun Workspace.hasImageViews(id: String) = views.imageViews.any { it.elementId == id }
