@@ -199,6 +199,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         eventSockets.forEach { it.send(message) }
     }
 
+    @Suppress("UNUSED_PARAMETER", "unused")
     @WebSocket
     inner class EventSocket {
         private var session: Session? = null
