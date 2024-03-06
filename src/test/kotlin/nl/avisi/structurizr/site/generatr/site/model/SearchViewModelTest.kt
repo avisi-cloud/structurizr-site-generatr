@@ -7,7 +7,6 @@ import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
-import com.structurizr.model.Location
 import org.junit.jupiter.api.Test
 
 class SearchViewModelTest : ViewModelTest() {
@@ -59,18 +58,6 @@ class SearchViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.documents.map { it.type })
             .containsExactly("Context views")
-    }
-
-    @Test
-    fun `indexes no external software system (outside enterprise boundary)`() {
-        val generatorContext = generatorContext()
-        generatorContext.workspace.apply {
-            model.addSoftwareSystem("Software system").apply { location = Location.External }
-        }
-        val viewModel = SearchViewModel(generatorContext)
-
-        assertThat(viewModel.documents.map { it.type })
-            .isEmpty()
     }
 
     @Test

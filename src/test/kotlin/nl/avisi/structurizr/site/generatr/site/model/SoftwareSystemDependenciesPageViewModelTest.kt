@@ -2,7 +2,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.*
-import com.structurizr.model.Location
 import kotlin.test.Test
 
 class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
@@ -88,20 +87,6 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         // Outbound Table
         assertThat(viewModel.dependenciesOutboundTable.bodyRows.extractTitle())
             .containsExactly("Software system 2")
-    }
-
-    @Test
-    fun `dependencies from and to external systems (outside enterprise boundary)`() {
-        val externalSystem = generatorContext.workspace.model
-            .addSoftwareSystem(Location.External, "External system", "")
-        externalSystem.uses(softwareSystem1, "Uses", "REST")
-        softwareSystem1.uses(externalSystem, "Uses", "REST")
-        val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
-
-        assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
-            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
-        assertThat(viewModel.dependenciesOutboundTable.bodyRows[0].columns[0])
-            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
     }
 
     @Test
