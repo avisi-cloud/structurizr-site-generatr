@@ -37,7 +37,7 @@ dependencies {
     implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.0.6")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.12")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.22")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.23")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.21")
     runtimeOnly("org.jruby:jruby-core:9.4.6.0")
 
