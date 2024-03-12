@@ -18,7 +18,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.6")
 
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:6.9.0.202403050737-r")
 
     implementation("com.structurizr:structurizr-core:1.29.0")
     implementation("com.structurizr:structurizr-dsl:1.35.0")
