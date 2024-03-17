@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
     <link href="../../style.css" rel="stylesheet">
     <link href="./../style-branding.css" rel="stylesheet">
+    <script type="text/javascript" src="../../modal.js"></script>
     <script type="text/javascript" src="../../svg-modal.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
     <link href="../../admonition.css" rel="stylesheet">
@@ -39,7 +40,7 @@
           <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">main</a>
             <div class="navbar-dropdown is-right"><a href="../../main/" class="navbar-item">main</a>
               <hr class="navbar-divider">
-              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.8</span></div>
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>1.1.10</span></div>
             </div>
           </div>
         </div>
@@ -435,7 +436,7 @@
     </svg>
    </div>
    <figcaption>
-    <a onclick="openModal('SystemLandscape-modal', 'SystemLandscape-svg')">System Landscape Diagram</a>
+    <a onclick="openSvgModal('SystemLandscape-modal', 'SystemLandscape-svg')">System Landscape Diagram</a>
    </figcaption>
   </figure>
   <div class="modal" id="SystemLandscape-modal">
@@ -808,7 +809,7 @@
       </svg>
      </div>
      <div class="has-text-centered">
-      [<a href="../svg/SystemLandscape.svg" target="_blank">svg</a>|<a href="../png/SystemLandscape.png" target="_blank">png</a>|<a href="../puml/SystemLandscape.puml" target="_blank">puml</a>]
+      System Landscape Diagram [<a href="../svg/SystemLandscape.svg" target="_blank">svg</a>|<a href="../png/SystemLandscape.png" target="_blank">png</a>|<a href="../puml/SystemLandscape.puml" target="_blank">puml</a>]
      </div>
     </div>
    </div><button class="modal-close is-large" aria-label="close" onclick="closeModal('SystemLandscape-modal')"></button>
@@ -822,6 +823,89 @@
 <h4 id="example-embedded-picture"><a href="#example-embedded-picture" id="example-embedded-picture">Example: Embedded picture</a></h4>
 <p><a href="https://www.flickr.com/photos/schmollmolch/4937297813/">Sun</a>, by Christian Scheja</p>
 <p><img src="../pictures/nice-picture.png" alt="A nice picture"></p>
+<h3 id="embedding-plantuml-diagrams"><a href="#embedding-plantuml-diagrams" id="embedding-plantuml-diagrams">Embedding PlantUML diagrams</a></h3>
+<p>Structurizr Site Generatr supports rendering PlantUML embedded in Markdown files.</p>
+<h4 id="sequence-diagram-example"><a href="#sequence-diagram-example" id="sequence-diagram-example">Sequence diagram example</a></h4>
+<pre><code class="language-markdown">```puml
+@startuml
+Foo -&gt; Bar: doSomething()
+@enduml
+```
+</code></pre>
+<div>
+ <!--?xml version="1.0" encoding="us-ascii" standalone="no"?-->
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="120px" preserveAspectRatio="none" style="width:169px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 120" width="169px" zoomAndPan="magnify">
+  <defs /><g>
+   <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="25" x2="25" y1="36.2969" y2="85.4297" />
+   <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="144.5" x2="144.5" y1="36.2969" y2="85.4297" />
+   <rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40" x="5" y="5" />
+   <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="26" x="12" y="24.9951">Foo</text>
+   <rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40" x="5" y="84.4297" />
+   <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="26" x="12" y="104.4248">Foo</text>
+   <rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37" x="126.5" y="5" />
+   <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23" x="133.5" y="24.9951">Bar</text>
+   <rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37" x="126.5" y="84.4297" />
+   <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23" x="133.5" y="104.4248">Bar</text>
+   <polygon fill="#181818" points="133,63.4297,143,67.4297,133,71.4297,137,67.4297" style="stroke:#181818;stroke-width:1.0;" />
+   <line style="stroke:#181818;stroke-width:1.0;" x1="25" x2="139" y1="67.4297" y2="67.4297" />
+   <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="96" x="32" y="62.3638">doSomething()</text>
+  </g>
+ </svg>
+</div>
+<h3 id="class-diagram-example"><a href="#class-diagram-example" id="class-diagram-example">Class diagram example</a></h3>
+<pre><code class="language-markdown">```puml
+@startuml
+class Foo {
+    +property: String
+    +foo()
+}
+
+class Bar {
+    -privateProperty: String
+    +bar()
+}
+
+Foo ..&gt; Bar: Uses
+@enduml
+```
+</code></pre>
+<div>
+ <!--?xml version="1.0" encoding="us-ascii" standalone="no"?-->
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="252px" preserveAspectRatio="none" style="width:193px;height:252px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 252" width="193px" zoomAndPan="magnify">
+  <defs /><g>
+   <!--class Foo-->
+   <g id="elem_Foo">
+    <rect codeLine="1" fill="#F1F1F1" height="80.5938" id="Foo" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133" x="30" y="7" />
+    <ellipse cx="79.25" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;" />
+    <path d="M82.2188,28.6406 Q81.6406,28.9375 81,29.0781 Q80.3594,29.2344 79.6563,29.2344 Q77.1563,29.2344 75.8281,27.5938 Q74.5156,25.9375 74.5156,22.8125 Q74.5156,19.6875 75.8281,18.0313 Q77.1563,16.375 79.6563,16.375 Q80.3594,16.375 81,16.5313 Q81.6563,16.6875 82.2188,16.9844 L82.2188,19.7031 Q81.5938,19.125 81,18.8594 Q80.4063,18.5781 79.7813,18.5781 Q78.4375,18.5781 77.75,19.6563 Q77.0625,20.7188 77.0625,22.8125 Q77.0625,24.9063 77.75,25.9844 Q78.4375,27.0469 79.7813,27.0469 Q80.4063,27.0469 81,26.7813 Q81.5938,26.5 82.2188,25.9219 L82.2188,28.6406 Z " fill="#000000" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="26" x="99.75" y="27.8467">Foo</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="31" x2="162" y1="39" y2="39" />
+    <ellipse cx="41" cy="52.6484" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107" x="50" y="55.9951">property: String</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="31" x2="162" y1="63.2969" y2="63.2969" />
+    <ellipse cx="41" cy="76.9453" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32" x="50" y="80.292">foo()</text>
+   </g><!--class Bar-->
+   <g id="elem_Bar">
+    <rect codeLine="6" fill="#F1F1F1" height="80.5938" id="Bar" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="179" x="7" y="165" />
+    <ellipse cx="80.75" cy="181" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;" />
+    <path d="M83.7188,186.6406 Q83.1406,186.9375 82.5,187.0781 Q81.8594,187.2344 81.1563,187.2344 Q78.6563,187.2344 77.3281,185.5938 Q76.0156,183.9375 76.0156,180.8125 Q76.0156,177.6875 77.3281,176.0313 Q78.6563,174.375 81.1563,174.375 Q81.8594,174.375 82.5,174.5313 Q83.1563,174.6875 83.7188,174.9844 L83.7188,177.7031 Q83.0938,177.125 82.5,176.8594 Q81.9063,176.5781 81.2813,176.5781 Q79.9375,176.5781 79.25,177.6563 Q78.5625,178.7188 78.5625,180.8125 Q78.5625,182.9063 79.25,183.9844 Q79.9375,185.0469 81.2813,185.0469 Q81.9063,185.0469 82.5,184.7813 Q83.0938,184.5 83.7188,183.9219 L83.7188,186.6406 Z " fill="#000000" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23" x="101.25" y="185.8467">Bar</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="185" y1="197" y2="197" />
+    <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="15" y="207.6484" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="153" x="27" y="213.9951">privateProperty: String</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="185" y1="221.2969" y2="221.2969" />
+    <ellipse cx="18" cy="234.9453" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32" x="27" y="238.292">bar()</text>
+   </g><!--link Foo to Bar-->
+   <g id="link_Foo_Bar">
+    <path codeLine="11" d="M96.5,88.27 C96.5,111.74 96.5,135.35 96.5,158.8 " fill="none" id="Foo-to-Bar" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;" />
+    <polygon fill="#181818" points="96.5,164.8,100.5,155.8,96.5,159.8,92.5,155.8,96.5,164.8" style="stroke:#181818;stroke-width:1.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="32" x="97.5" y="131.0669">Uses</text>
+   </g>
+  </g>
+ </svg>
+</div>
 <h3 id="embedding-mermaid-diagrams"><a href="#embedding-mermaid-diagrams" id="embedding-mermaid-diagrams">Embedding mermaid diagrams</a></h3>
 <p>Structurizr Site Generatr is supporting mermaid diagrams in markdown pages using the actual mermaid.js version. Therefore every diagram type, supported by mermaid may be used in markdown documentation files.</p>
 <ul>
@@ -852,7 +936,7 @@ graph TD;
   B--&gt;D;
   C--&gt;D;
 </code></pre>
-<h4 id="sequence-diagram-example"><a href="#sequence-diagram-example" id="sequence-diagram-example">Sequence Diagram Example</a></h4>
+<h4 id="sequence-diagram-example-1"><a href="#sequence-diagram-example-1" id="sequence-diagram-example-1">Sequence Diagram Example</a></h4>
 <pre><code class="language-markdown">```mermaid
 sequenceDiagram
     participant Alice
@@ -884,6 +968,7 @@ sequenceDiagram
     </div>
     <script type="text/javascript" src="../../admonition.js"></script>
     <script type="text/javascript" src="../../reformat-mermaid.js"></script>
-    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs';</script>
+    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';</script>
+    <script type="text/javascript" src="../../katex-render.js"></script>
   </body>
 </html>

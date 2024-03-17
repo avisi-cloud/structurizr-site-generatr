@@ -1,6 +1,6 @@
 @startuml
 set separator none
-title Internet Banking System - System Context
+title System Context of Internet Banking System
 
 top to bottom direction
 
