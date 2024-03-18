@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.containsAll
+import assertk.assertions.containsAtLeast
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
@@ -51,7 +52,7 @@ class IndexingTest : ViewModelTest() {
         workspace.documentation.addSection(createSection("# Landscape\nMore info"))
         val documents = workspaceSections(workspace.documentation, this.pageViewModel())
 
-        assertThat(documents).containsAll(
+        assertThat(documents).containsAtLeast(
             Document(
                 "../landscape/",
                 "Workspace Documentation",
@@ -73,7 +74,7 @@ class IndexingTest : ViewModelTest() {
         workspace.documentation.addDecision(createDecision())
         val documents = workspaceDecisions(workspace.documentation, this.pageViewModel())
 
-        assertThat(documents).containsAll(
+        assertThat(documents).containsAtLeast(
             Document(
                 "../decisions/1/",
                 "Workspace Decision",
@@ -261,7 +262,7 @@ class IndexingTest : ViewModelTest() {
         }
         val documents = softwareSystemDecisions(workspace.model.softwareSystems.single(), this.pageViewModel())
 
-        assertThat(documents).containsAll(
+        assertThat(documents).containsAtLeast(
             Document(
                 "../software-system-1/decisions/1/",
                 "Decision",
@@ -304,7 +305,7 @@ class IndexingTest : ViewModelTest() {
         }
         val documents = softwareSystemSections(workspace.model.softwareSystems.single(), this.pageViewModel())
 
-        assertThat(documents).containsAll(
+        assertThat(documents).containsAtLeast(
             Document(
                 "../software-system-1/sections/2/",
                 "Documentation",

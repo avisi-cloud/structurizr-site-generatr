@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
 import assertk.assertions.containsAll
+import assertk.assertions.containsAtLeast
 import kotlin.test.Test
 
 class TableViewModelTest : ViewModelTest() {
@@ -16,7 +17,7 @@ class TableViewModelTest : ViewModelTest() {
             headerRow(headerCell("1"), headerCell("2"), headerCell("3"))
         }
 
-        assertThat(viewModel.headerRows).containsAll(
+        assertThat(viewModel.headerRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.TextCellViewModel("1", isHeader = true),
@@ -33,7 +34,7 @@ class TableViewModelTest : ViewModelTest() {
             headerRow(headerCell("1", greyText = true))
         }
 
-        assertThat(viewModel.headerRows).containsAll(
+        assertThat(viewModel.headerRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.TextCellViewModel("1", isHeader = true, greyText = true),
@@ -48,7 +49,7 @@ class TableViewModelTest : ViewModelTest() {
             bodyRow(cell("1"), cell("2"), cell("3"))
         }
 
-        assertThat(viewModel.bodyRows).containsAll(
+        assertThat(viewModel.bodyRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.TextCellViewModel("1", isHeader = false),
@@ -65,7 +66,7 @@ class TableViewModelTest : ViewModelTest() {
             bodyRow(cellWithLink(pageViewModel, "click me", "/decisions"))
         }
 
-        assertThat(viewModel.bodyRows).containsAll(
+        assertThat(viewModel.bodyRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.LinkCellViewModel(
@@ -83,7 +84,7 @@ class TableViewModelTest : ViewModelTest() {
             bodyRow(headerCellWithLink(pageViewModel, "click me", "/decisions"))
         }
 
-        assertThat(viewModel.bodyRows).containsAll(
+        assertThat(viewModel.bodyRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.LinkCellViewModel(
@@ -101,7 +102,7 @@ class TableViewModelTest : ViewModelTest() {
             bodyRow(cellWithExternalLink("Temporary URI", "https://tempuri.org/"))
         }
 
-        assertThat(viewModel.bodyRows).containsAll(
+        assertThat(viewModel.bodyRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.ExternalLinkCellViewModel(
@@ -119,7 +120,7 @@ class TableViewModelTest : ViewModelTest() {
             bodyRow(cellWithIndex("1"))
         }
 
-        assertThat(viewModel.bodyRows).containsAll(
+        assertThat(viewModel.bodyRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
                     TableViewModel.TextCellViewModel(

@@ -7,7 +7,6 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
 import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
-import com.structurizr.model.Location
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -121,29 +120,6 @@ class MenuViewModelTest : ViewModelTest() {
             )
         )
             .let { assertThat(it.softwareSystemItems[0].active).isTrue() }
-    }
-
-    @Test
-    fun `show menu entries for software systems with an unspecified location`() {
-        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
-        generatorContext.workspace.model.addSoftwareSystem(Location.Unspecified, "System 1", "")
-
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
-            .let {
-                assertThat(it.softwareSystemItems).hasSize(1)
-                assertThat(it.softwareSystemItems[0].title).isEqualTo("System 1")
-            }
-    }
-
-    @Test
-    fun `do not show menu entries for software systems with an external location (outside enterprise boundary)`() {
-        val generatorContext = generatorContext(branches = listOf("main", "branch-2"), currentBranch = "main")
-        generatorContext.workspace.model.addSoftwareSystem(Location.External, "System 1", "")
-
-        MenuViewModel(generatorContext, createPageViewModel(generatorContext, url = HomePageViewModel.url()))
-            .let {
-                assertThat(it.softwareSystemItems).hasSize(0)
-            }
     }
 
     @Test

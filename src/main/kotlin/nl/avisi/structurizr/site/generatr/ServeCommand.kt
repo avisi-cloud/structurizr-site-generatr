@@ -2,7 +2,6 @@
 
 package nl.avisi.structurizr.site.generatr
 
-import com.sun.nio.file.SensitivityWatchEventModifier
 import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.*
 import org.eclipse.jetty.server.Server
@@ -130,11 +129,10 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         context: ContextHandler,
         @Suppress("SameParameterValue") pathSpec: String
     ) =
-        WebSocketUpgradeHandler.from(server, context)
-            .configure { container ->
-                container.idleTimeout = Duration.ZERO
-                container.addMapping(pathSpec) { _, _, _ -> EventSocket() }
-            }
+        WebSocketUpgradeHandler.from(server, context) { container ->
+            container.idleTimeout = Duration.ZERO
+            container.addMapping(pathSpec) { _, _, _ -> EventSocket() }
+        }
 
     private fun startWatchService(): WatchService {
         val path = File(workspaceFile).absoluteFile.parentFile.toPath()
@@ -193,8 +191,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
                 StandardWatchEventKinds.ENTRY_CREATE,
                 StandardWatchEventKinds.ENTRY_DELETE,
                 StandardWatchEventKinds.ENTRY_MODIFY
-            ),
-            SensitivityWatchEventModifier.HIGH
+            )
         )
     }
 
@@ -202,6 +199,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
         eventSockets.forEach { it.send(message) }
     }
 
+    @Suppress("UNUSED_PARAMETER", "unused")
     @WebSocket
     inner class EventSocket {
         private var session: Session? = null

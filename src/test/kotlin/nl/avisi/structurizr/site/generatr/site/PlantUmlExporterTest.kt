@@ -291,42 +291,6 @@ class PlantUmlExporterTest {
     }
 
     @Test
-    fun `external software system (outside enterprise boundary) (c4)`() {
-        val workspace = createWorkspaceWithTwoSystems()
-        workspace.model.softwareSystems.single { it.name == "System 2" }.location = Location.External
-
-        val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/landscape/")
-            .export(workspace.views.systemContextViews.first())
-
-        assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
-            """
-            System(System1, "System 1", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
-            System_Ext(System2, "System 2", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
-
-            Rel(System2, System1, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
-            """.trimIndent()
-        )
-    }
-
-    @Test
-    fun `external software system (outside enterprise boundary) (structurizr)`() {
-        val workspace = createWorkspaceWithTwoSystems()
-        workspace.model.softwareSystems.single { it.name == "System 2" }.location = Location.External
-
-        val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/landscape/")
-            .export(workspace.views.systemContextViews.first())
-
-        assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
-            """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1
-            rectangle "==System 2\n<size:10>[Software System]</size>" <<System2>> as System2
-
-            System2 .[#707070,thickness=2].> System1 : "<color:#707070>uses"
-            """.trimIndent()
-        )
-    }
-
-    @Test
     fun `external software system (declared external by tag) (c4)`() {
         val workspace = createWorkspaceWithTwoSystems()
         workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")

@@ -3,7 +3,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
-import com.structurizr.model.Location
 import kotlin.test.Test
 
 class SoftwareSystemsPageViewModelTest : ViewModelTest() {
@@ -66,16 +65,6 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
             .map { it.link.title }
 
         assertThat(names).containsExactly(system1.name, system2.name)
-    }
-
-    @Test
-    fun `external systems have grey text (outside enterprise boundary)`() {
-        val generatorContext = generatorContext()
-        generatorContext.workspace.model.addSoftwareSystem(Location.External, "system 1", "System 1 description")
-        val viewModel = SoftwareSystemsPageViewModel(generatorContext)
-
-        assertThat(viewModel.softwareSystemsTable.bodyRows[0].columns[0])
-            .isEqualTo(TableViewModel.TextCellViewModel("system 1 (External)", isHeader = true, greyText = true))
     }
 
     @Test
