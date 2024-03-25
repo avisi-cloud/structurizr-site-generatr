@@ -2,7 +2,7 @@
     "name": "structurizr-site-generatr",
     "dependencies": {
         "bulma": "0.9.4",
-        "katex": "0.16.9",
+        "katex": "0.16.10",
         "lunr": "2.3.9",
         "lunr-languages": "1.14.0",
         "mermaid": "10.9.0",
