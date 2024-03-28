@@ -11,8 +11,35 @@ workspace {
         ...
         properties {
             ...
-            // full list of available "generatr.markdown.flexmark.extensions"
-            // "Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink"
+            // full list of available "generatr.markdown.flexmark.extensions":
+            // - Abbreviation
+            // - Admonition
+            // - AnchorLink
+            // - Aside
+            // - Attributes
+            // - Autolink
+            // - Definition
+            // - Emoji
+            // - EnumeratedReference
+            // - Footnotes
+            // - GfmIssues
+            // - GfmStrikethroughSubscript
+            // - GfmTaskList
+            // - GfmUsers
+            // - GitLab
+            // - Ins
+            // - Macros
+            // - MediaTags
+            // - ResizableImage
+            // - Superscript
+            // - Tables
+            // - TableOfContents
+            // - SimulatedTableOfContents
+            // - Typographic
+            // - WikiLinks
+            // - XWikiMacro
+            // - YAMLFrontMatter
+            // - YouTubeLink
             // see https://github.com/vsch/flexmark-java/wiki/Extensions
             // ATTENTION:
             // * "generatr.markdown.flexmark.extensions" values must be separated by comma
