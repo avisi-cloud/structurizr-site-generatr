@@ -22,7 +22,7 @@
 
 # Structurizr Site Generatr
 
-A static site generator for C4 architecture models created with [Structrizr DSL](https://github.com/structurizr/dsl).
+A static site generator for [C4 architecture models](https://c4model.com/) created with [Structrizr DSL](https://docs.structurizr.com/dsl).
 See [Background](#background) for the story behind this tool.
 
 [Click here to see an example of a generated site](https://avisi-cloud.github.io/structurizr-site-generatr) based on
@@ -168,10 +168,10 @@ Structurizr Site Generatr v1.1.3
 
 ### Generate a website
 
-#### From a [C4 Workspace](https://github.com/structurizr/dsl)
+#### From a [C4 Workspace](https://docs.structurizr.com/dsl)
 
 This is the primary use case of Structurizr Site Generatr -- to generate a website from a
-[C4 Workspace](https://github.com/structurizr/dsl).
+[C4 Workspace](https://docs.structurizr.com/dsl).
 
 ```shell
 installed> structurizr-site-generatr generate-site -w workspace.dsl
@@ -180,7 +180,7 @@ installed> structurizr-site-generatr generate-site -w workspace.dsl
 ```
 
 Here, the `--workspace-file` or `-w` parameter specifies the input
-[C4 Workspace DSL file](https://github.com/structurizr/dsl) to the `generate-site` command. Additional
+[C4 Workspace DSL file](https://docs.structurizr.com/dsl) to the `generate-site` command. Additional
 parameters that affect website generation can be reviewed using the `--help` operator.
 
 By default, the generated website will be placed in `./build`, which is overwritten if it already exisits.
@@ -224,7 +224,7 @@ Both the --branches and --exclude-branches options are comma separated lists and
 
 ### Start a development web server around the generated website
 
-To aid composition of [C4 Workspace DSL files](https://github.com/structurizr/dsl), the `serve` command will
+To aid composition of [C4 Workspace DSL files](https://docs.structurizr.com/dsl), the `serve` command will
 generate a website from the input .dsl specified with `-w` _and_ start a web server to view it. **Default port** for the web server is **8080**.
 A different port for the web server can be specified with `-p PORT`. Additional parameters that affect website generation and the development
 web server can be reviewed using the `--help` operator.
@@ -248,7 +248,7 @@ is needed to expose the container's port 8080 to the host (web browser). In the 
 ## Customizing the generated website
 
 By default, the site generator uses the
-[C4PlantUmlExporter](https://github.com/structurizr/export/tree/main/src/main/java/com/structurizr/export/plantuml#c4plantumlexporter)
+[C4PlantUmlExporter](https://docs.structurizr.com/export/plantuml#c4plantumlexporter)
 to generate the diagrams. When using this exporter, all properties available for the C4PlantUMLExporter, e.g. `c4plantuml.tags`, can be applied
 and affect the diagrams in the generate site. See also [Diagram notation](https://docs.structurizr.com/export/comparison) for an overview of supported features
 and limitations for this exporter.
