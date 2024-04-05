@@ -6,6 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
 fun HTML.page(viewModel: PageViewModel, block: DIV.() -> Unit) {
     attributes["lang"] = "en"
+    attributes["data-theme"] = "light"
     classes = setOf("has-background-light")
 
     headFragment(viewModel)
