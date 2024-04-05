@@ -23,7 +23,7 @@
       "order" : 2,
       "title" : ""
     }, {
-      "content" : "## Extended Markdown features\n\nThis page showcases the ability to use extended Markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki [Extensions page](https://github.com/vsch/flexmark-java/wiki/Extensions).\n\nMost of these extended features have to be activated in your architecture model as a property in workspace views.\n\n```DSL\nworkspace {\n    ...\n    views {\n        ...\n        properties {\n            ...\n            // full list of available \"generatr.markdown.flexmark.extensions\"\n            // \"Abbreviation,Admonition,AnchorLink,Aside,Attributes,Autolink,Definition,Emoji,EnumeratedReference,Footnotes,GfmIssues,GfmStrikethroughSubscript,GfmTaskList,GfmUsers,GitLab,Ins,Macros,MediaTags,ResizableImage,Superscript,Tables,TableOfContents,SimulatedTableOfContents,Typographic,WikiLinks,XWikiMacro,YAMLFrontMatter,YouTubeLink\"\n            // see https://github.com/vsch/flexmark-java/wiki/Extensions\n            // ATTENTION:\n            // * \"generatr.markdown.flexmark.extensions\" values must be separated by comma\n            // * it's not possible to use \"GitLab\" and \"ResizableImage\" extensions together\n            // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only\n            \"generatr.markdown.flexmark.extensions\" \"Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic\"\n            ...\n        }\n        ...\n    }\n    ...\n}\n```\n\n### Table of Contents\n\n`[TOC]` element which renders a table of contents\n\n```markdown\n[TOC]\n```\n\nwill render into\n\n[TOC]\n\n#### Usage info\n\n\"TableOfContents\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"TableOfContents\"\n```\n\n### Render Tables\n\nStandard tables can be embedded in markdown text syntax:\n\n```markdown\n| header1 | header2 |\n| ------- | ------- |\n| content | content |\n```\n\nThis will be rendered as\n\n| header1 | header2 |\n| ------- | ------- |\n| content | content |\n\n#### Usage info\n\n\"Render Tables\" is an optional feature, that is enabled by default. If other optional markdown features are activated in workspace views properties, than you have to ensure, that Tables is listed in the extension list as well.\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Tables\"\n```\n\n### Admonition Blocks\n\nAdmonitions create block-styled side content.\n\n```markdown\n!!! faq \"FAQ\"\n    This is a FAQ.\n!!! attention \"Warning\"\n    This is a warning message\n\n!!! info \"information\"\n    this is an additional information\n```\n\nThis will be rendered as\n\n!!! faq \"FAQ\"\n    This is a FAQ.\n!!! attention \"Warning\"\n    This is a warning message\n\n!!! info \"information\"\n    this is an additional information\n\n#### Usage info\n\n\"Admonition Blocks\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Admonition\"\n```\n\n### GitLab flavored markdown extensions\n\nPlease see [GitLab flavored markdown features](https://docs.gitlab.com/ee/user/markdown.html?tab=Rendered+Markdown) for a detailed description.\nUnfortunately only the following features are supported by Flexmark markdown renderer, that is used here.\n\n#### Multiline Block quote delimiters\n\n```markdown\n>>>\nIf you paste a message from somewhere else\n\nthat spans multiple lines,\n\nyou can quote that without having to manually prepend `>` to every line!\n>>>\n```\n\n>>>\nIf you paste a message from somewhere else\n\nthat spans multiple lines,\n\nyou can quote that without having to manually prepend `>` to every line!\n>>>\n\n#### Inline diff (deletions and additions)\n\nWith inline diff tags, you can display `{+ additions +}` or `[- deletions -]`.\n\nThe wrapping tags can be either curly braces or square brackets:\n\n```markdown\n- {+ addition 1 +}\n- [+ addition 2 +]\n- {- deletion 3 -}\n- [- deletion 4 -]\n```\n\n- {+ addition 1 +}\n- [+ addition 2 +]\n- {- deletion 3 -}\n- [- deletion 4 -]\n\n#### Math\n\nMath written in LaTeX syntax is rendered with [KaTeX](https://github.com/KaTeX/KaTeX).\n_KaTeX only supports a [subset](https://katex.org/docs/supported.html) of LaTeX._\n\nMath written between dollar signs with backticks (``$`...`$``) or single dollar signs (`$...$`)\nis rendered inline with the text.\n\nMath written between double dollar signs (`$$...$$`) or in a code block with\nthe language declared as `math` is rendered on a separate line:\n\n````markdown\nThis math is inline: $`a^2+b^2=c^2`$.\n\nThis math is on a separate line using a ```` ```math ```` block:\n\n```math\na^2+b^2=c^2\n```\n````\n\nThis math is inline: $`a^2+b^2=c^2`$.\n\nThis math is on a separate line using a ```` ```math ```` block:\n\n```math\na^2+b^2=c^2\n```\n\n#### Usage info\n\n\"GitLab Flavored Markdown\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"GitLab\"\n```\n\n### AnchorLink\n\nAutomatically adds anchor links to headings, using GitHub id generation algorithm\n\n#### Usage info\n\n\"AnchorLink\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"AnchorLink\"\n```\n\n### Definition Lists\n\nConverts definition syntax of Php Markdown Extra Definition List to `<dl></dl>` HTML and corresponding AST nodes.\n\n```markdown\nDefinition Term\n: Definition of above term\n: Another definition of above term\n```\n\nDefinition Term\n: Definition of above term\n: Another definition of above term\n\n#### Usage info\n\n\"Definition Lists\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Definition\"\n```\n\n### Emoji\n\nAllows to create image link to emoji images from emoji shortcuts using [Emoji-Cheat-Sheet.com](https://www.webfx.com/tools/emoji-cheat-sheet) and optionally to replace with its unicode equivalent character with mapping by Mark Wunsch found at [mwunsch/rumoji](https://github.com/mwunsch/rumoji)\n\n```markdown\nthumbsup :thumbsup:  \ncalendar :calendar:  \nwarning :warning:  \n```\n\nthumbsup :thumbsup:  \ncalendar :calendar:  \nwarning :warning:  \n\n#### Usage info\n\n\"Emoji\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Emoji\"\n```\n\n### GfmTaskList\n\nEnables list items based task lists whose text begins with: `[ ]`, `[x]` or `[X]`\n\n```markdown\n- [x] Completed task\n- [ ] Incomplete task\n  - [x] Sub-task 1\n  - [ ] Sub-task 3\n\n1. [x] Completed task\n1. [ ] Incomplete task\n   1. [x] Sub-task 1\n   1. [ ] Sub-task 3\n```\n\nwill be rendered as\n\n- [x] Completed task\n- [ ] Incomplete task\n  - [x] Sub-task 1\n  - [ ] Sub-task 3\n\n1. [x] Completed task\n1. [ ] Incomplete task\n   1. [x] Sub-task 1\n   1. [ ] Sub-task 3\n\n#### Usage info\n\n\"GfmTaskList\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"GfmTaskList\"\n```\n",
+      "content" : "## Extended Markdown features\n\nThis page showcases the ability to use extended Markdown formating features in workspace documentation files. The full list of available extensions to standard commonmark markdown features is documented in the flexmark wiki [Extensions page](https://github.com/vsch/flexmark-java/wiki/Extensions).\n\nMost of these extended features have to be activated in your architecture model as a property in workspace views.\n\n```DSL\nworkspace {\n    ...\n    views {\n        ...\n        properties {\n            ...\n            // full list of available \"generatr.markdown.flexmark.extensions\":\n            // - Abbreviation\n            // - Admonition\n            // - AnchorLink\n            // - Aside\n            // - Attributes\n            // - Autolink\n            // - Definition\n            // - Emoji\n            // - EnumeratedReference\n            // - Footnotes\n            // - GfmIssues\n            // - GfmStrikethroughSubscript\n            // - GfmTaskList\n            // - GfmUsers\n            // - GitLab\n            // - Ins\n            // - Macros\n            // - MediaTags\n            // - ResizableImage\n            // - Superscript\n            // - Tables\n            // - TableOfContents\n            // - SimulatedTableOfContents\n            // - Typographic\n            // - WikiLinks\n            // - XWikiMacro\n            // - YAMLFrontMatter\n            // - YouTubeLink\n            // see https://github.com/vsch/flexmark-java/wiki/Extensions\n            // ATTENTION:\n            // * \"generatr.markdown.flexmark.extensions\" values must be separated by comma\n            // * it's not possible to use \"GitLab\" and \"ResizableImage\" extensions together\n            // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only\n            \"generatr.markdown.flexmark.extensions\" \"Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic\"\n            ...\n        }\n        ...\n    }\n    ...\n}\n```\n\n### Table of Contents\n\n`[TOC]` element which renders a table of contents\n\n```markdown\n[TOC]\n```\n\nwill render into\n\n[TOC]\n\n#### Usage info\n\n\"TableOfContents\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"TableOfContents\"\n```\n\n### Render Tables\n\nStandard tables can be embedded in markdown text syntax:\n\n```markdown\n| header1 | header2 |\n| ------- | ------- |\n| content | content |\n```\n\nThis will be rendered as\n\n| header1 | header2 |\n| ------- | ------- |\n| content | content |\n\n#### Usage info\n\n\"Render Tables\" is an optional feature, that is enabled by default. If other optional markdown features are activated in workspace views properties, than you have to ensure, that Tables is listed in the extension list as well.\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Tables\"\n```\n\n### Admonition Blocks\n\nAdmonitions create block-styled side content.\n\n```markdown\n!!! faq \"FAQ\"\n    This is a FAQ.\n!!! attention \"Warning\"\n    This is a warning message\n\n!!! info \"information\"\n    this is an additional information\n```\n\nThis will be rendered as\n\n!!! faq \"FAQ\"\n    This is a FAQ.\n!!! attention \"Warning\"\n    This is a warning message\n\n!!! info \"information\"\n    this is an additional information\n\n#### Usage info\n\n\"Admonition Blocks\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Admonition\"\n```\n\n### GitLab flavored markdown extensions\n\nPlease see [GitLab flavored markdown features](https://docs.gitlab.com/ee/user/markdown.html?tab=Rendered+Markdown) for a detailed description.\nUnfortunately only the following features are supported by Flexmark markdown renderer, that is used here.\n\n#### Multiline Block quote delimiters\n\n```markdown\n>>>\nIf you paste a message from somewhere else\n\nthat spans multiple lines,\n\nyou can quote that without having to manually prepend `>` to every line!\n>>>\n```\n\n>>>\nIf you paste a message from somewhere else\n\nthat spans multiple lines,\n\nyou can quote that without having to manually prepend `>` to every line!\n>>>\n\n#### Inline diff (deletions and additions)\n\nWith inline diff tags, you can display `{+ additions +}` or `[- deletions -]`.\n\nThe wrapping tags can be either curly braces or square brackets:\n\n```markdown\n- {+ addition 1 +}\n- [+ addition 2 +]\n- {- deletion 3 -}\n- [- deletion 4 -]\n```\n\n- {+ addition 1 +}\n- [+ addition 2 +]\n- {- deletion 3 -}\n- [- deletion 4 -]\n\n#### Math\n\nMath written in LaTeX syntax is rendered with [KaTeX](https://github.com/KaTeX/KaTeX).\n_KaTeX only supports a [subset](https://katex.org/docs/supported.html) of LaTeX._\n\nMath written between dollar signs with backticks (``$`...`$``) or single dollar signs (`$...$`)\nis rendered inline with the text.\n\nMath written between double dollar signs (`$$...$$`) or in a code block with\nthe language declared as `math` is rendered on a separate line:\n\n````markdown\nThis math is inline: $`a^2+b^2=c^2`$.\n\nThis math is on a separate line using a ```` ```math ```` block:\n\n```math\na^2+b^2=c^2\n```\n````\n\nThis math is inline: $`a^2+b^2=c^2`$.\n\nThis math is on a separate line using a ```` ```math ```` block:\n\n```math\na^2+b^2=c^2\n```\n\n#### Usage info\n\n\"GitLab Flavored Markdown\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"GitLab\"\n```\n\n### AnchorLink\n\nAutomatically adds anchor links to headings, using GitHub id generation algorithm\n\n#### Usage info\n\n\"AnchorLink\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"AnchorLink\"\n```\n\n### Definition Lists\n\nConverts definition syntax of Php Markdown Extra Definition List to `<dl></dl>` HTML and corresponding AST nodes.\n\n```markdown\nDefinition Term\n: Definition of above term\n: Another definition of above term\n```\n\nDefinition Term\n: Definition of above term\n: Another definition of above term\n\n#### Usage info\n\n\"Definition Lists\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Definition\"\n```\n\n### Emoji\n\nAllows to create image link to emoji images from emoji shortcuts using [Emoji-Cheat-Sheet.com](https://www.webfx.com/tools/emoji-cheat-sheet) and optionally to replace with its unicode equivalent character with mapping by Mark Wunsch found at [mwunsch/rumoji](https://github.com/mwunsch/rumoji)\n\n```markdown\nthumbsup :thumbsup:  \ncalendar :calendar:  \nwarning :warning:  \n```\n\nthumbsup :thumbsup:  \ncalendar :calendar:  \nwarning :warning:  \n\n#### Usage info\n\n\"Emoji\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"Emoji\"\n```\n\n### GfmTaskList\n\nEnables list items based task lists whose text begins with: `[ ]`, `[x]` or `[X]`\n\n```markdown\n- [x] Completed task\n- [ ] Incomplete task\n  - [x] Sub-task 1\n  - [ ] Sub-task 3\n\n1. [x] Completed task\n1. [ ] Incomplete task\n   1. [x] Sub-task 1\n   1. [ ] Sub-task 3\n```\n\nwill be rendered as\n\n- [x] Completed task\n- [ ] Incomplete task\n  - [x] Sub-task 1\n  - [ ] Sub-task 3\n\n1. [x] Completed task\n1. [ ] Incomplete task\n   1. [x] Sub-task 1\n   1. [ ] Sub-task 3\n\n#### Usage info\n\n\"GfmTaskList\" is an optional feature, that has to be activated in workspace views properties\n\n```DSL\n    \"generatr.markdown.flexmark.extensions\" \"GfmTaskList\"\n```\n",
       "filename" : "02-markdown-features.md",
       "format" : "Markdown",
       "order" : 3,
@@ -64,7 +64,7 @@
         "instances" : "1",
         "name" : "Web Browser",
         "properties" : {
-          "structurizr.dsl.identifier" : "f1c621f8-d2da-487e-a758-78862a8fb1e1"
+          "structurizr.dsl.identifier" : "bdf03aab-a297-40d8-9321-7f2f9caf6d4c"
         },
         "tags" : "Element,Deployment Node",
         "technology" : "Chrome, Firefox, Safari, or Edge"
@@ -118,7 +118,7 @@
           "instances" : "1",
           "name" : "Apache Tomcat",
           "properties" : {
-            "structurizr.dsl.identifier" : "718ffa2f-e6e3-44f7-ae48-99aa5cd7ced0"
+            "structurizr.dsl.identifier" : "3218240e-9129-4c2a-9124-c3501b394e93"
           },
           "tags" : "Element,Deployment Node",
           "technology" : "Apache Tomcat 8.x"
@@ -128,7 +128,7 @@
         "instances" : "1",
         "name" : "Docker Container - Web Server",
         "properties" : {
-          "structurizr.dsl.identifier" : "22423c22-9820-43e4-858a-7efe990af614"
+          "structurizr.dsl.identifier" : "7760e0b5-05e0-4e0b-98b8-e5f271a5b0a7"
         },
         "tags" : "Element,Deployment Node",
         "technology" : "Docker"
@@ -150,7 +150,7 @@
           "instances" : "1",
           "name" : "Database Server",
           "properties" : {
-            "structurizr.dsl.identifier" : "a98556a1-86e1-4a34-8d9e-143accf4d92a"
+            "structurizr.dsl.identifier" : "8a8761dd-38af-4ec8-9ff8-240fdb8b1f4e"
           },
           "tags" : "Element,Deployment Node",
           "technology" : "Oracle 12c"
@@ -160,7 +160,7 @@
         "instances" : "1",
         "name" : "Docker Container - Database Server",
         "properties" : {
-          "structurizr.dsl.identifier" : "4b13a92f-05cd-4504-9d79-1014cc59a9cb"
+          "structurizr.dsl.identifier" : "dc834c4d-a584-4d6b-a420-01499425857d"
         },
         "tags" : "Element,Deployment Node",
         "technology" : "Docker"
@@ -170,7 +170,7 @@
       "instances" : "1",
       "name" : "Developer Laptop",
       "properties" : {
-        "structurizr.dsl.identifier" : "61aa9626-89de-4ab3-9c22-14ea9c1e9d4d"
+        "structurizr.dsl.identifier" : "06f649eb-eef0-44ab-bff9-45b99bb685a8"
       },
       "tags" : "Element,Deployment Node",
       "technology" : "Microsoft Windows 10 or Apple macOS"
@@ -181,7 +181,7 @@
         "instances" : "1",
         "name" : "bigbank-dev001",
         "properties" : {
-          "structurizr.dsl.identifier" : "feb401b7-1d99-48a3-9b0a-6617a38c708f"
+          "structurizr.dsl.identifier" : "c4662d47-a7dd-4b2a-ae9e-d07fefa331e5"
         },
         "softwareSystemInstances" : [ {
           "deploymentGroups" : [ "Default" ],
@@ -189,7 +189,7 @@
           "id" : "67",
           "instanceId" : 1,
           "properties" : {
-            "structurizr.dsl.identifier" : "32c9b3f8-0cfe-4333-92fd-c999d8ce826c"
+            "structurizr.dsl.identifier" : "37657b9f-0bd9-4a36-8f69-0a74ff9d8801"
           },
           "softwareSystemId" : "5",
           "tags" : "Software System Instance"
@@ -201,7 +201,7 @@
       "instances" : "1",
       "name" : "Big Bank plc",
       "properties" : {
-        "structurizr.dsl.identifier" : "8e784345-a1df-41b5-bf7c-26e931a9419e"
+        "structurizr.dsl.identifier" : "2599699e-0554-4e61-83cb-3d98e898077b"
       },
       "tags" : "Element,Deployment Node,",
       "technology" : "Big Bank plc data center"
@@ -230,7 +230,7 @@
       "instances" : "1",
       "name" : "Customer's mobile device",
       "properties" : {
-        "structurizr.dsl.identifier" : "3881b2ad-6322-4121-acaf-496ea4ec0a3f"
+        "structurizr.dsl.identifier" : "4de2a5ee-abb1-4761-924d-1cb22a7cd236"
       },
       "tags" : "Element,Deployment Node",
       "technology" : "Apple iOS or Android"
@@ -260,7 +260,7 @@
         "instances" : "1",
         "name" : "Web Browser",
         "properties" : {
-          "structurizr.dsl.identifier" : "110c6545-8f31-4ecf-9870-9f730f3005ae"
+          "structurizr.dsl.identifier" : "99bba822-e7af-45c1-97ca-b8d5ccd96725"
         },
         "tags" : "Element,Deployment Node",
         "technology" : "Chrome, Firefox, Safari, or Edge"
@@ -270,7 +270,7 @@
       "instances" : "1",
       "name" : "Customer's computer",
       "properties" : {
-        "structurizr.dsl.identifier" : "fd8c30b4-47a2-4d4e-b205-23d1ce72f5cc"
+        "structurizr.dsl.identifier" : "e4edddfb-0767-4087-936a-7e709f87453a"
       },
       "tags" : "Element,Deployment Node",
       "technology" : "Microsoft Windows or Apple macOS"
@@ -300,7 +300,7 @@
           "instances" : "1",
           "name" : "Apache Tomcat",
           "properties" : {
-            "structurizr.dsl.identifier" : "340fc026-55ba-4262-9655-ed5eff74ebaf"
+            "structurizr.dsl.identifier" : "3c921bb5-2121-4c8a-89bc-64756176ec13"
           },
           "tags" : "Element,Deployment Node",
           "technology" : "Apache Tomcat 8.x"
@@ -310,7 +310,7 @@
         "instances" : "4",
         "name" : "bigbank-web***",
         "properties" : {
-          "structurizr.dsl.identifier" : "100a4995-4b8c-42c7-bcff-14cc94cacda7"
+          "structurizr.dsl.identifier" : "c3526abb-97af-44cc-8cdb-094b67d2b278"
         },
         "tags" : "Element,Deployment Node,",
         "technology" : "Ubuntu 16.04 LTS"
@@ -354,7 +354,7 @@
           "instances" : "1",
           "name" : "Apache Tomcat",
           "properties" : {
-            "structurizr.dsl.identifier" : "eee0bfd2-34e1-48e0-b59a-53104abbd89b"
+            "structurizr.dsl.identifier" : "b8a6a5bf-2203-497d-9410-1bc70a071d50"
           },
           "tags" : "Element,Deployment Node",
           "technology" : "Apache Tomcat 8.x"
@@ -364,7 +364,7 @@
         "instances" : "8",
         "name" : "bigbank-api***",
         "properties" : {
-          "structurizr.dsl.identifier" : "34e5e988-f81a-465d-aae5-8b0767646139"
+          "structurizr.dsl.identifier" : "3da1583f-aaca-400e-b47c-b624de03d9b5"
         },
         "tags" : "Element,Deployment Node,",
         "technology" : "Ubuntu 16.04 LTS"
@@ -393,7 +393,7 @@
             "destinationId" : "89",
             "id" : "95",
             "properties" : {
-              "structurizr.dsl.identifier" : "08a0731d-1a14-47d7-a750-44bb1ac8686c"
+              "structurizr.dsl.identifier" : "a30d8cbe-03ae-4ba0-84dc-024562f14a30"
             },
             "sourceId" : "85",
             "tags" : "Relationship"
@@ -406,7 +406,7 @@
         "instances" : "1",
         "name" : "bigbank-db01",
         "properties" : {
-          "structurizr.dsl.identifier" : "1d384963-aa8d-40eb-b03f-620989d87999"
+          "structurizr.dsl.identifier" : "725a35fb-9f30-45e6-a051-50036267c266"
         },
         "tags" : "Element,Deployment Node",
         "technology" : "Ubuntu 16.04 LTS"
@@ -438,7 +438,7 @@
         "instances" : "1",
         "name" : "bigbank-db02",
         "properties" : {
-          "structurizr.dsl.identifier" : "08ccc445-005b-4b45-ac38-9643a79d6c00"
+          "structurizr.dsl.identifier" : "fe505b20-ac3c-4c26-bf61-60b0dc727d1b"
         },
         "tags" : "Element,Deployment Node,Failover",
         "technology" : "Ubuntu 16.04 LTS"
@@ -448,7 +448,7 @@
         "instances" : "1",
         "name" : "bigbank-prod001",
         "properties" : {
-          "structurizr.dsl.identifier" : "b7cf67c2-2020-4976-8fc4-26046d6f47f0"
+          "structurizr.dsl.identifier" : "169a5e80-0efc-400b-9cad-2ef93c285e48"
         },
         "softwareSystemInstances" : [ {
           "deploymentGroups" : [ "Default" ],
@@ -456,7 +456,7 @@
           "id" : "93",
           "instanceId" : 1,
           "properties" : {
-            "structurizr.dsl.identifier" : "bf9c1faa-b4eb-49f5-a7bc-e4f963ec6df2"
+            "structurizr.dsl.identifier" : "b1d891b1-40c8-4285-a2e6-3601da24b384"
           },
           "softwareSystemId" : "5",
           "tags" : "Software System Instance"
@@ -468,7 +468,7 @@
       "instances" : "1",
       "name" : "Big Bank plc",
       "properties" : {
-        "structurizr.dsl.identifier" : "3a4cc2c3-a776-4646-82bb-5e14de6f9875"
+        "structurizr.dsl.identifier" : "83e027f7-b851-46fa-97db-82065670fb19"
       },
       "tags" : "Element,Deployment Node",
       "technology" : "Big Bank plc data center"
@@ -486,7 +486,7 @@
         "destinationId" : "8",
         "id" : "20",
         "properties" : {
-          "structurizr.dsl.identifier" : "d61ecbca-1131-484e-af7f-62cd547793a1"
+          "structurizr.dsl.identifier" : "e45927cc-7def-4632-8abb-3b875544744f"
         },
         "sourceId" : "1",
         "tags" : "Relationship"
@@ -495,7 +495,7 @@
         "destinationId" : "3",
         "id" : "24",
         "properties" : {
-          "structurizr.dsl.identifier" : "ea697a8e-2034-40be-a0ea-ae2ac53c859c"
+          "structurizr.dsl.identifier" : "110d6731-a3f8-4bcc-b43b-2df42aba9004"
         },
         "sourceId" : "1",
         "tags" : "Relationship",
@@ -505,7 +505,7 @@
         "destinationId" : "7",
         "id" : "26",
         "properties" : {
-          "structurizr.dsl.identifier" : "02bba099-8071-4ef8-a129-9ccd19b1ef12"
+          "structurizr.dsl.identifier" : "fbf0a0ba-a88f-4542-808a-5dd034f6fc67"
         },
         "sourceId" : "1",
         "tags" : "Relationship"
@@ -514,7 +514,7 @@
         "destinationId" : "11",
         "id" : "30",
         "properties" : {
-          "structurizr.dsl.identifier" : "7a281d96-9815-4b80-939e-8e03e78c8f3b"
+          "structurizr.dsl.identifier" : "cd7a5889-7670-486b-9020-3dcfe3c24f14"
         },
         "sourceId" : "1",
         "tags" : "Relationship",
@@ -524,7 +524,7 @@
         "destinationId" : "9",
         "id" : "31",
         "properties" : {
-          "structurizr.dsl.identifier" : "d16ab086-791e-446f-8b8f-fd82690caba0"
+          "structurizr.dsl.identifier" : "438508bd-33e8-4eda-a048-898a2a1c50f0"
         },
         "sourceId" : "1",
         "tags" : "Relationship"
@@ -533,7 +533,7 @@
         "destinationId" : "10",
         "id" : "32",
         "properties" : {
-          "structurizr.dsl.identifier" : "fe1e84ec-61e8-4900-a417-6e59dae09fc5"
+          "structurizr.dsl.identifier" : "258e109b-3b4e-4784-b1a5-72eafc0f4591"
         },
         "sourceId" : "1",
         "tags" : "Relationship"
@@ -554,7 +554,7 @@
         "destinationId" : "5",
         "id" : "25",
         "properties" : {
-          "structurizr.dsl.identifier" : "5b5cef23-e951-4053-945b-cd4dc64c6e5b"
+          "structurizr.dsl.identifier" : "f9319031-b3a1-4a58-962b-a06b7e1aa3c7"
         },
         "sourceId" : "3",
         "tags" : "Relationship"
@@ -575,7 +575,7 @@
         "destinationId" : "5",
         "id" : "28",
         "properties" : {
-          "structurizr.dsl.identifier" : "1a2f548d-0bc8-41eb-b794-020bed5d5711"
+          "structurizr.dsl.identifier" : "8e102019-a7a5-4d89-bdb6-8e4693d85ea2"
         },
         "sourceId" : "4",
         "tags" : "Relationship"
@@ -599,7 +599,7 @@
         "destinationId" : "5",
         "id" : "29",
         "properties" : {
-          "structurizr.dsl.identifier" : "7cd9c996-40fc-42da-8cec-2f7914ac2795"
+          "structurizr.dsl.identifier" : "910df334-ba66-40d8-b468-6a3b45006f04"
         },
         "sourceId" : "2",
         "tags" : "Relationship"
@@ -631,7 +631,7 @@
         "destinationId" : "1",
         "id" : "23",
         "properties" : {
-          "structurizr.dsl.identifier" : "41d4270f-9561-4c1c-8cfb-209d04ab6067"
+          "structurizr.dsl.identifier" : "5f473105-81cb-4ee5-a2e1-1cf75647c490"
         },
         "sourceId" : "6",
         "tags" : "Relationship"
@@ -652,7 +652,7 @@
         "destinationId" : "5",
         "id" : "27",
         "properties" : {
-          "structurizr.dsl.identifier" : "a82118bc-8fc5-4c45-ba05-45a8de918ffe"
+          "structurizr.dsl.identifier" : "42b9e4d7-2267-4674-96b3-841a6200939e"
         },
         "sourceId" : "7",
         "tags" : "Relationship"
@@ -672,7 +672,7 @@
           "destinationId" : "13",
           "id" : "34",
           "properties" : {
-            "structurizr.dsl.identifier" : "98351c49-fc02-4ade-83db-fc2f820ca05d"
+            "structurizr.dsl.identifier" : "f3b979d2-e92f-4cd4-90a6-b85bbee3fc1f"
           },
           "sourceId" : "9",
           "tags" : "Relationship",
@@ -689,7 +689,7 @@
           "destinationId" : "14",
           "id" : "36",
           "properties" : {
-            "structurizr.dsl.identifier" : "013be188-5cde-48e8-b122-88c10d246d3b"
+            "structurizr.dsl.identifier" : "c3f50b0c-58ca-45f3-915e-287cfd3248a0"
           },
           "sourceId" : "9",
           "tags" : "Relationship",
@@ -699,7 +699,7 @@
           "destinationId" : "15",
           "id" : "37",
           "properties" : {
-            "structurizr.dsl.identifier" : "1d987908-5fad-446d-8363-88988ae2e387"
+            "structurizr.dsl.identifier" : "b7c4e432-7900-4185-821b-257b49e4c288"
           },
           "sourceId" : "9",
           "tags" : "Relationship",
@@ -720,7 +720,7 @@
           "destinationId" : "13",
           "id" : "38",
           "properties" : {
-            "structurizr.dsl.identifier" : "24786969-7347-4212-86fb-d5a71fa32f38"
+            "structurizr.dsl.identifier" : "f3aae870-45d6-40eb-a7f9-5a57904964f0"
           },
           "sourceId" : "10",
           "tags" : "Relationship",
@@ -737,7 +737,7 @@
           "destinationId" : "14",
           "id" : "40",
           "properties" : {
-            "structurizr.dsl.identifier" : "fac95b36-21dd-422b-82bb-988918e27f0a"
+            "structurizr.dsl.identifier" : "e36dcead-0f1b-40f5-bbb5-9d3a794496b0"
           },
           "sourceId" : "10",
           "tags" : "Relationship",
@@ -747,7 +747,7 @@
           "destinationId" : "15",
           "id" : "41",
           "properties" : {
-            "structurizr.dsl.identifier" : "cd702b57-63c1-493e-a6c0-4c75bdcdfc55"
+            "structurizr.dsl.identifier" : "47b40d1e-16f4-415a-9db6-99544293c622"
           },
           "sourceId" : "10",
           "tags" : "Relationship",
@@ -768,7 +768,7 @@
           "destinationId" : "9",
           "id" : "33",
           "properties" : {
-            "structurizr.dsl.identifier" : "2fac8172-3d5a-42a9-bebf-8e2d33232a3d"
+            "structurizr.dsl.identifier" : "bd25bbcb-92d8-4f16-85eb-16e44701986d"
           },
           "sourceId" : "11",
           "tags" : "Relationship"
@@ -789,7 +789,7 @@
             "destinationId" : "16",
             "id" : "42",
             "properties" : {
-              "structurizr.dsl.identifier" : "8e2e571d-3f00-41ce-9df6-8a018de94738"
+              "structurizr.dsl.identifier" : "41857ff1-1b6d-4eaf-a094-ebfca030c7d8"
             },
             "sourceId" : "13",
             "tags" : "Relationship"
@@ -809,7 +809,7 @@
             "destinationId" : "17",
             "id" : "43",
             "properties" : {
-              "structurizr.dsl.identifier" : "f95caef6-d2a2-4d2d-812e-17925e9aefcf"
+              "structurizr.dsl.identifier" : "6cf91f7f-2cf2-4d12-b084-132e42d6b8fc"
             },
             "sourceId" : "14",
             "tags" : "Relationship"
@@ -829,7 +829,7 @@
             "destinationId" : "16",
             "id" : "44",
             "properties" : {
-              "structurizr.dsl.identifier" : "d010d636-511c-457b-b570-ca4c7a207e80"
+              "structurizr.dsl.identifier" : "07412a2b-cc0b-4628-88e5-f03e43a61ed0"
             },
             "sourceId" : "15",
             "tags" : "Relationship"
@@ -838,7 +838,7 @@
             "destinationId" : "18",
             "id" : "45",
             "properties" : {
-              "structurizr.dsl.identifier" : "1e4bb85e-bab3-4823-9d0b-50c7456e8f67"
+              "structurizr.dsl.identifier" : "ebb04021-f2fb-4a89-9245-d5944cc27eb2"
             },
             "sourceId" : "15",
             "tags" : "Relationship"
@@ -858,7 +858,7 @@
             "destinationId" : "19",
             "id" : "46",
             "properties" : {
-              "structurizr.dsl.identifier" : "83f9cd69-bcb1-4af6-9904-33261a7e1e6a"
+              "structurizr.dsl.identifier" : "32f7a1f8-bd41-4269-ab7b-0adc7a7cb035"
             },
             "sourceId" : "16",
             "tags" : "Relationship",
@@ -879,7 +879,7 @@
             "destinationId" : "5",
             "id" : "48",
             "properties" : {
-              "structurizr.dsl.identifier" : "de8e159b-c1e9-4182-a643-3c5b93666bd2"
+              "structurizr.dsl.identifier" : "70a59cc9-1231-44a1-a9f8-b4de2ffe3f89"
             },
             "sourceId" : "17",
             "tags" : "Relationship",
@@ -900,7 +900,7 @@
             "destinationId" : "6",
             "id" : "50",
             "properties" : {
-              "structurizr.dsl.identifier" : "87802c8b-6399-4bf8-b0e8-0bac996a37c0"
+              "structurizr.dsl.identifier" : "32ca8659-b7ea-40db-bc32-24015486eef5"
             },
             "sourceId" : "18",
             "tags" : "Relationship"
@@ -1010,7 +1010,7 @@
         "destinationId" : "5",
         "id" : "21",
         "properties" : {
-          "structurizr.dsl.identifier" : "79700651-57f2-41c0-9fc6-d7dc87de20d7"
+          "structurizr.dsl.identifier" : "34781541-efe0-4aa0-be2d-52df99281c61"
         },
         "sourceId" : "8",
         "tags" : "Relationship"
@@ -1019,7 +1019,7 @@
         "destinationId" : "6",
         "id" : "22",
         "properties" : {
-          "structurizr.dsl.identifier" : "e3a13c35-7fe7-4f5f-a816-cfd7ab0e7183"
+          "structurizr.dsl.identifier" : "3457eedc-e3ee-469f-aded-fbc1314a6fb6"
         },
         "sourceId" : "8",
         "tags" : "Relationship"
