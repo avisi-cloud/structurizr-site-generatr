@@ -70,6 +70,14 @@ tasks {
         }
     }
 
+    startScripts {
+        // This is a workaround for an issue with the generated .bat file,
+        // reported in https://github.com/avisi-cloud/structurizr-site-generatr/issues/463.
+        // Instead of listing each and every .jar file in the lib directory, we just use a
+        // wildcard to include everything in the lib directory in the classpath.
+        classpath = files("lib/*")
+    }
+
     withType<Tar> {
         archiveExtension.set("tar.gz")
         compression = Compression.GZIP
