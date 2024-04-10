@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.views.CDN
 
 abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     val pageTitle: String by lazy {
@@ -12,6 +13,7 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
         else
             pageSubTitle
     }
+    val cdn by lazy { CDN(generatorContext.workspace) }
     val favicon by lazy { FaviconViewModel(generatorContext, this) }
     val customStylesheet by lazy { CustomStylesheetViewModel(generatorContext, this) }
     val headerBar by lazy { HeaderBarViewModel(this, generatorContext) }

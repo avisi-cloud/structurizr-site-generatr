@@ -17,12 +17,12 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         meta(charset = "utf-8")
         meta(name = "viewport", content = "width=device-width, initial-scale=1")
         title { +viewModel.pageTitle }
-        link(rel = "stylesheet", href = CDN.bulmaCss())
+        link(rel = "stylesheet", href = viewModel.cdn.bulmaCss())
         link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
         script(type = ScriptType.textJavaScript, src = "../" + "/modal.js".asUrlToFile(viewModel.url)) { }
         script(type = ScriptType.textJavaScript, src = "../" + "/svg-modal.js".asUrlToFile(viewModel.url)) { }
-        script(type = ScriptType.textJavaScript, src = CDN.svgpanzoomJs()) { }
+        script(type = ScriptType.textJavaScript, src = viewModel.cdn.svgpanzoomJs()) { }
 
         if (viewModel.includeTreeview)
             link(rel = "stylesheet", href = "../" + "/treeview.css".asUrlToFile(viewModel.url))
@@ -31,11 +31,11 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
             markdownAdmonitionStylesheet(viewModel)
 
         if (viewModel.includeKatex)
-            katexStylesheet()
+            katexStylesheet(viewModel.cdn)
         if (viewModel.includeKatex)
-            katexScript()
+            katexScript(viewModel.cdn)
         if (viewModel.includeKatex)
-            katexFonts()
+            katexFonts(viewModel.cdn)
 
         if (viewModel.favicon.includeFavicon)
             favicon(viewModel.favicon)
