@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
@@ -52,6 +54,13 @@ application {
 
 kotlin {
     jvmToolchain(21)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks {
