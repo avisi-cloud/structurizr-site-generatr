@@ -18,16 +18,16 @@ fun HTML.searchPage(viewModel: SearchViewModel) {
             h2 { +viewModel.pageSubTitle }
             script(
                 type = ScriptType.textJavaScript,
-                src = CDN.lunrJs()
+                src = viewModel.cdn.lunrJs()
             ) { }
             script(
                 type = ScriptType.textJavaScript,
-                src = CDN.lunrLanguagesStemmerJs()
+                src = viewModel.cdn.lunrLanguagesStemmerJs()
             ) { }
             if (language.isNotBlank())
                 script(
                     type = ScriptType.textJavaScript,
-                    src = CDN.lunrLanguagesJs(language)
+                    src = viewModel.cdn.lunrLanguagesJs(language)
                 ) { }
 
             script(type = ScriptType.textJavaScript) {
