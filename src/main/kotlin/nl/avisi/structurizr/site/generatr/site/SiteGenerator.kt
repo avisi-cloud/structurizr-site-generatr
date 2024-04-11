@@ -9,7 +9,6 @@ import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.views.*
 import java.io.File
 import java.math.BigInteger
-import java.nio.file.Path
 import java.security.MessageDigest
 import java.util.concurrent.ConcurrentHashMap
 
@@ -215,7 +214,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
         }
     }
 
-    val htmlFile = File(exportDir, Path.of(viewModel.url, "index.html").toString())
+    val subDirectory = File(exportDir, viewModel.url)
+    val htmlFile = File(subDirectory, "index.html")
     htmlFile.parentFile.mkdirs()
     htmlFile.writeText(html)
 
