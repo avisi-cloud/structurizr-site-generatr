@@ -47,7 +47,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.28.0")
 
-    testImplementation("com.microsoft.playwright:playwright:1.32.0")
+    testImplementation("com.microsoft.playwright:playwright:1.43.0")
 }
 
 application {
