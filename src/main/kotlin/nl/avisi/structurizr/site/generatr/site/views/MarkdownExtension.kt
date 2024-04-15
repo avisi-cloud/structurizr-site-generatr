@@ -18,25 +18,25 @@ fun BODY.markdownAdmonitionScript(viewModel: PageViewModel) {
     ) { }
 }
 
-fun HEAD.katexStylesheet() {
+fun HEAD.katexStylesheet(cdn: CDN) {
     // loading KaTeX as global on a webpage: https://katex.org/docs/browser.html#loading-as-global
     unsafe {
         raw("""
-            <link rel="stylesheet" href="${CDN.katexCss()}" crossorigin="anonymous">
+            <link rel="stylesheet" href="${cdn.katexCss()}" crossorigin="anonymous">
         """)
     }
 }
 
-fun HEAD.katexScript() {
+fun HEAD.katexScript(cdn: CDN) {
     // loading KaTeX as global on a webpage: https://katex.org/docs/browser.html#loading-as-global
     unsafe {
         raw("""
-            <script defer src="${CDN.katexJs()}" crossorigin="anonymous"></script>
+            <script defer src="${cdn.katexJs()}" crossorigin="anonymous"></script>
         """)
     }
 }
 
-fun HEAD.katexFonts() {
+fun HEAD.katexFonts(cdn: CDN) {
     // loading KaTeX as global on a webpage: https://katex.org/docs/browser.html#loading-as-global
     unsafe {
         raw("""
@@ -50,7 +50,7 @@ fun HEAD.katexFonts() {
                 },
             };
             </script>
-            <script defer src="${CDN.webfontloaderJs()}" crossorigin="anonymous"></script>
+            <script defer src="${cdn.webfontloaderJs()}" crossorigin="anonymous"></script>
         """)
     }
 }
@@ -72,7 +72,7 @@ fun BODY.mermaidScript(viewModel: PageViewModel) {
     // Simple full example, how to include Mermaid: https://mermaid.js.org/config/usage.html#simple-full-example
     script(type = "module") {
         unsafe {
-            raw("import mermaid from '${CDN.mermaidJs()}';")
+            raw("import mermaid from '${viewModel.cdn.mermaidJs()}';")
         }
     }
 }
