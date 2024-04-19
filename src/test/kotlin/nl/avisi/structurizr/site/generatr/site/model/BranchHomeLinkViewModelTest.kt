@@ -29,4 +29,20 @@ class BranchHomeLinkViewModelTest : ViewModelTest() {
         assertThat(viewModel.relativeHref)
             .isEqualTo("./../master/")
     }
+
+    @Test
+    fun `title is branch name when branch name contains slash`() {
+        val viewModel = BranchHomeLinkViewModel(pageViewModel(), "feat/branch-1")
+
+        assertThat(viewModel.title)
+            .isEqualTo("feat/branch-1")
+    }
+
+    @Test
+    fun `relative href from home when branch name contains slash`() {
+        val viewModel = BranchHomeLinkViewModel(pageViewModel("/"), "feat/branch-1")
+
+        assertThat(viewModel.relativeHref)
+            .isEqualTo("./../feat%2Fbranch-1/")
+    }
 }
