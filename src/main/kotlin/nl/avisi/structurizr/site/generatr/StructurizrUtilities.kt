@@ -2,7 +2,6 @@ package nl.avisi.structurizr.site.generatr
 
 import com.structurizr.Workspace
 import com.structurizr.model.Container
-import com.structurizr.model.Location
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
