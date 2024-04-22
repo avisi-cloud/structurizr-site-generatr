@@ -50,7 +50,7 @@ open class SoftwareSystemPageViewModel(
         TabViewModel(Tab.HOME),
         TabViewModel(Tab.SYSTEM_CONTEXT),
         TabViewModel(Tab.CONTAINER),
-        TabViewModel(Tab.COMPONENT),
+        TabViewModel(Tab.COMPONENT, exactLink = false),
         TabViewModel(Tab.CODE),
         TabViewModel(Tab.DYNAMIC),
         TabViewModel(Tab.DEPLOYMENT),
