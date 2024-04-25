@@ -12,7 +12,15 @@ open class SoftwareSystemPageViewModel(
     enum class Tab { HOME, SYSTEM_CONTEXT, CONTAINER, COMPONENT, CODE, DYNAMIC, DEPLOYMENT, DEPENDENCIES, DECISIONS, SECTIONS }
 
     inner class TabViewModel(val tab: Tab, match: Match = Match.EXACT) {
-        val link = LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab), match)
+        val link = when (tab) {
+            Tab.COMPONENT -> LinkViewModel(
+                this@SoftwareSystemPageViewModel,
+                title,
+                "${url(softwareSystem, tab)}/${softwareSystem.firstContainerName(generatorContext)}",
+                match
+            )
+            else -> LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab), match)
+    }
 
         private val title
             get() = when (tab) {
@@ -50,7 +58,7 @@ open class SoftwareSystemPageViewModel(
         TabViewModel(Tab.HOME),
         TabViewModel(Tab.SYSTEM_CONTEXT),
         TabViewModel(Tab.CONTAINER),
-        TabViewModel(Tab.COMPONENT),
+        TabViewModel(Tab.COMPONENT, Match.SIBLING),
         TabViewModel(Tab.CODE),
         TabViewModel(Tab.DYNAMIC),
         TabViewModel(Tab.DEPLOYMENT),

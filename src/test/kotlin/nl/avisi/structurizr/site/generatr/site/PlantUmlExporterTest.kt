@@ -141,7 +141,7 @@ class PlantUmlExporterTest {
         assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
             """
             System_Boundary("System1_boundary", "System 1", ${'$'}tags="") {
-              Container(System1.Container1, "Container 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/component/")
+              Container(System1.Container1, "Container 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/component/container-1/")
             }
             """.trimIndent()
         )
@@ -157,7 +157,7 @@ class PlantUmlExporterTest {
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
             rectangle "System 1\n<size:10>[Software System]</size>" <<System1>> {
-              rectangle "==Container 1\n<size:10>[Container]</size>" <<System1.Container1>> as System1.Container1 [[../system-1/component/]]
+              rectangle "==Container 1\n<size:10>[Container]</size>" <<System1.Container1>> as System1.Container1 [[../system-1/component/container-1/]]
             }
             """.trimIndent()
         )

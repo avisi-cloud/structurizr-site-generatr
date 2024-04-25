@@ -30,7 +30,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @TestFactory
-    fun subtitle() = Tab.values().map { tab ->
+    fun subtitle() = Tab.entries.map { tab ->
         DynamicTest.dynamicTest("subtitle - $tab") {
             val generatorContext = generatorContext()
             val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
@@ -84,19 +84,21 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @TestFactory
-    fun `active tab`() = Tab.values().map { tab ->
-        DynamicTest.dynamicTest("active tab - $tab") {
-            val generatorContext = generatorContext()
-            val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
-            val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, tab)
+    fun `active tab`() = Tab.entries
+        .filter { it != Tab.COMPONENT } // Component link is dynamic
+        .map { tab ->
+            DynamicTest.dynamicTest("active tab - $tab") {
+                val generatorContext = generatorContext()
+                val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+                val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, tab)
 
-            assertThat(
-                viewModel.tabs
-                    .single { it.link.active }
-                    .tab
-            ).isEqualTo(tab)
+                assertThat(
+                    viewModel.tabs
+                        .single { it.link.active }
+                        .tab
+                ).isEqualTo(tab)
+            }
         }
-    }
 
     @Test
     fun `home tab is visible`() {
