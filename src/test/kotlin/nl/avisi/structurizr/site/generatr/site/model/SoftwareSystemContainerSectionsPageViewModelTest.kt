@@ -6,7 +6,6 @@ import assertk.assertions.hasSize
 import assertk.assertions.index
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
-import nl.avisi.structurizr.site.generatr.normalize
 import kotlin.test.Test
 
 class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
