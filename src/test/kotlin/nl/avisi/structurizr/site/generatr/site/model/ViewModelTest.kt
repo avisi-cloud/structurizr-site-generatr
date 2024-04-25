@@ -41,7 +41,7 @@ abstract class ViewModelTest {
 
     protected fun createSection(content: String = "# Content") = Section(Format.Markdown, content)
 
-    protected fun createImageView(workspace: Workspace, element: Element): ImageView = workspace.views.createImageView(element, "imageview-001").also {
+    protected fun createImageView(workspace: Workspace, element: Element): ImageView = workspace.views.createImageView(element, "imageview-${element.id}").also {
         it.description = "Image View Description"
         it.title = "Image View Title"
         it.contentType = "image/png"

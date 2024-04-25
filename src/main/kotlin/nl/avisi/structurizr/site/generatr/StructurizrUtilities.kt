@@ -2,9 +2,9 @@ package nl.avisi.structurizr.site.generatr
 
 import com.structurizr.Workspace
 import com.structurizr.model.Container
-import com.structurizr.model.Location
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
+import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 val Workspace.includedSoftwareSystems: List<SoftwareSystem>
     get() = model.softwareSystems.filter {
@@ -14,6 +14,8 @@ val Workspace.includedSoftwareSystems: List<SoftwareSystem>
 
 fun Workspace.hasImageViews(id: String) = views.imageViews.any { it.elementId == id }
 
+fun Workspace.hasComponentDiagrams(container: Container) = views.componentViews.any { it.container == container}
+
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 
@@ -22,6 +24,12 @@ val SoftwareSystem.includedProperties
 
 val Container.hasComponents
     get() = this.components.isNotEmpty()
+
+fun SoftwareSystem.firstContainerName(generatorContext: GeneratorContext) = containers
+        .firstOrNull { container ->
+            generatorContext.workspace.hasComponentDiagrams(container) or
+                    generatorContext.workspace.hasImageViews(container.id) }
+        ?.name?.normalize()
 
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 

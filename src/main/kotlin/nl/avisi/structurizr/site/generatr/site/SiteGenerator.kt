@@ -144,7 +144,6 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             add { writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it)) }
-            add { writeHtmlFile(branchDir, SoftwareSystemComponentPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemCodePageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDynamicPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it)) }
@@ -174,6 +173,13 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
                     }
                 }
 
+            it.containers
+                .filter { container ->
+                    context.workspace.views.componentViews.any { containerView -> containerView.container == container } or
+                            context.workspace.views.imageViews.any { imageView -> imageView.elementId in container.id } }
+                .forEach { container ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentsPageViewModel(context, container)) } }
+
             it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
                 add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
             }
@@ -198,7 +204,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerDecisionsPageViewModel -> softwareSystemContainerDecisionsPage(viewModel)
                 is SoftwareSystemContainerSectionPageViewModel -> softwareSystemContainerSectionPage(viewModel)
                 is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
-                is SoftwareSystemComponentPageViewModel -> softwareSystemComponentPage(viewModel)
+                is SoftwareSystemContainerComponentsPageViewModel -> softwareSystemContainerComponentsPage(viewModel)
                 is SoftwareSystemCodePageViewModel -> softwareSystemCodePage(viewModel)
                 is SoftwareSystemDynamicPageViewModel -> softwareSystemDynamicPage(viewModel)
                 is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
