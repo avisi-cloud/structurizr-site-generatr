@@ -56,7 +56,7 @@ class MenuViewModelTest : ViewModelTest() {
         val viewModel = MenuViewModel(generatorContext, pageViewModel)
 
         assertThat(viewModel.generalItems[1]).isEqualTo(
-            LinkViewModel(pageViewModel, "Decisions", WorkspaceDecisionsPageViewModel.url(), false)
+            LinkViewModel(pageViewModel, "Decisions", WorkspaceDecisionsPageViewModel.url(), Match.CHILD)
         )
     }
 
@@ -92,13 +92,13 @@ class MenuViewModelTest : ViewModelTest() {
                 pageViewModel,
                 "system 1",
                 SoftwareSystemPageViewModel.url(system1, SoftwareSystemPageViewModel.Tab.HOME),
-                false
+                Match.CHILD
             ),
             LinkViewModel(
                 pageViewModel,
                 "System 2",
                 SoftwareSystemPageViewModel.url(system2, SoftwareSystemPageViewModel.Tab.HOME),
-                false
+                Match.CHILD
             )
         )
     }

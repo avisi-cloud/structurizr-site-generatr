@@ -35,8 +35,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
                     LinkViewModel(
                         viewModel,
                         "Decision 1",
-                        "/software-system/decisions/api-application/1",
-                        true
+                        "/software-system/decisions/api-application/1"
                     )
                 )
         }

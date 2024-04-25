@@ -35,8 +35,7 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
                     LinkViewModel(
                         viewModel,
                         "Content",
-                        "/software-system/sections/api-application/1",
-                        true
+                        "/software-system/sections/api-application/1"
                     )
                 )
         }

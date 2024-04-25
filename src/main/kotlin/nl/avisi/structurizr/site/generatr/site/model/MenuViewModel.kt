@@ -7,7 +7,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         yield(createMenuItem("Home", HomePageViewModel.url()))
 
         if (generatorContext.workspace.documentation.decisions.isNotEmpty())
-            yield(createMenuItem("Decisions", WorkspaceDecisionsPageViewModel.url(), false))
+            yield(createMenuItem("Decisions", WorkspaceDecisionsPageViewModel.url(), Match.CHILD))
 
         if (generatorContext.workspace.model.softwareSystems.isNotEmpty())
             yield(createMenuItem("Software Systems", SoftwareSystemsPageViewModel.url()))
@@ -21,7 +21,7 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
     val softwareSystemItems = pageViewModel.includedSoftwareSystems
         .sortedBy { it.name.lowercase() }
         .map {
-            createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), false)
+            createMenuItem(it.name, SoftwareSystemPageViewModel.url(it, SoftwareSystemPageViewModel.Tab.HOME), Match.CHILD)
         }
 
     private val groupSeparator = generatorContext.workspace.model.properties["structurizr.groupSeparator"] ?: "/"
@@ -30,8 +30,8 @@ class MenuViewModel(generatorContext: GeneratorContext, private val pageViewMode
         .map { "${it.group ?: ""}$groupSeparator${it.name}" }
         .sortedBy { it.lowercase() }
 
-    private fun createMenuItem(title: String, href: String, exact: Boolean = true) =
-        LinkViewModel(pageViewModel, title, href, exact)
+    private fun createMenuItem(title: String, href: String, match: Match = Match.EXACT) =
+        LinkViewModel(pageViewModel, title, href, match)
 
     fun softwareSystemNodes(): MenuNodeViewModel {
         data class MutableMenuNode(val name: String, val children: MutableList<MutableMenuNode>) {

@@ -28,7 +28,7 @@ class LinkViewModelTest : ViewModelTest() {
     @ValueSource(strings = ["/some-page", "/some-page/1", "/some-page/subpage/subsubpage"])
     fun `non-exact links are active when the page url matches partially`(pageHref: String) {
         val pageViewModel = pageViewModel(pageHref)
-        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page", false)
+        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page", Match.CHILD)
         assertThat(viewModel.active).isTrue()
     }
 
@@ -36,14 +36,14 @@ class LinkViewModelTest : ViewModelTest() {
     @ValueSource(strings = ["/", "/some-other-page/1", "/some-other-page/subpage/subsubpage"])
     fun `non-exact links are not active when the page url doesn't match partially`(pageHref: String) {
         val pageViewModel = pageViewModel(pageHref)
-        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page", false)
+        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page", Match.CHILD)
         assertThat(viewModel.active).isFalse()
     }
 
     @Test
     fun `non-exact links are only active when page url is a subdirectory of the link`() {
-        val expectInactivePartialMatch = LinkViewModel(pageViewModel("/page-two"), "Some page", "/page", false)
-        val expectActivePartialMatch = LinkViewModel(pageViewModel("/page/two"), "Some page", "/page", false)
+        val expectInactivePartialMatch = LinkViewModel(pageViewModel("/page-two"), "Some page", "/page", Match.CHILD)
+        val expectActivePartialMatch = LinkViewModel(pageViewModel("/page/two"), "Some page", "/page", Match.CHILD)
         assertThat(expectInactivePartialMatch.active).isFalse()
         assertThat(expectActivePartialMatch.active).isTrue()
     }
@@ -53,5 +53,29 @@ class LinkViewModelTest : ViewModelTest() {
         val pageViewModel = pageViewModel("/some-page/some-subpage")
         val viewModel = LinkViewModel(pageViewModel, "Some other page", "/some-other-page")
         assertThat(viewModel.relativeHref).isEqualTo("../../some-other-page/")
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["/some-page/sibling-page-1/", "/some-page/sibling-page-2/"])
+    fun `sibling links are active when the previous url path matches`(pageHref: String) {
+        val pageViewModel = pageViewModel(pageHref)
+        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page/sibling-page-3/", Match.SIBLING)
+        assertThat(viewModel.active).isTrue()
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["/some-other-page/sibling-page-1/", "/some-other-page/sibling-page-2/"])
+    fun `sibling links are not active when the previous url path doesn't match`(pageHref: String) {
+        val pageViewModel = pageViewModel(pageHref)
+        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page/sibling-page-1", Match.SIBLING)
+        assertThat(viewModel.active).isFalse()
+    }
+
+    @Test
+    fun `sibling links are only active when previous page url path matches previous href path url`() {
+        val expectInactiveSiblingMatch = LinkViewModel(pageViewModel("/page/two/"), "Some page", "/some-page/", Match.SIBLING)
+        val expectActiveSiblingMatch = LinkViewModel(pageViewModel("/page/two"), "Some page", "/page/one", Match.SIBLING)
+        assertThat(expectInactiveSiblingMatch.active).isFalse()
+        assertThat(expectActiveSiblingMatch.active).isTrue()
     }
 }
