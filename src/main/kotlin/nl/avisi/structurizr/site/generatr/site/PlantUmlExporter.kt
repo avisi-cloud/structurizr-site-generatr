@@ -109,7 +109,7 @@ private class WriterWithElementLinks(
         val path = when (element) {
             is SoftwareSystem -> "/${element.name?.normalize()}/${page?.let { page } ?: "container"}/".asUrlToDirectory(url)
             is Container -> "/${element.parent?.name?.normalize()}/${page?.let { page } ?: "component"}/${element.name?.normalize()}".asUrlToDirectory(url)
-            is Component -> "/${element.parent?.parent?.name?.normalize()}/${page?.let { page } ?: "code"}/".asUrlToDirectory(url)
+            is Component -> "/${element.parent?.parent?.name?.normalize()}/${page?.let { page } ?: "code"}/${element.container?.name?.normalize()}/${element.name?.normalize()}".asUrlToDirectory(url)
             else -> throw IllegalStateException("Not supported element")
         }
         return "$TEMP_URI$path"

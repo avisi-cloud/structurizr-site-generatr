@@ -17,7 +17,7 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
         .map { ImageViewViewModel(it) }
 
     val visible = diagrams.isNotEmpty() or images.isNotEmpty()
-    val containerTabs = createContainersTabViewModel(generatorContext, container.softwareSystem)
+    val containerTabs = createContainersComponentTabViewModel(generatorContext, container.softwareSystem)
     companion object {
         fun url(container: Container) = "${url(container.softwareSystem, Tab.COMPONENT)}/${container.name.normalize()}"
     }

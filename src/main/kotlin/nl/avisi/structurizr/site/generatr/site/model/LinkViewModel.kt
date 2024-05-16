@@ -14,14 +14,19 @@ data class LinkViewModel(
             Match.EXACT -> isHrefOfContainingPage
             Match.CHILD -> isChildHrefOfContainingPage
             Match.SIBLING -> isSiblingHrefOfContainingPage
+            Match.SIBLING_CHILD -> isSiblingChildHrefOfContainingPage
         }
 
     private val isHrefOfContainingPage get() = href == pageViewModel.url
     private val isChildHrefOfContainingPage get() = pageViewModel.url == href || pageViewModel.url.startsWith("$href/")
     private val isSiblingHrefOfContainingPage get() = pageViewModel.url.trimEnd('/').dropLastWhile { it != '/' } == href.trimEnd('/').dropLastWhile { it != '/' }
+    private val isSiblingChildHrefOfContainingPage get() =
+        pageViewModel.url.trimEnd('/').dropLastWhile { it != '/' }.trimEnd('/').dropLastWhile { it != '/' } ==
+            href.trimEnd('/').dropLastWhile { it != '/' }.trimEnd('/').dropLastWhile { it != '/' }
 }
 enum class Match {
     EXACT,
     CHILD,
-    SIBLING
+    SIBLING,
+    SIBLING_CHILD
 }

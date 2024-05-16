@@ -173,7 +173,7 @@ class PlantUmlExporterTest {
         assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
             """
             Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
-              Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/code/")
+              Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/code/container-1/component-1/")
               Component(System1.Container1.Component2, "Component 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
               Component(System1.Container1.Component3, "Component 3", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             }
@@ -191,7 +191,7 @@ class PlantUmlExporterTest {
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
             rectangle "Container 1\n<size:10>[Container]</size>" <<System1.Container1>> {
-              rectangle "==Component 1\n<size:10>[Component]</size>" <<System1.Container1.Component1>> as System1.Container1.Component1 [[../system-1/code/]]
+              rectangle "==Component 1\n<size:10>[Component]</size>" <<System1.Container1.Component1>> as System1.Container1.Component1 [[../system-1/code/container-1/component-1/]]
               rectangle "==Component 2\n<size:10>[Component]</size>" <<System1.Container1.Component2>> as System1.Container1.Component2
               rectangle "==Component 3\n<size:10>[Component]</size>" <<System1.Container1.Component3>> as System1.Container1.Component3
             }

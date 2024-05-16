@@ -25,11 +25,10 @@ val SoftwareSystem.includedProperties
 val Container.hasComponents
     get() = this.components.isNotEmpty()
 
-fun SoftwareSystem.firstContainerName(generatorContext: GeneratorContext) = containers
-        .firstOrNull { container ->
+fun SoftwareSystem.firstContainer(generatorContext: GeneratorContext) = containers
+        .sortedBy { it.name }.firstOrNull { container ->
             generatorContext.workspace.hasComponentDiagrams(container) or
                     generatorContext.workspace.hasImageViews(container.id) }
-        ?.name?.normalize()
 
 fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 
@@ -38,6 +37,10 @@ fun SoftwareSystem.hasContainerDecisions() = containers.any { it.hasDecisions() 
 fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
 
 fun SoftwareSystem.hasContainerDocumentationSections() = containers.any { it.hasSections() }
+
+fun Container.firstComponent(generatorContext: GeneratorContext) = components
+    .sortedBy { it.name }.firstOrNull {
+        component -> generatorContext.workspace.hasImageViews(component.id) }
 
 fun Container.hasDecisions() = documentation.decisions.isNotEmpty()
 

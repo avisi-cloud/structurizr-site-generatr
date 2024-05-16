@@ -16,7 +16,13 @@ open class SoftwareSystemPageViewModel(
             Tab.COMPONENT -> LinkViewModel(
                 this@SoftwareSystemPageViewModel,
                 title,
-                "${url(softwareSystem, tab)}/${softwareSystem.firstContainerName(generatorContext)}",
+                "${url(softwareSystem, tab)}/${softwareSystem.firstContainer(generatorContext)?.name?.normalize()}",
+                match
+            )
+            Tab.CODE -> LinkViewModel(
+                this@SoftwareSystemPageViewModel,
+                title,
+                "${url(softwareSystem, tab)}/${softwareSystem.firstContainer(generatorContext)?.name?.normalize()}/${softwareSystem.firstContainer(generatorContext)?.firstComponent(generatorContext)?.name?.normalize()}",
                 match
             )
             else -> LinkViewModel(this@SoftwareSystemPageViewModel, title, url(softwareSystem, tab), match)
@@ -59,7 +65,7 @@ open class SoftwareSystemPageViewModel(
         TabViewModel(Tab.SYSTEM_CONTEXT),
         TabViewModel(Tab.CONTAINER),
         TabViewModel(Tab.COMPONENT, Match.SIBLING),
-        TabViewModel(Tab.CODE),
+        TabViewModel(Tab.CODE, Match.SIBLING_CHILD),
         TabViewModel(Tab.DYNAMIC),
         TabViewModel(Tab.DEPLOYMENT),
         TabViewModel(Tab.DEPENDENCIES),

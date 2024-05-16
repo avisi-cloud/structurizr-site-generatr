@@ -78,4 +78,28 @@ class LinkViewModelTest : ViewModelTest() {
         assertThat(expectInactiveSiblingMatch.active).isFalse()
         assertThat(expectActiveSiblingMatch.active).isTrue()
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["/some-page/sibling/child/", "/some-page/other-sibling/other-child/"])
+    fun `sibling child links are active when two url paths back matches`(pageHref: String) {
+        val pageViewModel = pageViewModel(pageHref)
+        val viewModel = LinkViewModel(pageViewModel, "Some page", "/some-page/another-sibling/another-child", Match.SIBLING_CHILD)
+        assertThat(viewModel.active).isTrue()
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["/some-page/sibling/child/", "/some-page/other-sibling/other-child/"])
+    fun `sibling child links are not active when two url paths back doesnt match`(pageHref: String) {
+        val pageViewModel = pageViewModel(pageHref)
+        val viewModel = LinkViewModel(pageViewModel, "Some other page", "/some-other-page/not-a-sibling/child/", Match.SIBLING_CHILD)
+        assertThat(viewModel.active).isFalse()
+    }
+
+    @Test
+    fun `sibling child links are only active when two url paths back matches with two url paths back from href`() {
+        val expectInactiveSiblingChildMatch = LinkViewModel(pageViewModel("/page/one/description"), "Some page", "/some-page/", Match.SIBLING_CHILD)
+        val expectActiveSiblingChildMatch = LinkViewModel(pageViewModel("/page/one/description"), "Some page", "/page/two/title-screen", Match.SIBLING_CHILD)
+        assertThat(expectInactiveSiblingChildMatch.active).isFalse()
+        assertThat(expectActiveSiblingChildMatch.active).isTrue()
+    }
 }
