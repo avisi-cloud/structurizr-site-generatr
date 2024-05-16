@@ -176,8 +176,8 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
 
             it.containers
                 .filter { container ->
-                    context.workspace.views.componentViews.any { containerView -> containerView.container == container } or
-                            context.workspace.views.imageViews.any { imageView -> imageView.elementId in container.id } }
+                    context.workspace.hasComponentDiagrams(container) or
+                            context.workspace.hasImageViews(container.id) }
                 .forEach { container ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentsPageViewModel(context, container)) } }
 
