@@ -4,6 +4,8 @@ import com.structurizr.Workspace
 import com.structurizr.util.WorkspaceUtils
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
+import nl.avisi.structurizr.site.generatr.hasComponentDiagrams
+import nl.avisi.structurizr.site.generatr.hasImageViews
 import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.views.*
@@ -144,7 +146,6 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             add { writeHtmlFile(branchDir, SoftwareSystemHomePageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContextPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemContainerPageViewModel(context, it)) }
-            add { writeHtmlFile(branchDir, SoftwareSystemCodePageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDynamicPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDeploymentPageViewModel(context, it)) }
             add { writeHtmlFile(branchDir, SoftwareSystemDependenciesPageViewModel(context, it)) }
@@ -175,10 +176,22 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
 
             it.containers
                 .filter { container ->
-                    context.workspace.views.componentViews.any { containerView -> containerView.container == container } or
-                            context.workspace.views.imageViews.any { imageView -> imageView.elementId in container.id } }
+                    context.workspace.hasComponentDiagrams(container) or
+                            context.workspace.hasImageViews(container.id) }
                 .forEach { container ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentsPageViewModel(context, container)) } }
+
+            it.containers
+                .filter { container ->
+                    ( context.workspace.hasComponentDiagrams(container) or
+                            context.workspace.hasImageViews(container.id)) }
+                .forEach { container ->
+                    container.components.filter { component ->
+                        context.workspace.hasImageViews(component.id) }
+                    .forEach { component ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentCodePageViewModel(context, container, component)) }
+                    }
+                }
 
             it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
                 add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
@@ -205,7 +218,7 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerSectionPageViewModel -> softwareSystemContainerSectionPage(viewModel)
                 is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
                 is SoftwareSystemContainerComponentsPageViewModel -> softwareSystemContainerComponentsPage(viewModel)
-                is SoftwareSystemCodePageViewModel -> softwareSystemCodePage(viewModel)
+                is SoftwareSystemContainerComponentCodePageViewModel -> softwareSystemContainerComponentCodePage(viewModel)
                 is SoftwareSystemDynamicPageViewModel -> softwareSystemDynamicPage(viewModel)
                 is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
                 is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)

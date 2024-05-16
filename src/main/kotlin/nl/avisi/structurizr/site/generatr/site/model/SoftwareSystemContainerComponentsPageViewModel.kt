@@ -12,12 +12,12 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
         .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
     val images = generatorContext.workspace.views.imageViews
-        .filter { it.elementId in container.id }
+        .filter { it.element == container }
         .sortedBy { it.key }
         .map { ImageViewViewModel(it) }
 
     val visible = diagrams.isNotEmpty() or images.isNotEmpty()
-    val containerTabs = createContainersTabViewModel(generatorContext, container.softwareSystem)
+    val containerTabs = createContainersComponentTabViewModel(generatorContext, container.softwareSystem)
     companion object {
         fun url(container: Container) = "${url(container.softwareSystem, Tab.COMPONENT)}/${container.name.normalize()}"
     }

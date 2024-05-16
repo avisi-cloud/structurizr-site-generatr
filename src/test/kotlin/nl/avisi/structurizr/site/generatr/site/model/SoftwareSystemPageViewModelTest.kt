@@ -85,7 +85,7 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @TestFactory
     fun `active tab`() = Tab.entries
-        .filter { it != Tab.COMPONENT } // Component link is dynamic
+        .filter { it != Tab.COMPONENT && it != Tab.CODE } // Component & code links are dynamic
         .map { tab ->
             DynamicTest.dynamicTest("active tab - $tab") {
                 val generatorContext = generatorContext()
@@ -150,6 +150,20 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         assertThat(getTab(viewModel, Tab.COMPONENT).visible).isFalse()
         generatorContext.workspace.views.createComponentView(container, "component", "description")
         assertThat(getTab(viewModel, Tab.COMPONENT).visible).isTrue()
+    }
+
+    @Test
+    fun `code views tab only visible when component diagrams available and component diagram has image view`() {
+        val generatorContext = generatorContext()
+        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+        val container = softwareSystem.addContainer("Backend")
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.CODE).visible).isFalse()
+        val component = container.addComponent("Backend Component")
+        generatorContext.workspace.views.createComponentView(container, "component", "description")
+        createImageView(generatorContext.workspace, component)
+        assertThat(getTab(viewModel, Tab.CODE).visible).isTrue()
     }
 
     @Test

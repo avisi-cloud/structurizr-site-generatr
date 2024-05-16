@@ -4,10 +4,10 @@ import kotlinx.html.HTML
 import kotlinx.html.div
 import kotlinx.html.li
 import kotlinx.html.ul
-import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerComponentsPageViewModel
+import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerComponentCodePageViewModel
 
-fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContainerComponentsPageViewModel) {
-     if (viewModel.visible) {
+fun HTML.softwareSystemContainerComponentCodePage(viewModel: SoftwareSystemContainerComponentCodePageViewModel) {
+    if (viewModel.visible) {
         softwareSystemPage(viewModel) {
             div(classes = "tabs") {
                 ul(classes = "m-0 is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {
@@ -19,7 +19,16 @@ fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContaine
                         }
                 }
             }
-            viewModel.diagrams.forEach { diagram(it) }
+            div(classes = "tabs is-size-7") {
+                ul(classes = "m-0 is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {
+                    viewModel.componentTabs
+                        .forEach {
+                            li(classes = if (it.link.active) "is-active" else null) {
+                                link(it.link)
+                            }
+                        }
+                }
+            }
             viewModel.images.forEach { image(it) }
         }
     } else
