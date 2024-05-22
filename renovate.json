@@ -1,11 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:best-practices"
   ],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 6,
   "packageRules": [
+    {
+      "groupName": "structurizr",
+      "matchPackagePrefixes": [
+        "com.structurizr:"
+      ]
+    },
+    {
+      "groupName": "jetty",
+      "matchPackagePrefixes": [
+        "org.eclipse.jetty:",
+        "org.eclipse.jetty.websocket:"
+      ]
+    },
     {
       "matchPackageNames": "net.sourceforge.plantuml:plantuml",
       "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
