@@ -11,23 +11,23 @@ jobs:
   build-gradle:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
+      - uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4
         with:
           distribution: temurin
           java-version: 21
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.3.2
+        uses: gradle/gradle-build-action@4c39dd82cd5e1ec7c6fa0173bb41b4b6bb3b86ff # v3.3.2
       - name: Execute Gradle build
         run: ./gradlew -PprojectVersion=${{ github.ref_name }} test assemble installDist
       - name: Archive binaries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
         with:
           name: binaries
           path: build/install
           retention-days: 1
       - name: Archive distribution
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
         with:
           name: distribution
           path: build/distributions
@@ -37,33 +37,33 @@ jobs:
     needs: build-gradle
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3
       - name: Set up cosign
         uses: sigstore/cosign-installer@main
 
       - name: Download binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
         with:
           name: binaries
           path: build/install
       - name: Download distribution
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
         with:
           name: distribution
           path: build/distributions
 
       - name: Build and publish container image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5
         id: build_push
         with:
           push: true
@@ -94,7 +94,7 @@ jobs:
           docker buildx imagetools inspect ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
           docker pull ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
           cosign verify --key cosign.pub ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
-      - uses: anchore/sbom-action@v0
+      - uses: anchore/sbom-action@e8d2a6937ecead383dfe75190d104edd1f9c5751 # v0
         with:
           image: ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
 
@@ -103,10 +103,10 @@ jobs:
     needs: build-gradle
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
 
       - name: Download distribution
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
         with:
           name: distribution
           path: build/distributions
@@ -128,14 +128,14 @@ jobs:
     needs: build-gradle
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
+      - uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4
         with:
           distribution: temurin
           java-version: 21
 
       - name: Download binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
         with:
           name: binaries
           path: build/install
@@ -156,7 +156,7 @@ jobs:
           --version ${{ github.ref_name }}
 
       - name: Upload example site as GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: ./build/site
 
@@ -175,4 +175,4 @@ jobs:
     steps:
       - name: Deploy example site to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
