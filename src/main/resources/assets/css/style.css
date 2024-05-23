@@ -45,18 +45,7 @@ svg a:hover {
     max-height: inherit;
 }
 
-.content h1,
-.content h1 a,
-.content h2,
-.content h2 a,
-.content h3,
-.content h3 a,
-.content h4,
-.content h4 a,
-.content h5,
-.content h5 a,
-.content h6 ,
-.content h6 a {
+a {
     color: #485fc7; /* Pre Bulma 1.x colour code for headers, tabs and links */
 }
 
