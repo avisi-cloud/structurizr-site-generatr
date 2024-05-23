@@ -64,6 +64,10 @@ svg a:hover {
     object-fit: contain;
 }
 
+a.navbar-item:hover {
+    background-color: transparent;
+}
+
 .tabs li.is-active a {
     color: #485fc7;
     border-bottom-color: #485fc7;
