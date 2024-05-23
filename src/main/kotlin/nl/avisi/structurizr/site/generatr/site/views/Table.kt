@@ -4,7 +4,7 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.TableViewModel
 
 fun FlowContent.table(viewModel: TableViewModel) {
-    table {
+    table (classes = "table is-fullwidth") {
         thead {
             viewModel.headerRows.forEach {
                 row(it)
