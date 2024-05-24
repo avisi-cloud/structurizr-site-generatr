@@ -1,12 +1,11 @@
 package nl.avisi.structurizr.site.generatr.site
 
-import java.nio.file.Path
-import kotlin.io.path.relativeTo
+import java.io.File
 
 fun String.asUrlToDirectory(otherUrl: String) = "${this.asUrlToFile(otherUrl)}/"
 
-fun String.asUrlToFile(otherUrl: String) =
-    if (otherUrl == this) "."
-    else Path.of(this)
-        .relativeTo(Path.of(otherUrl)).toString()
-
+fun String.asUrlToFile(relativeTo: String): String =
+    if (relativeTo == this) "."
+    else File(this)
+        .relativeTo(File(relativeTo))
+        .toString()
