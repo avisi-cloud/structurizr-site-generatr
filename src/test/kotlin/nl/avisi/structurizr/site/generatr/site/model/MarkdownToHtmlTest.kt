@@ -334,4 +334,50 @@ class MarkdownToHtmlTest : ViewModelTest() {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun `links to pages`() {
+        val generatorContext = generatorContext()
+        val viewModel = HomePageViewModel(generatorContext)
+
+        val html = toHtml(
+            viewModel,
+            """
+                ## header
+                Link: [Some decision](/decisions/1/),
+            """.trimIndent(),
+            Format.Markdown,
+            svgFactory
+        )
+
+        assertThat(html).isEqualTo(
+            """
+                <h2>header</h2>
+                <p>Link: <a href="decisions/1/">Some decision</a>,</p>
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `links to files`() {
+        val generatorContext = generatorContext()
+        val viewModel = HomePageViewModel(generatorContext)
+
+        val html = toHtml(
+            viewModel,
+            """
+                ## header
+                Link: [Some document](/document.md),
+            """.trimIndent(),
+            Format.Markdown,
+            svgFactory
+        )
+
+        assertThat(html).isEqualTo(
+            """
+                <h2>header</h2>
+                <p>Link: <a href="document.md">Some document</a>,</p>
+            """.trimIndent()
+        )
+    }
 }

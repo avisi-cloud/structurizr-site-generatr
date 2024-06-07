@@ -14,6 +14,7 @@ import kotlinx.html.stream.createHTML
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
+import nl.avisi.structurizr.site.generatr.site.asUrlToDirectory
 import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.views.diagram
 import org.asciidoctor.Options
@@ -134,7 +135,14 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
             return link
 
         return link.withStatus(LinkStatus.VALID)
-            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlToFile(pageViewModel.url))
+            .withUrl("/${link.url.dropWhile { it == '/' }}"
+                .let {
+                    if (it.endsWith('/'))
+                        it.asUrlToDirectory(pageViewModel.url)
+                    else
+                        it.asUrlToFile(pageViewModel.url)
+                }
+            )
     }
 
     class Factory(private val viewModel: PageViewModel) : LinkResolverFactory {
