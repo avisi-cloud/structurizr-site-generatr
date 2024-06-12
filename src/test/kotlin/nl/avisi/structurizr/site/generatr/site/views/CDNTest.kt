@@ -23,7 +23,8 @@ class CDNTest {
             cdn.lunrLanguagesJs("en") to "/min/lunr.en.min.js",
             cdn.mermaidJs() to "/dist/mermaid.esm.min.mjs",
             cdn.svgpanzoomJs() to "/dist/svg-pan-zoom.min.js",
-            cdn.webfontloaderJs() to "/webfontloader.js"
+            cdn.webfontloaderJs() to "/webfontloader.js",
+            cdn.fontAwesomeCss() to "/css/font-awesome.min.css"
         ).map { (url, suffix) ->
             DynamicTest.dynamicTest(url) {
                 assertThat(url).all {

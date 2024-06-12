@@ -53,6 +53,18 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                         }
                     }
                 }
+                if (viewModel.showDarkModeButton) {
+                    div(classes = "navbar-item") {
+                        button(classes = "btn-toggle") {
+                            span(classes = "icon") {
+                                i(classes = "fa fa-xl has-site-branding") {
+                                    id = "icon-toggle"
+                                }
+                            }
+                        }
+                        script(type = ScriptType.textJavaScript, src = "/toggle-theme.js") { }
+                    }
+                }
             }
         }
     }

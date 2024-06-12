@@ -61,3 +61,19 @@ a.navbar-item:hover {
     color: #485fc7;
     border-bottom-color: #485fc7;
 }
+
+.fa-xl {
+    font-size: 24px
+}
+
+body.dark-theme .tabs li a {
+    border-bottom-color: #696969;
+}
+
+body.dark-theme .tabs li.is-active a {
+    color: #7585ff;
+    border-bottom-color: #7585ff;
+}
+body.dark-theme .text {
+    fill: #ebecf0
+}
