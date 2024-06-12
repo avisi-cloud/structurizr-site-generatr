@@ -9,11 +9,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 
 class CDNTest {
+    val workspace = Workspace("workspace name", "")
+    val cdn = CDN(workspace)
     @TestFactory
-    fun `cdn locations`() {
-        val workspace = Workspace("workspace name", "")
-        val cdn = CDN(workspace)
-
+    fun `cdn locations`() : List<DynamicTest> =
         listOf(
             cdn.bulmaCss() to "/css/bulma.min.css",
             cdn.katexJs() to "/dist/katex.min.js",
@@ -34,7 +33,6 @@ class CDNTest {
                 }
             }
         }
-    }
 
     @Test
     fun `usage of default cdn url`() {
