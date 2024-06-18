@@ -132,9 +132,12 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
         }
         if (link.url.matches("https?://.*".toRegex()))
             return link
-
+        var url =  "/${link.url.dropWhile { it == '/' }}"
+            .asUrlToFile(pageViewModel.url)
+        // Make sure that the link ending slash is being preserved
+        url = if (link.url.endsWith("/")) url.plus("/") else url
         return link.withStatus(LinkStatus.VALID)
-            .withUrl("/${link.url.dropWhile { it == '/' }}".asUrlToFile(pageViewModel.url))
+            .withUrl(url)
     }
 
     class Factory(private val viewModel: PageViewModel) : LinkResolverFactory {

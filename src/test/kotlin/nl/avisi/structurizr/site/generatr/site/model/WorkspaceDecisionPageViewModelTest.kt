@@ -33,6 +33,22 @@ class WorkspaceDecisionPageViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `absolute link`() {
+        val decision = createDecision().apply {
+            content = """
+                [Test Link](/test/decision/2/)
+            """.trimIndent()
+        }
+        val viewModel = WorkspaceDecisionPageViewModel(generatorContext(), decision)
+
+        assertThat(viewModel.content).isEqualTo(
+            """
+                <p><a href="../../test/decision/2/">Test Link</a></p>
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `link to other ADR`() {
         val decision = createDecision().apply {
             content = """
