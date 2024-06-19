@@ -301,3 +301,11 @@ will be rendered as
 ```DSL
     "generatr.markdown.flexmark.extensions" "GfmTaskList"
 ```
+
+### Links to Markdown documents
+
+Placing links on markdown pages is easy. You can link to:
+
+* an overview page like [Workspace decisions](/decisions/),
+* an individual decision [ADR-0001. record architecture decisions](/decisions/1/)
+* or some system documentation like [Internet Banking](/internet-banking-system/).
