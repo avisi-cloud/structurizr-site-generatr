@@ -67,4 +67,22 @@ class HeaderBarViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.hasLogo).isFalse()
     }
+
+    @Test
+    fun `dark mode`() {
+        val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
+
+        assertThat(viewModel.showDarkModeButton).isTrue()
+    }
+
+    @Test
+    fun `no dark mode`() {
+        generatorContext.workspace.views.configuration.addProperty(
+            "generatr.site.darkMode",
+            "false"
+        )
+        val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
+
+        assertThat(viewModel.showDarkModeButton).isFalse()
+    }
 }

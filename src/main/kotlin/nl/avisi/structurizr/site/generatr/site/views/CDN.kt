@@ -55,6 +55,10 @@ class CDN(val workspace: Workspace) {
         "${it.baseUrl()}/webfontloader.js"
     }
 
+    fun fontAwesomeCss() = dependencies.single { it.name == "font-awesome"}.let {
+        "${it.baseUrl()}/css/font-awesome.min.css"
+    }
+
     fun getCdnBaseUrl() = workspace.views.configuration.properties
         .getOrDefault("generatr.site.cdn", "https://cdn.jsdelivr.net/npm")
         .trimEnd('/')

@@ -12,6 +12,8 @@ class HeaderBarViewModel(pageViewModel: PageViewModel, generatorContext: Generat
         .map { BranchHomeLinkViewModel(pageViewModel, it) }
     val currentBranch = generatorContext.currentBranch
     val version = generatorContext.version
+    val showDarkModeButton = generatorContext.workspace.views.configuration.properties
+        .getOrDefault("generatr.site.darkMode", "true").toBoolean()
 
     private fun logoPath(generatorContext: GeneratorContext) =
         generatorContext.workspace.views.configuration.properties
