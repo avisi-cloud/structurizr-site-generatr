@@ -9,7 +9,7 @@ class SoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorCo
     SoftwareSystemPageViewModel(generatorContext, container.softwareSystem, Tab.SECTIONS) {
     override val url = url(container)
     val sectionsTable = createSectionsTableViewModel(container.documentation.sections, dropFirst = false) {
-        "$url/${it.order}"
+        "$url/${it.contentTitle().normalize()}"
     }
 
     val visible = container.hasSections()

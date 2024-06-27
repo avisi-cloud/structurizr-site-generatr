@@ -19,7 +19,7 @@ class SoftwareSystemContainerSectionPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemContainerSectionPageViewModel(generatorContext, container, section)
 
         assertThat(SoftwareSystemContainerSectionPageViewModel.url(container, section))
-            .isEqualTo("/${softwareSystem.name.normalize()}/sections/${container.name.normalize()}/${section.order}")
+            .isEqualTo("/${softwareSystem.name.normalize()}/sections/${container.name.normalize()}/${section.contentTitle().normalize()}")
         assertThat(viewModel.url)
             .isEqualTo(SoftwareSystemContainerSectionPageViewModel.url(container, section))
     }

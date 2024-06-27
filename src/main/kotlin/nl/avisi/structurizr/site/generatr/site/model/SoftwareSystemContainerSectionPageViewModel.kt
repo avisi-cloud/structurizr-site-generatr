@@ -16,6 +16,6 @@ class SoftwareSystemContainerSectionPageViewModel(
 
     companion object {
         fun url(container: Container, section: Section) =
-            "${url(container.softwareSystem, Tab.SECTIONS)}/${container.name.normalize()}/${section.order}"
+            "${url(container.softwareSystem, Tab.SECTIONS)}/${container.name.normalize()}/${section.contentTitle().normalize()}"
     }
 }

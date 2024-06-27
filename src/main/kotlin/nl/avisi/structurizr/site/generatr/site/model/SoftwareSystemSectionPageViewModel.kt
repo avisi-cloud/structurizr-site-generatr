@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Section
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemSectionPageViewModel(
@@ -15,6 +16,6 @@ class SoftwareSystemSectionPageViewModel(
 
     companion object {
         fun url(softwareSystem: SoftwareSystem, section: Section) =
-            "${url(softwareSystem, Tab.SECTIONS)}/${section.order}"
+            "${url(softwareSystem, Tab.SECTIONS)}/${section.contentTitle().normalize()}"
     }
 }

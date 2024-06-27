@@ -28,7 +28,7 @@ class SoftwareSystemSectionsPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.sectionsTable)
             .isEqualTo(
                 viewModel.createSectionsTableViewModel(softwareSystem.documentation.sections) {
-                    "/${softwareSystem.name.normalize()}/sections/2"
+                    "/${softwareSystem.name.normalize()}/sections/${it.contentTitle().normalize()}"
                 }
             )
     }
