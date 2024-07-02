@@ -7,7 +7,10 @@ class SoftwareSystemsPageViewModel(generatorContext: GeneratorContext) : PageVie
     override val pageSubTitle = "Software Systems"
 
     val softwareSystemsTable: TableViewModel = TableViewModel.create {
-        headerRow(headerCell("Name"), headerCell("Description"))
+        headerRow(
+            headerCellMedium("Name"),
+            headerCell("Description")
+        )
 
         generatorContext.workspace.model.softwareSystems
             .sortedBy { it.name.lowercase() }

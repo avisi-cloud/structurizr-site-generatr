@@ -29,9 +29,9 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.softwareSystemsTable).isEqualTo(
             TableViewModel.create {
-                headerRow(headerCell("Name"), headerCell("Description"))
+                headerRow(headerCellMedium("Name"), headerCell("Description"))
                 bodyRow(
-                    headerCellWithLink(
+                    cellWithSoftwareSystemLink(
                         viewModel, system1.name, SoftwareSystemPageViewModel.url(
                             system1,
                             SoftwareSystemPageViewModel.Tab.HOME
@@ -40,7 +40,7 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
                     cell(system1.description)
                 )
                 bodyRow(
-                    headerCellWithLink(
+                    cellWithSoftwareSystemLink(
                         viewModel, system2.name, SoftwareSystemPageViewModel.url(
                             system2,
                             SoftwareSystemPageViewModel.Tab.HOME
@@ -77,6 +77,6 @@ class SoftwareSystemsPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemsPageViewModel(generatorContext)
 
         assertThat(viewModel.softwareSystemsTable.bodyRows[1].columns[0])
-            .isEqualTo(TableViewModel.TextCellViewModel("system 2 (External)", isHeader = true, greyText = true))
+            .isEqualTo(TableViewModel.TextCellViewModel("system 2 (External)", isHeader = false, greyText = true, boldText = true))
     }
 }

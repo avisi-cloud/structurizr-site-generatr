@@ -56,6 +56,6 @@ class PropertiesTableViewModelTest : ViewModelTest() {
     }
 
     private fun TableViewModel.TableViewInitializerContext.propertiesTableHeaderRow() {
-        headerRow(headerCell("Name"), headerCell("Value"))
+        headerRow(headerCellMedium("Name"), headerCell("Value"))
     }
 }
