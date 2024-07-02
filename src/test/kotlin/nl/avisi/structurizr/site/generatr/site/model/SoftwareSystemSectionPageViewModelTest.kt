@@ -16,7 +16,7 @@ class SoftwareSystemSectionPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemSectionPageViewModel(generatorContext, softwareSystem, section)
 
         assertThat(SoftwareSystemSectionPageViewModel.url(softwareSystem, section))
-            .isEqualTo("/${softwareSystem.name.normalize()}/sections/${section.order}")
+            .isEqualTo("/${softwareSystem.name.normalize()}/sections/${section.contentTitle().normalize()}")
         assertThat(viewModel.url)
             .isEqualTo(SoftwareSystemSectionPageViewModel.url(softwareSystem, section))
     }
