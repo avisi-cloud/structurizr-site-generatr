@@ -61,3 +61,7 @@ a.navbar-item:hover {
     color: #485fc7;
     border-bottom-color: #485fc7;
 }
+
+.large-table {
+    table-layout: fixed;
+}

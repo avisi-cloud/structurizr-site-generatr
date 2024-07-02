@@ -4,15 +4,32 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.TableViewModel
 
 fun FlowContent.table(viewModel: TableViewModel) {
-    table (classes = "table is-fullwidth") {
-        thead {
-            viewModel.headerRows.forEach {
-                row(it)
+    viewModel.headerRows.forEach { rowViewModel ->
+        if (rowViewModel.columns.size > 2) {
+            table (classes = "table is-fullwidth large-table") {
+                thead {
+                    viewModel.headerRows.forEach {
+                        row(it)
+                    }
+                }
+                tbody {
+                    viewModel.bodyRows.forEach {
+                        row(it)
+                    }
+                }
             }
-        }
-        tbody {
-            viewModel.bodyRows.forEach {
-                row(it)
+        } else {
+            table (classes = "table is-fullwidth") {
+                thead {
+                    viewModel.headerRows.forEach {
+                        row(it)
+                    }
+                }
+                tbody {
+                    viewModel.bodyRows.forEach {
+                        row(it)
+                    }
+                }
             }
         }
     }
