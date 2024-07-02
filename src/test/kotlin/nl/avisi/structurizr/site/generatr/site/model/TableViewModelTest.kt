@@ -1,7 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
-import assertk.assertions.containsAll
 import assertk.assertions.containsAtLeast
 import kotlin.test.Test
 
@@ -29,15 +28,45 @@ class TableViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `header cell with grey text`() {
+    fun `header row with index`() {
         val viewModel = TableViewModel.create {
-            headerRow(headerCell("1", greyText = true))
+            headerRow(headerCellSmall("1"))
         }
 
         assertThat(viewModel.headerRows).containsAtLeast(
             TableViewModel.RowViewModel(
                 listOf(
-                    TableViewModel.TextCellViewModel("1", isHeader = true, greyText = true),
+                    TableViewModel.TextCellViewModel("1", isHeader = true, width = CellWidth.ONE_TENTH)
+                )
+            )
+        )
+    }
+
+    @Test
+    fun `header row with name`() {
+        val viewModel = TableViewModel.create {
+            headerRow(headerCellMedium("Name"))
+        }
+
+        assertThat(viewModel.headerRows).containsAtLeast(
+            TableViewModel.RowViewModel(
+                listOf(
+                    TableViewModel.TextCellViewModel("Name", isHeader = true, width = CellWidth.ONE_FOURTH)
+                )
+            )
+        )
+    }
+
+    @Test
+    fun `header row with description`() {
+        val viewModel = TableViewModel.create {
+            headerRow(headerCellLarge("Description"))
+        }
+
+        assertThat(viewModel.headerRows).containsAtLeast(
+            TableViewModel.RowViewModel(
+                listOf(
+                    TableViewModel.TextCellViewModel("Description", isHeader = true, width = CellWidth.TWO_FOURTH)
                 )
             )
         )
@@ -79,24 +108,6 @@ class TableViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `header cell with link`() {
-        val viewModel = TableViewModel.create {
-            bodyRow(headerCellWithLink(pageViewModel, "click me", "/decisions"))
-        }
-
-        assertThat(viewModel.bodyRows).containsAtLeast(
-            TableViewModel.RowViewModel(
-                listOf(
-                    TableViewModel.LinkCellViewModel(
-                        LinkViewModel(pageViewModel, "click me", "/decisions"),
-                        isHeader = true
-                    )
-                )
-            )
-        )
-    }
-
-    @Test
     fun `cell with external link`() {
         val viewModel = TableViewModel.create {
             bodyRow(cellWithExternalLink("Temporary URI", "https://tempuri.org/"))
@@ -127,8 +138,7 @@ class TableViewModelTest : ViewModelTest() {
                         "1",
                         isHeader = false,
                         greyText = false,
-                        boldText = true,
-                        oneTenthWidth = true
+                        boldText = true
                     )
                 )
             )

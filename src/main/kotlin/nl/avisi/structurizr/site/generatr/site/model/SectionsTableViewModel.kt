@@ -7,7 +7,11 @@ import nl.avisi.structurizr.site.generatr.hasSections
 
 fun PageViewModel.createSectionsTableViewModel(sections: Collection<Section>, dropFirst: Boolean = true, hrefFactory: (Section) -> String) =
     TableViewModel.create {
-        headerRow(headerCell("#"), headerCell("Title"))
+        headerRow(
+            headerCellSmall("#"),
+            headerCell("Title")
+        )
+
         sections
             .sortedBy { it.order }
             .drop(if (dropFirst) 1 else 0)

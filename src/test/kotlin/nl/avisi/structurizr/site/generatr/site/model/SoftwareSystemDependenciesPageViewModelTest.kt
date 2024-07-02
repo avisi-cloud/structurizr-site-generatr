@@ -37,7 +37,7 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
             TableViewModel.create {
                 dependenciesTableHeader()
                 bodyRow(
-                    headerCellWithLink(
+                    cellWithSoftwareSystemLink(
                         viewModel, softwareSystem2.name,
                         SoftwareSystemPageViewModel.url(softwareSystem2, SoftwareSystemPageViewModel.Tab.HOME)
                     ),
@@ -57,7 +57,7 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
             TableViewModel.create {
                 dependenciesTableHeader()
                 bodyRow(
-                    headerCellWithLink(
+                    cellWithSoftwareSystemLink(
                         viewModel, softwareSystem2.name,
                         SoftwareSystemPageViewModel.url(softwareSystem2, SoftwareSystemPageViewModel.Tab.HOME)
                     ),
@@ -99,9 +99,9 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemDependenciesPageViewModel(generatorContext, softwareSystem1)
 
         assertThat(viewModel.dependenciesInboundTable.bodyRows[0].columns[0])
-            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = false, greyText = true, boldText = true))
         assertThat(viewModel.dependenciesOutboundTable.bodyRows[0].columns[0])
-            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = true, greyText = true))
+            .isEqualTo(TableViewModel.TextCellViewModel("External system (External)", isHeader = false, greyText = true, boldText = true))
     }
 
     @Test
@@ -122,8 +122,8 @@ class SoftwareSystemDependenciesPageViewModelTest : ViewModelTest() {
 
     private fun TableViewModel.TableViewInitializerContext.dependenciesTableHeader() {
         headerRow(
-            headerCell("System"),
-            headerCell("Description"),
+            headerCellMedium("System"),
+            headerCellLarge("Description"),
             headerCell("Technology"),
         )
     }

@@ -4,7 +4,11 @@ import com.structurizr.util.Url
 
 fun createPropertiesTableViewModel(properties: Map<String, String>) =
     TableViewModel.create {
-        headerRow(headerCell("Name"), headerCell("Value"))
+        headerRow(
+            headerCellMedium("Name"),
+            headerCell("Value")
+        )
+
         properties
             .toSortedMap()
             .forEach { (name, value) ->

@@ -44,6 +44,6 @@ class DecisionsTableViewModelTest : ViewModelTest() {
     }
 
     private fun TableViewModel.TableViewInitializerContext.decisionsTableHeaderRow() {
-        headerRow(headerCell("ID"), headerCell("Date"), headerCell("Status"), headerCell("Title"))
+        headerRow(headerCellSmall("ID"), headerCell("Date"), headerCell("Status"), headerCellLarge("Title"))
     }
 }

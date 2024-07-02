@@ -37,8 +37,8 @@ class SoftwareSystemDependenciesPageViewModel(
 
     private fun TableViewModel.TableViewInitializerContext.header() {
         headerRow(
-            headerCell("System"),
-            headerCell("Description"),
+            headerCellMedium("System"),
+            headerCellLarge("Description"),
             headerCell("Technology")
         )
     }

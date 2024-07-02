@@ -7,7 +7,13 @@ import nl.avisi.structurizr.site.generatr.site.formatDate
 
 fun PageViewModel.createDecisionsTableViewModel(decisions: Collection<Decision>, hrefFactory: (Decision) -> String) =
     TableViewModel.create {
-        headerRow(headerCell("ID"), headerCell("Date"), headerCell("Status"), headerCell("Title"))
+        headerRow(
+            headerCellSmall("ID"),
+            headerCell("Date"),
+            headerCell("Status"),
+            headerCellLarge("Title")
+        )
+
         decisions
             .sortedBy { it.id.toInt() }
             .forEach {
