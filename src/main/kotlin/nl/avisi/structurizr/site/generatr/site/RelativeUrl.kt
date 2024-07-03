@@ -8,4 +8,4 @@ fun String.asUrlToFile(relativeTo: String): String =
     if (relativeTo == this) "."
     else File(this)
         .relativeTo(File(relativeTo))
-        .toString()
+        .invariantSeparatorsPath
