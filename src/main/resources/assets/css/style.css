@@ -22,6 +22,14 @@
     width: 10%;
 }
 
+.is-one-fourth {
+    width: 25%;
+}
+
+.is-two-fourth {
+    width: 50%;
+}
+
 svg a:hover {
     opacity: 90%;
 }

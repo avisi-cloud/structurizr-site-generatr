@@ -1,5 +1,12 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+enum class CellWidth {
+    UNSPECIFIED,
+    ONE_TENTH,
+    ONE_FOURTH,
+    TWO_FOURTH,
+}
+
 data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List<RowViewModel>) {
     sealed interface CellViewModel {
         val isHeader: Boolean
@@ -10,16 +17,23 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
         override val isHeader: Boolean,
         val greyText: Boolean = false,
         val boldText: Boolean = false,
-        val oneTenthWidth: Boolean = false
+        val width: CellWidth = CellWidth.UNSPECIFIED
     ) : CellViewModel {
         override fun toString() = if (isHeader)
             "headerCell($title, greyText=$greyText)"
         else
-            "cell($title, greyText=$greyText, boldText=$boldText, oneTenthWidth=$oneTenthWidth)"
+            "cell($title, greyText=$greyText, boldText=$boldText, width=${width.name})"
     }
 
-    data class LinkCellViewModel(val link: LinkViewModel, override val isHeader: Boolean) : CellViewModel {
-        override fun toString() = if (isHeader) "headerCell($link)" else "cell($link)"
+    data class LinkCellViewModel(
+        val link: LinkViewModel,
+        override val isHeader: Boolean,
+        val boldText: Boolean = false
+    ) : CellViewModel {
+        override fun toString() = if (isHeader)
+            "headerCell($link), boldText=$boldText,"
+        else
+            "cell($link), boldText=$boldText,"
     }
 
     data class ExternalLinkCellViewModel(
@@ -46,17 +60,25 @@ data class TableViewModel(val headerRows: List<RowViewModel>, val bodyRows: List
             bodyRows.add(RowViewModel(cells.toList()))
         }
 
-        fun headerCell(title: String, greyText: Boolean = false) = TextCellViewModel(title, true, greyText)
-        fun headerCellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
-            LinkCellViewModel(LinkViewModel(pageViewModel, title, href), true)
+        fun headerCell(title: String) =
+            TextCellViewModel(title, true)
+        fun headerCellSmall(title: String): TextCellViewModel =
+            TextCellViewModel(title, isHeader = true, width = CellWidth.ONE_TENTH)
+        fun headerCellMedium(title: String): TextCellViewModel =
+            TextCellViewModel(title, isHeader = true, width = CellWidth.ONE_FOURTH)
+        fun headerCellLarge(title: String): TextCellViewModel =
+            TextCellViewModel(title, isHeader = true, width = CellWidth.TWO_FOURTH)
 
-        fun cell(title: String): TextCellViewModel = TextCellViewModel(title, false)
-        fun cellWithIndex(title: String): TextCellViewModel =
-            TextCellViewModel(title, false, greyText = false, boldText = true, oneTenthWidth = true)
-
+        fun cell(title: String, greyText: Boolean = false) =
+            TextCellViewModel(title, false, greyText, false)
+        fun cellWithIndex(title: String) =
+            TextCellViewModel(title, false, boldText = true)
+        fun cellWithExternalSoftwareSystem(title: String) =
+            TextCellViewModel(title, false, greyText = true, boldText = true)
         fun cellWithLink(pageViewModel: PageViewModel, title: String, href: String) =
             LinkCellViewModel(LinkViewModel(pageViewModel, title, href), false)
-
+        fun cellWithSoftwareSystemLink(pageViewModel: PageViewModel, title: String, href: String) =
+            LinkCellViewModel(LinkViewModel(pageViewModel, title, href), false, boldText = true)
         fun cellWithExternalLink(title: String, href: String) =
             ExternalLinkCellViewModel(ExternalLinkViewModel(title, href), false)
     }
