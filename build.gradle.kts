@@ -30,7 +30,7 @@ dependencies {
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
     implementation("org.asciidoctor:asciidoctorj:2.5.13")
-    implementation("org.jsoup:jsoup:1.17.2")
+    implementation("org.jsoup:jsoup:1.18.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
