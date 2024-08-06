@@ -21,13 +21,13 @@ jobs:
       - name: Execute Gradle build
         run: ./gradlew -PprojectVersion=${{ github.ref_name }} test assemble installDist
       - name: Archive binaries
-        uses: actions/upload-artifact@89ef406dd8d7e03cfd12d9e0a4a378f454709029 # v4
+        uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4
         with:
           name: binaries
           path: build/install
           retention-days: 1
       - name: Archive distribution
-        uses: actions/upload-artifact@89ef406dd8d7e03cfd12d9e0a4a378f454709029 # v4
+        uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4
         with:
           name: distribution
           path: build/distributions
