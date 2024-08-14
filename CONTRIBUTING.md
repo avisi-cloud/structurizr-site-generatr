@@ -36,7 +36,7 @@ not familiar with Gradle.
 #### Example: Start a development server from source
 
 ```shell
-./gradlew run --args "serve -w docs/example/workspace.dsl"
+./gradlew run --args "serve --workspace-file docs/example/workspace.dsl --assets-dir docs/example/assets"
 ```
 
 ## Working with IntelliJ

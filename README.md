@@ -174,14 +174,15 @@ This is the primary use case of Structurizr Site Generatr -- to generate a websi
 [C4 Workspace](https://docs.structurizr.com/dsl).
 
 ```shell
-installed> structurizr-site-generatr generate-site -w workspace.dsl
+installed> structurizr-site-generatr generate-site --workspace-file workspace.dsl --assets-dir assets
 
-   docker> docker run -it --rm -v c:/projects/c4:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr generate-site -w workspace.dsl
+   docker> docker run -it --rm -v c:/projects/c4:/var/model ghcr.io/avisi-cloud/structurizr-site-generatr generate-site --workspace-file workspace.dsl --assets-dir assets
 ```
 
 Here, the `--workspace-file` or `-w` parameter specifies the input
-[C4 Workspace DSL file](https://docs.structurizr.com/dsl) to the `generate-site` command. Additional
-parameters that affect website generation can be reviewed using the `--help` operator.
+[C4 Workspace DSL file](https://docs.structurizr.com/dsl) to the `generate-site` command. The `--assets-dir` or `-a` parameter is not
+required, but usually needed as well. Additional parameters that affect website generation can be reviewed
+using the `--help` operator.
 
 By default, the generated website will be placed in `./build`, which is overwritten if it already exisits.
 
@@ -205,6 +206,7 @@ To explicitly name the branches that you want to build sites from you can use th
 structurizr-site-generatr generate-site
     --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
     --workspace-file docs/example/workspace.dsl
+    --assets-dir docs/example/assets
     --branches main,future,old
     --default-branch main
 ```
@@ -215,6 +217,7 @@ or you can choose to build all branches that are found in the repository and exc
 structurizr-site-generatr generate-site
     --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
     --workspace-file docs/example/workspace.dsl
+    --assets-dir docs/example/assets
     --all-branches
     --exclude-branches gh-pages
     --default-branch main
@@ -232,7 +235,7 @@ web server can be reviewed using the `--help` operator.
 ```shell
 installed> structurizr-site-generatr serve -w workspace.dsl
 
-   docker> docker run -it --rm -v c:/projects/c4:/var/model -p 8080:8080 ghcr.io/avisi-cloud/structurizr-site-generatr serve -w workspace.dsl
+   docker> docker run -it --rm -v c:/projects/c4:/var/model -p 8080:8080 ghcr.io/avisi-cloud/structurizr-site-generatr serve --workspace-file workspace.dsl --assets-dir assets
 ```
 
 By default, a development web server will be started and accessible at http://localhost:8080/ (if available).
