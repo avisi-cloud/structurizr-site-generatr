@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import kotlin.test.Test
 
 class ContentTitleTest {
 
@@ -49,6 +50,12 @@ class ContentTitleTest {
     @ValueSource(strings = ["= header", "== header", "=== header"])
     fun `with asciidoc heading`(content: String) {
         val section = Section(Format.AsciiDoc, content)
+        assertThat(section.contentTitle()).isEqualTo("header")
+    }
+
+    @Test
+    fun `with asciidoc heading including logo`() {
+        val section = Section(Format.AsciiDoc, "= image:logo.png[logo] header")
         assertThat(section.contentTitle()).isEqualTo("header")
     }
 }
