@@ -27,6 +27,10 @@
     {
       "matchDepNames": "net.sourceforge.plantuml:plantuml",
       "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
+    },
+    {
+      "groupName": "actions",
+      "matchDepTypes": ["action"]
     }
   ]
 }
