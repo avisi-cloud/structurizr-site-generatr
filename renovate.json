@@ -7,8 +7,8 @@
     {
       "groupName": "kotlin",
       "matchPackageNames": [
-        "org.jetbrains.kotlin.jvm",
-        "org.jetbrains.kotlin.plugin.serialization",
+        "org.jetbrains.kotlin.jvm{/,}**",
+        "org.jetbrains.kotlin.plugin.serialization{/,}**",
         "org.jetbrains.kotlin:{/,}**"
       ]
     },
