@@ -5,6 +5,18 @@
   "prConcurrentLimit": 6,
   "packageRules": [
     {
+      "groupName": "kotlin",
+      "matchPackageNames": [
+        "org.jetbrains.kotlin.jvm",
+        "org.jetbrains.kotlin.plugin.serialization",
+        "org.jetbrains.kotlin:{/,}**"
+      ]
+    },
+    {
+      "groupName": "kotlinx",
+      "matchPackageNames": ["org.jetbrains.kotlinx:{/,}**"]
+    },
+    {
       "groupName": "structurizr",
       "matchPackageNames": ["com.structurizr:{/,}**"]
     },
