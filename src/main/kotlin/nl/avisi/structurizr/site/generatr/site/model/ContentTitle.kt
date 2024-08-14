@@ -20,17 +20,17 @@ private fun Section.markdownTitle(): String {
 
     val header = document.children.firstOrNull { it is Heading }?.let { it as Heading }
     if (header != null)
-        return header.text.toString()
+        return header.text.toString().trim()
 
     return "untitled document"
 }
 
 private fun Section.asciidocTitle(): String {
-    val options = Options.builder().safe(SafeMode.SERVER).build()
+    val options = Options.builder().safe(SafeMode.SERVER).backend("text").build()
     val document = asciidoctorWithTextConverter.load(content, options)
 
     if (document.title != null && document.title.isNotEmpty())
-        return document.title
+        return document.title.trim()
 
     return "untitled document"
 }
