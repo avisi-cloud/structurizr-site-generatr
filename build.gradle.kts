@@ -29,7 +29,7 @@ dependencies {
     implementation("net.sourceforge.plantuml:plantuml:1.2024.6")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
-    implementation("org.asciidoctor:asciidoctorj:2.5.13")
+    implementation("org.asciidoctor:asciidoctorj:3.0.0")
     implementation("org.jsoup:jsoup:1.18.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.11.0")
