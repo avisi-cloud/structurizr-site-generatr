@@ -10,11 +10,11 @@ import org.junit.jupiter.api.TestFactory
 
 class CDNTest {
     @TestFactory
-    fun `cdn locations`() {
+    fun `cdn locations`() : List<DynamicTest> {
         val workspace = Workspace("workspace name", "")
         val cdn = CDN(workspace)
 
-        listOf(
+        return listOf(
             cdn.bulmaCss() to "/css/bulma.min.css",
             cdn.katexJs() to "/dist/katex.min.js",
             cdn.katexCss() to "/dist/katex.min.css",
