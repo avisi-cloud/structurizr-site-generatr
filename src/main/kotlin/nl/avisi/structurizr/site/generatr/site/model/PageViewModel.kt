@@ -25,8 +25,16 @@ abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
     val includedSoftwareSystems = generatorContext.workspace.includedSoftwareSystems
     val configuration = generatorContext.workspace.views.configuration.properties
     val includeTreeview = configuration.getOrDefault("generatr.site.nestGroups", "false").toBoolean()
-    val allowToggleTheme = configuration.getOrDefault("generatr.site.darkMode", "false").toBoolean()
+    val theme = configuration.getOrDefault("generatr.site.theme", "light").toTheme()
+    val allowToggleTheme = theme == Theme.AUTO
 
     abstract val url: String
     abstract val pageSubTitle: String
+}
+
+fun String.toTheme() = when (this) {
+    "light" -> Theme.LIGHT
+    "dark" -> Theme.DARK
+    "auto" -> Theme.AUTO
+    else -> throw IllegalArgumentException("Unknown theme '$this', allowed values are 'light', 'dark' or 'auto'")
 }

@@ -3,12 +3,19 @@ package nl.avisi.structurizr.site.generatr.site.views
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.asUrlToFile
 import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
+import nl.avisi.structurizr.site.generatr.site.model.Theme
 
 fun HTML.page(viewModel: PageViewModel, block: DIV.() -> Unit) {
     attributes["lang"] = "en"
-    if (!viewModel.allowToggleTheme) {
-        attributes["data-theme"] = "light"
-        classes = setOf("has-background-light")
+    when (viewModel.theme) {
+        Theme.LIGHT -> {
+            attributes["data-theme"] = "light"
+            classes = setOf("has-background-light")
+        }
+        Theme.DARK -> {
+            attributes["data-theme"] = "dark"
+        }
+        Theme.AUTO -> { }
     }
 
     headFragment(viewModel)
