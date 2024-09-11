@@ -6,8 +6,10 @@ import nl.avisi.structurizr.site.generatr.site.model.PageViewModel
 
 fun HTML.page(viewModel: PageViewModel, block: DIV.() -> Unit) {
     attributes["lang"] = "en"
-    attributes["data-theme"] = "light"
-    classes = setOf("has-background-light")
+    if (!viewModel.allowToggleTheme) {
+        attributes["data-theme"] = "light"
+        classes = setOf("has-background-light")
+    }
 
     headFragment(viewModel)
     bodyFragment(viewModel, block)
@@ -24,6 +26,8 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         script(type = ScriptType.textJavaScript, src = "../" + "/modal.js".asUrlToFile(viewModel.url)) { }
         script(type = ScriptType.textJavaScript, src = "../" + "/svg-modal.js".asUrlToFile(viewModel.url)) { }
         script(type = ScriptType.textJavaScript, src = viewModel.cdn.svgpanzoomJs()) { }
+        if (viewModel.allowToggleTheme)
+            script(type = ScriptType.textJavaScript, src = "../" + "/toggle-theme.js".asUrlToFile(viewModel.url)) { }
 
         if (viewModel.includeTreeview)
             link(rel = "stylesheet", href = "../" + "/treeview.css".asUrlToFile(viewModel.url))
@@ -59,7 +63,7 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
         div(classes = "site-layout") {
             id = "site"
             menu(viewModel.menu, viewModel.includeTreeview)
-            div(classes = "container is-fluid has-background-white") {
+            div(classes = "container is-fluid") {
                 block()
             }
         }

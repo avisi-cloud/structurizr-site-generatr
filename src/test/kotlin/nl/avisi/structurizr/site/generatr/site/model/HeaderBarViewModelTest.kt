@@ -67,4 +67,26 @@ class HeaderBarViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.hasLogo).isFalse()
     }
+
+    @Test
+    fun `dark mode`() {
+        val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
+
+        assertThat(viewModel.allowToggleTheme).isFalse()
+    }
+
+    @Test
+    fun `no dark mode`() {
+        generatorContext.workspace.views.configuration.addProperty(
+            "generatr.site.darkMode",
+            "true"
+        )
+
+        val viewModel = HeaderBarViewModel(object : PageViewModel(generatorContext) {
+            override val url: String = "/master/system"
+            override val pageSubTitle: String = "subtitle"
+        }, generatorContext)
+
+        assertThat(viewModel.allowToggleTheme).isTrue()
+    }
 }

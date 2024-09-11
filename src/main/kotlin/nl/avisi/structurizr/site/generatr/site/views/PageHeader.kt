@@ -46,6 +46,15 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                                 +branchLink.title
                             }
                         }
+                        if (viewModel.allowToggleTheme) {
+                            hr(classes = "navbar-divider")
+                            a(
+                                classes = "navbar-item",
+                            ) {
+                                onClick = "toggleTheme()"
+                                +"Toggle theme"
+                            }
+                        }
                         hr(classes = "navbar-divider")
                         div(classes = "navbar-item has-text-grey-light") {
                             span { +"v" }
