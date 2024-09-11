@@ -10,7 +10,6 @@ fun HTML.page(viewModel: PageViewModel, block: DIV.() -> Unit) {
     when (viewModel.theme) {
         Theme.LIGHT -> {
             attributes["data-theme"] = "light"
-            classes = setOf("has-background-light")
         }
         Theme.DARK -> {
             attributes["data-theme"] = "dark"
