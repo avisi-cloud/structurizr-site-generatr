@@ -24,7 +24,7 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
         div(classes = "navbar-menu has-site-branding") {
             div(classes = "navbar-end") {
                 div(classes = "navbar-item") {
-                    input(classes = "input is-small is-rounded has-site-branding") {
+                    input(classes = "input is-small is-rounded") {
                         id = "search"
                         type = InputType.search
                         size = "30"

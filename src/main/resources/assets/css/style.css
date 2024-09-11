@@ -69,3 +69,11 @@ a.navbar-item:hover {
     color: #485fc7;
     border-bottom-color: #485fc7;
 }
+
+.input {
+    color: dimgrey!important;
+    background-color: white!important;
+}
+.input::placeholder {
+    color: darkgrey!important;
+}

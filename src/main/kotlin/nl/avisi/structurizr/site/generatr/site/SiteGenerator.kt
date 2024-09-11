@@ -113,10 +113,6 @@ private fun generateStyle(context: GeneratorContext, branchDir: File) {
             color: $secondary!important;
             background-color: $primary!important;
         }
-        .input.has-site-branding {
-            color: dimgrey!important;
-            background-color: white!important;
-        }
         .input.has-site-branding:focus {
             border-color: $secondary!important;
             box-shadow: 0 0 0 0.125em $secondary;
