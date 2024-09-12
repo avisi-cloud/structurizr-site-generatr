@@ -182,7 +182,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
             "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
 
-            "generatr.site.exporter" "c4"
+            "generatr.site.exporter" "structurizr"
             "generatr.site.externalTag" "External System"
             "generatr.site.nestGroups" "false"
             "generatr.site.cdn" "https://cdn.jsdelivr.net/npm"
