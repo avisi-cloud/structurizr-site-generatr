@@ -81,6 +81,8 @@ class SearchViewModelTest : ViewModelTest() {
                 documentation.addSection(Section(Format.Markdown, "# Introduction\nSome info"))
                 addContainer("Container 1", "a container").apply {
                     addComponent("Component 1", "a component")
+                    documentation.addDecision(createDecision("1"))
+                    documentation.addSection(Section(Format.Markdown, "# Component Usage\nThat's how it works"))
                 }
                 documentation.addDecision(createDecision("1"))
                 documentation.addSection(Section(Format.Markdown, "# Usage\nThat's how it works"))
@@ -94,8 +96,10 @@ class SearchViewModelTest : ViewModelTest() {
                 "Context views",
                 "Container views",
                 "Component views",
-                "Decision",
-                "Documentation"
+                "Software System Decision",
+                "Software System Documentation",
+                "Container Documentation",
+                "Container Decision"
             )
     }
 

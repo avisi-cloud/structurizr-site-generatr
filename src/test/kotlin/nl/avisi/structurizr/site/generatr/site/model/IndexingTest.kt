@@ -265,13 +265,13 @@ class IndexingTest : ViewModelTest() {
         assertThat(documents).containsAtLeast(
             Document(
                 "../software-system-1/decisions/1/",
-                "Decision",
+                "Software System Decision",
                 "Software System 1 | Decision 1",
                 "Decision 1 Decision 1 content"
             ),
             Document(
                 "../software-system-1/decisions/2/",
-                "Decision",
+                "Software System Decision",
                 "Software System 1 | Decision 2",
                 "Decision 2 Decision 2 content"
             )
@@ -307,14 +307,14 @@ class IndexingTest : ViewModelTest() {
 
         assertThat(documents).containsAtLeast(
             Document(
-                "../software-system-1/sections/2/",
-                "Documentation",
+                "../software-system-1/sections/usage/",
+                "Software System Documentation",
                 "Software System 1 | Usage",
                 "Usage That's how it works"
             ),
             Document(
-                "../software-system-1/sections/3/",
-                "Documentation",
+                "../software-system-1/sections/history/",
+                "Software System Documentation",
                 "Software System 1 | History",
                 "History That's how we got here"
             )
