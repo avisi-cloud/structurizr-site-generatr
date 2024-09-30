@@ -136,7 +136,7 @@ private class WriterWithElementLinks(
         writeElement(view, element, it)
         it.toString()
             .replace(TEMP_URI, "")
-            .split(System.lineSeparator())
+            .lines()
             .forEach { line -> writer?.writeLine(line) }
     }
 }
