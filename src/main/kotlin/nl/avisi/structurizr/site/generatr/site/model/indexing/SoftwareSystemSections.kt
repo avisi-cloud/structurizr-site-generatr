@@ -9,7 +9,6 @@ fun softwareSystemSections(softwareSystem: SoftwareSystem, viewModel: PageViewMo
     .drop(1) // Drop software system home
     .map { section ->
         Document(
-
             SoftwareSystemSectionPageViewModel.url(
                 softwareSystem,
                 section
