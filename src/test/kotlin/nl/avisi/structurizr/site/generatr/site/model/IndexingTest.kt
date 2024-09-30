@@ -269,7 +269,7 @@ class IndexingTest : ViewModelTest() {
     }
 
     @Test
-    fun `no software system documentation`() {
+    fun `no software system sections`() {
         workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all")
         val documents = softwareSystemSections(workspace.model.softwareSystems.single(), this.pageViewModel())
 
@@ -277,7 +277,7 @@ class IndexingTest : ViewModelTest() {
     }
 
     @Test
-    fun `only software system documentation for software system home`() {
+    fun `only software system section for software system home`() {
         workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all").apply {
             documentation.addSection(Section(Format.Markdown, "# Introduction\nSome info"))
         }
