@@ -1,20 +1,20 @@
 package nl.avisi.structurizr.site.generatr.site.model.indexing
 
-import com.structurizr.model.SoftwareSystem
+import com.structurizr.model.Container
 import nl.avisi.structurizr.site.generatr.site.asUrlToDirectory
 import nl.avisi.structurizr.site.generatr.site.model.*
 
-fun softwareSystemSections(softwareSystem: SoftwareSystem, viewModel: PageViewModel) = softwareSystem.documentation
+fun softwareSystemContainerSections(container: Container, viewModel: PageViewModel) = container
+    .documentation
     .sections
-    .drop(1) // Drop software system home
     .map { section ->
         Document(
-            SoftwareSystemSectionPageViewModel.url(
-                softwareSystem,
+            SoftwareSystemContainerSectionPageViewModel.url(
+                container,
                 section
             ).asUrlToDirectory(viewModel.url),
-            "Software System Documentation",
-            "${softwareSystem.name} | ${section.contentTitle()}",
+            "Container Documentation",
+            "${container.name} | ${section.contentTitle()}",
             "${section.contentTitle()} ${section.contentText()}".trim()
         )
     }

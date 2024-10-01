@@ -8,17 +8,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
-import nl.avisi.structurizr.site.generatr.site.model.indexing.Document
-import nl.avisi.structurizr.site.generatr.site.model.indexing.home
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemComponents
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemContainers
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemContext
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemDecisions
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemHome
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemRelationships
-import nl.avisi.structurizr.site.generatr.site.model.indexing.softwareSystemSections
-import nl.avisi.structurizr.site.generatr.site.model.indexing.workspaceDecisions
-import nl.avisi.structurizr.site.generatr.site.model.indexing.workspaceSections
+import nl.avisi.structurizr.site.generatr.site.model.indexing.*
 import kotlin.test.Test
 
 class IndexingTest : ViewModelTest() {
@@ -265,13 +255,13 @@ class IndexingTest : ViewModelTest() {
         assertThat(documents).containsAtLeast(
             Document(
                 "../software-system-1/decisions/1/",
-                "Decision",
+                "Software System Decision",
                 "Software System 1 | Decision 1",
                 "Decision 1 Decision 1 content"
             ),
             Document(
                 "../software-system-1/decisions/2/",
-                "Decision",
+                "Software System Decision",
                 "Software System 1 | Decision 2",
                 "Decision 2 Decision 2 content"
             )
@@ -279,7 +269,7 @@ class IndexingTest : ViewModelTest() {
     }
 
     @Test
-    fun `no software system documentation`() {
+    fun `no software system sections`() {
         workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all")
         val documents = softwareSystemSections(workspace.model.softwareSystems.single(), this.pageViewModel())
 
@@ -287,7 +277,7 @@ class IndexingTest : ViewModelTest() {
     }
 
     @Test
-    fun `only software system documentation for software system home`() {
+    fun `only software system section for software system home`() {
         workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all").apply {
             documentation.addSection(Section(Format.Markdown, "# Introduction\nSome info"))
         }
@@ -307,15 +297,84 @@ class IndexingTest : ViewModelTest() {
 
         assertThat(documents).containsAtLeast(
             Document(
-                "../software-system-1/sections/2/",
-                "Documentation",
+                "../software-system-1/sections/usage/",
+                "Software System Documentation",
                 "Software System 1 | Usage",
                 "Usage That's how it works"
             ),
             Document(
-                "../software-system-1/sections/3/",
-                "Documentation",
+                "../software-system-1/sections/history/",
+                "Software System Documentation",
                 "Software System 1 | History",
+                "History That's how we got here"
+            )
+        )
+    }
+
+    @Test
+    fun `no container sections`() {
+        val softwareSystem = workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all")
+        softwareSystem.addContainer("Container 1", "a container")
+        val documents = softwareSystemContainerSections(softwareSystem.containers.single(), this.pageViewModel())
+
+        assertThat(documents).isEmpty()
+    }
+
+    @Test
+    fun `no container decisions`() {
+        val softwareSystem = workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all")
+        softwareSystem.addContainer("Container 1", "a container")
+        val documents = softwareSystemContainerDecisions(softwareSystem.containers.single(), this.pageViewModel())
+
+        assertThat(documents).isEmpty()
+    }
+
+    @Test
+    fun `indexes container decisions`() {
+        val softwareSystem = workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all")
+        val container = softwareSystem.addContainer("Container 1", "a container").apply {
+            documentation.addDecision(createDecision("1"))
+            documentation.addDecision(createDecision("2"))
+        }
+        val documents = softwareSystemContainerDecisions(container, this.pageViewModel())
+
+        assertThat(documents).containsAtLeast(
+            Document(
+                "../software-system-1/decisions/container-1/1/",
+                "Container Decision",
+                "Container 1 | Decision 1",
+                "Decision 1 Decision 1 content"
+            ),
+            Document(
+                "../software-system-1/decisions/container-1/2/",
+                "Container Decision",
+                "Container 1 | Decision 2",
+                "Decision 2 Decision 2 content"
+            )
+        )
+    }
+
+    @Test
+    fun `indexes container sections`() {
+        val softwareSystem = workspace.model.addSoftwareSystem("Software System 1", "One system to rule them all")
+        val container = softwareSystem.addContainer("Container 1", "a container").apply {
+            documentation.addSection(Section(Format.Markdown, "# Introduction\nSome info"))
+            documentation.addSection(Section(Format.Markdown, "# Usage\nThat's how it works"))
+            documentation.addSection(Section(Format.Markdown, "# History\nThat's how we got here"))
+        }
+        val documents = softwareSystemContainerSections(container, this.pageViewModel())
+
+        assertThat(documents).containsAtLeast(
+            Document(
+                "../software-system-1/sections/container-1/usage/",
+                "Container Documentation",
+                "Container 1 | Usage",
+                "Usage That's how it works"
+            ),
+            Document(
+                "../software-system-1/sections/container-1/history/",
+                "Container Documentation",
+                "Container 1 | History",
                 "History That's how we got here"
             )
         )
