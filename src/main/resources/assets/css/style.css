@@ -70,6 +70,10 @@ a.navbar-item:hover {
     border-bottom-color: #485fc7;
 }
 
+.tabs li {
+    font-weight: bold;
+}
+
 .input {
     color: dimgrey!important;
     background-color: white!important;
