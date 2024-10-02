@@ -69,3 +69,15 @@ a.navbar-item:hover {
     color: #485fc7;
     border-bottom-color: #485fc7;
 }
+
+.tabs li {
+    font-weight: bold;
+}
+
+.input {
+    color: dimgrey!important;
+    background-color: white!important;
+}
+.input::placeholder {
+    color: darkgrey!important;
+}

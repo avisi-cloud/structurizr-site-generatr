@@ -5,6 +5,8 @@ import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
 import assertk.assertions.isTrue
+import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 
 class HeaderBarViewModelTest : ViewModelTest() {
@@ -66,5 +68,26 @@ class HeaderBarViewModelTest : ViewModelTest() {
         val viewModel = HeaderBarViewModel(pageViewModel, generatorContext)
 
         assertThat(viewModel.hasLogo).isFalse()
+    }
+
+    @TestFactory
+    fun `no dark mode`() = listOf(
+        "light" to false,
+        "dark" to false,
+        "auto" to true,
+    ).map { (theme, allowToggle) ->
+        DynamicTest.dynamicTest(theme) {
+            generatorContext.workspace.views.configuration.addProperty(
+                "generatr.site.theme",
+                theme
+            )
+
+            val viewModel = HeaderBarViewModel(object : PageViewModel(generatorContext) {
+                override val url: String = "/master/system"
+                override val pageSubTitle: String = "subtitle"
+            }, generatorContext)
+
+            assertThat(viewModel.allowToggleTheme).isEqualTo(allowToggle)
+        }
     }
 }
