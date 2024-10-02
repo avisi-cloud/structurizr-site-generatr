@@ -20,7 +20,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.6")
 
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.10.0.202406032230-r")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r")
 
     implementation("com.structurizr:structurizr-core:2.2.0")
     implementation("com.structurizr:structurizr-dsl:2.2.0")
