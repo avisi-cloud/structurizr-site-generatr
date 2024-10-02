@@ -1,6 +1,13 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .site-layout {
     display: grid;
     grid-template-columns: 300px 1fr;
+    flex-grow: 1;
 }
 
 .menu {
