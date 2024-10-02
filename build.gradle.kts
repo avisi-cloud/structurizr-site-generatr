@@ -22,9 +22,9 @@ dependencies {
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r")
 
-    implementation("com.structurizr:structurizr-core:2.2.0")
-    implementation("com.structurizr:structurizr-dsl:2.2.0")
-    implementation("com.structurizr:structurizr-export:2.2.0")
+    implementation("com.structurizr:structurizr-core:3.0.0")
+    implementation("com.structurizr:structurizr-dsl:3.0.0")
+    implementation("com.structurizr:structurizr-export:3.0.0")
 
     implementation("net.sourceforge.plantuml:plantuml:1.2024.7")
 
