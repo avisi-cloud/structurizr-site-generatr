@@ -5,7 +5,7 @@
 
 == AsciiDoc features 📌
 
-This page showcases the ability to use AsciiDoc formating features in workspace documentation files. The full list of AsciiDoc features is documented in the https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[Asciidoctor Syntax Reerence].
+This page showcases the ability to use AsciiDoc formating features in workspace documentation files. The full list of AsciiDoc features is documented in the https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[Asciidoctor Syntax Reference].
 
 toc::[]
 
