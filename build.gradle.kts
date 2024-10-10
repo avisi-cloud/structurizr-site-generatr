@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.0.20"
-    kotlin("plugin.serialization") version "2.0.20"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "2.0.21"
     application
 }
 
@@ -39,7 +39,7 @@ dependencies {
     implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.0.14")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.16")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.0.20")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.0.21")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.22")
     runtimeOnly("org.jruby:jruby-core:9.4.8.0")
 
