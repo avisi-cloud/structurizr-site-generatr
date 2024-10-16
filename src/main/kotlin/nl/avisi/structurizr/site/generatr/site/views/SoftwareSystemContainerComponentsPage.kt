@@ -1,10 +1,8 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
-import kotlinx.html.HTML
-import kotlinx.html.div
-import kotlinx.html.li
-import kotlinx.html.ul
+import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerComponentsPageViewModel
+import nl.avisi.structurizr.site.generatr.site.model.createPropertiesTableViewModel
 
 fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContainerComponentsPageViewModel) {
      if (viewModel.visible) {
@@ -21,6 +19,11 @@ fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContaine
             }
             viewModel.diagrams.forEach { diagram(it) }
             viewModel.images.forEach { image(it) }
+
+            if(viewModel.hasProperties) {
+                h6 { +"Properties" }
+                table(viewModel.propertiesTable)
+            }
         }
     } else
         redirectUpPage()
