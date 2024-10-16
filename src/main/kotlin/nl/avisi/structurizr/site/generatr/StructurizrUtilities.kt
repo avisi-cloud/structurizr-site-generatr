@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr
 import com.structurizr.Workspace
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.model.StaticStructureElement
 import com.structurizr.view.ViewSet
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
@@ -19,8 +20,8 @@ fun Workspace.hasComponentDiagrams(container: Container) = views.componentViews.
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 
-val SoftwareSystem.includedProperties
-    get() = this.properties.filterNot { (name, _) -> name == "structurizr.dsl.identifier" }
+val StaticStructureElement.includedProperties
+    get() = this.properties.filterNot { setOf("structurizr", "generatr").contains(it.key.split(".").first()) }
 
 val Container.hasComponents
     get() = this.components.isNotEmpty()
