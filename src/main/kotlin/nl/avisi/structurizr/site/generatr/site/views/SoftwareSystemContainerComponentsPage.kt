@@ -2,7 +2,6 @@ package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerComponentsPageViewModel
-import nl.avisi.structurizr.site.generatr.site.model.createPropertiesTableViewModel
 
 fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContainerComponentsPageViewModel) {
      if (viewModel.visible) {
@@ -21,7 +20,7 @@ fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContaine
             viewModel.images.forEach { image(it) }
 
             if(viewModel.hasProperties) {
-                h6 { +"Properties" }
+                h3 { +"Properties" }
                 table(viewModel.propertiesTable)
             }
         }

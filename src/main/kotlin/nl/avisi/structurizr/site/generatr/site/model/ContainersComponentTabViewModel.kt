@@ -15,7 +15,7 @@ fun SoftwareSystemPageViewModel.createContainersComponentTabViewModel(
         .sortedBy { it.name }
         .filter { container ->
             container.includedProperties.isNotEmpty() or
-            generatorContext.workspace.hasComponentDiagrams(container) or
+                    generatorContext.workspace.hasComponentDiagrams(container) or
                     generatorContext.workspace.hasImageViews(container.id) }
         .map {
             ContainerTabViewModel(

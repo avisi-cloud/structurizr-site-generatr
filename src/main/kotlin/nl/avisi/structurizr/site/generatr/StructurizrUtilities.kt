@@ -21,7 +21,7 @@ val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 
 val StaticStructureElement.includedProperties
-    get() = this.properties.filterNot { setOf("structurizr", "generatr").contains(it.key.split(".").first()) }
+    get() = this.properties.filterNot { (name, _) -> name.startsWith("structurizr.") or name.startsWith("generatr.") }
 
 val Container.hasComponents
     get() = this.components.isNotEmpty()
