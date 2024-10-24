@@ -6,6 +6,7 @@ import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
 import nl.avisi.structurizr.site.generatr.hasComponentDiagrams
 import nl.avisi.structurizr.site.generatr.hasImageViews
+import nl.avisi.structurizr.site.generatr.includedProperties
 import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.views.*
@@ -174,6 +175,7 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             it.containers
                 .filter { container ->
                     context.workspace.hasComponentDiagrams(container) or
+                            container.includedProperties.isNotEmpty() or
                             context.workspace.hasImageViews(container.id) }
                 .forEach { container ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentsPageViewModel(context, container)) } }

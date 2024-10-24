@@ -48,6 +48,9 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 apiApplication = container "API Application" "Provides Internet banking functionality via a JSON/HTTPS API." "Java and Spring MVC" {
                     !adrs internet-banking-system/api-application/adr
                     !docs internet-banking-system/api-application/docs
+                    properties {
+                        Owner "Team 1"
+                    }
                     signinController = component "Sign In Controller" "Allows users to sign in to the Internet Banking System." "Spring MVC Rest Controller"
                     accountsSummaryController = component "Accounts Summary Controller" "Provides customers with a summary of their bank accounts." "Spring MVC Rest Controller"
                     resetPasswordController = component "Reset Password Controller" "Allows users to reset their passwords with a single use URL." "Spring MVC Rest Controller"
