@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.4_7-jre-jammy
+FROM eclipse-temurin:21.0.5_11-jre-jammy
 
 USER root
 RUN apt update && apt install graphviz --yes && rm -rf /var/lib/apt/lists/*
