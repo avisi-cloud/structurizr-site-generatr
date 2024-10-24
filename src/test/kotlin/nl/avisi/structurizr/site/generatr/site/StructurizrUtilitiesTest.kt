@@ -20,6 +20,7 @@ class StructurizrUtilitiesTest {
     fun `includedProperties filters out structurizr and generatr properties`() {
         val element = generatorContext().workspace.model.addSoftwareSystem("System 1")
         element.addProperty("structurizr.key", "value")
+        element.addProperty("generatr.key", "value")
         element.addProperty("structurizrnotquite.key", "value")
         element.addProperty("generatrbut.not.key", "value")
         element.addProperty("other.key", "value")

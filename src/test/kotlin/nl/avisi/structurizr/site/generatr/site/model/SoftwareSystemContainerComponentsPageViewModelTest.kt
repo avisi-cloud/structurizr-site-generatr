@@ -41,12 +41,12 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
     fun `container tabs`() {
         val viewModel = SoftwareSystemContainerComponentsPageViewModel(generatorContext, backendContainer)
         val componentTabList = listOf(
+            ContainerTabViewModel(viewModel, "Api", "/software-system/component/api"),
             ContainerTabViewModel(viewModel, "Backend", "/software-system/component/backend"),
-            ContainerTabViewModel(viewModel, "Frontend", "/software-system/component/frontend"),
-            ContainerTabViewModel(viewModel, "Api", "/software-system/component/api"))
-        assertThat(viewModel.containerTabs.elementAtOrNull(0)).isEqualTo(componentTabList.elementAt(2))
-        assertThat(viewModel.containerTabs.elementAtOrNull(1)).isEqualTo(componentTabList.elementAt(0))
-        assertThat(viewModel.containerTabs.elementAtOrNull(2)).isEqualTo(componentTabList.elementAt(1))
+            ContainerTabViewModel(viewModel, "Frontend", "/software-system/component/frontend"))
+        assertThat(viewModel.containerTabs.elementAtOrNull(0)).isEqualTo(componentTabList.elementAt(0))
+        assertThat(viewModel.containerTabs.elementAtOrNull(1)).isEqualTo(componentTabList.elementAt(1))
+        assertThat(viewModel.containerTabs.elementAtOrNull(2)).isEqualTo(componentTabList.elementAt(2))
     }
 
     @Test
