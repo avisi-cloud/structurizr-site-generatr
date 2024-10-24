@@ -16,6 +16,9 @@ fun Workspace.hasImageViews(id: String) = views.imageViews.any { it.elementId ==
 
 fun Workspace.hasComponentDiagrams(container: Container) = views.componentViews.any { it.container == container}
 
+val Workspace.listIndexViewEnabled: Boolean
+    get() = views.configuration.properties.getOrDefault("generatr.site.listIndexViews", "false").toBoolean()
+
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 

@@ -288,7 +288,7 @@ class MarkdownToHtmlTest : ViewModelTest() {
             """
                 <p>
                  <div>
-                  <figure style="width: min(100%, 800px);">
+                  <figure style="width: min(100%, 800px);" id="SystemLandscape">
                    <div>
                     <svg viewBox="0 0 800 900"></svg>
                    </div>

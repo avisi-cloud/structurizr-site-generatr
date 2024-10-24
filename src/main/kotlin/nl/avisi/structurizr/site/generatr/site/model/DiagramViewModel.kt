@@ -5,6 +5,7 @@ import com.structurizr.view.View
 data class DiagramViewModel(
     val key: String,
     val name: String,
+    val title: String?,
     val description: String?,
     val svg: String?,
     val diagramWidthInPixels: Int?,
@@ -14,12 +15,13 @@ data class DiagramViewModel(
 ) {
     companion object {
         fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (key: String, url: String) -> String?) =
-            forView(pageViewModel, view.key, view.name, view.description.ifBlank { null }, svgFactory)
+            forView(pageViewModel, view.key, view.name, view.title, view.description.ifBlank { null }, svgFactory)
 
         fun forView(
             pageViewModel: PageViewModel,
             key: String,
             name: String,
+            title: String?,
             description: String?,
             svgFactory: (key: String, url: String) -> String?
         ): DiagramViewModel {
@@ -27,6 +29,7 @@ data class DiagramViewModel(
             return DiagramViewModel(
                 key,
                 name,
+                title,
                 description,
                 svg,
                 extractDiagramWidthInPixels(svg),

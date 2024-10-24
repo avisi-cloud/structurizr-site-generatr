@@ -35,6 +35,7 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "container-1",
                 "Software system - Containers",
+                null,
                 "Container view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -45,6 +46,7 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "container-2",
                 "Software system - Containers",
+                null,
                 "Container view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,

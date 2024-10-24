@@ -168,7 +168,7 @@ fun Element.transformEmbeddedDiagramElements(
         val key = it.attr("src").substring(embedPrefix.length)
         val name = it.attr("alt").ifBlank { key }
         val html = createHTML().div {
-            diagram(DiagramViewModel.forView(pageViewModel, key, name, null, svgFactory))
+            diagram(DiagramViewModel.forView(pageViewModel, key, name, null, null, svgFactory))
         }
 
         it.parent()?.append(html)
