@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -22,6 +23,7 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "context-1",
                 "Software system - System Context",
+                null,
                 "System context view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -32,6 +34,7 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "context-2",
                 "Software system - System Context",
+                null,
                 "System context view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -50,5 +53,12 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
         )
 
         assertThat(viewModel.visible).isFalse()
+    }
+
+    @Test
+    fun `show list is enabled`() {
+        generatorContext.workspace.views.configuration.addProperty("generatr.site.listIndexViews", "true")
+        val viewModel = SoftwareSystemContextPageViewModel(generatorContext, softwareSystem)
+        assertThat(viewModel.diagramIndexListViewModel.showList).isTrue()
     }
 }

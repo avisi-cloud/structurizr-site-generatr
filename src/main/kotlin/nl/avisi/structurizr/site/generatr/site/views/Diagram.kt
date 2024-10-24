@@ -10,7 +10,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
 
         figure {
             style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
-
+            attributes["id"] = viewModel.key
             rawHtml(viewModel.svg)
             figcaption {
                 a {
