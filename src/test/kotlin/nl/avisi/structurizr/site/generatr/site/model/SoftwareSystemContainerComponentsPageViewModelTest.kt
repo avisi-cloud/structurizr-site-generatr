@@ -1,15 +1,12 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
-import assertk.assertions.containsExactly
-import assertk.assertions.hasSize
-import assertk.assertions.isEqualTo
-import assertk.assertions.isFalse
-import assertk.assertions.isTrue
+import assertk.assertions.*
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.normalize
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
     private val generatorContext = generatorContext()
@@ -17,6 +14,9 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
         .addSoftwareSystem("Software system").also {
             val backend = it.addContainer("Backend")
             val frontend = it.addContainer("Frontend")
+            it.addContainer("Api").also { c ->
+                c.addProperty("test", "value")
+            }
             generatorContext.workspace.views.createComponentView(backend, "component-1-backend", "Component view 1 - Backend")
             generatorContext.workspace.views.createComponentView(backend, "component-2-backend", "Component view 2 - Backend")
 
@@ -26,6 +26,7 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
 
     private val backendContainer: Container = softwareSystem.containers.elementAt(0)
     private val frontendContainer: Container = softwareSystem.containers.elementAt(1)
+    private val apiContainer: Container = softwareSystem.containers.elementAt(2)
     private val backendImageView = createImageView(generatorContext.workspace, backendContainer)
     private val frontendImageView = createImageView(generatorContext.workspace, frontendContainer)
 
@@ -40,10 +41,12 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
     fun `container tabs`() {
         val viewModel = SoftwareSystemContainerComponentsPageViewModel(generatorContext, backendContainer)
         val componentTabList = listOf(
+            ContainerTabViewModel(viewModel, "Api", "/software-system/component/api"),
             ContainerTabViewModel(viewModel, "Backend", "/software-system/component/backend"),
             ContainerTabViewModel(viewModel, "Frontend", "/software-system/component/frontend"))
         assertThat(viewModel.containerTabs.elementAtOrNull(0)).isEqualTo(componentTabList.elementAt(0))
         assertThat(viewModel.containerTabs.elementAtOrNull(1)).isEqualTo(componentTabList.elementAt(1))
+        assertThat(viewModel.containerTabs.elementAtOrNull(2)).isEqualTo(componentTabList.elementAt(2))
     }
 
     @Test
@@ -129,6 +132,15 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.visible).isTrue()
         assertThat(viewModel.images).hasSize(1)
         assertThat(viewModel.images.single().imageView).isEqualTo(frontendImageView)
+    }
+
+    @Test
+    fun `has only properties`() {
+        val viewModel = SoftwareSystemContainerComponentsPageViewModel(generatorContext, apiContainer)
+        assertTrue(viewModel.visible)
+        assertThat(viewModel.propertiesTable.bodyRows).isNotEmpty()
+        assertThat(viewModel.images).isEmpty()
+        assertThat(viewModel.diagrams).isEmpty()
     }
 
     @Test
