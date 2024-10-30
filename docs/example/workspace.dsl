@@ -187,7 +187,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             "generatr.site.nestGroups" "false"
             "generatr.site.cdn" "https://cdn.jsdelivr.net/npm"
             "generatr.site.theme" "auto"
-            "generatr.site.listIndexViews" "true"
         }
 
         systemlandscape "SystemLandscape" {

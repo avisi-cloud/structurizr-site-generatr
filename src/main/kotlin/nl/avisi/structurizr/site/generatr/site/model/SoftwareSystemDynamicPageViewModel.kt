@@ -14,6 +14,7 @@ class SoftwareSystemDynamicPageViewModel(generatorContext: GeneratorContext, sof
     val visible = generatorContext.workspace.views.hasDynamicViews(softwareSystem)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         diagrams,
-        generatorContext.workspace.listIndexViewEnabled
+        null,
+        generatorContext.workspace.listIndexViewEnabled(diagrams, null)
     )
 }

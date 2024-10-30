@@ -21,7 +21,8 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
     val containerTabs = createContainersComponentTabViewModel(generatorContext, container.softwareSystem)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         diagrams,
-        generatorContext.workspace.listIndexViewEnabled
+        images,
+        generatorContext.workspace.listIndexViewEnabled(diagrams, images)
     )
     companion object {
         fun url(container: Container) = "${url(container.softwareSystem, Tab.COMPONENT)}/${container.name.normalize()}"

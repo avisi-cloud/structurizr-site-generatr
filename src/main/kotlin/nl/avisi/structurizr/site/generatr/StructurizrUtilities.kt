@@ -5,6 +5,8 @@ import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
+import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
+import nl.avisi.structurizr.site.generatr.site.model.ImageViewViewModel
 
 val Workspace.includedSoftwareSystems: List<SoftwareSystem>
     get() = model.softwareSystems.filter {
@@ -16,8 +18,10 @@ fun Workspace.hasImageViews(id: String) = views.imageViews.any { it.elementId ==
 
 fun Workspace.hasComponentDiagrams(container: Container) = views.componentViews.any { it.container == container}
 
-val Workspace.listIndexViewEnabled: Boolean
-    get() = views.configuration.properties.getOrDefault("generatr.site.listIndexViews", "false").toBoolean()
+fun Workspace.listIndexViewEnabled(
+    diagrams: List<DiagramViewModel>?,
+    images: List<ImageViewViewModel>?
+) = ((diagrams?.count() ?: 0) + (images?.count() ?: 0)) > 1
 
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()

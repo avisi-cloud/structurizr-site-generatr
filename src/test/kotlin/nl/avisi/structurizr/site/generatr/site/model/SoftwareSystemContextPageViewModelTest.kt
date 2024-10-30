@@ -57,7 +57,6 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `show list is enabled`() {
-        generatorContext.workspace.views.configuration.addProperty("generatr.site.listIndexViews", "true")
         val viewModel = SoftwareSystemContextPageViewModel(generatorContext, softwareSystem)
         assertThat(viewModel.diagramIndexListViewModel.showList).isTrue()
     }

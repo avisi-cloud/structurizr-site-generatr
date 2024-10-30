@@ -14,6 +14,7 @@ class SoftwareSystemContextPageViewModel(generatorContext: GeneratorContext, sof
     val visible = generatorContext.workspace.views.hasSystemContextViews(softwareSystem)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         diagrams,
-        generatorContext.workspace.listIndexViewEnabled
+        null,
+        generatorContext.workspace.listIndexViewEnabled(diagrams, null)
     )
 }

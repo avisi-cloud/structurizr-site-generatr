@@ -8,7 +8,8 @@ fun FlowContent.image(viewModel: ImageViewViewModel) {
 
     figure {
         style = "width: fit-content;"
-
+        attributes["id"] = viewModel.key
+        
         p(classes = "has-text-weight-bold") { +viewModel.title }
         img { src = viewModel.content }
         figcaption {
