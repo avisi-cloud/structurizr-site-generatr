@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.hasComponentDiagrams
 import nl.avisi.structurizr.site.generatr.hasImageViews
+import nl.avisi.structurizr.site.generatr.includedProperties
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 fun SoftwareSystemPageViewModel.createContainersComponentTabViewModel(
@@ -13,7 +14,8 @@ fun SoftwareSystemPageViewModel.createContainersComponentTabViewModel(
         .containers
         .sortedBy { it.name }
         .filter { container ->
-            generatorContext.workspace.hasComponentDiagrams(container) or
+            container.includedProperties.isNotEmpty() or
+                    generatorContext.workspace.hasComponentDiagrams(container) or
                     generatorContext.workspace.hasImageViews(container.id) }
         .map {
             ContainerTabViewModel(

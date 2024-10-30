@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.Container
+import nl.avisi.structurizr.site.generatr.includedProperties
 import nl.avisi.structurizr.site.generatr.listIndexViewEnabled
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
@@ -17,7 +18,9 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
         .sortedBy { it.key }
         .map { ImageViewViewModel(it) }
 
-    val visible = diagrams.isNotEmpty() or images.isNotEmpty()
+    val hasProperties = container.includedProperties.isNotEmpty()
+    val propertiesTable = createPropertiesTableViewModel(container.includedProperties)
+    val visible = diagrams.isNotEmpty() or images.isNotEmpty() or hasProperties
     val containerTabs = createContainersComponentTabViewModel(generatorContext, container.softwareSystem)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         diagrams,
