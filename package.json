@@ -5,7 +5,7 @@
         "katex": "0.16.11",
         "lunr": "2.3.9",
         "lunr-languages": "1.14.0",
-        "mermaid": "11.3.0",
+        "mermaid": "11.4.0",
         "svg-pan-zoom": "3.6.2",
         "webfontloader": "1.6.28"
     }
