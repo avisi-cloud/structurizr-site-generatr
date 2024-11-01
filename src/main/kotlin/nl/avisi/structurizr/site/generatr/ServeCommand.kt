@@ -122,6 +122,7 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
     private fun createStaticResourceHandler() =
         ResourceHandler().apply {
             baseResource = ResourceFactory.of(this).newResource(File(siteDir).absolutePath)
+            isUseFileMapping = false
         }
 
     private fun createWebSocketHandler(
