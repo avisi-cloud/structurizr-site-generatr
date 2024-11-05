@@ -17,7 +17,7 @@ class SoftwareSystemContainerComponentCodePageViewModel(generatorContext: Genera
     val containerTabs = createContainersCodeTabViewModel(generatorContext, container.softwareSystem)
     val componentTabs = createComponentsTabViewModel(generatorContext, container)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
-        null,
+        emptyList(),
         images
     )
     companion object {

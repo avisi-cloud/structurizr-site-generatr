@@ -13,6 +13,6 @@ class SoftwareSystemDeploymentPageViewModel(generatorContext: GeneratorContext, 
     val visible = generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         diagrams,
-        null
+        emptyList()
     )
 }
