@@ -2,7 +2,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.hasContainerViews
-import nl.avisi.structurizr.site.generatr.listIndexViewEnabled
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemContainerPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
@@ -18,7 +17,6 @@ class SoftwareSystemContainerPageViewModel(generatorContext: GeneratorContext, s
     val visible = generatorContext.workspace.views.hasContainerViews(generatorContext.workspace, softwareSystem) || images.isNotEmpty()
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         diagrams,
-        images,
-        generatorContext.workspace.listIndexViewEnabled(diagrams, images)
+        images
     )
 }

@@ -2,7 +2,6 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.model.Container
 import com.structurizr.model.Component
-import nl.avisi.structurizr.site.generatr.listIndexViewEnabled
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
@@ -19,8 +18,7 @@ class SoftwareSystemContainerComponentCodePageViewModel(generatorContext: Genera
     val componentTabs = createComponentsTabViewModel(generatorContext, container)
     val diagramIndexListViewModel = DiagramIndexListViewModel(
         null,
-        images,
-        generatorContext.workspace.listIndexViewEnabled(null, images)
+        images
     )
     companion object {
         fun url(container: Container, component: Component?) = "${url(container.softwareSystem, Tab.CODE)}/${container.name.normalize()}/${component?.name?.normalize()}"

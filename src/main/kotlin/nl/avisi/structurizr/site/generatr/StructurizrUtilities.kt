@@ -19,11 +19,6 @@ fun Workspace.hasImageViews(id: String) = views.imageViews.any { it.elementId ==
 
 fun Workspace.hasComponentDiagrams(container: Container) = views.componentViews.any { it.container == container}
 
-fun Workspace.listIndexViewEnabled(
-    diagrams: List<DiagramViewModel>?,
-    images: List<ImageViewViewModel>?
-) = ((diagrams?.count() ?: 0) + (images?.count() ?: 0)) > 1
-
 val SoftwareSystem.hasContainers
     get() = this.containers.isNotEmpty()
 
