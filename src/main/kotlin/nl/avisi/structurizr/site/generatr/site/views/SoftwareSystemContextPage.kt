@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContextPageVi
 fun HTML.softwareSystemContextPage(viewModel: SoftwareSystemContextPageViewModel) {
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
-            diagramIndexList(viewModel.diagramIndexViewModel)
+            diagramIndexList(viewModel.diagramIndex)
             viewModel.diagrams.forEach { diagram(it) }
         }
     else

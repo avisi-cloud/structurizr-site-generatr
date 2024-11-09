@@ -21,7 +21,7 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
     val propertiesTable = createPropertiesTableViewModel(container.includedProperties)
     val visible = diagrams.isNotEmpty() or images.isNotEmpty() or hasProperties
     val containerTabs = createContainersComponentTabViewModel(generatorContext, container.softwareSystem)
-    val diagramIndexViewModel = DiagramIndexViewModel(
+    val diagramIndex = DiagramIndexViewModel(
         diagrams,
         images
     )

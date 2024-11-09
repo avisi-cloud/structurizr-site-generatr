@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemDeploymentPag
 fun HTML.softwareSystemDeploymentPage(viewModel: SoftwareSystemDeploymentPageViewModel) {
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
-            diagramIndexList(viewModel.diagramIndexViewModel)
+            diagramIndexList(viewModel.diagramIndex)
             viewModel.diagrams.forEach {
                 diagram(it)
             }

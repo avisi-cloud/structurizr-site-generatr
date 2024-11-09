@@ -16,7 +16,7 @@ class SoftwareSystemContainerComponentCodePageViewModel(generatorContext: Genera
     val visible = images.isNotEmpty()
     val containerTabs = createContainersCodeTabViewModel(generatorContext, container.softwareSystem)
     val componentTabs = createComponentsTabViewModel(generatorContext, container)
-    val diagramIndexViewModel = DiagramIndexViewModel(
+    val diagramIndex = DiagramIndexViewModel(
         emptyList(),
         images
     )

@@ -58,6 +58,6 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
     @Test
     fun `show list is enabled`() {
         val viewModel = SoftwareSystemContextPageViewModel(generatorContext, softwareSystem)
-        assertThat(viewModel.diagramIndexViewModel.showList).isTrue()
+        assertThat(viewModel.diagramIndex.showList).isTrue()
     }
 }
