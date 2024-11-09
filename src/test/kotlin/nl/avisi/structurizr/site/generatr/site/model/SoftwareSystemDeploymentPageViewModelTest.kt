@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -61,5 +62,11 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
         )
 
         assertThat(viewModel.visible).isFalse()
+    }
+
+    @Test
+    fun `show list is enabled`() {
+        val viewModel = SoftwareSystemDeploymentPageViewModel(generatorContext, softwareSystem)
+        assertThat(viewModel.diagramIndex.showList).isTrue()
     }
 }

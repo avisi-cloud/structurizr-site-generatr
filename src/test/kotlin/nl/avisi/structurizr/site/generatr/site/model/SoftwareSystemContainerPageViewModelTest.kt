@@ -75,4 +75,10 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.visible).isFalse()
     }
+
+    @Test
+    fun `show list is enabled`() {
+        val viewModel = SoftwareSystemContainerPageViewModel(generatorContext, softwareSystem)
+        assertThat(viewModel.diagramIndex.showList).isTrue()
+    }
 }

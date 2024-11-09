@@ -6,8 +6,6 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.StaticStructureElement
 import com.structurizr.view.ViewSet
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
-import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
-import nl.avisi.structurizr.site.generatr.site.model.ImageViewViewModel
 
 val Workspace.includedSoftwareSystems: List<SoftwareSystem>
     get() = model.softwareSystems.filter {
