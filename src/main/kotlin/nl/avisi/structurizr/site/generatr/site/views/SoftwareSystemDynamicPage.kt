@@ -6,7 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemDynamicPageVi
 fun HTML.softwareSystemDynamicPage(viewModel: SoftwareSystemDynamicPageViewModel) {
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
-            diagramIndexList(viewModel.diagramIndex)
+            diagramIndex(viewModel.diagramIndex)
             viewModel.diagrams.forEach {
                 diagram(it)
             }

@@ -16,7 +16,7 @@ fun HTML.softwareSystemContainerComponentsPage(viewModel: SoftwareSystemContaine
                         }
                 }
             }
-            diagramIndexList(viewModel.diagramIndex)
+            diagramIndex(viewModel.diagramIndex)
             viewModel.diagrams.forEach { diagram(it) }
             viewModel.images.forEach { image(it) }
 
