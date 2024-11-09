@@ -1,10 +1,9 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
-import nl.avisi.structurizr.site.generatr.site.model.DiagramIndexListViewModel
-import nl.avisi.structurizr.site.generatr.site.model.DiagramViewModel
+import nl.avisi.structurizr.site.generatr.site.model.DiagramIndexViewModel
 
-fun FlowContent.diagramIndexList(viewModel: DiagramIndexListViewModel) {
+fun FlowContent.diagramIndexList(viewModel: DiagramIndexViewModel) {
     if(viewModel.showList) {
         h5 {
             +"Jump to: "

@@ -15,7 +15,7 @@ class SoftwareSystemContainerPageViewModel(generatorContext: GeneratorContext, s
         .sortedBy { it.key }
         .map { ImageViewViewModel(it) }
     val visible = generatorContext.workspace.views.hasContainerViews(generatorContext.workspace, softwareSystem) || images.isNotEmpty()
-    val diagramIndexListViewModel = DiagramIndexListViewModel(
+    val diagramIndexViewModel = DiagramIndexViewModel(
         diagrams,
         images
     )
