@@ -7,9 +7,7 @@ fun HTML.softwareSystemDynamicPage(viewModel: SoftwareSystemDynamicPageViewModel
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
             diagramIndex(viewModel.diagramIndex)
-            viewModel.diagrams.forEach {
-                diagram(it)
-            }
+            viewModel.diagrams.forEach { diagram(it) }
         }
     else
         redirectUpPage()

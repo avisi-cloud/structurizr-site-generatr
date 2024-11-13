@@ -109,10 +109,16 @@ class SoftwareSystemContainerComponentCodePageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show list is disabled`() {
+    fun `no index`() {
         val viewModel = SoftwareSystemContainerComponentCodePageViewModel(generatorContext, backendContainer, backendComponent)
-        assertThat(viewModel.diagramIndex.showList).isFalse()
+        assertThat(viewModel.diagramIndex.visible).isFalse()
+    }
 
+    @Test
+    fun `index visible`() {
+        createImageView(generatorContext.workspace, backendComponent, "other-imageview")
+        val viewModel = SoftwareSystemContainerComponentCodePageViewModel(generatorContext, backendContainer, backendComponent)
 
+        assertThat(viewModel.diagramIndex.visible).isTrue()
     }
 }

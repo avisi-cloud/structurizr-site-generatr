@@ -4,22 +4,22 @@ import kotlinx.html.*
 import nl.avisi.structurizr.site.generatr.site.model.DiagramIndexViewModel
 
 fun FlowContent.diagramIndex(viewModel: DiagramIndexViewModel) {
-    if(viewModel.showList) {
-        h5 {
+    if(viewModel.visible) {
+        h6 {
             +"Jump to: "
         }
         ul {
-            viewModel.diagrams?.forEach {
+            viewModel.diagrams.forEach {
                 li {
                     a(href = "#${it.key}") {
                         +(it.title ?: it.name)
                     }
                 }
             }
-            viewModel.images?.forEach {
+            viewModel.images.forEach {
                 li {
                     a(href = "#${it.key}") {
-                        +(it.title ?: it.name)
+                        +it.title
                     }
                 }
             }

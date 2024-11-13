@@ -16,10 +16,7 @@ class SoftwareSystemContainerComponentCodePageViewModel(generatorContext: Genera
     val visible = images.isNotEmpty()
     val containerTabs = createContainersCodeTabViewModel(generatorContext, container.softwareSystem)
     val componentTabs = createComponentsTabViewModel(generatorContext, container)
-    val diagramIndex = DiagramIndexViewModel(
-        emptyList(),
-        images
-    )
+    val diagramIndex = DiagramIndexViewModel(emptyList(), images)
     companion object {
         fun url(container: Container, component: Component?) = "${url(container.softwareSystem, Tab.CODE)}/${container.name.normalize()}/${component?.name?.normalize()}"
     }

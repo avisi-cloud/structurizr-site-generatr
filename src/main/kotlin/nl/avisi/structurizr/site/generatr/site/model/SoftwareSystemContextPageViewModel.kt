@@ -11,8 +11,5 @@ class SoftwareSystemContextPageViewModel(generatorContext: GeneratorContext, sof
         .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
     val visible = generatorContext.workspace.views.hasSystemContextViews(softwareSystem)
-    val diagramIndex = DiagramIndexViewModel(
-        diagrams,
-        emptyList()
-    )
+    val diagramIndex = DiagramIndexViewModel(diagrams, emptyList())
 }

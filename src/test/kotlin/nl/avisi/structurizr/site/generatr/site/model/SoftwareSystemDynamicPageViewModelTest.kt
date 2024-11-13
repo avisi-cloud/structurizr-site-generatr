@@ -67,8 +67,8 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show list is enabled`() {
+    fun `has index`() {
         val viewModel = SoftwareSystemDynamicPageViewModel(generatorContext, softwareSystem)
-        assertThat(viewModel.diagramIndex.showList).isTrue()
+        assertThat(viewModel.diagramIndex.visible).isTrue()
     }
 }
