@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -31,6 +32,7 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "deployment-1",
                 "Software system - Deployment - Default",
+                null,
                 "Deployment view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -41,6 +43,7 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "deployment-2",
                 "Software system - Deployment - Default",
+                null,
                 "Deployment view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -59,5 +62,20 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
         )
 
         assertThat(viewModel.visible).isFalse()
+    }
+
+    @Test
+    fun `no index`() {
+        val viewModel = SoftwareSystemDeploymentPageViewModel(generatorContext, generatorContext.workspace.model
+            .addSoftwareSystem("Software system 2").also {
+                generatorContext.workspace.views.createDeploymentView(it, "deployment-3", "Deployment view 3")
+            })
+        assertThat(viewModel.diagramIndex.visible).isFalse()
+    }
+
+    @Test
+    fun `has index`() {
+        val viewModel = SoftwareSystemDeploymentPageViewModel(generatorContext, softwareSystem)
+        assertThat(viewModel.diagramIndex.visible).isTrue()
     }
 }

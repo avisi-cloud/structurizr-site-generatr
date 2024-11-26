@@ -29,6 +29,7 @@ fun HTML.softwareSystemContainerComponentCodePage(viewModel: SoftwareSystemConta
                         }
                 }
             }
+            diagramIndex(viewModel.diagramIndex)
             viewModel.images.forEach { image(it) }
         }
     } else
