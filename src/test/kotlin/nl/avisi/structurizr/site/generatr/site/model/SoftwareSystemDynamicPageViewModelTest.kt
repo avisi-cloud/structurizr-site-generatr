@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -33,6 +34,7 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "backend-dynamic",
                 "Backend - Dynamic",
+                null,
                 "Dynamic view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -43,6 +45,7 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "frontend-dynamic",
                 "Frontend - Dynamic",
+                null,
                 "Dynamic view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -61,5 +64,21 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
         )
 
         assertThat(viewModel.visible).isFalse()
+    }
+
+    @Test
+    fun `no index`() {
+        val viewModel = SoftwareSystemDynamicPageViewModel(generatorContext, generatorContext.workspace.model
+            .addSoftwareSystem("Software system 2").also {
+                val backend = it.addContainer("Api")
+                generatorContext.workspace.views.createDynamicView(backend, "api-dynamic", "Dynamic view 3")
+            })
+        assertThat(viewModel.diagramIndex.visible).isFalse()
+    }
+
+    @Test
+    fun `has index`() {
+        val viewModel = SoftwareSystemDynamicPageViewModel(generatorContext, softwareSystem)
+        assertThat(viewModel.diagramIndex.visible).isTrue()
     }
 }

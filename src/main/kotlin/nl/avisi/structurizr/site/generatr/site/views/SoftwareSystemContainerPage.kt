@@ -6,6 +6,7 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerPage
 fun HTML.softwareSystemContainerPage(viewModel: SoftwareSystemContainerPageViewModel) {
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
+            diagramIndex(viewModel.diagramIndex)
             viewModel.diagrams.forEach { diagram(it) }
             viewModel.images.forEach { image(it) }
         }

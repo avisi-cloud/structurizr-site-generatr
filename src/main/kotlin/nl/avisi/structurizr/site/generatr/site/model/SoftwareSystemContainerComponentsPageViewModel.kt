@@ -21,6 +21,8 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
     val propertiesTable = createPropertiesTableViewModel(container.includedProperties)
     val visible = diagrams.isNotEmpty() or images.isNotEmpty() or hasProperties
     val containerTabs = createContainersComponentTabViewModel(generatorContext, container.softwareSystem)
+    val diagramIndex = DiagramIndexViewModel(diagrams, images)
+
     companion object {
         fun url(container: Container) = "${url(container.softwareSystem, Tab.COMPONENT)}/${container.name.normalize()}"
     }
