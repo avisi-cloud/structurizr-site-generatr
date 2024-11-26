@@ -12,7 +12,7 @@ fun FlowContent.diagramIndex(viewModel: DiagramIndexViewModel) {
             viewModel.diagrams.forEach {
                 li {
                     a(href = "#${it.key}") {
-                        +(it.title ?: it.name)
+                        +it.title
                     }
                 }
             }

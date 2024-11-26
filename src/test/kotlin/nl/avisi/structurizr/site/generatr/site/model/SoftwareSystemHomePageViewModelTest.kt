@@ -5,7 +5,6 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.prop
 import com.structurizr.documentation.Format
-import com.structurizr.documentation.Section
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
