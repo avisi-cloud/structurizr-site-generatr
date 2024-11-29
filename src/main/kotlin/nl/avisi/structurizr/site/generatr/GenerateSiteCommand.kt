@@ -4,7 +4,10 @@ package nl.avisi.structurizr.site.generatr
 
 import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.*
+import org.apache.commons.exec.CommandLine
+import org.apache.commons.exec.DefaultExecutor
 import java.io.File
+
 
 class GenerateSiteCommand : Subcommand(
     "generate-site",
@@ -59,7 +62,10 @@ class GenerateSiteCommand : Subcommand(
         ArgType.String, "exclude-branches", "ex",
         "Comma-separated list of branches to exclude from the generated site"
     ).default("")
-
+    private val parallel by option(
+        ArgType.Boolean, "parallel", "par",
+        "When set to TRUE will generate the site for each branch in parallel"
+    ).default(value = false)
     override fun execute() {
         val siteDir = File(outputDir).apply { mkdirs() }
         val gitUrl = gitUrl
@@ -105,22 +111,59 @@ class GenerateSiteCommand : Subcommand(
         if (!branchesToGenerate.contains(defaultBranch)) {
             throw Exception("$defaultBranch does not contain a valid structurizr workspace. Site generation halted.")
         }
+        clonedRepository.checkoutBranch(defaultBranch)
 
-        branchesToGenerate.forEach { branch ->
-            println("Generating site for branch $branch")
-            clonedRepository.checkoutBranch(branch)
+        if (parallel) {
+            branchesToGenerate.withIndex().toList().parallelStream().forEach { branchIndex ->
+                val branch = branchIndex.value
+                val index = branchIndex.index
+                val isDefaultBranch = branch == defaultBranch
+                println("Generating site for branch $branch")
+                // Default branch is already in git worktree
+                if(!isDefaultBranch) {
+                    val gitCommand = CommandLine.parse("git worktree add ./$index $branch")
+                    val executor = DefaultExecutor.builder().setWorkingDirectory(cloneDir).get()
+                    executor.execute(gitCommand)
+                }
+                val path = if(isDefaultBranch) clonedRepository.cloneDir else File("${clonedRepository.cloneDir.path}/$index")
+                val branchWorkspaceFile = File(path, workspaceFile)
+                val workspace = createStructurizrWorkspace(branchWorkspaceFile)
+                writeStructurizrJson(workspace, File(siteDir, branch))
+                generateDiagrams(workspace, File(siteDir, branch))
+                generateSite(
+                    version,
+                    workspace,
+                    assetsDir?.let { File(cloneDir, it) },
+                    siteDir,
+                    branchesToGenerate,
+                    branch
+                )
+                // Remove the worktree branch directory after generating the site
+                if(!isDefaultBranch) {
+                    val gitCommand = CommandLine.parse("git worktree remove ./$index")
+                    val executor = DefaultExecutor.builder().setWorkingDirectory(cloneDir).get()
+                    executor.execute(gitCommand)
+                }
 
-            val workspace = createStructurizrWorkspace(workspaceFileInRepo)
-            writeStructurizrJson(workspace, File(siteDir, branch))
-            generateDiagrams(workspace, File(siteDir, branch))
-            generateSite(
-                version,
-                workspace,
-                assetsDir?.let { File(cloneDir, it) },
-                siteDir,
-                branchesToGenerate,
-                branch
-            )
+            }
+        } else {
+            branchesToGenerate.forEach { branch ->
+                println("Generating site for branch $branch")
+
+                clonedRepository.checkoutBranch(branch)
+
+                val workspace = createStructurizrWorkspace(workspaceFileInRepo)
+                writeStructurizrJson(workspace, File(siteDir, branch))
+                generateDiagrams(workspace, File(siteDir, branch))
+                generateSite(
+                    version,
+                    workspace,
+                    assetsDir?.let { File(cloneDir, it) },
+                    siteDir,
+                    branchesToGenerate,
+                    branch
+                )
+            }
         }
     }
 

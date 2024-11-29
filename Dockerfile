@@ -1,7 +1,7 @@
 FROM eclipse-temurin:21.0.5_11-jre-jammy
 
 USER root
-RUN apt update && apt install graphviz --yes && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install graphviz git --yes && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /var/model \
     && chown 65532:65532 /var/model
 RUN useradd -d /home/generatr -u 65532 --create-home generatr
