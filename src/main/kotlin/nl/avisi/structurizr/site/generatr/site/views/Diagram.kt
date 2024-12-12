@@ -15,7 +15,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
             figcaption {
                 a {
                     onClick = "openSvgModal('$dialogId', '$svgId')"
-                    +viewModel.name
+                    +viewModel.title
                     if (!viewModel.description.isNullOrBlank()) {
                         br
                         +viewModel.description
@@ -27,7 +27,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
             // TODO: no links in this SVG
             rawHtml(viewModel.svg, svgId, "modal-box-content")
             div(classes = "has-text-centered") {
-                +viewModel.name
+                +viewModel.title
                 +" ["
                 a(href = viewModel.svgLocation.relativeHref, target = "_blank") { +"svg" }
                 +"|"

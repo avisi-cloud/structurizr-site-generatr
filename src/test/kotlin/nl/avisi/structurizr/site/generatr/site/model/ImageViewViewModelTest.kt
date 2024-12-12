@@ -13,19 +13,19 @@ class ImageViewViewModelTest : ViewModelTest() {
 
     @Test
     fun `image name for software system`() {
-        val imageView = ImageViewViewModel(createImageView(generatorContext.workspace, softwareSystem))
-        assertThat(imageView.name).isEqualTo("Software system 1 - Containers")
+        val imageView = ImageViewViewModel(createImageView(generatorContext.workspace, softwareSystem, title = null))
+        assertThat(imageView.title).isEqualTo("Software system 1 - Containers")
     }
 
     @Test
     fun `image name for container`() {
-        val imageView = ImageViewViewModel(createImageView(generatorContext.workspace, container))
-        assertThat(imageView.name).isEqualTo("Software system 1 - Container 1 - Components")
+        val imageView = ImageViewViewModel(createImageView(generatorContext.workspace, container, title = null))
+        assertThat(imageView.title).isEqualTo("Software system 1 - Container 1 - Components")
     }
 
     @Test
     fun `image name for component`() {
-        val imageView = ImageViewViewModel(createImageView(generatorContext.workspace, component))
-        assertThat(imageView.name).isEqualTo("Software system 1 - Container 1 - Component 1 - Code")
+        val imageView = ImageViewViewModel(createImageView(generatorContext.workspace, component, title = null))
+        assertThat(imageView.title).isEqualTo("Software system 1 - Container 1 - Component 1 - Code")
     }
 }

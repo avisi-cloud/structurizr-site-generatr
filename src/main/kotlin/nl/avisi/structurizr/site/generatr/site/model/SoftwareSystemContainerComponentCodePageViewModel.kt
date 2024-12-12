@@ -10,7 +10,6 @@ class SoftwareSystemContainerComponentCodePageViewModel(generatorContext: Genera
     override val url = url(container, component)
     val images = generatorContext.workspace.views.imageViews
         .filter { it.element == component }
-        .sortedBy { it.key }
         .map { ImageViewViewModel(it) }
 
     val visible = images.isNotEmpty()

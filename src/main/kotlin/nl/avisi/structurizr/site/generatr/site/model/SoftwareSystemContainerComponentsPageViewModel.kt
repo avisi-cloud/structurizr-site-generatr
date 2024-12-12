@@ -10,11 +10,9 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
     override val url = url(container)
     val diagrams = generatorContext.workspace.views.componentViews
         .filter { it.container == container }
-        .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
     val images = generatorContext.workspace.views.imageViews
         .filter { it.element == container }
-        .sortedBy { it.key }
         .map { ImageViewViewModel(it) }
 
     val hasProperties = container.includedProperties.isNotEmpty()

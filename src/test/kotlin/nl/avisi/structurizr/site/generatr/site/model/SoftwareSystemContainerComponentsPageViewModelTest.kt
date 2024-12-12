@@ -72,7 +72,6 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "component-1-backend",
                 "Software system - Backend - Components",
-                null,
                 "Component view 1 - Backend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -83,7 +82,6 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "component-2-backend",
                 "Software system - Backend - Components",
-                null,
                 "Component view 2 - Backend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -99,7 +97,6 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "component-1-frontend",
                 "Software system - Frontend - Components",
-                null,
                 "Component view 1 - Frontend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -110,7 +107,6 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "component-2-frontend",
                 "Software system - Frontend - Components",
-                null,
                 "Component view 2 - Frontend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,

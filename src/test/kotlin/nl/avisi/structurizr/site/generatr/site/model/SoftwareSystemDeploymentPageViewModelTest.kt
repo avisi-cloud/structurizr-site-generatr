@@ -32,7 +32,6 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "deployment-1",
                 "Software system - Deployment - Default",
-                null,
                 "Deployment view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -43,7 +42,6 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             DiagramViewModel(
                 "deployment-2",
                 "Software system - Deployment - Default",
-                null,
                 "Deployment view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,

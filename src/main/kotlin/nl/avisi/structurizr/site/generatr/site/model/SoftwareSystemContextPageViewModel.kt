@@ -8,7 +8,6 @@ class SoftwareSystemContextPageViewModel(generatorContext: GeneratorContext, sof
     SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.SYSTEM_CONTEXT) {
     val diagrams = generatorContext.workspace.views.systemContextViews
         .filter { it.softwareSystem == softwareSystem }
-        .sortedBy { it.key }
         .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
     val visible = generatorContext.workspace.views.hasSystemContextViews(softwareSystem)
     val diagramIndex = DiagramIndexViewModel(diagrams)
