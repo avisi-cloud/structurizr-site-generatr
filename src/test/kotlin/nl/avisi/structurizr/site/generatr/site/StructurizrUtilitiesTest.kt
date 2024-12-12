@@ -1,15 +1,16 @@
 package nl.avisi.structurizr.site.generatr.site
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import com.structurizr.Workspace
 import nl.avisi.structurizr.site.generatr.includedProperties
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class StructurizrUtilitiesTest {
 
-    protected val svgFactory = { _: String, _: String -> "" }
+    private val svgFactory = { _: String, _: String -> "" }
 
-    protected fun generatorContext(
+    private fun generatorContext(
         workspaceName: String = "Workspace name",
         branches: List<String> = listOf("main"),
         currentBranch: String = "main",
@@ -27,8 +28,8 @@ class StructurizrUtilitiesTest {
 
         val includedProperties = element.includedProperties
 
-        assertEquals(3, includedProperties.size)
-        assertEquals(includedProperties.keys, setOf("structurizrnotquite.key", "generatrbut.not.key", "other.key"))
+        assertThat(includedProperties.size).isEqualTo(3)
+        assertThat(includedProperties.keys).isEqualTo(setOf("structurizrnotquite.key", "generatrbut.not.key", "other.key"))
     }
 
     @Test
@@ -39,15 +40,15 @@ class StructurizrUtilitiesTest {
 
         val includedProperties = element.includedProperties
 
-        assertEquals(2, includedProperties.size)
-        assertEquals("key1", includedProperties.keys.first())
-        assertEquals("key2", includedProperties.keys.last())
+        assertThat(includedProperties.size).isEqualTo(2)
+        assertThat(includedProperties.keys.first()).isEqualTo("key1")
+        assertThat(includedProperties.keys.last()).isEqualTo("key2")
     }
 
     @Test
     fun `includedProperties returns empty map when no properties are set`() {
         val element = generatorContext().workspace.model.addSoftwareSystem("System 1")
         val includedProperties = element.includedProperties
-        assertEquals(0, includedProperties.size)
+        assertThat(includedProperties.size).isEqualTo(0)
     }
 }
