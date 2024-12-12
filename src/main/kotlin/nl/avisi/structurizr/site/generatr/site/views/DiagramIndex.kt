@@ -9,14 +9,7 @@ fun FlowContent.diagramIndex(viewModel: DiagramIndexViewModel) {
             +"Index:"
         }
         ul {
-            viewModel.diagrams.forEach {
-                li {
-                    a(href = "#${it.key}") {
-                        +it.title
-                    }
-                }
-            }
-            viewModel.images.forEach {
+            viewModel.entries.forEach {
                 li {
                     a(href = "#${it.key}") {
                         +it.title
