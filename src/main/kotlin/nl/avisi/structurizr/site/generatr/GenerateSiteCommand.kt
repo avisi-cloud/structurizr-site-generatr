@@ -114,6 +114,7 @@ class GenerateSiteCommand : Subcommand(
         clonedRepository.checkoutBranch(defaultBranch)
 
         if (parallel) {
+            System.setProperty("org.jruby.embed.localcontext.scope", "threadsafe");
             branchesToGenerate.withIndex().toList().parallelStream().forEach { branchIndex ->
                 val branch = branchIndex.value
                 val index = branchIndex.index
