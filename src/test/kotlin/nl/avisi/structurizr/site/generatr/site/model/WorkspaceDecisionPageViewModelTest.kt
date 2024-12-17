@@ -38,7 +38,8 @@ class WorkspaceDecisionPageViewModelTest : ViewModelTest() {
             content = """
                 Decision with [link to other ADR](#2).
                 [Web link](https://google.com)
-                [Internal link](#other-section)
+                [Section link](#other-section)
+                [Internal link](../embedding-diagrams-and-images/)
             """.trimIndent()
         }
         val viewModel = WorkspaceDecisionPageViewModel(generatorContext(), decision)
@@ -46,9 +47,10 @@ class WorkspaceDecisionPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.content).isEqualTo(
             toHtml(
                 viewModel, """
-                    Decision with [link to other ADR](decisions/2).
+                    Decision with [link to other ADR](decisions/2/).
                     [Web link](https://google.com)
-                    [Internal link](#other-section)
+                    [Section link](#other-section)
+                    [Internal link](../embedding-diagrams-and-images/)
                 """.trimIndent(),
                 Format.Markdown,
                 svgFactory
