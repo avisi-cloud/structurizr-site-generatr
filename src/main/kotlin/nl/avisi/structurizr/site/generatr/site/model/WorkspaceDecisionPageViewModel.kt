@@ -17,7 +17,7 @@ class WorkspaceDecisionPageViewModel(generatorContext: GeneratorContext, decisio
 
     private fun transformADRLinks(content: String) =
         content.replace("\\[(.*)]\\(#(\\d+)\\)".toRegex()) {
-            "[${it.groupValues[1]}](decisions/${it.groupValues[2]})"
+            "[${it.groupValues[1]}](decisions/${it.groupValues[2]}/)"
         }
 
     companion object {
