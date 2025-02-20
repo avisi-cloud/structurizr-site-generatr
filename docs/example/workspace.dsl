@@ -160,6 +160,24 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
             primaryDatabaseServer -> secondaryDatabaseServer "Replicates data to"
         }
+
+        deploymentEnvironment "Environment Landscape" {
+            deploymentNode "bigbank-prod001" {
+                softwareSystemInstance mainframe
+            }
+            deploymentNode "bigbank-preprod001" {
+                softwareSystemInstance mainframe
+            }
+            deploymentNode "bigbank-test001" {
+                softwareSystemInstance mainframe
+            }
+            deploymentNode "bigbank-staging1" {
+                softwareSystemInstance email
+            }
+            deploymentNode "bigbank-prod1" {
+                softwareSystemInstance email
+            }
+        }
     }
 
     views {
@@ -282,6 +300,14 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 liveSecondaryDatabaseInstance
             }
             autoLayout
+        }
+
+        deployment * "Environment Landscape" "EnvLandscapeMainframe" {
+            include mainframe
+            autoLayout
+            properties {
+                "generatr.view.deployment.belongsTo" "Mainframe Banking System"
+            }
         }
 
         styles {

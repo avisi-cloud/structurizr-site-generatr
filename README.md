@@ -275,6 +275,12 @@ architecture model:
 | `generatr.site.cdn`                     | Specifies the CDN base location for fetching NPM packages for browser runtime dependencies. Defaults to jsDelivr, but can be changed to e.g. an on-premise location.                                                                                                                                                                             | `https://cdn.jsdelivr.net/npm` | `https://cdn.my-company/npm`                         |
 | `generatr.site.theme`                   | Experimental: allows to force a light or dark theme or allows to switch between light and dark mode on the website with browser preference or menu item. Possible values are 'light', 'dark' or 'auto'. Note that the 'structurizr' exporter (see 'generatr.site.exporter' setting) generally works better for the dark theme.                   | `light`                        | `auto`                                               |
 
+To control the behavior of views, apply the following properties:
+
+| Property name                        | Description                                                                  | Value                | Scope           |
+|--------------------------------------|------------------------------------------------------------------------------|----------------------|-----------------|
+| `generatr.view.deployment.belongsTo` | Associate the diagram into the Deployment tab of a specific software system. | software system name | deployment view |
+
 See the included example for usage of some those properties in the
 [C4 architecture model example](https://github.com/avisi-cloud/structurizr-site-generatr/blob/main/docs/example/workspace.dsl#L163).
 

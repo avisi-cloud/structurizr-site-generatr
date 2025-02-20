@@ -1,10 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.assertThat
-import assertk.assertions.containsExactly
-import assertk.assertions.isEqualTo
-import assertk.assertions.isFalse
-import assertk.assertions.isTrue
+import assertk.assertions.*
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
@@ -75,5 +72,21 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
     fun `has index`() {
         val viewModel = SoftwareSystemDeploymentPageViewModel(generatorContext, softwareSystem)
         assertThat(viewModel.diagramIndex.visible).isTrue()
+    }
+
+    @Test
+    fun `includes star-scoped deployment view when belongsTo in properties`() {
+        val viewModel = SoftwareSystemDeploymentPageViewModel(
+            generatorContext, generatorContext.workspace.model.addSoftwareSystem("Software system 3").also {
+                generatorContext.workspace.views.createDeploymentView("star-scoped", "Star Scoped Deployment View").apply {
+                    addProperty("generatr.view.deployment.belongsTo", it.name)
+                }
+            })
+
+        assertThat(viewModel.visible, "is visible").isTrue()
+
+        assertThat(viewModel.diagrams).exactly(1) { assert ->
+            assert.transform { it.key }.isEqualTo("star-scoped")
+        }
     }
 }
