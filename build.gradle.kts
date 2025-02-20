@@ -32,7 +32,7 @@ dependencies {
     implementation("org.asciidoctor:asciidoctorj:3.0.0")
     implementation("org.jsoup:jsoup:1.18.3")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.12.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
 
     implementation("org.eclipse.jetty:jetty-server:12.0.16")
