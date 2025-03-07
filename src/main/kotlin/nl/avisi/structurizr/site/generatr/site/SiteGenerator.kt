@@ -1,13 +1,12 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
+import com.structurizr.documentation.Documentation
+import com.structurizr.documentation.Section
 import com.structurizr.util.WorkspaceUtils
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
-import nl.avisi.structurizr.site.generatr.hasComponentDiagrams
-import nl.avisi.structurizr.site.generatr.hasImageViews
-import nl.avisi.structurizr.site.generatr.includedProperties
-import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
+import nl.avisi.structurizr.site.generatr.*
 import nl.avisi.structurizr.site.generatr.site.model.*
 import nl.avisi.structurizr.site.generatr.site.views.*
 import java.io.File
@@ -192,6 +191,18 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
                     }
                 }
 
+            it.containers
+                .filter { container -> container.hasComponentsSections() }
+                .flatMap { container -> container.components }
+                .filter { component -> component.hasSections() }
+                .forEach { component ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentSectionsPageViewModel(context, component)) }
+
+                    component.documentation.sections.forEach { section ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentSectionPageViewModel(context, component, section)) }
+                    }
+                }
+
             it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
                 add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
             }
@@ -218,6 +229,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
                 is SoftwareSystemContainerComponentsPageViewModel -> softwareSystemContainerComponentsPage(viewModel)
                 is SoftwareSystemContainerComponentCodePageViewModel -> softwareSystemContainerComponentCodePage(viewModel)
+                is SoftwareSystemContainerComponentSectionPageViewModel -> softwareSystemContainerComponentSectionPage(viewModel)
+                is SoftwareSystemContainerComponentSectionsPageViewModel -> softwareSystemContainerComponentSectionsPage(viewModel)
                 is SoftwareSystemDynamicPageViewModel -> softwareSystemDynamicPage(viewModel)
                 is SoftwareSystemDeploymentPageViewModel -> softwareSystemDeploymentPage(viewModel)
                 is SoftwareSystemDependenciesPageViewModel -> softwareSystemDependenciesPage(viewModel)

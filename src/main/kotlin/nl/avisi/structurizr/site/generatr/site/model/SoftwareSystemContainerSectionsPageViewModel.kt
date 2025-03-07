@@ -1,21 +1,44 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
+import com.structurizr.documentation.Section
+import com.structurizr.model.Component
 import com.structurizr.model.Container
+import nl.avisi.structurizr.site.generatr.hasComponentsSections
 import nl.avisi.structurizr.site.generatr.hasSections
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
-class SoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
+abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
     SoftwareSystemPageViewModel(generatorContext, container.softwareSystem, Tab.SECTIONS) {
-    override val url = url(container)
-    val sectionsTable = createSectionsTableViewModel(container.documentation.sections, dropFirst = false) {
-        "$url/${it.contentTitle().normalize()}"
+
+    open val visible = container.hasSections() || container.hasComponentsSections()
+
+    val sectionsTable: TableViewModel = createSectionsTableViewModel(container.documentation.sections, dropFirst = false) {
+        sectionTableItemUrl(container, it)
     }
 
-    val visible = container.hasSections()
-    val sectionsTabs = createSectionsTabViewModel(container.softwareSystem, Tab.SECTIONS)
+    val sectionsTabs = createSectionsTabViewModel(container.softwareSystem, Tab.SECTIONS) {
+        if (it is Container) Match.CHILD else Match.EXACT
+    }
+
+    val componentSectionsTabs = container.components.filter { it.hasSections() }.map { component ->
+        SectionTabViewModel(this, component.name, componentSectionItemUrl(component),)
+    }
+
+    abstract fun sectionTableItemUrl(container: Container, section: Section): String
+    abstract fun componentSectionItemUrl(component: Component): String
+}
+
+class SoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
+    BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext, container) {
+
+    override val url = url(container)
+
+    override fun sectionTableItemUrl(container: Container, section: Section): String = url(container, section)
+    override fun componentSectionItemUrl(component: Component): String = SoftwareSystemContainerComponentSectionsPageViewModel.url(component)
 
     companion object {
         fun url(container: Container) = "${url(container.softwareSystem, Tab.SECTIONS)}/${container.name.normalize()}"
+        fun url(container: Container, section: Section) = "${url(container)}/${section.contentTitle().normalize()}"
     }
 }

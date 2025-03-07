@@ -2,6 +2,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Section
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.model.StaticStructureElement
 import nl.avisi.structurizr.site.generatr.hasDocumentationSections
 import nl.avisi.structurizr.site.generatr.hasSections
 
@@ -26,14 +27,16 @@ fun PageViewModel.createSectionsTableViewModel(sections: Collection<Section>, dr
 
 fun SoftwareSystemPageViewModel.createSectionsTabViewModel(
     softwareSystem: SoftwareSystem,
-    tab: SoftwareSystemPageViewModel.Tab
+    tab: SoftwareSystemPageViewModel.Tab,
+    linkMatch: (StaticStructureElement) -> Match = { Match.EXACT }
 ) = buildList {
     if (softwareSystem.hasDocumentationSections()) {
         add(
             SectionTabViewModel(
                 this@createSectionsTabViewModel,
                 "System",
-                SoftwareSystemPageViewModel.url(softwareSystem, tab)
+                SoftwareSystemPageViewModel.url(softwareSystem, tab),
+                linkMatch(softwareSystem)
             )
         )
     }
@@ -44,7 +47,8 @@ fun SoftwareSystemPageViewModel.createSectionsTabViewModel(
             SectionTabViewModel(
                 this@createSectionsTabViewModel,
                 it.name,
-                SoftwareSystemContainerSectionsPageViewModel.url(it)
+                SoftwareSystemContainerSectionsPageViewModel.url(it),
+                linkMatch(it)
             )
         }
         .forEach { add(it) }

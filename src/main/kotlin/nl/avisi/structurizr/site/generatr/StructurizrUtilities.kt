@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr
 
 import com.structurizr.Workspace
+import com.structurizr.model.Component
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.StaticStructureElement
@@ -39,6 +40,8 @@ fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
 
 fun SoftwareSystem.hasContainerDocumentationSections() = containers.any { it.hasSections() }
 
+fun SoftwareSystem.hasComponentDocumentationSections() = containers.any { it.hasComponentsSections() }
+
 fun Container.firstComponent(generatorContext: GeneratorContext) = components
     .sortedBy { it.name }.firstOrNull {
         component -> generatorContext.workspace.hasImageViews(component.id) }
@@ -46,6 +49,10 @@ fun Container.firstComponent(generatorContext: GeneratorContext) = components
 fun Container.hasDecisions() = documentation.decisions.isNotEmpty()
 
 fun Container.hasSections() = documentation.sections.isNotEmpty()
+
+fun Container.hasComponentsSections() = components.any { it.hasSections() }
+
+fun Component.hasSections() = documentation.sections.isNotEmpty()
 
 fun ViewSet.hasSystemContextViews(softwareSystem: SoftwareSystem) =
     systemContextViews.any { it.softwareSystem == softwareSystem }

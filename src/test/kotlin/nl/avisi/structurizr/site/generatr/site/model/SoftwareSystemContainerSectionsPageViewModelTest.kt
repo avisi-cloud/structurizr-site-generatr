@@ -2,16 +2,23 @@ package nl.avisi.structurizr.site.generatr.site.model
 
 import assertk.all
 import assertk.assertThat
-import assertk.assertions.hasSize
-import assertk.assertions.index
-import assertk.assertions.isEqualTo
-import assertk.assertions.isFalse
+import assertk.assertions.*
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
     private val generatorContext = generatorContext()
     private val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system").also {
-        it.addContainer("API Application")
+        it.documentation.addSection(createSection())
+        it.documentation.addSection(createSection())
+
+        it.addContainer("API Application").apply {
+            documentation.addSection(createSection())
+
+            addComponent("Some Component").apply {
+                documentation.addSection(createSection())
+            }
+        }
     }
     private val container = softwareSystem.containers.first()
 
@@ -24,8 +31,6 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `sections table`() {
-        container.documentation.addSection(createSection())
-
         val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
         assertThat(viewModel.sectionsTable.bodyRows).all {
@@ -38,6 +43,48 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
                         "/software-system/sections/api-application/content"
                     )
                 )
+        }
+    }
+
+    @Test
+    fun `sections tabs`() {
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
+
+        assertThat(viewModel.sectionsTabs).all {
+            hasSize(2)
+            index(0).all {
+                transform { it.link.active }.isFalse()
+                transform { it.link.title }.isEqualTo("System")
+            }
+            index(1).all {
+                transform { it.link.active }.isTrue()
+                transform { it.link }.isEqualTo(
+                    LinkViewModel(
+                        viewModel,
+                        "API Application",
+                        "/software-system/sections/api-application",
+                        Match.CHILD
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `component sections tabs`() {
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
+
+        assertThat(viewModel.componentSectionsTabs).all {
+            hasSize(1)
+            index(0).all {
+                transform { it.link }.isEqualTo(
+                    LinkViewModel(
+                        viewModel,
+                        "Some Component",
+                        "/software-system/sections/api-application/some-component"
+                    )
+                )
+            }
         }
     }
 
