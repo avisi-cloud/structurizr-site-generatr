@@ -163,15 +163,6 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
                 }
 
             it.containers
-                .filter { container -> container.documentation.sections.isNotEmpty() }
-                .forEach { container ->
-                    add { writeHtmlFile(branchDir, SoftwareSystemContainerSectionsPageViewModel(context, container)) }
-                    container.documentation.sections.forEach { section ->
-                        add { writeHtmlFile(branchDir, SoftwareSystemContainerSectionPageViewModel(context, container, section)) }
-                    }
-                }
-
-            it.containers
                 .filter { container ->
                     context.workspace.hasComponentDiagrams(container) or
                             container.includedProperties.isNotEmpty() or
@@ -191,21 +182,28 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
                     }
                 }
 
+            it.documentation.sections
+                .filter { section -> section.order != 1 }
+                .forEach { section ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
+                }
+
             it.containers
-                .filter { container -> container.hasComponentsSections() }
+                .filter { container -> container.hasSections(recursive = true) }
+                .onEach { container ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerSectionsPageViewModel(context, container)) }
+                    container.documentation.sections.forEach { section ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerSectionPageViewModel(context, container, section)) }
+                    }
+                }
                 .flatMap { container -> container.components }
                 .filter { component -> component.hasSections() }
                 .forEach { component ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentSectionsPageViewModel(context, component)) }
-
                     component.documentation.sections.forEach { section ->
                         add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentSectionPageViewModel(context, component, section)) }
                     }
                 }
-
-            it.documentation.sections.filter { section -> section.order != 1 }.forEach { section ->
-                add { writeHtmlFile(branchDir, SoftwareSystemSectionPageViewModel(context, it, section)) }
-            }
         }
     }
         .parallelStream()

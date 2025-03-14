@@ -7,23 +7,14 @@ import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemContainerSect
 fun HTML.softwareSystemContainerSectionsPage(viewModel: SoftwareSystemContainerSectionsPageViewModel) {
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
-            softwareSystemContainerSectionBody(viewModel)
+            softwareSystemContainerSectionsBody(viewModel)
         }
     else
         redirectUpPage()
 }
 
-fun FlowContent.softwareSystemContainerSectionBody(viewModel: BaseSoftwareSystemContainerSectionsPageViewModel) {
-    div(classes = "tabs") {
-        ul(classes = "m-0 is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {
-            viewModel.sectionsTabs
-                .forEach {
-                    li(classes = if (it.link.active) "is-active" else null) {
-                        link(it.link)
-                    }
-                }
-        }
-    }
+fun FlowContent.softwareSystemContainerSectionsBody(viewModel: BaseSoftwareSystemContainerSectionsPageViewModel) {
+    softwareSystemSectionsBody(viewModel)
     table(viewModel.sectionsTable)
 
     div(classes = "tabs") {

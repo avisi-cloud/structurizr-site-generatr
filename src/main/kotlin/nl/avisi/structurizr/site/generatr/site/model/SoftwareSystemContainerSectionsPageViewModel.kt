@@ -3,26 +3,21 @@ package nl.avisi.structurizr.site.generatr.site.model
 import com.structurizr.documentation.Section
 import com.structurizr.model.Component
 import com.structurizr.model.Container
-import nl.avisi.structurizr.site.generatr.hasComponentsSections
 import nl.avisi.structurizr.site.generatr.hasSections
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
-    SoftwareSystemPageViewModel(generatorContext, container.softwareSystem, Tab.SECTIONS) {
+    BaseSoftwareSystemSectionsPageViewModel(generatorContext, container.softwareSystem) {
 
-    open val visible = container.hasSections() || container.hasComponentsSections()
+    override val visible = container.hasSections(recursive = true)
 
     val sectionsTable: TableViewModel = createSectionsTableViewModel(container.documentation.sections, dropFirst = false) {
         sectionTableItemUrl(container, it)
     }
 
-    val sectionsTabs = createSectionsTabViewModel(container.softwareSystem, Tab.SECTIONS) {
-        if (it is Container) Match.CHILD else Match.EXACT
-    }
-
     val componentSectionsTabs = container.components.filter { it.hasSections() }.map { component ->
-        SectionTabViewModel(this, component.name, componentSectionItemUrl(component),)
+        SectionTabViewModel(this, component.name, componentSectionItemUrl(component))
     }
 
     abstract fun sectionTableItemUrl(container: Container, section: Section): String

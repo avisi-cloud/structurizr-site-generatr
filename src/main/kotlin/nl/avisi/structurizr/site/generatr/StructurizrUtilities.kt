@@ -36,9 +36,9 @@ fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
 
 fun SoftwareSystem.hasContainerDecisions() = containers.any { it.hasDecisions() }
 
-fun SoftwareSystem.hasDocumentationSections() = documentation.sections.size >= 2
+fun SoftwareSystem.hasDocumentationSections(recursive: Boolean = false) = documentation.sections.size >= 2 || (recursive && hasContainerDocumentationSections(recursive))
 
-fun SoftwareSystem.hasContainerDocumentationSections() = containers.any { it.hasSections() }
+fun SoftwareSystem.hasContainerDocumentationSections(recursive: Boolean = false) = containers.any { it.hasSections(recursive) } || (recursive && hasComponentDocumentationSections())
 
 fun SoftwareSystem.hasComponentDocumentationSections() = containers.any { it.hasComponentsSections() }
 
@@ -48,7 +48,7 @@ fun Container.firstComponent(generatorContext: GeneratorContext) = components
 
 fun Container.hasDecisions() = documentation.decisions.isNotEmpty()
 
-fun Container.hasSections() = documentation.sections.isNotEmpty()
+fun Container.hasSections(recursive: Boolean = false) = documentation.sections.isNotEmpty() || (recursive && hasComponentsSections())
 
 fun Container.hasComponentsSections() = components.any { it.hasSections() }
 

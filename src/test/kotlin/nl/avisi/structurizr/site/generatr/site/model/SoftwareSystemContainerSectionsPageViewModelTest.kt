@@ -97,4 +97,18 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.visible).isFalse()
     }
+
+    @Test
+    fun `visible view when any child has a section`() {
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(
+            generatorContext,
+            softwareSystem.addContainer("Container 3").apply {
+                addComponent("Some Component").apply {
+                    documentation.addSection(createSection())
+                }
+            }
+        )
+
+        assertThat(viewModel.visible).isTrue()
+    }
 }
