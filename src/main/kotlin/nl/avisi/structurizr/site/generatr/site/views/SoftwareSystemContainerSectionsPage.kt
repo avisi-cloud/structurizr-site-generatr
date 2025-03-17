@@ -17,7 +17,7 @@ fun FlowContent.softwareSystemContainerSectionsBody(viewModel: BaseSoftwareSyste
     softwareSystemSectionsBody(viewModel)
     table(viewModel.sectionsTable)
 
-    div(classes = "tabs") {
+    div(classes = "tabs is-size-7") {
         ul(classes = "m-0 is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {
             viewModel.componentSectionsTabs.forEach { tab ->
                 li(classes = if (tab.link.active) "is-active" else null) {
