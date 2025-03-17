@@ -1,3 +1,3 @@
-# Inner workings
+# Inner workings of Mainframe Banking System Facade
 
-This is how this thing works.
+This is how the facade works.

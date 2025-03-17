@@ -1,3 +1,3 @@
-# Inner workings
+# Email Component inner workings
 
-This is how this thing works.
+This is how the e-mail component works.

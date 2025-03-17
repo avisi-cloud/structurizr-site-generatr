@@ -1,3 +1,3 @@
-# Inner workings
+# Inner workings of API application
 
-This is how this thing works.
+This is how the API works.
