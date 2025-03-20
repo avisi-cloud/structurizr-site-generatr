@@ -16,11 +16,27 @@ abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext
         sectionTableItemUrl(container, it)
     }
 
-    val componentSectionsTabs = container.components.filter { it.hasSections() }.map { component ->
-        SectionTabViewModel(this, component.name, componentSectionItemUrl(component))
+    val componentSectionsTabs by lazy {
+        val components = container.components.filter { it.hasSections() }
+        buildList(components.size) {
+            add(
+                SectionTabViewModel(
+                    this@BaseSoftwareSystemContainerSectionsPageViewModel,
+                    "Container",
+                    sectionTableItemUrl(container),
+                    Match.EXACT
+                )
+            )
+
+            addAll(
+                components.map { component ->
+                    SectionTabViewModel(this@BaseSoftwareSystemContainerSectionsPageViewModel, component.name, componentSectionItemUrl(component))
+                }
+            )
+        }
     }
 
-    abstract fun sectionTableItemUrl(container: Container, section: Section): String
+    abstract fun sectionTableItemUrl(container: Container, section: Section? = null): String
     abstract fun componentSectionItemUrl(component: Component): String
 }
 
@@ -29,11 +45,11 @@ class SoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorCo
 
     override val url = url(container)
 
-    override fun sectionTableItemUrl(container: Container, section: Section): String = url(container, section)
+    override fun sectionTableItemUrl(container: Container, section: Section?): String = url(container, section)
     override fun componentSectionItemUrl(component: Component): String = SoftwareSystemContainerComponentSectionsPageViewModel.url(component)
 
     companion object {
         fun url(container: Container) = "${url(container.softwareSystem, Tab.SECTIONS)}/${container.name.normalize()}"
-        fun url(container: Container, section: Section) = "${url(container)}/${section.contentTitle().normalize()}"
+        fun url(container: Container, section: Section?) = section?.let { "${url(container)}/${it.contentTitle().normalize()}" } ?: url(container)
     }
 }

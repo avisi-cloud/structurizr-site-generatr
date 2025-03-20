@@ -75,8 +75,12 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
         val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
         assertThat(viewModel.componentSectionsTabs).all {
-            hasSize(1)
+            hasSize(2)
             index(0).all {
+                transform { it.link.active }.isTrue()
+                transform { it.title }.isEqualTo("Container")
+            }
+            index(1).all {
                 transform { it.link }.isEqualTo(
                     LinkViewModel(
                         viewModel,

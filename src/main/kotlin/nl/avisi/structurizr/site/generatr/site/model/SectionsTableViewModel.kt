@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Section
+import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.StaticStructureElement
 import nl.avisi.structurizr.site.generatr.hasDocumentationSections
@@ -35,7 +36,7 @@ fun PageViewModel.createSectionsTableViewModel(
     }
 }
 
-fun SoftwareSystemPageViewModel.createSectionsTabViewModel(
+fun BaseSoftwareSystemSectionsPageViewModel.createSectionsTabViewModel(
     softwareSystem: SoftwareSystem,
     tab: SoftwareSystemPageViewModel.Tab,
     linkMatch: (StaticStructureElement) -> Match = { Match.EXACT }

@@ -24,10 +24,4 @@ class SoftwareSystemSectionsPageViewModel(generatorContext: GeneratorContext, so
     val sectionsTable = createSectionsTableViewModel(softwareSystem.documentation.sections) {
         "$url/${it.contentTitle().normalize()}"
     }
-
-    //private val containerSectionsVisible = softwareSystem.hasContainerDocumentationSections()
-    val softwareSystemSectionsVisible = softwareSystem.hasDocumentationSections()
-
-    //val visible = softwareSystemSectionsVisible or containerSectionsVisible or softwareSystem.hasComponentDocumentationSections()
-    //val onlyContainerSectionsVisible = !softwareSystemSectionsVisible and containerSectionsVisible
 }

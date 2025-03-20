@@ -8,6 +8,7 @@ fun HTML.softwareSystemContainerSectionsPage(viewModel: SoftwareSystemContainerS
     if (viewModel.visible)
         softwareSystemPage(viewModel) {
             softwareSystemContainerSectionsBody(viewModel)
+            table(viewModel.sectionsTable)
         }
     else
         redirectUpPage()
@@ -15,7 +16,6 @@ fun HTML.softwareSystemContainerSectionsPage(viewModel: SoftwareSystemContainerS
 
 fun FlowContent.softwareSystemContainerSectionsBody(viewModel: BaseSoftwareSystemContainerSectionsPageViewModel) {
     softwareSystemSectionsBody(viewModel)
-    table(viewModel.sectionsTable)
 
     div(classes = "tabs is-size-7") {
         ul(classes = "m-0 is-flex-wrap-wrap is-flex-shrink-1 is-flex-grow-0") {

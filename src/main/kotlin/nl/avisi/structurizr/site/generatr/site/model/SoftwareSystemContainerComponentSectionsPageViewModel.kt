@@ -14,7 +14,7 @@ class SoftwareSystemContainerComponentSectionsPageViewModel(generatorContext: Ge
     override val visible = component.hasSections()
     override val url = url(component)
 
-    override fun sectionTableItemUrl(container: Container, section: Section): String =
+    override fun sectionTableItemUrl(container: Container, section: Section?): String =
         SoftwareSystemContainerSectionsPageViewModel.url(container, section)
 
     override fun componentSectionItemUrl(component: Component): String = url(component)
