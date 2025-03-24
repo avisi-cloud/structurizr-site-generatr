@@ -132,7 +132,7 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
                 .withUrl(link.url)
         }
         if (link.url.matches("https?://.*".toRegex()))
-            return link
+            return link.withTarget("blank")
 
         return link.withStatus(LinkStatus.VALID)
             .withUrl("/${link.url.dropWhile { it == '/' }}"

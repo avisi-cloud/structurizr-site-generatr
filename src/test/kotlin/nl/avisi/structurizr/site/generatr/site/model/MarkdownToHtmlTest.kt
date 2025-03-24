@@ -381,4 +381,27 @@ class MarkdownToHtmlTest : ViewModelTest() {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun `links to external sites`() {
+        val generatorContext = generatorContext()
+        val viewModel = HomePageViewModel(generatorContext)
+
+        val html = toHtml(
+            viewModel,
+            """
+                ## header
+                Link: [Wikipedia](https://www.wikipedia.org/),
+            """.trimIndent(),
+            Format.Markdown,
+            svgFactory
+        )
+
+        assertThat(html).isEqualTo(
+            """
+                <h2>header</h2>
+                <p>Link: <a href="https://www.wikipedia.org/" target="blank">Wikipedia</a>,</p>
+            """.trimIndent()
+        )
+    }
 }
