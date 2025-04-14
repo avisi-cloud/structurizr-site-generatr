@@ -56,7 +56,7 @@ class GenerateSiteCommand : Subcommand(
 
     private val allBranches by option(
         ArgType.Boolean, "all-branches", "all",
-        "When set to TRUE will generate a site for every branch in the git repository"
+        "When set, generate a site for every branch in the git repository"
     ).default(value = false)
     private val excludeBranches by option(
         ArgType.String, "exclude-branches", "ex",

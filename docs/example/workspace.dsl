@@ -55,8 +55,12 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     accountsSummaryController = component "Accounts Summary Controller" "Provides customers with a summary of their bank accounts." "Spring MVC Rest Controller"
                     resetPasswordController = component "Reset Password Controller" "Allows users to reset their passwords with a single use URL." "Spring MVC Rest Controller"
                     securityComponent = component "Security Component" "Provides functionality related to signing in, changing passwords, etc." "Spring Bean"
-                    mainframeBankingSystemFacade = component "Mainframe Banking System Facade" "A facade onto the mainframe banking system." "Spring Bean"
-                    emailComponent = component "E-mail Component" "Sends e-mails to users." "Spring Bean"
+                    mainframeBankingSystemFacade = component "Mainframe Banking System Facade" "A facade onto the mainframe banking system." "Spring Bean" {
+                        !docs internet-banking-system/api-application/mainframe-banking-system-facade/docs
+                    }
+                    emailComponent = component "E-mail Component" "Sends e-mails to users." "Spring Bean" {
+                        !docs internet-banking-system/api-application/email-component/docs
+                    }
                 }
                 database = container "Database" "Stores user registration information, hashed authentication credentials, access logs, etc." "Oracle Database Schema" "Database"
             }
@@ -159,6 +163,24 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             }
 
             primaryDatabaseServer -> secondaryDatabaseServer "Replicates data to"
+        }
+
+        deploymentEnvironment "Environment Landscape" {
+            deploymentNode "bigbank-prod001" {
+                softwareSystemInstance mainframe
+            }
+            deploymentNode "bigbank-preprod001" {
+                softwareSystemInstance mainframe
+            }
+            deploymentNode "bigbank-test001" {
+                softwareSystemInstance mainframe
+            }
+            deploymentNode "bigbank-staging1" {
+                softwareSystemInstance email
+            }
+            deploymentNode "bigbank-prod1" {
+                softwareSystemInstance email
+            }
         }
     }
 
@@ -282,6 +304,14 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 liveSecondaryDatabaseInstance
             }
             autoLayout
+        }
+
+        deployment * "Environment Landscape" "EnvLandscapeMainframe" {
+            include mainframe
+            autoLayout
+            properties {
+                "generatr.view.deployment.belongsTo" "Mainframe Banking System"
+            }
         }
 
         styles {

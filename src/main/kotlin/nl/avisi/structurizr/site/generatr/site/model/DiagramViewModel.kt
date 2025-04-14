@@ -4,8 +4,7 @@ import com.structurizr.view.View
 
 data class DiagramViewModel(
     val key: String,
-    val name: String,
-    val title: String?,
+    val title: String,
     val description: String?,
     val svg: String?,
     val diagramWidthInPixels: Int?,
@@ -28,8 +27,7 @@ data class DiagramViewModel(
             val svg = svgFactory(key, pageViewModel.url)
             return DiagramViewModel(
                 key,
-                name,
-                title,
+                title ?: name,
                 description,
                 svg,
                 extractDiagramWidthInPixels(svg),

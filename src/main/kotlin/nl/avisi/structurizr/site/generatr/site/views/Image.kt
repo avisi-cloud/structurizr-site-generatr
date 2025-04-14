@@ -9,13 +9,13 @@ fun FlowContent.image(viewModel: ImageViewViewModel) {
     figure {
         style = "width: fit-content;"
         attributes["id"] = viewModel.key
-        
+
         p(classes = "has-text-weight-bold") { +viewModel.title }
         img { src = viewModel.content }
         figcaption {
             a {
                 onClick = "openModal('$dialogId')"
-                +viewModel.name
+                +viewModel.title
                 if (!viewModel.description.isNullOrBlank()) {
                     br
                     +viewModel.description
@@ -25,6 +25,6 @@ fun FlowContent.image(viewModel: ImageViewViewModel) {
     }
     modal(dialogId) {
         img(classes = "modal-box-content modal-image") { src = viewModel.content }
-        div(classes = "has-text-centered") { +viewModel.name }
+        div(classes = "has-text-centered") { +viewModel.title }
     }
 }
