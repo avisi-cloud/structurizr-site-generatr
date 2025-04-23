@@ -1,16 +1,20 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.view.View
+import nl.avisi.structurizr.site.generatr.site.ExporterType
+import nl.avisi.structurizr.site.generatr.site.exporterType
 
 data class DiagramViewModel(
     val key: String,
     val title: String,
     val description: String?,
     val svg: String?,
+    val type: ExporterType,
     val diagramWidthInPixels: Int?,
     val svgLocation: ImageViewModel,
     val pngLocation: ImageViewModel,
-    val pumlLocation: ImageViewModel
+    val pumlLocation: ImageViewModel,
+    val d2Localtion: ImageViewModel,
 ) {
     companion object {
         fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (key: String, url: String) -> String?) =
@@ -30,10 +34,12 @@ data class DiagramViewModel(
                 title ?: name,
                 description,
                 svg,
-                extractDiagramWidthInPixels(svg),
+                pageViewModel.generatorContext.workspace.exporterType(),
+                extractDiagramWidthInPixels(if (pageViewModel.generatorContext.workspace.exporterType() == ExporterType.D2) null else svg),
                 ImageViewModel(pageViewModel, "/svg/$key.svg"),
                 ImageViewModel(pageViewModel, "/png/$key.png"),
-                ImageViewModel(pageViewModel, "/puml/$key.puml")
+                ImageViewModel(pageViewModel, "/puml/$key.puml"),
+                ImageViewModel(pageViewModel, "/d2/$key.d2")
             )
         }
 

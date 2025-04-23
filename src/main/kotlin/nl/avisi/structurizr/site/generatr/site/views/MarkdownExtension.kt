@@ -27,6 +27,16 @@ fun HEAD.katexStylesheet(cdn: CDN) {
     }
 }
 
+fun HEAD.d2Script(viewModel: PageViewModel) {
+    script(type = "module") {
+        unsafe {
+            raw("import { D2 } from '${viewModel.cdn.d2Js()}'; window.D2 = D2;")
+        }
+    }
+    script(type = "module", src = "../" + "/d2-to-svg.js".asUrlToFile(viewModel.url)) { }
+//    script(type = ScriptType.textJavaScript, src = "../" + "/d2-to-svg.js".asUrlToFile(viewModel.url)) { }
+}
+
 fun HEAD.katexScript(cdn: CDN) {
     // loading KaTeX as global on a webpage: https://katex.org/docs/browser.html#loading-as-global
     unsafe {

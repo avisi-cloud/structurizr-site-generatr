@@ -5,6 +5,7 @@ import assertk.assertions.*
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import nl.avisi.structurizr.site.generatr.normalize
+import nl.avisi.structurizr.site.generatr.site.exporterType
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -74,20 +75,24 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
                 "Software system - Backend - Components",
                 "Component view 1 - Backend",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/component-1-backend.svg"),
                 ImageViewModel(viewModel, "/png/component-1-backend.png"),
-                ImageViewModel(viewModel, "/puml/component-1-backend.puml")
+                ImageViewModel(viewModel, "/puml/component-1-backend.puml"),
+                ImageViewModel(viewModel, "/d2/component-1-backend.d2")
             ),
             DiagramViewModel(
                 "component-2-backend",
                 "Software system - Backend - Components",
                 "Component view 2 - Backend",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/component-2-backend.svg"),
                 ImageViewModel(viewModel, "/png/component-2-backend.png"),
-                ImageViewModel(viewModel, "/puml/component-2-backend.puml")
+                ImageViewModel(viewModel, "/puml/component-2-backend.puml"),
+                ImageViewModel(viewModel, "/d2/component-2-backend.d2")
             )
         )
 
@@ -99,20 +104,24 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
                 "Software system - Frontend - Components",
                 "Component view 1 - Frontend",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/component-1-frontend.svg"),
                 ImageViewModel(viewModel, "/png/component-1-frontend.png"),
-                ImageViewModel(viewModel, "/puml/component-1-frontend.puml")
+                ImageViewModel(viewModel, "/puml/component-1-frontend.puml"),
+                ImageViewModel(viewModel, "/d2/component-1-frontend.d2")
             ),
             DiagramViewModel(
                 "component-2-frontend",
                 "Software system - Frontend - Components",
                 "Component view 2 - Frontend",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/component-2-frontend.svg"),
                 ImageViewModel(viewModel, "/png/component-2-frontend.png"),
-                ImageViewModel(viewModel, "/puml/component-2-frontend.puml")
+                ImageViewModel(viewModel, "/puml/component-2-frontend.puml"),
+                ImageViewModel(viewModel, "/d2/component-2-frontend.d2")
             )
         )
     }
