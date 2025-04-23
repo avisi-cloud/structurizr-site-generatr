@@ -2,17 +2,18 @@ package nl.avisi.structurizr.site.generatr.site
 
 import assertk.assertThat
 import assertk.assertions.contains
+import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import com.structurizr.Workspace
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 
-class PlantUmlExporterTest {
+class DiagramExporterTest {
     @TestFactory
-    fun `adds skinparam to remove explicit size from generated svg`() = exporters().map { (type, exporterFn) ->
+    fun `adds skinparam to remove explicit size from generated svg`() = svgExporters().map { (type, exporterFn) ->
         DynamicTest.dynamicTest("($type)") {
-            val workspace = createWorkspaceWithOneSystem()
+            val workspace = createWorkspaceWithOneSystem(ExporterType.valueOf(type.uppercase()))
 
             val diagram = exporterFn(workspace, "/landscape/").export(workspace.views.systemContextViews.first())
 
@@ -22,9 +23,20 @@ class PlantUmlExporterTest {
     }
 
     @TestFactory
-    fun `adds skinparam to preserve the aspect ratio of the generated svg`() = exporters().map { (type, exporterFn) ->
+    fun `does not add skinparam to non-svg exports`() = nonSvgExporters().map { (type, exporterFn) ->
         DynamicTest.dynamicTest("($type)") {
-            val workspace = createWorkspaceWithOneSystem()
+            val workspace = createWorkspaceWithOneSystem(ExporterType.valueOf(type.uppercase()))
+            val diagram = exporterFn(workspace, "/landscape/").export(workspace.views.systemContextViews.first())
+
+            assertThat(diagram.definition)
+                .doesNotContain("skinparam")
+        }
+    }
+
+    @TestFactory
+    fun `adds skinparam to preserve the aspect ratio of the generated svg`() = svgExporters().map { (type, exporterFn) ->
+        DynamicTest.dynamicTest("($type)") {
+            val workspace = createWorkspaceWithOneSystem(ExporterType.valueOf(type.uppercase()))
 
             val diagram = exporterFn(workspace, "/landscape/")
                 .export(workspace.views.systemContextViews.first())
@@ -34,16 +46,21 @@ class PlantUmlExporterTest {
         }
     }
 
-    private fun exporters() = listOf(
+    private fun svgExporters() = listOf(
         ExporterType.C4.name.lowercase() to
             { workspace: Workspace, url: String -> C4PlantUmlExporterWithElementLinks(workspace, url) },
         ExporterType.STRUCTURIZR.name.lowercase() to
             { workspace: Workspace, url: String -> StructurizrPlantUmlExporterWithElementLinks(workspace, url) }
     )
 
+    private fun nonSvgExporters() = listOf(
+        ExporterType.D2.name.lowercase() to
+                { workspace: Workspace, url: String -> D2ExporterWithElementLinks(workspace, url) },
+    )
+
     @Test
     fun `renders diagram (c4)`() {
-        val workspace = createWorkspaceWithOneSystem()
+        val workspace = createWorkspaceWithOneSystem(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/landscape/")
             .export(workspace.views.systemContextViews.first())
@@ -57,7 +74,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `renders diagram (structurizr)`() {
-        val workspace = createWorkspaceWithOneSystem()
+        val workspace = createWorkspaceWithOneSystem(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/landscape/")
             .export(workspace.views.systemContextViews.first())
@@ -70,8 +87,23 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `renders diagram (d2)`() {
+        val workspace = createWorkspaceWithOneSystem(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/landscape/")
+            .export(workspace.views.systemContextViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            shape: rectangle
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `renders System Diagram with link to container (c4)`() {
-        val workspace = createWorkspaceWithOneSystemWithContainers()
+        val workspace = createWorkspaceWithOneSystemWithContainers(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.systemContextViews.first())
@@ -85,7 +117,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `renders System Diagram with link to container (structurizr)`() {
-        val workspace = createWorkspaceWithOneSystemWithContainers()
+        val workspace = createWorkspaceWithOneSystemWithContainers(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.systemContextViews.first())
@@ -98,8 +130,24 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `renders System Diagram with link to container (d2)`() {
+        val workspace = createWorkspaceWithOneSystemWithContainers(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/container/")
+            .export(workspace.views.systemContextViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            link: "../system-1/container/"
+            shape: rectangle
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `renders System Diagram with link to other system and link to container (c4)`() {
-        val workspace = createSystemContextViewForWorkspaceWithTwoSystemWithContainers()
+        val workspace = createSystemContextViewForWorkspaceWithTwoSystemWithContainers(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.systemContextViews.first())
@@ -116,7 +164,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `renders System Diagram with link to other system and link to container (structurizr)`() {
-        val workspace = createSystemContextViewForWorkspaceWithTwoSystemWithContainers()
+        val workspace = createSystemContextViewForWorkspaceWithTwoSystemWithContainers(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.systemContextViews.first())
@@ -132,8 +180,29 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `renders System Diagram with link to other system and link to container (d2)`() {
+        val workspace = createSystemContextViewForWorkspaceWithTwoSystemWithContainers(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/container/")
+            .export(workspace.views.systemContextViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            link: "../system-1/container/"
+            shape: rectangle
+            label: "System 2\n[Software System]"
+            link: "../system-2/context/"
+            shape: rectangle
+            container_2 -> container_1: {
+            label: "uses"
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `renders Container Diagram with link to component diagram (c4)`() {
-        val workspace = createWorkspaceWithOneSystemWithContainersAndComponents()
+        val workspace = createWorkspaceWithOneSystemWithContainersAndComponents(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.containerViews.first())
@@ -149,7 +218,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `renders Container Diagram with link to component diagram (structurizr)`() {
-        val workspace = createWorkspaceWithOneSystemWithContainersAndComponents()
+        val workspace = createWorkspaceWithOneSystemWithContainersAndComponents(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.containerViews.first())
@@ -164,8 +233,26 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `renders Container Diagram with link to component diagram (d2)`() {
+        val workspace = createWorkspaceWithOneSystemWithContainersAndComponents(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/container/")
+            .export(workspace.views.containerViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            shape: rectangle
+            label: "Container 1\n[Container]"
+            link: "../system-1/component/container-1/"
+            shape: rectangle
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `renders Container Diagram with link to code view (c4)`() {
-        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage()
+        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.componentViews.first())
@@ -183,7 +270,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `renders Container Diagram with link to code view (structurizr)`() {
-        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage()
+        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/container/")
             .export(workspace.views.componentViews.first())
@@ -200,19 +287,33 @@ class PlantUmlExporterTest {
     }
 
     @Test
-    fun `renders Components Diagram without link to other Component Diagram (c4)`() {
-        val workspace = Workspace("workspace name", "")
-        val system = workspace.model.addSoftwareSystem("System 1")
-        val container1 = system.addContainer("Container 1")
-        val container2 = system.addContainer("Container 2")
-        container1.addComponent("Component 1").apply { uses(container2, "uses") }
-        container2.addComponent("Component 2")
+    fun `renders Container Diagram with link to code view (d2)`() {
+        val workspace = createWorkspaceWithOneSystemWithContainersComponentAndImage(ExporterType.D2)
 
-        val view = workspace.views.createComponentView(container1, "Component2", "")
-            .apply { addAllElements() }
+        val diagram = D2ExporterWithElementLinks(workspace, "/container/")
+            .export(workspace.views.componentViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "Container 1\n[Container]"
+            shape: rectangle
+            label: "Component 1\n[Component]"
+            link: "../system-1/code/container-1/component-1/"
+            shape: rectangle
+            label: "Component 2\n[Component]"
+            shape: rectangle
+            label: "Component 3\n[Component]"
+            shape: rectangle
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `renders Components Diagram without link to other Component Diagram (c4)`() {
+        val workspace = createWorkspaceWithOneSystemWithTwoContainers(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/system-1/component/")
-            .export(view)
+            .export(workspace.views.componentViews.first())
 
         assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
             """
@@ -229,18 +330,10 @@ class PlantUmlExporterTest {
 
     @Test
     fun `renders Components Diagram without link to other Component Diagram (structurizr)`() {
-        val workspace = Workspace("workspace name", "")
-        val system = workspace.model.addSoftwareSystem("System 1")
-        val container1 = system.addContainer("Container 1")
-        val container2 = system.addContainer("Container 2")
-        container1.addComponent("Component 1").apply { uses(container2, "uses") }
-        container2.addComponent("Component 2")
-
-        val view = workspace.views.createComponentView(container1, "Component2", "")
-            .apply { addAllElements() }
+        val workspace = createWorkspaceWithOneSystemWithTwoContainers(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/system-1/component/")
-            .export(view)
+            .export(workspace.views.componentViews.first())
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
@@ -256,8 +349,29 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `renders Components Diagram without link to other Component Diagram (d2)`() {
+        val workspace = createWorkspaceWithOneSystemWithTwoContainers(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/system-1/component/")
+            .export(workspace.views.componentViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "Container 2\n[Container]"
+            shape: rectangle
+            label: "Container 1\n[Container]"
+            shape: rectangle
+            label: "Component 1\n[Component]"
+            shape: rectangle
+            container_2.container_4 -> container_3: {
+            label: "uses"
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `link to other software system (c4)`() {
-        val workspace = createWorkspaceWithTwoSystems()
+        val workspace = createWorkspaceWithTwoSystems(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/landscape/")
             .export(workspace.views.systemContextViews.first())
@@ -274,7 +388,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `link to other software system (structurizr)`() {
-        val workspace = createWorkspaceWithTwoSystems()
+        val workspace = createWorkspaceWithTwoSystems(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/landscape/")
             .export(workspace.views.systemContextViews.first())
@@ -290,14 +404,31 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `link to other software system (d2)`() {
+        val workspace = createWorkspaceWithTwoSystems(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/landscape/")
+            .export(workspace.views.systemContextViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            shape: rectangle
+            label: "System 2\n[Software System]"
+            link: "../system-2/context/"
+            shape: rectangle
+            container_2 -> container_1: {
+            label: "uses"
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `external software system (declared external by tag) (c4)`() {
-        val workspace = createWorkspaceWithTwoSystems()
-        workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
-        workspace.model.softwareSystems.single { it.name == "System 2" }.addTags("External System")
-        val view = workspace.views.systemContextViews.first()
+        val workspace = createWorkspaceWithExternalSoftwareSystemByTag(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/landscape/")
-            .export(view)
+            .export(workspace.views.systemContextViews.first())
 
         assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
             """
@@ -311,13 +442,10 @@ class PlantUmlExporterTest {
 
     @Test
     fun `external software system (declared external by tag) (structurizr)`() {
-        val workspace = createWorkspaceWithTwoSystems()
-        workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
-        workspace.model.softwareSystems.single { it.name == "System 2" }.addTags("External System")
-        val view = workspace.views.systemContextViews.first()
+        val workspace = createWorkspaceWithExternalSoftwareSystemByTag(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/landscape/")
-            .export(view)
+            .export(workspace.views.systemContextViews.first())
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
@@ -330,8 +458,27 @@ class PlantUmlExporterTest {
     }
 
     @Test
+    fun `external software system (declared external by tag) (d2)`() {
+        val workspace = createWorkspaceWithExternalSoftwareSystemByTag(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/landscape/")
+            .export(workspace.views.systemContextViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            shape: rectangle
+            label: "System 2\n[Software System]"
+            shape: rectangle
+            container_2 -> container_1: {
+            label: "uses"
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `link to other software system from two path segments deep (c4)`() {
-        val workspace = createWorkspaceWithTwoSystems()
+        val workspace = createWorkspaceWithTwoSystems(ExporterType.C4)
 
         val diagram = C4PlantUmlExporterWithElementLinks(workspace, "/system-1/context/")
             .export(workspace.views.systemContextViews.first())
@@ -348,7 +495,7 @@ class PlantUmlExporterTest {
 
     @Test
     fun `link to other software system from two path segments deep (structurizr)`() {
-        val workspace = createWorkspaceWithTwoSystems()
+        val workspace = createWorkspaceWithTwoSystems(ExporterType.STRUCTURIZR)
 
         val diagram = StructurizrPlantUmlExporterWithElementLinks(workspace, "/system-1/context/")
             .export(workspace.views.systemContextViews.first())
@@ -363,9 +510,30 @@ class PlantUmlExporterTest {
         )
     }
 
-    private fun createWorkspaceWithOneSystem(): Workspace {
+    @Test
+    fun `link to other software system from two path segments deep (d2)`() {
+        val workspace = createWorkspaceWithTwoSystems(ExporterType.D2)
+
+        val diagram = D2ExporterWithElementLinks(workspace, "/system-1/context/")
+            .export(workspace.views.systemContextViews.first())
+
+        assertThat(diagram.definition.withoutD2HeaderAndFooter()).isEqualTo(
+            """
+            label: "System 1\n[Software System]"
+            shape: rectangle
+            label: "System 2\n[Software System]"
+            link: "../../system-2/context/"
+            shape: rectangle
+            container_2 -> container_1: {
+            label: "uses"
+            """.trimIndent()
+        )
+    }
+
+    private fun createWorkspaceWithOneSystem(type: ExporterType): Workspace {
         val workspace = Workspace("workspace name", "").apply {
             views.configuration.addProperty("generatr.site.excludedTag", "External System")
+            views.configuration.addProperty("generatr.site.exporter", type.name.lowercase())
         }
         val system = workspace.model.addSoftwareSystem("System 1")
 
@@ -375,8 +543,10 @@ class PlantUmlExporterTest {
         return workspace
     }
 
-    private fun createWorkspaceWithOneSystemWithContainers(): Workspace {
-        val workspace = Workspace("workspace name", "")
+    private fun createWorkspaceWithOneSystemWithContainers(type: ExporterType): Workspace {
+        val workspace = Workspace("workspace name", "").apply {
+            views.configuration.addProperty("generatr.site.exporter", type.name.lowercase())
+        }
         val system = workspace.model.addSoftwareSystem("System 1")
         system.addContainer("Container 1")
         system.addContainer("Container 2")
@@ -390,8 +560,10 @@ class PlantUmlExporterTest {
         return workspace
     }
 
-    private fun createSystemContextViewForWorkspaceWithTwoSystemWithContainers(): Workspace {
-        val workspace = Workspace("workspace name", "")
+    private fun createSystemContextViewForWorkspaceWithTwoSystemWithContainers(type: ExporterType): Workspace {
+        val workspace = Workspace("workspace name", "").apply {
+            views.configuration.addProperty("generatr.site.exporter", type.name.lowercase())
+        }
         val system = workspace.model.addSoftwareSystem("System 1")
         workspace.model.addSoftwareSystem("System 2").apply { uses(system, "uses") }
         system.addContainer("Container 1")
@@ -406,8 +578,10 @@ class PlantUmlExporterTest {
         return workspace
     }
 
-    private fun createWorkspaceWithOneSystemWithContainersAndComponents(): Workspace {
-        val workspace = Workspace("workspace name", "")
+    private fun createWorkspaceWithOneSystemWithContainersAndComponents(type: ExporterType): Workspace {
+        val workspace = Workspace("workspace name", "").apply {
+            views.configuration.addProperty("generatr.site.exporter", type.name.lowercase())
+        }
         val system = workspace.model.addSoftwareSystem("System 1")
         val container = system.addContainer("Container 1")
         container.addComponent("Component 1")
@@ -426,7 +600,7 @@ class PlantUmlExporterTest {
         return workspace
     }
 
-    private fun createWorkspaceWithOneSystemWithContainersComponentAndImage() = createWorkspaceWithOneSystemWithContainersAndComponents().apply {
+    private fun createWorkspaceWithOneSystemWithContainersComponentAndImage(type: ExporterType) = createWorkspaceWithOneSystemWithContainersAndComponents(type).apply {
         views.createImageView(model.softwareSystems.single().containers.single().components.single { it.name == "Component 1" }, "imageview-001").also {
             it.description = "Image View Description"
             it.title = "Image View Title"
@@ -435,14 +609,40 @@ class PlantUmlExporterTest {
         }
     }
 
-    private fun createWorkspaceWithTwoSystems(): Workspace {
-        val workspace = Workspace("workspace name", "")
+    private fun createWorkspaceWithOneSystemWithTwoContainers(type: ExporterType): Workspace {
+        val workspace = Workspace("workspace name", "").apply {
+            views.configuration.addProperty("generatr.site.exporter", type.name.lowercase())
+        }
+
+        val system = workspace.model.addSoftwareSystem("System 1")
+        val container1 = system.addContainer("Container 1")
+        val container2 = system.addContainer("Container 2")
+        container1.addComponent("Component 1").apply { uses(container2, "uses") }
+        container2.addComponent("Component 2")
+
+        workspace.views.createComponentView(container1, "Component2", "")
+            .apply { addAllElements() }
+        return workspace
+    }
+
+    private fun createWorkspaceWithTwoSystems(type: ExporterType): Workspace {
+        val workspace = Workspace("workspace name", "").apply {
+            views.configuration.addProperty("generatr.site.exporter", type.name.lowercase())
+        }
         val system = workspace.model.addSoftwareSystem("System 1")
         workspace.model.addSoftwareSystem("System 2").apply { uses(system, "uses") }
 
         workspace.views.createSystemContextView(system, "Context 1", "")
             .apply { addAllElements() }
 
+        return workspace
+    }
+
+    private fun createWorkspaceWithExternalSoftwareSystemByTag(type: ExporterType): Workspace {
+        val workspace = createWorkspaceWithTwoSystems(type)
+        workspace.views.configuration.addProperty("generatr.site.externalTag", "External System")
+        workspace.model.softwareSystems.single { it.name == "System 2" }.addTags("External System")
+        workspace.views.systemContextViews.first()
         return workspace
     }
 
@@ -459,4 +659,9 @@ class PlantUmlExporterTest {
         .dropLast(1)
         .joinToString(System.lineSeparator())
         .trimEnd()
+
+    private fun String.withoutD2HeaderAndFooter() = this
+        .split(System.lineSeparator())
+        .filter { it.contains("label") || it.contains("shape") || it.contains("link") || it.contains("->") }
+        .joinToString(System.lineSeparator()) { it.trimStart() }
 }

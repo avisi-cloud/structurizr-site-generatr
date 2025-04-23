@@ -5,6 +5,7 @@ import assertk.assertions.containsExactly
 import assertk.assertions.isFalse
 import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.site.exporterType
 import kotlin.test.Test
 
 class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
@@ -25,20 +26,24 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
                 "Software system - System Context",
                 "System context view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/context-1.svg"),
                 ImageViewModel(viewModel, "/png/context-1.png"),
-                ImageViewModel(viewModel, "/puml/context-1.puml")
+                ImageViewModel(viewModel, "/puml/context-1.puml"),
+                ImageViewModel(viewModel, "/d2/context-1.d2")
             ),
             DiagramViewModel(
                 "context-2",
                 "Software system - System Context",
                 "System context view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/context-2.svg"),
                 ImageViewModel(viewModel, "/png/context-2.png"),
-                ImageViewModel(viewModel, "/puml/context-2.puml")
+                ImageViewModel(viewModel, "/puml/context-2.puml"),
+                ImageViewModel(viewModel, "/d2/context-2.d2")
             )
         )
     }

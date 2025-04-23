@@ -3,6 +3,7 @@ package nl.avisi.structurizr.site.generatr.site.model
 import assertk.assertThat
 import assertk.assertions.*
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.site.exporterType
 import kotlin.test.Test
 
 class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
@@ -31,20 +32,23 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
                 "Software system - Deployment - Default",
                 "Deployment view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/deployment-1.svg"),
                 ImageViewModel(viewModel, "/png/deployment-1.png"),
-                ImageViewModel(viewModel, "/puml/deployment-1.puml")
-            ),
+                ImageViewModel(viewModel, "/puml/deployment-1.puml"),
+                ImageViewModel(viewModel, "/d2/deployment-1.d2")),
             DiagramViewModel(
                 "deployment-2",
                 "Software system - Deployment - Default",
                 "Deployment view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/deployment-2.svg"),
                 ImageViewModel(viewModel, "/png/deployment-2.png"),
-                ImageViewModel(viewModel, "/puml/deployment-2.puml")
+                ImageViewModel(viewModel, "/puml/deployment-2.puml"),
+                ImageViewModel(viewModel, "/d2/deployment-2.d2")
             )
         )
     }

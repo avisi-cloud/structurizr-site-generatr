@@ -7,6 +7,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
 import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.site.exporterType
 import kotlin.test.Test
 
 class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
@@ -37,20 +38,24 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
                 "Software system - Containers",
                 "Container view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/container-1.svg"),
                 ImageViewModel(viewModel, "/png/container-1.png"),
-                ImageViewModel(viewModel, "/puml/container-1.puml")
+                ImageViewModel(viewModel, "/puml/container-1.puml"),
+                ImageViewModel(viewModel, "/d2/container-1.d2")
             ),
             DiagramViewModel(
                 "container-2",
                 "Software system - Containers",
                 "Container view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/container-2.svg"),
                 ImageViewModel(viewModel, "/png/container-2.png"),
-                ImageViewModel(viewModel, "/puml/container-2.puml")
+                ImageViewModel(viewModel, "/puml/container-2.puml"),
+                ImageViewModel(viewModel, "/d2/container-2.d2")
             )
         )
     }
