@@ -10,32 +10,26 @@ import com.structurizr.model.Container
 import com.structurizr.model.Element
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.*
+import io.github.goto1134.structurizr.export.d2.D2Exporter
 import nl.avisi.structurizr.site.generatr.*
 
-enum class ExporterType { C4, STRUCTURIZR }
+enum class ExporterType { C4, STRUCTURIZR, D2 }
 
-class PlantUmlExporter(val workspace: Workspace) {
+class DiagramExporter(val workspace: Workspace) {
     private val exporter = when (workspace.exporterType()) {
         ExporterType.C4 -> C4PlantUMLExporter()
         ExporterType.STRUCTURIZR -> StructurizrPlantUMLExporter()
+        ExporterType.D2 -> D2Exporter()
     }
 
     fun export(): Collection<Diagram> = exporter.export(workspace)
 }
 
-class PlantUmlExporterWithElementLinks(workspace: Workspace, url: String) {
+class DiagramExporterWithElementLinks(workspace: Workspace, url: String) {
     private val exporter = when (workspace.exporterType()) {
         ExporterType.C4 -> C4PlantUmlExporterWithElementLinks(workspace, url)
         ExporterType.STRUCTURIZR -> StructurizrPlantUmlExporterWithElementLinks(workspace, url)
-    }
-
-    init {
-        if (workspace.views.configuration.properties.containsKey("generatr.svglink.target")) {
-            exporter.addSkinParam(
-                "svgLinkTarget",
-                workspace.views.configuration.properties.getValue("generatr.svglink.target")
-            )
-        }
+        ExporterType.D2 -> D2ExporterWithElementLinks(workspace, url)
     }
 
     fun export(view: View): Diagram = when (view) {
@@ -68,8 +62,11 @@ private class WriterWithElementLinks(
         writeHeaderFn: (view: ModelView, writer: IndentingWriter) -> Unit
     ) {
         writeHeaderFn(view, writer)
-        writer.writeLine("skinparam svgDimensionStyle false")
-        writer.writeLine("skinparam preserveAspectRatio meet")
+
+        if (workspace.exporterType() != ExporterType.D2) {
+            writer.writeLine("skinparam svgDimensionStyle false")
+            writer.writeLine("skinparam preserveAspectRatio meet")
+        }
     }
 
     fun writeElement(
@@ -162,5 +159,22 @@ class StructurizrPlantUmlExporterWithElementLinks(workspace: Workspace, url: Str
 
     override fun writeElement(view: ModelView?, element: Element?, writer: IndentingWriter?) {
         withElementLinks.writeElement(view, element, writer) { v, e, w -> super.writeElement(v, e, w) }
+    }
+}
+
+class D2ExporterWithElementLinks(workspace: Workspace, url: String) : D2Exporter() {
+    private val withElementLinks = WriterWithElementLinks(workspace, url)
+
+    override fun writeHeader(view: ModelView, writer: IndentingWriter) {
+        withElementLinks.writeHeader(view, writer) { v, w -> super.writeHeader(v, w) }
+    }
+
+    override fun writeElement(view: ModelView, element: Element, writer: IndentingWriter) {
+        withElementLinks.writeElement(view, element, writer) { v, e, w ->
+            requireNotNull(v) { "view cannot be null" }
+            requireNotNull(e) { "element cannot be null" }
+            requireNotNull(w) { "writer cannot be null" }
+            super.writeElement(v, e, w)
+        }
     }
 }

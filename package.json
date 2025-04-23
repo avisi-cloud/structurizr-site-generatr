@@ -1,6 +1,7 @@
 {
     "name": "structurizr-site-generatr",
     "dependencies": {
+        "@terrastruct/d2": "0.1.23",
         "bulma": "1.0.3",
         "katex": "0.16.21",
         "lunr": "2.3.9",

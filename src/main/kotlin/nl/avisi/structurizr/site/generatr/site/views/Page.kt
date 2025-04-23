@@ -31,6 +31,7 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
         script(type = ScriptType.textJavaScript, src = "../" + "/modal.js".asUrlToFile(viewModel.url)) { }
         script(type = ScriptType.textJavaScript, src = "../" + "/svg-modal.js".asUrlToFile(viewModel.url)) { }
+        d2Script(viewModel)
         script(type = ScriptType.textJavaScript, src = viewModel.cdn.svgpanzoomJs()) { }
         if (viewModel.allowToggleTheme)
             script(type = ScriptType.textJavaScript, src = "../" + "/toggle-theme.js".asUrlToFile(viewModel.url)) { }

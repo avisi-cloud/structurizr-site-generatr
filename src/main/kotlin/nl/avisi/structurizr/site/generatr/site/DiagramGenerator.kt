@@ -12,21 +12,30 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URI
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.exp
 
 fun generateDiagrams(workspace: Workspace, exportDir: File) {
     val pumlDir = pumlDir(exportDir)
     val svgDir = svgDir(exportDir)
     val pngDir = pngDir(exportDir)
+    val d2Dir = d2Dir(exportDir)
 
-    val plantUMLDiagrams = generatePlantUMLDiagrams(workspace)
+    val diagrams = generateDiagrams(workspace)
+    val exporterType = workspace.exporterType()
 
-    plantUMLDiagrams.parallelStream()
+    diagrams.parallelStream()
         .forEach { diagram ->
             val plantUMLFile = File(pumlDir, "${diagram.key}.puml")
             if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
                 println("${diagram.key}...")
-                saveAsSvg(diagram, svgDir)
-                saveAsPng(diagram, pngDir)
+                when (exporterType) {
+                    ExporterType.D2 -> saveAsD2(diagram, d2Dir)
+                    ExporterType.C4, ExporterType.STRUCTURIZR -> {
+                        saveAsPng(diagram, pngDir)
+                        saveAsSvg(diagram, svgDir)
+                    }
+                }
+
                 saveAsPUML(diagram, plantUMLFile)
             } else {
                 println("${diagram.key} UP-TO-DATE")
@@ -40,22 +49,28 @@ fun generateDiagramWithElementLinks(
     url: String,
     diagramCache: ConcurrentHashMap<String, String>
 ): String {
-    val diagram = generatePlantUMLDiagramWithElementLinks(workspace, view, url)
+    val diagram = generateDiagramWithElementLinks(workspace, view, url)
 
     val name = "${diagram.key}-${view.key}"
-    return diagramCache.getOrPut(name) {
-        val reader = SourceStringReader(diagram.withCachedIncludes().definition)
-        val stream = ByteArrayOutputStream()
 
-        reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
-        stream.toString(Charsets.UTF_8)
+    return diagramCache.getOrPut(name) {
+        when (workspace.exporterType()) {
+            ExporterType.D2 -> diagram.definition
+            ExporterType.C4, ExporterType.STRUCTURIZR -> {
+                val reader = SourceStringReader(diagram.withCachedIncludes().definition)
+                val stream = ByteArrayOutputStream()
+
+                reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
+                stream.toString(Charsets.UTF_8)
+            }
+        }
     }
 }
 
-private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
-    val plantUMLExporter = PlantUmlExporter(workspace)
+private fun generateDiagrams(workspace: Workspace): Collection<Diagram> {
+    val diagramExporter = DiagramExporter(workspace)
 
-    return plantUMLExporter.export()
+    return diagramExporter.export()
 }
 
 private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
@@ -71,6 +86,11 @@ private fun saveAsSvg(diagram: Diagram, svgDir: File, name: String = diagram.key
     }
 }
 
+private fun saveAsD2(diagram: Diagram, d2Dir: File, name: String = diagram.key) {
+    val d2File = File(d2Dir, "${name}.d2")
+    d2File.writeText(diagram.definition)
+}
+
 private fun saveAsPng(diagram: Diagram, pngDir: File) {
     val reader = SourceStringReader(diagram.withCachedIncludes().definition)
     val pngFile = File(pngDir, "${diagram.key}.png")
@@ -80,15 +100,16 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
     }
 }
 
-private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
-    val plantUMLExporter = PlantUmlExporterWithElementLinks(workspace, url)
+private fun generateDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
+    val diagramExporter = DiagramExporterWithElementLinks(workspace, url)
 
-    return plantUMLExporter.export(view)
+    return diagramExporter.export(view)
 }
 
 private fun pumlDir(exportDir: File) = File(exportDir, "puml").apply { mkdirs() }
 private fun svgDir(exportDir: File) = File(exportDir, "svg").apply { mkdirs() }
 private fun pngDir(exportDir: File) = File(exportDir, "png").apply { mkdirs() }
+private fun d2Dir(exportDir: File) = File(exportDir, "d2").apply { mkdirs() }
 
 private fun Diagram.withCachedIncludes(): Diagram {
     val def = definition.replace("!include\\s+(.*)".toRegex()) {
