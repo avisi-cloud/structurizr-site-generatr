@@ -26,14 +26,12 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
         meta(charset = "utf-8")
         meta(name = "viewport", content = "width=device-width, initial-scale=1")
         title { +viewModel.pageTitle }
-        link(rel = "stylesheet", href = viewModel.cdn.bulmaCss())
+        link(rel = "stylesheet", href = "https://service-manual.nhs.uk/css/main.css")
         link(rel = "stylesheet", href = "../" + "/style.css".asUrlToFile(viewModel.url))
         link(rel = "stylesheet", href = "./" + "/style-branding.css".asUrlToFile(viewModel.url))
         script(type = ScriptType.textJavaScript, src = "../" + "/modal.js".asUrlToFile(viewModel.url)) { }
         script(type = ScriptType.textJavaScript, src = "../" + "/svg-modal.js".asUrlToFile(viewModel.url)) { }
         script(type = ScriptType.textJavaScript, src = viewModel.cdn.svgpanzoomJs()) { }
-        if (viewModel.allowToggleTheme)
-            script(type = ScriptType.textJavaScript, src = "../" + "/toggle-theme.js".asUrlToFile(viewModel.url)) { }
 
         if (viewModel.includeTreeview)
             link(rel = "stylesheet", href = "../" + "/treeview.css".asUrlToFile(viewModel.url))
@@ -61,21 +59,40 @@ private fun HTML.headFragment(viewModel: PageViewModel) {
 
 private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
     body {
-        if (viewModel.includeAutoReloading)
-            updatingSiteProgressBar()
 
         pageHeader(viewModel.headerBar)
 
-        div(classes = "site-layout") {
+
+
+        div(classes = "nhsuk-width-container app-width-container") {
             id = "site"
-            menu(viewModel.menu, viewModel.includeTreeview)
-            div(classes = "container is-fluid") {
-                block()
+            div(classes = "nhsuk-main-wrapper"){
+                id = "maintcontent"
+                role = "main"
+                div(classes = "nhsuk-grid-row"){
+                    div(classes = "nhsuk-grid-column-one-quarter"){
+                        menu(viewModel.menu, viewModel.includeTreeview)
+                    }
+                    div(classes = "nhsuk-grid-column-three-quarters"){
+                        block()
+                    }
+                }
             }
         }
 
-        if (viewModel.includeAutoReloading)
-            updateSiteErrorHero()
+        footer(){
+            role = "contentinfo"
+            div(classes = "nhsuk-footer-container"){
+                div(classes = "nhsuk-width-container"){
+                    div() {
+                        p(classes = "nhsuk-footer__copyright") {
+                            +"NHS England"
+                        }
+                    }
+                }
+            }
+        }
+
         if (viewModel.includeAdmonition)
             markdownAdmonitionScript(viewModel)
 

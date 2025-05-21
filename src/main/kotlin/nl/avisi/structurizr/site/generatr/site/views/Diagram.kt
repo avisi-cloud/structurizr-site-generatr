@@ -8,12 +8,12 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
         val dialogId = "${viewModel.key}-modal"
         val svgId = "${viewModel.key}-svg"
 
-        figure {
+        figure ("nhsuk-image") {
             style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
             attributes["id"] = viewModel.key
             rawHtml(viewModel.svg)
-            figcaption {
-                a {
+            figcaption ("nhsuk-image__caption") {
+                a{
                     onClick = "openSvgModal('$dialogId', '$svgId')"
                     +viewModel.title
                     if (!viewModel.description.isNullOrBlank()) {
@@ -37,6 +37,7 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 +"]"
             }
         }
+
     } else
         div(classes = "notification is-danger") {
             +"No view with key"

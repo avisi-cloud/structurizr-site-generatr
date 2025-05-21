@@ -6,21 +6,21 @@ import nl.avisi.structurizr.site.generatr.site.model.MenuNodeViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
 fun DIV.menu(viewModel: MenuViewModel, nestGroups: Boolean) {
-    aside(classes = "menu p-3") {
+    nav(){
         generalSection(viewModel.generalItems)
         softwareSystemsSection(viewModel, nestGroups)
     }
 }
 
-private fun ASIDE.generalSection(items: List<LinkViewModel>) {
-    p(classes = "menu-label") { +"General" }
+private fun NAV.generalSection(items: List<LinkViewModel>) {
+    h2("app-side-nav__heading") { +"General" }
     menuItemLinks(items)
 }
 
-private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: Boolean) {
-    p(classes = "menu-label") { +"Software systems" }
+private fun NAV.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: Boolean) {
+    h2("app-side-nav__heading") { +"Software systems" }
     if (nestGroups) {
-        ul(classes = "listree menu-list has-site-branding") {
+        ul(classes = "nhsuk-list app-side-nav__list") {
             buildHtmlTree(viewModel.softwareSystemNodes(), viewModel).invoke(this)
         }
     } else {
@@ -28,11 +28,11 @@ private fun ASIDE.softwareSystemsSection(viewModel: MenuViewModel, nestGroups: B
     }
 }
 
-private fun ASIDE.menuItemLinks(items: List<LinkViewModel>) {
-    ul(classes = "menu-list has-site-branding") {
-        li {
-            items.forEach {
-                link(it)
+private fun NAV.menuItemLinks(items: List<LinkViewModel>) {
+    ul(classes = "nhsuk-list app-side-nav__list") {
+        items.forEach {
+            li(classes=if (it.active) "app-side-nav__item--current" else "app-side-nav__item")  {
+                link(it, "app-side-nav__link")
             }
         }
     }

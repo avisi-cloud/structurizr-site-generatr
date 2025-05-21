@@ -14,7 +14,7 @@ class SoftwareSystemHomePageViewModel(generatorContext: GeneratorContext, softwa
     private fun SoftwareSystem.info() = documentation.sections
         .minByOrNull { it.order }
         ?.content
-        ?: "# Description${System.lineSeparator()}${description}"
+        ?: "### Description${System.lineSeparator()}${description}"
 
     private fun SoftwareSystem.format() = documentation.sections
         .minByOrNull { it.order }
