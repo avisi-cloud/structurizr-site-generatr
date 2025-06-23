@@ -4,7 +4,7 @@ import nl.avisi.structurizr.site.generatr.includedSoftwareSystems
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 import nl.avisi.structurizr.site.generatr.site.views.CDN
 
-abstract class PageViewModel(protected val generatorContext: GeneratorContext) {
+abstract class PageViewModel(val generatorContext: GeneratorContext) {
     val pageTitle: String by lazy {
         if (pageSubTitle.isNotBlank() && generatorContext.workspace.name.isNotBlank())
             "$pageSubTitle | ${generatorContext.workspace.name}"

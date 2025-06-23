@@ -207,7 +207,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             // default behaviour, if no generatr.markdown.flexmark.extensions property is specified, is to load the Tables extension only
             "generatr.markdown.flexmark.extensions" "Abbreviation,Admonition,AnchorLink,Attributes,Autolink,Definition,Emoji,Footnotes,GfmTaskList,GitLab,MediaTags,Tables,TableOfContents,Typographic"
 
-            "generatr.site.exporter" "structurizr"
+            "generatr.site.exporter" "d2"
             "generatr.site.externalTag" "External System"
             "generatr.site.nestGroups" "false"
             "generatr.site.cdn" "https://cdn.jsdelivr.net/npm"
@@ -227,12 +227,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         systemcontext internetBankingSystem "SystemContext" {
             include *
-            animation {
-                internetBankingSystem
-                customer
-                mainframe
-                email
-            }
             autoLayout
             title "System Context of Internet Banking System"
             description "Describes the overall context"
@@ -240,25 +234,11 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         container internetBankingSystem "Containers" {
             include *
-            animation {
-                customer mainframe email
-                webApplication
-                singlePageApplication
-                mobileApp
-                apiApplication
-                database
-            }
             autoLayout
         }
 
         component apiApplication "Components" {
             include *
-            animation {
-                singlePageApplication mobileApp database email mainframe
-                signinController securityComponent
-                accountsSummaryController mainframeBankingSystemFacade
-                resetPasswordController emailComponent
-            }
             autoLayout
         }
 
@@ -286,23 +266,11 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         deployment internetBankingSystem "Development" "DevelopmentDeployment" {
             include *
-            animation {
-                developerSinglePageApplicationInstance
-                developerWebApplicationInstance developerApiApplicationInstance
-                developerDatabaseInstance
-            }
             autoLayout
         }
 
         deployment internetBankingSystem "Live" "LiveDeployment" {
             include *
-            animation {
-                liveSinglePageApplicationInstance
-                liveMobileAppInstance
-                liveWebApplicationInstance liveApiApplicationInstance
-                livePrimaryDatabaseInstance
-                liveSecondaryDatabaseInstance
-            }
             autoLayout
         }
 

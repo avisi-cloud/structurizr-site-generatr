@@ -23,6 +23,10 @@ class CDN(val workspace: Workspace) {
         "${it.baseUrl()}/css/bulma.min.css"
     }
 
+    fun d2Js() = dependencies.single { it.name == "@terrastruct/d2" }.let {
+        "${it.baseUrl()}/dist/browser/index.min.js"
+    }
+
     fun katexJs() = dependencies.single { it.name == "katex" }.let {
         "${it.baseUrl()}/dist/katex.min.js"
     }

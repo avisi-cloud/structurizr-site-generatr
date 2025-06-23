@@ -1,8 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
-import com.structurizr.documentation.Documentation
-import com.structurizr.documentation.Section
 import com.structurizr.util.WorkspaceUtils
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
@@ -18,6 +16,7 @@ fun copySiteWideAssets(exportDir: File) {
     copySiteWideAsset(exportDir, "/css/style.css")
     copySiteWideAsset(exportDir, "/js/header.js")
     copySiteWideAsset(exportDir, "/js/svg-modal.js")
+    copySiteWideAsset(exportDir, "/js/d2-to-svg.js")
     copySiteWideAsset(exportDir, "/js/modal.js")
     copySiteWideAsset(exportDir, "/js/search.js")
     copySiteWideAsset(exportDir, "/js/auto-reload.js")

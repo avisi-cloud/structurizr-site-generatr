@@ -6,6 +6,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
 import assertk.assertions.isTrue
 import com.structurizr.model.SoftwareSystem
+import nl.avisi.structurizr.site.generatr.site.exporterType
 import kotlin.test.Test
 
 class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
@@ -36,20 +37,24 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
                 "Backend - Dynamic",
                 "Dynamic view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/backend-dynamic.svg"),
                 ImageViewModel(viewModel, "/png/backend-dynamic.png"),
-                ImageViewModel(viewModel, "/puml/backend-dynamic.puml")
+                ImageViewModel(viewModel, "/puml/backend-dynamic.puml"),
+                ImageViewModel(viewModel, "/d2/backend-dynamic.d2")
             ),
             DiagramViewModel(
                 "frontend-dynamic",
                 "Frontend - Dynamic",
                 "Dynamic view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
+                generatorContext.workspace.exporterType(),
                 800,
                 ImageViewModel(viewModel, "/svg/frontend-dynamic.svg"),
                 ImageViewModel(viewModel, "/png/frontend-dynamic.png"),
-                ImageViewModel(viewModel, "/puml/frontend-dynamic.puml")
+                ImageViewModel(viewModel, "/puml/frontend-dynamic.puml"),
+                ImageViewModel(viewModel, "/d2/frontend-dynamic.d2")
             )
         )
     }
