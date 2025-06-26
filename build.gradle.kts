@@ -39,6 +39,8 @@ dependencies {
     implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.0.22")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
+
+    // Support for Structurizr scripting languages
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.2.0")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.25")
     runtimeOnly("org.jruby:jruby-core:9.4.13.0")
