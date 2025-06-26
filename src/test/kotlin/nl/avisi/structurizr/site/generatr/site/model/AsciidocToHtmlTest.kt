@@ -77,9 +77,11 @@ class AsciidocToHtmlTest : ViewModelTest() {
                <tbody>
                 <tr>
                  <td class="tableblock halign-left valign-top content">
-                  <p class="tableblock content">content</p></td>
+                  <p class="tableblock content">content</p>
+                 </td>
                  <td class="tableblock halign-left valign-top content">
-                  <p class="tableblock content">content</p></td>
+                  <p class="tableblock content">content</p>
+                 </td>
                 </tr>
                </tbody>
               </table>
@@ -115,9 +117,8 @@ class AsciidocToHtmlTest : ViewModelTest() {
                 <tbody>
                  <tr>
                   <td class="icon adm-heading">
-                   <div class="title">
-                    Note
-                   </div></td>
+                   <div class="title">Note</div>
+                  </td>
                   <td class="content">This is a note.</td>
                  </tr>
                 </tbody>
