@@ -156,7 +156,7 @@ jobs:
           --version ${{ github.ref_name }}
 
       - name: Upload example site as GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./build/site
 
