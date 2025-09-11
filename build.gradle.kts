@@ -43,7 +43,7 @@ dependencies {
     // Support for Structurizr scripting languages
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.2.10")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.25")
-    runtimeOnly("org.jruby:jruby-core:9.4.13.0")
+    runtimeOnly("org.jruby:jruby-core:9.4.14.0")
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
