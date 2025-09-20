@@ -172,7 +172,8 @@ class MarkdownToHtmlTest : ViewModelTest() {
                  <div class="adm-heading">
                   <svg class="adm-icon">
                    <use xlink:href="#adm-faq" />
-                  </svg><span>FAQ</span>
+                  </svg>
+                  <span>FAQ</span>
                  </div>
                  <div class="adm-body">
                   <p>This is a FAQ.</p>
@@ -310,7 +311,8 @@ class MarkdownToHtmlTest : ViewModelTest() {
                    </div>
                    <button class="modal-close is-large" aria-label="close" onclick="closeModal('SystemLandscape-modal')"></button>
                   </div>
-                 </div></p>
+                 </div>
+                </p>
             """.trimIndent()
         )
     }
@@ -331,7 +333,8 @@ class MarkdownToHtmlTest : ViewModelTest() {
                   <div class="notification is-danger">
                    No view with key<span class="has-text-weight-bold"> non-existing </span>found!
                   </div>
-                 </div></p>
+                 </div>
+                </p>
             """.trimIndent()
         )
     }

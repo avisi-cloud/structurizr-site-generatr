@@ -33,7 +33,6 @@ fun toHtml(
 ): String = when (format) {
     Format.Markdown -> markdownToHtml(pageViewModel, content, svgFactory)
     Format.AsciiDoc -> asciidocToHtml(pageViewModel, content, svgFactory)
-    else -> "unsupported document"
 }
 
 private fun markdownToHtml(

@@ -1,11 +1,11 @@
 {
     "name": "structurizr-site-generatr",
     "dependencies": {
-        "bulma": "1.0.3",
+        "bulma": "1.0.4",
         "katex": "0.16.22",
         "lunr": "2.3.9",
         "lunr-languages": "1.14.0",
-        "mermaid": "11.6.0",
+        "mermaid": "11.11.0",
         "svg-pan-zoom": "3.6.2",
         "webfontloader": "1.6.28"
     }

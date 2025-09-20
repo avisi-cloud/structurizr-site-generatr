@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    kotlin("plugin.serialization") version "2.1.20"
+    kotlin("jvm") version "2.2.10"
+    kotlin("plugin.serialization") version "2.2.10"
     application
 }
 
@@ -20,30 +20,32 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.6")
 
-    implementation("org.eclipse.jgit:org.eclipse.jgit:7.2.0.202503040940-r")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:7.3.0.202506031305-r")
 
-    implementation("com.structurizr:structurizr-core:3.2.1")
-    implementation("com.structurizr:structurizr-dsl:3.2.1")
-    implementation("com.structurizr:structurizr-export:3.2.1")
+    implementation("com.structurizr:structurizr-core:4.1.0")
+    implementation("com.structurizr:structurizr-dsl:4.1.0")
+    implementation("com.structurizr:structurizr-export:4.1.0")
 
-    implementation("net.sourceforge.plantuml:plantuml:1.2025.2")
+    implementation("net.sourceforge.plantuml:plantuml:1.2025.7")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
     implementation("org.asciidoctor:asciidoctorj:3.0.0")
-    implementation("org.jsoup:jsoup:1.19.1")
+    implementation("org.jsoup:jsoup:1.21.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.12.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
-    implementation("org.eclipse.jetty:jetty-server:12.0.19")
-    implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.0.19")
+    implementation("org.eclipse.jetty:jetty-server:12.1.1")
+    implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.1.1")
 
     implementation("org.apache.commons:commons-exec:1.4.0")
 
     runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.1.20")
-    runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.24")
-    runtimeOnly("org.jruby:jruby-core:9.4.12.0")
+
+    // Support for Structurizr scripting languages
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.2.10")
+    runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.25")
+    runtimeOnly("org.jruby:jruby-core:9.4.14.0")
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
