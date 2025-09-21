@@ -38,8 +38,6 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-server:12.1.1")
     implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.1.1")
 
-    implementation("org.apache.commons:commons-exec:1.4.0")
-
     runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
 
     // Support for Structurizr scripting languages

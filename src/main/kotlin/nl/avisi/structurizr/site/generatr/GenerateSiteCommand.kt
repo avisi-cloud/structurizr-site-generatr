@@ -4,8 +4,6 @@ package nl.avisi.structurizr.site.generatr
 
 import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.*
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.DefaultExecutor
 import java.io.File
 
 
@@ -120,13 +118,17 @@ class GenerateSiteCommand : Subcommand(
                 val index = branchIndex.index
                 val isDefaultBranch = branch == defaultBranch
                 println("Generating site for branch $branch")
-                // Default branch is already in git worktree
-                if(!isDefaultBranch) {
-                    val gitCommand = CommandLine.parse("git worktree add ./$index $branch")
-                    val executor = DefaultExecutor.builder().setWorkingDirectory(cloneDir).get()
-                    executor.execute(gitCommand)
+                
+                val path = if (isDefaultBranch) {
+                    // Default branch is already in the main clone directory
+                    clonedRepository.cloneDir
+                } else {
+                    // Clone the branch to a separate directory for parallel processing
+                    val branchCloneDir = File("build/model-clone-$index")
+                    clonedRepository.localBranchClone(branchCloneDir, branch)
+                    branchCloneDir
                 }
-                val path = if(isDefaultBranch) clonedRepository.cloneDir else File("${clonedRepository.cloneDir.path}/$index")
+                
                 val branchWorkspaceFile = File(path, workspaceFile)
                 val workspace = createStructurizrWorkspace(branchWorkspaceFile)
                 writeStructurizrJson(workspace, File(siteDir, branch))
@@ -134,18 +136,16 @@ class GenerateSiteCommand : Subcommand(
                 generateSite(
                     version,
                     workspace,
-                    assetsDir?.let { File(cloneDir, it) },
+                    assetsDir?.let { File(path, it) },
                     siteDir,
                     branchesToGenerate,
                     branch
                 )
-                // Remove the worktree branch directory after generating the site
-                if(!isDefaultBranch) {
-                    val gitCommand = CommandLine.parse("git worktree remove ./$index")
-                    val executor = DefaultExecutor.builder().setWorkingDirectory(cloneDir).get()
-                    executor.execute(gitCommand)
+                
+                // Clean up the temporary clone directory for non-default branches
+                if (!isDefaultBranch) {
+                    File("build/model-clone-$index").deleteRecursively()
                 }
-
             }
         } else {
             branchesToGenerate.forEach { branch ->
