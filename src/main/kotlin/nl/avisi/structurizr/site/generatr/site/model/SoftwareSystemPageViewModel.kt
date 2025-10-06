@@ -52,8 +52,8 @@ open class SoftwareSystemPageViewModel(
                 Tab.CODE -> generatorContext.workspace.views.hasCodeViews(generatorContext.workspace, softwareSystem)
                 Tab.DYNAMIC -> generatorContext.workspace.views.hasDynamicViews(softwareSystem)
                 Tab.DEPLOYMENT -> generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
-                Tab.DECISIONS -> softwareSystem.hasDecisions() or softwareSystem.hasContainerDecisions()
-                Tab.SECTIONS -> softwareSystem.hasDocumentationSections() or softwareSystem.hasContainerDocumentationSections() or softwareSystem.hasComponentDocumentationSections()
+                Tab.DECISIONS -> softwareSystem.hasDecisions(recursive = true)
+                Tab.SECTIONS -> softwareSystem.hasDocumentationSections(recursive = true)
             }
     }
 

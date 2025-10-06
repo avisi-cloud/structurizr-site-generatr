@@ -34,8 +34,8 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             atm = softwaresystem "ATM" "Allows customers to withdraw cash." "Existing System"
 
             internetBankingSystem = softwaresystem "Internet Banking System" "Allows customers to view information about their bank accounts, and make payments." {
-                !docs internet-banking-system/docs
                 !adrs internet-banking-system/adr
+                !docs internet-banking-system/docs
                 properties {
                     "Owner" "Customer Services"
                     "Development Team" "Dev/Internet Services"
@@ -55,9 +55,11 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     resetPasswordController = component "Reset Password Controller" "Allows users to reset their passwords with a single use URL." "Spring MVC Rest Controller"
                     securityComponent = component "Security Component" "Provides functionality related to signing in, changing passwords, etc." "Spring Bean"
                     mainframeBankingSystemFacade = component "Mainframe Banking System Facade" "A facade onto the mainframe banking system." "Spring Bean" {
+                        !adrs internet-banking-system/api-application/mainframe-banking-system-facade/adr
                         !docs internet-banking-system/api-application/mainframe-banking-system-facade/docs
                     }
                     emailComponent = component "E-mail Component" "Sends e-mails to users." "Spring Bean" {
+                        !adrs internet-banking-system/api-application/email-component/adr
                         !docs internet-banking-system/api-application/email-component/docs
                     }
                 }

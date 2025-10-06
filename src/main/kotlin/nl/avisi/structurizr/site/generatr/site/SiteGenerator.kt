@@ -154,12 +154,21 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             }
 
             it.containers
-                .filter { container -> container.documentation.decisions.isNotEmpty() }
+                .filter { container -> container.hasDecisions(recursive = true) }
                 .forEach { container ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionsPageViewModel(context, container)) }
                     container.documentation.decisions.forEach { decision ->
                         add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionPageViewModel(context, container, decision)) }
                     }
+
+                    container.components
+                        .filter { component -> component.hasDecisions() }
+                        .forEach { component ->
+                            add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionsPageViewModel(context, component)) }
+                            component.documentation.decisions.forEach { decision ->
+                                add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionPageViewModel(context, component, decision)) }
+                            }
+                        }
                 }
 
             it.containers
@@ -227,6 +236,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
                 is SoftwareSystemContainerComponentsPageViewModel -> softwareSystemContainerComponentsPage(viewModel)
                 is SoftwareSystemContainerComponentCodePageViewModel -> softwareSystemContainerComponentCodePage(viewModel)
+                is SoftwareSystemContainerComponentDecisionPageViewModel -> softwareSystemContainerComponentDecisionPage(viewModel)
+                is SoftwareSystemContainerComponentDecisionsPageViewModel -> softwareSystemContainerComponentDecisionsPage(viewModel)
                 is SoftwareSystemContainerComponentSectionPageViewModel -> softwareSystemContainerComponentSectionPage(viewModel)
                 is SoftwareSystemContainerComponentSectionsPageViewModel -> softwareSystemContainerComponentSectionsPage(viewModel)
                 is SoftwareSystemDynamicPageViewModel -> softwareSystemDynamicPage(viewModel)
