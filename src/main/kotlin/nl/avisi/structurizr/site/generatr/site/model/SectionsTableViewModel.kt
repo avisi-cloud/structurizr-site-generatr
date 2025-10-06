@@ -41,7 +41,7 @@ fun BaseSoftwareSystemSectionsPageViewModel.createSectionsTabViewModel(
     tab: SoftwareSystemPageViewModel.Tab,
     linkMatch: (StaticStructureElement) -> Match = { Match.EXACT }
 ) = buildList {
-    if (softwareSystem.hasDocumentationSections(recursive = true)) {
+    if (softwareSystem.hasDocumentationSections()) {
         add(
             SectionTabViewModel(
                 this@createSectionsTabViewModel,
