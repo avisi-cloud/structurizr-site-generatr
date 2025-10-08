@@ -1,8 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
-import com.structurizr.documentation.Documentation
-import com.structurizr.documentation.Section
 import com.structurizr.util.WorkspaceUtils
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML

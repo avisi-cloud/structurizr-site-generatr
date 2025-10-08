@@ -6,7 +6,6 @@ import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.StaticStructureElement
 import com.structurizr.view.ViewSet
-import gen.lib.dotgen.flat__c
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 val Workspace.includedSoftwareSystems: List<SoftwareSystem>

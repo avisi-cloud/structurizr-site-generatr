@@ -9,7 +9,7 @@ import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import kotlin.test.Test
 
-class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
+class SoftwareSystemContainerComponentDecisionsPageViewModelTest : ViewModelTest() {
     private val generatorContext = generatorContext()
     private val softwareSystem: SoftwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system")
     private val container: Container = softwareSystem.addContainer("API Application")
@@ -17,7 +17,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `active tab`() {
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.tabs.single { it.link.active }.tab)
             .isEqualTo(SoftwareSystemPageViewModel.Tab.DECISIONS)
@@ -29,7 +29,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
 
         container.documentation.addDecision(createDecision("1", "Accepted"))
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.decisionTabs)
             .isEqualTo(listOf(
@@ -51,7 +51,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
     fun `decisions tabs without container decisions`() {
         softwareSystem.documentation.addDecision(createDecision("1", "Accepted"))
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.decisionTabs)
             .isEqualTo(listOf(
@@ -67,7 +67,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
     fun `decisions tabs without software system decisions`() {
         container.documentation.addDecision(createDecision("1", "Accepted"))
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.decisionTabs)
             .isEqualTo(listOf(
@@ -85,7 +85,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
         container.documentation.addDecision(createDecision("1", "Accepted"))
         createComponentDecisions()
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.componentDecisionsTabs)
             .isEqualTo(listOf(
@@ -106,7 +106,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
     fun `component decisions tabs without container decisions`() {
         createComponentDecisions()
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.componentDecisionsTabs)
             .isEqualTo(listOf(
@@ -122,7 +122,7 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
     fun `component decisions tabs without component decisions`() {
         container.documentation.addDecision(createDecision("1", "Accepted"))
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.componentDecisionsTabs)
             .isEqualTo(listOf(
@@ -136,44 +136,34 @@ class SoftwareSystemContainerDecisionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `decisions table`() {
-        container.documentation.addDecision(createDecision("1", "Accepted"))
+        createComponentDecisions()
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
+
+        var counter = 1
 
         assertThat(viewModel.decisionsTable)
             .isEqualTo(
-                viewModel.createDecisionsTableViewModel(container.documentation.decisions) {
-                    "/software-system/decisions/api-application/1"
+                viewModel.createDecisionsTableViewModel(component.documentation.decisions) {
+                    "/software-system/decisions/api-application/email-component/${counter++}"
                 }
             )
     }
 
     @Test
     fun `is visible`() {
-        container.documentation.addDecision(createDecision("1", "Accepted"))
-
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
-
-        assertThat(viewModel.visible).isTrue()
-        assertThat(viewModel.onlyComponentDecisionsVisible).isFalse()
-    }
-
-    @Test
-    fun `only component decisions visible`() {
         createComponentDecisions()
 
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.visible).isTrue()
-        assertThat(viewModel.onlyComponentDecisionsVisible).isTrue()
     }
 
     @Test
     fun `hidden view`() {
-        val viewModel = SoftwareSystemContainerDecisionsPageViewModel(generatorContext, container)
+        val viewModel = SoftwareSystemContainerComponentDecisionsPageViewModel(generatorContext, component)
 
         assertThat(viewModel.visible).isFalse()
-        assertThat(viewModel.onlyComponentDecisionsVisible).isFalse()
     }
 
     private fun createComponentDecisions() {

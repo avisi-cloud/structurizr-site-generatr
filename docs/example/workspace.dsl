@@ -46,7 +46,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 mobileApp = container "Mobile App" "Provides a limited subset of the Internet banking functionality to customers via their mobile device." "Xamarin" "Mobile App"
                 webApplication = container "Web Application" "Delivers the static content and the Internet banking single page application." "Java and Spring MVC"
                 apiApplication = container "API Application" "Provides Internet banking functionality via a JSON/HTTPS API." "Java and Spring MVC" {
-                    !adrs internet-banking-system/api-application/adr
                     properties {
                         Owner "Team 1"
                     }
