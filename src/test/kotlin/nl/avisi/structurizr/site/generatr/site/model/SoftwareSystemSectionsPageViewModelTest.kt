@@ -6,6 +6,7 @@ import assertk.assertions.hasSize
 import assertk.assertions.index
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import nl.avisi.structurizr.site.generatr.normalize
 import kotlin.test.Test
 
@@ -42,12 +43,35 @@ class SoftwareSystemSectionsPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `hidden view`() {
+    fun `has sections`() {
+        listOf("# Section 0000", "# Section 0001")
+            .forEach { softwareSystem.documentation.addSection(createSection(it)) }
+
+        val viewModel = SoftwareSystemSectionsPageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel.visible).isTrue()
+        assertThat(viewModel.onlyContainersDocumentationSectionsVisible).isFalse()
+    }
+
+    @Test
+    fun `no sections`() {
         val viewModel = SoftwareSystemSectionsPageViewModel(
             generatorContext,
             generatorContext.workspace.model.addSoftwareSystem("Software system 2")
         )
 
         assertThat(viewModel.visible).isFalse()
+        assertThat(viewModel.onlyContainersDocumentationSectionsVisible).isFalse()
+    }
+
+    @Test
+    fun `child has section`() {
+        val container = softwareSystem.addContainer("API Application")
+        container.documentation.addSection(createSection())
+
+        val viewModel = SoftwareSystemSectionsPageViewModel(generatorContext, softwareSystem)
+
+        assertThat(viewModel.visible).isTrue()
+        assertThat(viewModel.onlyContainersDocumentationSectionsVisible).isTrue()
     }
 }

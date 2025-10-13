@@ -47,7 +47,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 webApplication = container "Web Application" "Delivers the static content and the Internet banking single page application." "Java and Spring MVC"
                 apiApplication = container "API Application" "Provides Internet banking functionality via a JSON/HTTPS API." "Java and Spring MVC" {
                     !adrs internet-banking-system/api-application/adr
-                    !docs internet-banking-system/api-application/docs
                     properties {
                         Owner "Team 1"
                     }

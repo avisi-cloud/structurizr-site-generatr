@@ -10,14 +10,6 @@ import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
     BaseSoftwareSystemSectionsPageViewModel(generatorContext, container.softwareSystem) {
-    private val componentsDocumentationSectionsVisible = container.hasComponentsSections()
-
-    override val containerDocumentationSectionsVisible = container.hasSections()
-
-    val onlyComponentsDocumentationSectionsVisible = !containerDocumentationSectionsVisible and componentsDocumentationSectionsVisible
-
-    override val visible = containerDocumentationSectionsVisible or componentsDocumentationSectionsVisible
-
     val sectionsTable: TableViewModel = createSectionsTableViewModel(container.documentation.sections, dropFirst = false) {
         sectionTableItemUrl(container, it)
     }
@@ -50,6 +42,11 @@ abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext
 
 class SoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
     BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext, container) {
+    private val containerDocumentationSectionsVisible = container.hasSections()
+    private val componentsDocumentationSectionsVisible = container.hasComponentsSections()
+
+    val visible = containerDocumentationSectionsVisible or componentsDocumentationSectionsVisible
+    val onlyComponentsDocumentationSectionsVisible = !containerDocumentationSectionsVisible and componentsDocumentationSectionsVisible
 
     override val url = url(container)
 
