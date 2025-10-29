@@ -153,20 +153,19 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
 
             it.containers
                 .filter { container -> container.hasDecisions(recursive = true) }
-                .forEach { container ->
+                .onEach { container ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionsPageViewModel(context, container)) }
                     container.documentation.decisions.forEach { decision ->
                         add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionPageViewModel(context, container, decision)) }
                     }
-
-                    container.components
-                        .filter { component -> component.hasDecisions() }
-                        .forEach { component ->
-                            add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionsPageViewModel(context, component)) }
-                            component.documentation.decisions.forEach { decision ->
-                                add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionPageViewModel(context, component, decision)) }
-                            }
-                        }
+                }
+                .flatMap { container -> container.components }
+                .filter { component -> component.hasDecisions() }
+                .forEach { component ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionsPageViewModel(context, component)) }
+                    component.documentation.decisions.forEach { decision ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionPageViewModel(context, component, decision)) }
+                    }
                 }
 
             it.containers

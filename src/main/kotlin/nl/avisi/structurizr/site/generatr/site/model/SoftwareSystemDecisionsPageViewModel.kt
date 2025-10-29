@@ -14,6 +14,7 @@ abstract class BaseSoftwareSystemDecisionsPageViewModel(
         if (it is Container) Match.CHILD else Match.EXACT
     }
 }
+
 class SoftwareSystemDecisionsPageViewModel(generatorContext: GeneratorContext, softwareSystem: SoftwareSystem) :
     BaseSoftwareSystemDecisionsPageViewModel(generatorContext, softwareSystem) {
 
