@@ -1,7 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site.model
 
 import com.structurizr.documentation.Section
-import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.StaticStructureElement
 import nl.avisi.structurizr.site.generatr.hasDocumentationSections
@@ -41,7 +40,7 @@ fun BaseSoftwareSystemSectionsPageViewModel.createSectionsTabViewModel(
     tab: SoftwareSystemPageViewModel.Tab,
     linkMatch: (StaticStructureElement) -> Match = { Match.EXACT }
 ) = buildList {
-    if (softwareSystem.hasDocumentationSections(recursive = true)) {
+    if (softwareSystem.hasDocumentationSections()) {
         add(
             SectionTabViewModel(
                 this@createSectionsTabViewModel,

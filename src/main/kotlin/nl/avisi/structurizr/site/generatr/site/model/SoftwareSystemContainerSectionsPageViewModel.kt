@@ -3,15 +3,13 @@ package nl.avisi.structurizr.site.generatr.site.model
 import com.structurizr.documentation.Section
 import com.structurizr.model.Component
 import com.structurizr.model.Container
+import nl.avisi.structurizr.site.generatr.hasComponentsSections
 import nl.avisi.structurizr.site.generatr.hasSections
 import nl.avisi.structurizr.site.generatr.normalize
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
     BaseSoftwareSystemSectionsPageViewModel(generatorContext, container.softwareSystem) {
-
-    override val visible = container.hasSections(recursive = true)
-
     val sectionsTable: TableViewModel = createSectionsTableViewModel(container.documentation.sections, dropFirst = false) {
         sectionTableItemUrl(container, it)
     }
@@ -19,14 +17,16 @@ abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext
     val componentSectionsTabs by lazy {
         val components = container.components.filter { it.hasSections() }
         buildList(components.size) {
-            add(
-                SectionTabViewModel(
-                    this@BaseSoftwareSystemContainerSectionsPageViewModel,
-                    "Container",
-                    sectionTableItemUrl(container),
-                    Match.EXACT
+            if (container.hasSections()) {
+                add(
+                    SectionTabViewModel(
+                        this@BaseSoftwareSystemContainerSectionsPageViewModel,
+                        "Container",
+                        sectionTableItemUrl(container),
+                        Match.EXACT
+                    )
                 )
-            )
+            }
 
             addAll(
                 components.map { component ->
@@ -42,6 +42,11 @@ abstract class BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext
 
 class SoftwareSystemContainerSectionsPageViewModel(generatorContext: GeneratorContext, container: Container) :
     BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext, container) {
+    private val containerDocumentationSectionsVisible = container.hasSections()
+    private val componentsDocumentationSectionsVisible = container.hasComponentsSections()
+
+    val visible = containerDocumentationSectionsVisible or componentsDocumentationSectionsVisible
+    val onlyComponentsDocumentationSectionsVisible = !containerDocumentationSectionsVisible and componentsDocumentationSectionsVisible
 
     override val url = url(container)
 

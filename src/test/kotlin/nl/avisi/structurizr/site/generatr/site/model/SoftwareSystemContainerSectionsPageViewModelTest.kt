@@ -8,19 +8,11 @@ import kotlin.test.Test
 
 class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
     private val generatorContext = generatorContext()
-    private val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software system").also {
-        it.documentation.addSection(createSection())
-        it.documentation.addSection(createSection())
-
-        it.addContainer("API Application").apply {
-            documentation.addSection(createSection())
-
-            addComponent("Some Component").apply {
-                documentation.addSection(createSection())
-            }
-        }
+    private val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Software System").apply {
+        documentation.addSection(createSection())
+        documentation.addSection(createSection())
     }
-    private val container = softwareSystem.containers.first()
+    private val container = softwareSystem.addContainer("API Application")
 
     @Test
     fun `active tab`() {
@@ -31,6 +23,8 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `sections table`() {
+        container.documentation.addSection(createSection())
+
         val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
         assertThat(viewModel.sectionsTable.bodyRows).all {
@@ -48,6 +42,8 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `sections tabs`() {
+        container.documentation.addSection(createSection())
+
         val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
         assertThat(viewModel.sectionsTabs).all {
@@ -72,6 +68,11 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `component sections tabs`() {
+        container.documentation.addSection(createSection())
+        container.addComponent("Some Component").apply {
+            documentation.addSection(createSection())
+        }
+
         val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
         assertThat(viewModel.componentSectionsTabs).all {
@@ -93,26 +94,30 @@ class SoftwareSystemContainerSectionsPageViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `hidden view`() {
-        val viewModel = SoftwareSystemContainerSectionsPageViewModel(
-            generatorContext,
-            softwareSystem.addContainer("Container 2")
-        )
+    fun `has sections`() {
+        container.documentation.addSection(createSection())
 
-        assertThat(viewModel.visible).isFalse()
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
+
+        assertThat(viewModel.visible).isTrue()
+        assertThat(viewModel.onlyComponentsDocumentationSectionsVisible).isFalse()
     }
 
     @Test
-    fun `visible view when any child has a section`() {
-        val viewModel = SoftwareSystemContainerSectionsPageViewModel(
-            generatorContext,
-            softwareSystem.addContainer("Container 3").apply {
-                addComponent("Some Component").apply {
-                    documentation.addSection(createSection())
-                }
-            }
-        )
+    fun `no sections`() {
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
+
+        assertThat(viewModel.visible).isFalse()
+        assertThat(viewModel.onlyComponentsDocumentationSectionsVisible).isFalse()
+    }
+
+    @Test
+    fun `child has section`() {
+        container.addComponent("Email Component").documentation.addSection(createSection())
+
+        val viewModel = SoftwareSystemContainerSectionsPageViewModel(generatorContext, container)
 
         assertThat(viewModel.visible).isTrue()
+        assertThat(viewModel.onlyComponentsDocumentationSectionsVisible).isTrue()
     }
 }

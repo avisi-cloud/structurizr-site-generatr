@@ -10,8 +10,8 @@ import nl.avisi.structurizr.site.generatr.site.GeneratorContext
 
 class SoftwareSystemContainerComponentSectionsPageViewModel(generatorContext: GeneratorContext, component: Component) :
     BaseSoftwareSystemContainerSectionsPageViewModel(generatorContext, component.container) {
+    val visible = component.hasSections()
 
-    override val visible = component.hasSections()
     override val url = url(component)
 
     override fun sectionTableItemUrl(container: Container, section: Section?): String =

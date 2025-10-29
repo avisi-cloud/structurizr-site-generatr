@@ -5,7 +5,11 @@ import nl.avisi.structurizr.site.generatr.site.model.BaseSoftwareSystemSectionsP
 import nl.avisi.structurizr.site.generatr.site.model.SoftwareSystemSectionsPageViewModel
 
 fun HTML.softwareSystemSectionsPage(viewModel: SoftwareSystemSectionsPageViewModel) {
-    if (viewModel.visible)
+    if (viewModel.onlyContainersDocumentationSectionsVisible) {
+        redirectRelative(
+            viewModel.sectionsTabs.first().link.relativeHref
+        )
+    } else if (viewModel.visible)
         softwareSystemPage(viewModel) {
             softwareSystemSectionsBody(viewModel)
             table(viewModel.sectionsTable)
