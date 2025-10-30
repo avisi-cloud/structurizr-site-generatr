@@ -40,10 +40,28 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
         }
     }
 
+    @TestFactory
+    fun `active tab`() = Tab.entries
+        .filter { it != Tab.COMPONENT && it != Tab.CODE } // Component & code links are dynamic
+        .map { tab ->
+            DynamicTest.dynamicTest("active tab - $tab") {
+                val generatorContext = generatorContext()
+                val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
+                val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, tab)
+
+                assertThat(
+                    viewModel.tabs
+                        .single { it.link.active }
+                        .tab
+                ).isEqualTo(tab)
+            }
+        }
+
+    private val generatorContext = generatorContext()
+    private val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some Software system", "Description")
+
     @Test
     fun `software system description`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("System", "Description")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(viewModel.description).isEqualTo("Description")
@@ -51,8 +69,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun tabs() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(viewModel.tabs.map { it.tab })
@@ -83,27 +99,8 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
             )
     }
 
-    @TestFactory
-    fun `active tab`() = Tab.entries
-        .filter { it != Tab.COMPONENT && it != Tab.CODE } // Component & code links are dynamic
-        .map { tab ->
-            DynamicTest.dynamicTest("active tab - $tab") {
-                val generatorContext = generatorContext()
-                val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
-                val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, tab)
-
-                assertThat(
-                    viewModel.tabs
-                        .single { it.link.active }
-                        .tab
-                ).isEqualTo(tab)
-            }
-        }
-
     @Test
     fun `home tab is visible`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.HOME).visible).isTrue()
@@ -111,8 +108,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `dependencies tab is visible`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.DEPENDENCIES).visible).isTrue()
@@ -120,8 +115,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `context views tab only visible when context diagrams available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.SYSTEM_CONTEXT).visible).isFalse()
@@ -131,8 +124,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `container views tab only visible when container diagrams available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.CONTAINER).visible).isFalse()
@@ -142,8 +133,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `component views tab only visible when component diagrams available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val container = softwareSystem.addContainer("Backend")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
@@ -154,8 +143,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `code views tab only visible when component diagrams available and component diagram has image view`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val container = softwareSystem.addContainer("Backend")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
@@ -168,8 +155,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `dynamic views tab only visible when dynamic diagrams available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val container = softwareSystem.addContainer("Backend")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
@@ -180,8 +165,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `deployment views tab only visible when deployment diagrams available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.DEPLOYMENT).visible).isFalse()
@@ -191,8 +174,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `decisions views tab visible when software system decisions available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
@@ -201,9 +182,18 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `decisions views tab visible when component decisions available in software system`() {
+        val container = softwareSystem.addContainer("Some Container")
+
+        container.addComponent("Some component").documentation.addDecision(createDecision("2", "Proposed"))
+
+        val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
+
+        assertThat(getTab(viewModel, Tab.DECISIONS).visible).isTrue()
+    }
+
+    @Test
     fun `decisions views tab visible when container decisions available in software system`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
@@ -213,8 +203,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `decisions views tab visible when container & software system decisions are available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.DECISIONS).visible).isFalse()
@@ -225,8 +213,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `sections views tab only visible when two or more sections available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
@@ -238,8 +224,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `sections views tab visible when container sections available in software system`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()
@@ -249,8 +233,6 @@ class SoftwareSystemPageViewModelTest : ViewModelTest() {
 
     @Test
     fun `sections views tab visible when container & software system sections are available`() {
-        val generatorContext = generatorContext()
-        val softwareSystem = generatorContext.workspace.model.addSoftwareSystem("Some software system")
         val viewModel = SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.HOME)
 
         assertThat(getTab(viewModel, Tab.SECTIONS).visible).isFalse()

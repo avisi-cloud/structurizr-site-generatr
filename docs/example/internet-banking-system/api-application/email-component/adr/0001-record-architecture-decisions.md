@@ -1,4 +1,4 @@
-# 1. Record API Application architecture decision records
+# 1. Record Email Component architecture decision records
 
 Date: 2022-06-21
 

@@ -32,9 +32,11 @@ fun SoftwareSystem.firstContainer(generatorContext: GeneratorContext) = containe
             generatorContext.workspace.hasComponentDiagrams(container) or
                     generatorContext.workspace.hasImageViews(container.id) }
 
-fun SoftwareSystem.hasDecisions() = documentation.decisions.isNotEmpty()
+fun SoftwareSystem.hasDecisions(recursive: Boolean = false) = documentation.decisions.isNotEmpty() || (recursive && hasContainerDecisions(recursive = true))
 
-fun SoftwareSystem.hasContainerDecisions() = containers.any { it.hasDecisions() }
+fun SoftwareSystem.hasContainerDecisions(recursive: Boolean = false) = containers.any { it.hasDecisions() || (recursive && hasComponentDecisions()) }
+
+fun SoftwareSystem.hasComponentDecisions() = containers.any { it.hasComponentDecisions() }
 
 fun SoftwareSystem.hasDocumentationSections(recursive: Boolean = false) = documentation.sections.size >= 2 || (recursive && hasContainerDocumentationSections(recursive))
 
@@ -46,11 +48,15 @@ fun Container.firstComponent(generatorContext: GeneratorContext) = components
     .sortedBy { it.name }.firstOrNull {
         component -> generatorContext.workspace.hasImageViews(component.id) }
 
-fun Container.hasDecisions() = documentation.decisions.isNotEmpty()
+fun Container.hasDecisions(recursive: Boolean = false) = documentation.decisions.isNotEmpty() || (recursive && hasComponentDecisions())
+
+fun Container.hasComponentDecisions() = components.any { it.hasDecisions() }
 
 fun Container.hasSections(recursive: Boolean = false) = documentation.sections.isNotEmpty() || (recursive && hasComponentsSections())
 
 fun Container.hasComponentsSections() = components.any { it.hasSections() }
+
+fun Component.hasDecisions() = documentation.decisions.isNotEmpty()
 
 fun Component.hasSections() = documentation.sections.isNotEmpty()
 

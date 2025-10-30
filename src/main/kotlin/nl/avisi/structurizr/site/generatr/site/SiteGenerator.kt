@@ -1,8 +1,6 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
-import com.structurizr.documentation.Documentation
-import com.structurizr.documentation.Section
 import com.structurizr.util.WorkspaceUtils
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
@@ -154,11 +152,19 @@ private fun generateHtmlFiles(context: GeneratorContext, branchDir: File) {
             }
 
             it.containers
-                .filter { container -> container.documentation.decisions.isNotEmpty() }
-                .forEach { container ->
+                .filter { container -> container.hasDecisions(recursive = true) }
+                .onEach { container ->
                     add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionsPageViewModel(context, container)) }
                     container.documentation.decisions.forEach { decision ->
                         add { writeHtmlFile(branchDir, SoftwareSystemContainerDecisionPageViewModel(context, container, decision)) }
+                    }
+                }
+                .flatMap { container -> container.components }
+                .filter { component -> component.hasDecisions() }
+                .forEach { component ->
+                    add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionsPageViewModel(context, component)) }
+                    component.documentation.decisions.forEach { decision ->
+                        add { writeHtmlFile(branchDir, SoftwareSystemContainerComponentDecisionPageViewModel(context, component, decision)) }
                     }
                 }
 
@@ -227,6 +233,8 @@ private fun writeHtmlFile(exportDir: File, viewModel: PageViewModel) {
                 is SoftwareSystemContainerSectionsPageViewModel -> softwareSystemContainerSectionsPage(viewModel)
                 is SoftwareSystemContainerComponentsPageViewModel -> softwareSystemContainerComponentsPage(viewModel)
                 is SoftwareSystemContainerComponentCodePageViewModel -> softwareSystemContainerComponentCodePage(viewModel)
+                is SoftwareSystemContainerComponentDecisionPageViewModel -> softwareSystemContainerComponentDecisionPage(viewModel)
+                is SoftwareSystemContainerComponentDecisionsPageViewModel -> softwareSystemContainerComponentDecisionsPage(viewModel)
                 is SoftwareSystemContainerComponentSectionPageViewModel -> softwareSystemContainerComponentSectionPage(viewModel)
                 is SoftwareSystemContainerComponentSectionsPageViewModel -> softwareSystemContainerComponentSectionsPage(viewModel)
                 is SoftwareSystemDynamicPageViewModel -> softwareSystemDynamicPage(viewModel)
