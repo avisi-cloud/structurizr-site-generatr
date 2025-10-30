@@ -25,7 +25,7 @@ jobs:
       - name: Execute Gradle build
         run: ./gradlew test installDist
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: binaries
           path: build/install
@@ -41,7 +41,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Download binaries
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: binaries
           path: build/install
