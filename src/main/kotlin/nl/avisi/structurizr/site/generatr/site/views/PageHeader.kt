@@ -16,6 +16,19 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
         attributes["aria-label"] = "main navigation"
 
         div(classes = "navbar-brand has-site-branding") {
+            // Mobile hamburger menu button (positioned first for left alignment)
+            a(classes = "navbar-burger") {
+                role = "button"
+                attributes["aria-label"] = "menu"
+                attributes["aria-expanded"] = "false"
+                attributes["data-target"] = "site-menu"
+
+                span { attributes["aria-hidden"] = "true" }
+                span { attributes["aria-hidden"] = "true" }
+                span { attributes["aria-hidden"] = "true" }
+                span { attributes["aria-hidden"] = "true" }
+            }
+
             if (viewModel.hasLogo)
                 logo(viewModel.titleLink, viewModel.logo!!)
 
