@@ -29,7 +29,7 @@ fun toHtml(
     pageViewModel: PageViewModel,
     content: String,
     format: Format,
-    svgFactory: (key: String, url: String) -> String?
+    svgFactory: (key: String, url: String) -> Pair<String, String>?
 ): String = when (format) {
     Format.Markdown -> markdownToHtml(pageViewModel, content, svgFactory)
     Format.AsciiDoc -> asciidocToHtml(pageViewModel, content, svgFactory)
@@ -38,7 +38,7 @@ fun toHtml(
 private fun markdownToHtml(
     pageViewModel: PageViewModel,
     markdown: String,
-    svgFactory: (key: String, url: String) -> String?
+    svgFactory: (key: String, url: String) -> Pair<String, String>?
 ): String {
     val flexmarkConfig = pageViewModel.flexmarkConfig
     val options = flexmarkConfig.flexmarkOptions
@@ -77,7 +77,7 @@ private class FencedCodeBlockRenderer : NodeRenderer {
 private fun asciidocToHtml(
     pageViewModel: PageViewModel,
     asciidoc: String,
-    svgFactory: (key: String, url: String) -> String?
+    svgFactory: (key: String, url: String) -> Pair<String, String>?
 ): String {
     val options = Options.builder()
         .safe(SafeMode.SERVER)
@@ -159,7 +159,7 @@ private class CustomLinkResolver(private val pageViewModel: PageViewModel) : Lin
 
 fun Element.transformEmbeddedDiagramElements(
     pageViewModel: PageViewModel,
-    svgFactory: (key: String, url: String) -> String?
+    svgFactory: (key: String, url: String) -> Pair<String, String>?
 ) = this.allElements
     .toList()
     .filter { it.tag().name == "img" && it.attr("src").startsWith(embedPrefix) }

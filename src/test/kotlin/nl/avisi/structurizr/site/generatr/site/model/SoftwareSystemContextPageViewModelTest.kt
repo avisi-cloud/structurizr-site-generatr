@@ -28,7 +28,14 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/context-1.svg"),
                 ImageViewModel(viewModel, "/png/context-1.png"),
-                ImageViewModel(viewModel, "/puml/context-1.puml")
+                ImageViewModel(viewModel, "/puml/context-1.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/context-1.legend.svg"),
+                    ImageViewModel(viewModel, "/png/context-1.legend.png"),
+                    ImageViewModel(viewModel, "/puml/context-1.legend.puml"),
+                )
             ),
             DiagramViewModel(
                 "context-2",
@@ -38,7 +45,14 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/context-2.svg"),
                 ImageViewModel(viewModel, "/png/context-2.png"),
-                ImageViewModel(viewModel, "/puml/context-2.puml")
+                ImageViewModel(viewModel, "/puml/context-2.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/context-2.legend.svg"),
+                    ImageViewModel(viewModel, "/png/context-2.legend.png"),
+                    ImageViewModel(viewModel, "/puml/context-2.legend.puml"),
+                )
             )
         )
     }

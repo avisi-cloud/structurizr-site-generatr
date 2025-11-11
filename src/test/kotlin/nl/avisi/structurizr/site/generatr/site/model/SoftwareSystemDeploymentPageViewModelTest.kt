@@ -34,7 +34,14 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/deployment-1.svg"),
                 ImageViewModel(viewModel, "/png/deployment-1.png"),
-                ImageViewModel(viewModel, "/puml/deployment-1.puml")
+                ImageViewModel(viewModel, "/puml/deployment-1.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/deployment-1.legend.svg"),
+                    ImageViewModel(viewModel, "/png/deployment-1.legend.png"),
+                    ImageViewModel(viewModel, "/puml/deployment-1.legend.puml"),
+                )
             ),
             DiagramViewModel(
                 "deployment-2",
@@ -44,7 +51,14 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/deployment-2.svg"),
                 ImageViewModel(viewModel, "/png/deployment-2.png"),
-                ImageViewModel(viewModel, "/puml/deployment-2.puml")
+                ImageViewModel(viewModel, "/puml/deployment-2.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/deployment-2.legend.svg"),
+                    ImageViewModel(viewModel, "/png/deployment-2.legend.png"),
+                    ImageViewModel(viewModel, "/puml/deployment-2.legend.puml"),
+                )
             )
         )
     }

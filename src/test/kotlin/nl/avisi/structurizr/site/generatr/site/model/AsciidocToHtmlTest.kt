@@ -211,6 +211,11 @@ class AsciidocToHtmlTest : ViewModelTest() {
                 <div>
                  <svg viewBox="0 0 800 900"></svg>
                 </div>
+                <div style="width: min(100%, 800px);">
+                 <div>
+                  <svg viewBox="0 0 800 900"></svg>
+                 </div>
+                </div>
                 <figcaption>
                  <a onclick="openSvgModal('SystemLandscape-modal', 'SystemLandscape-svg')">System Landscape Diagram</a>
                 </figcaption>
@@ -224,6 +229,8 @@ class AsciidocToHtmlTest : ViewModelTest() {
                   </div>
                   <div class="has-text-centered">
                    System Landscape Diagram [<a href="svg/SystemLandscape.svg" target="_blank">svg</a>|<a href="png/SystemLandscape.png" target="_blank">png</a>|<a href="puml/SystemLandscape.puml" target="_blank">puml</a>]
+                   <br>
+                   Legend [<a href="svg/SystemLandscape.legend.svg" target="_blank">svg</a>|<a href="png/SystemLandscape.legend.png" target="_blank">png</a>|<a href="svg/SystemLandscape.legend.svg" target="_blank">puml</a>]
                   </div>
                  </div>
                 </div>

@@ -8,7 +8,7 @@ import kotlin.test.Test
 
 class StructurizrUtilitiesTest {
 
-    private val svgFactory = { _: String, _: String -> "" }
+    private val svgFactory = { _: String, _: String -> "" to "" }
 
     private fun generatorContext(
         workspaceName: String = "Workspace name",
