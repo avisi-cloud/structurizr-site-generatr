@@ -1,6 +1,7 @@
 package nl.avisi.structurizr.site.generatr.site
 
 import com.structurizr.Workspace
+import nl.avisi.structurizr.site.generatr.site.model.DiagramSvgs
 
 data class GeneratorContext(
     val version: String,
@@ -8,5 +9,5 @@ data class GeneratorContext(
     val branches: List<String>,
     val currentBranch: String,
     val serving: Boolean,
-    val svgFactory: (key: String, url: String) -> String?
+    val svgFactory: (key: String, url: String) -> DiagramSvgs?
 )

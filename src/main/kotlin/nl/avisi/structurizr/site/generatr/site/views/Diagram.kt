@@ -35,6 +35,15 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 +"|"
                 a(href = viewModel.pumlLocation.relativeHref, target = "_blank") { +"puml" }
                 +"]"
+                if (viewModel.legend != null) {
+                    +" Legend ["
+                    a(href = viewModel.legend.svgLocation.relativeHref, target = "_blank") { +"svg" }
+                    +"|"
+                    a(href = viewModel.legend.pngLocation.relativeHref, target = "_blank") { +"png" }
+                    +"|"
+                    a(href = viewModel.legend.pumlLocation.relativeHref, target = "_blank") { +"puml" }
+                    +"]"
+                }
             }
         }
     } else

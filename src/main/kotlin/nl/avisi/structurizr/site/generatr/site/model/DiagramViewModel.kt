@@ -10,10 +10,11 @@ data class DiagramViewModel(
     val diagramWidthInPixels: Int?,
     val svgLocation: ImageViewModel,
     val pngLocation: ImageViewModel,
-    val pumlLocation: ImageViewModel
+    val pumlLocation: ImageViewModel,
+    val legend: LegendViewModel?,
 ) {
     companion object {
-        fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (key: String, url: String) -> String?) =
+        fun forView(pageViewModel: PageViewModel, view: View, svgFactory: (key: String, url: String) -> DiagramSvgs?) =
             forView(pageViewModel, view.key, view.name, view.title, view.description.ifBlank { null }, svgFactory)
 
         fun forView(
@@ -22,9 +23,11 @@ data class DiagramViewModel(
             name: String,
             title: String?,
             description: String?,
-            svgFactory: (key: String, url: String) -> String?
+            svgFactory: (key: String, url: String) -> DiagramSvgs?
         ): DiagramViewModel {
-            val svg = svgFactory(key, pageViewModel.url)
+            val (svg, legendSvg) = svgFactory(key, pageViewModel.url)?.let {
+                it.svg to it.legendSvg
+            } ?: (null to null)
             return DiagramViewModel(
                 key,
                 title ?: name,
@@ -33,7 +36,14 @@ data class DiagramViewModel(
                 extractDiagramWidthInPixels(svg),
                 ImageViewModel(pageViewModel, "/svg/$key.svg"),
                 ImageViewModel(pageViewModel, "/png/$key.png"),
-                ImageViewModel(pageViewModel, "/puml/$key.puml")
+                ImageViewModel(pageViewModel, "/puml/$key.puml"),
+                legendSvg?.let { LegendViewModel(
+                    legendSvg,
+                    extractDiagramWidthInPixels(legendSvg),
+                    ImageViewModel(pageViewModel, "/svg/$key.legend.svg"),
+                    ImageViewModel(pageViewModel, "/png/$key.legend.png"),
+                    ImageViewModel(pageViewModel, "/puml/$key.legend.puml"),
+                ) }
             )
         }
 

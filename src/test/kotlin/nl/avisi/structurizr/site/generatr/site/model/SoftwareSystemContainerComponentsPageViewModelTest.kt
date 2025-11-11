@@ -77,7 +77,14 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/component-1-backend.svg"),
                 ImageViewModel(viewModel, "/png/component-1-backend.png"),
-                ImageViewModel(viewModel, "/puml/component-1-backend.puml")
+                ImageViewModel(viewModel, "/puml/component-1-backend.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/component-1-backend.legend.svg"),
+                    ImageViewModel(viewModel, "/png/component-1-backend.legend.png"),
+                    ImageViewModel(viewModel, "/puml/component-1-backend.legend.puml"),
+                )
             ),
             DiagramViewModel(
                 "component-2-backend",
@@ -87,7 +94,14 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/component-2-backend.svg"),
                 ImageViewModel(viewModel, "/png/component-2-backend.png"),
-                ImageViewModel(viewModel, "/puml/component-2-backend.puml")
+                ImageViewModel(viewModel, "/puml/component-2-backend.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/component-2-backend.legend.svg"),
+                    ImageViewModel(viewModel, "/png/component-2-backend.legend.png"),
+                    ImageViewModel(viewModel, "/puml/component-2-backend.legend.puml"),
+                )
             )
         )
 
@@ -102,7 +116,14 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/component-1-frontend.svg"),
                 ImageViewModel(viewModel, "/png/component-1-frontend.png"),
-                ImageViewModel(viewModel, "/puml/component-1-frontend.puml")
+                ImageViewModel(viewModel, "/puml/component-1-frontend.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/component-1-frontend.legend.svg"),
+                    ImageViewModel(viewModel, "/png/component-1-frontend.legend.png"),
+                    ImageViewModel(viewModel, "/puml/component-1-frontend.legend.puml"),
+                )
             ),
             DiagramViewModel(
                 "component-2-frontend",
@@ -112,7 +133,14 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/component-2-frontend.svg"),
                 ImageViewModel(viewModel, "/png/component-2-frontend.png"),
-                ImageViewModel(viewModel, "/puml/component-2-frontend.puml")
+                ImageViewModel(viewModel, "/puml/component-2-frontend.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/component-2-frontend.legend.svg"),
+                    ImageViewModel(viewModel, "/png/component-2-frontend.legend.png"),
+                    ImageViewModel(viewModel, "/puml/component-2-frontend.legend.puml"),
+                )
             )
         )
     }
