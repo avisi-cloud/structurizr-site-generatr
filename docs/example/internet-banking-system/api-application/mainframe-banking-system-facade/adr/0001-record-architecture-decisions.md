@@ -1,4 +1,4 @@
-# 1. Record Mainframe Banking System Facade architecture decision records
+# 1. Record Mainframe Banking System Facade architecture decision
 
 Date: 2022-06-21
 
