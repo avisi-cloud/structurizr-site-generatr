@@ -64,7 +64,7 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1
+            rectangle "==System 1\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System1
             """.trimIndent()
         )
     }
@@ -92,7 +92,7 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1 [[../system-1/container/]]
+            rectangle "==System 1\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System1 [[../system-1/container/]]
             """.trimIndent()
         )
     }
@@ -123,10 +123,10 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1 [[../system-1/container/]]
-            rectangle "==System 2\n<size:10>[Software System]</size>" <<System2>> as System2 [[../system-2/context/]]
+            rectangle "==System 1\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System1 [[../system-1/container/]]
+            rectangle "==System 2\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System2 [[../system-2/context/]]
 
-            System2 .[#707070,thickness=2].> System1 : "<color:#707070>uses"
+            System2 --> System1 <<Relationship-UmVsYXRpb25zaGlw>> : "uses"
             """.trimIndent()
         )
     }
@@ -156,8 +156,8 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "System 1\n<size:10>[Software System]</size>" <<System1>> {
-              rectangle "==Container 1\n<size:10>[Container]</size>" <<System1.Container1>> as System1.Container1 [[../system-1/component/container-1/]]
+            rectangle "System 1\n<size:16>[Software System]</size>" <<Boundary-U3lzdGVtIDE=>> {
+              rectangle "==Container 1\n<size:16>[Container]</size>" <<Element-RWxlbWVudA==>> as System1.Container1 [[../system-1/component/container-1/]]
             }
             """.trimIndent()
         )
@@ -172,10 +172,13 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
             """
-            Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
-              Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/code/container-1/component-1/")
-              Component(System1.Container1.Component2, "Component 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
-              Component(System1.Container1.Component3, "Component 3", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+            System_Boundary("System1_boundary", "System 1", ${'$'}tags="") {
+              Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
+                Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="../system-1/code/container-1/component-1/")
+                Component(System1.Container1.Component2, "Component 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+                Component(System1.Container1.Component3, "Component 3", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+              }
+
             }
             """.trimIndent()
         )
@@ -190,10 +193,13 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "Container 1\n<size:10>[Container]</size>" <<System1.Container1>> {
-              rectangle "==Component 1\n<size:10>[Component]</size>" <<System1.Container1.Component1>> as System1.Container1.Component1 [[../system-1/code/container-1/component-1/]]
-              rectangle "==Component 2\n<size:10>[Component]</size>" <<System1.Container1.Component2>> as System1.Container1.Component2
-              rectangle "==Component 3\n<size:10>[Component]</size>" <<System1.Container1.Component3>> as System1.Container1.Component3
+            rectangle "System 1\n<size:16>[Software System]</size>" <<Boundary-U3lzdGVtIDE=>> {
+              rectangle "Container 1\n<size:16>[Container]</size>" <<Boundary-Q29udGFpbmVyIDE=>> {
+                rectangle "==Component 1\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as System1.Container1.Component1 [[../system-1/code/container-1/component-1/]]
+                rectangle "==Component 2\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as System1.Container1.Component2
+                rectangle "==Component 3\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as System1.Container1.Component3
+              }
+
             }
             """.trimIndent()
         )
@@ -216,10 +222,12 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutC4HeaderAndFooter()).isEqualTo(
             """
-            Container(System1.Container2, "Container 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+            System_Boundary("System1_boundary", "System 1", ${'$'}tags="") {
+              Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
+                Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+              }
 
-            Container_Boundary("System1.Container1_boundary", "Container 1", ${'$'}tags="") {
-              Component(System1.Container1.Component1, "Component 1", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
+              Container(System1.Container2, "Container 2", ${'$'}techn="", ${'$'}descr="", ${'$'}tags="", ${'$'}link="")
             }
 
             Rel(System1.Container1.Component1, System1.Container2, "uses", ${'$'}techn="", ${'$'}tags="", ${'$'}link="")
@@ -244,13 +252,15 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==Container 2\n<size:10>[Container]</size>" <<System1.Container2>> as System1.Container2
+            rectangle "System 1\n<size:16>[Software System]</size>" <<Boundary-U3lzdGVtIDE=>> {
+              rectangle "Container 1\n<size:16>[Container]</size>" <<Boundary-Q29udGFpbmVyIDE=>> {
+                rectangle "==Component 1\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as System1.Container1.Component1
+              }
 
-            rectangle "Container 1\n<size:10>[Container]</size>" <<System1.Container1>> {
-              rectangle "==Component 1\n<size:10>[Component]</size>" <<System1.Container1.Component1>> as System1.Container1.Component1
+              rectangle "==Container 2\n<size:16>[Container]</size>" <<Element-RWxlbWVudA==>> as System1.Container2
             }
 
-            System1.Container1.Component1 .[#707070,thickness=2].> System1.Container2 : "<color:#707070>uses"
+            System1.Container1.Component1 --> System1.Container2 <<Relationship-UmVsYXRpb25zaGlw>> : "uses"
             """.trimIndent()
         )
     }
@@ -281,10 +291,10 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1
-            rectangle "==System 2\n<size:10>[Software System]</size>" <<System2>> as System2 [[../system-2/context/]]
+            rectangle "==System 1\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System1
+            rectangle "==System 2\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System2 [[../system-2/context/]]
 
-            System2 .[#707070,thickness=2].> System1 : "<color:#707070>uses"
+            System2 --> System1 <<Relationship-UmVsYXRpb25zaGlw>> : "uses"
             """.trimIndent()
         )
     }
@@ -321,10 +331,10 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1
-            rectangle "==System 2\n<size:10>[Software System]</size>" <<System2>> as System2
+            rectangle "==System 1\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System1
+            rectangle "==System 2\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System2
 
-            System2 .[#707070,thickness=2].> System1 : "<color:#707070>uses"
+            System2 --> System1 <<Relationship-UmVsYXRpb25zaGlw>> : "uses"
             """.trimIndent()
         )
     }
@@ -355,10 +365,10 @@ class PlantUmlExporterTest {
 
         assertThat(diagram.definition.withoutStructurizrHeaderAndFooter()).isEqualTo(
             """
-            rectangle "==System 1\n<size:10>[Software System]</size>" <<System1>> as System1
-            rectangle "==System 2\n<size:10>[Software System]</size>" <<System2>> as System2 [[../../system-2/context/]]
+            rectangle "==System 1\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System1
+            rectangle "==System 2\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as System2 [[../../system-2/context/]]
 
-            System2 .[#707070,thickness=2].> System1 : "<color:#707070>uses"
+            System2 --> System1 <<Relationship-UmVsYXRpb25zaGlw>> : "uses"
             """.trimIndent()
         )
     }

@@ -33,7 +33,7 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "backend-dynamic",
-                "Backend - Dynamic",
+                "Dynamic View: Software system - Backend",
                 "Dynamic view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -43,7 +43,7 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
             ),
             DiagramViewModel(
                 "frontend-dynamic",
-                "Frontend - Dynamic",
+                "Dynamic View: Software system - Frontend",
                 "Dynamic view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
