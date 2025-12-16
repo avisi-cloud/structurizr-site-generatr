@@ -16,8 +16,8 @@ enum class ExporterType { C4, STRUCTURIZR }
 
 class PlantUmlExporter(val workspace: Workspace) {
     private val exporter = when (workspace.exporterType()) {
-        ExporterType.C4 -> C4PlantUMLExporter()
-        ExporterType.STRUCTURIZR -> StructurizrPlantUMLExporter()
+        ExporterType.C4 -> C4PlantUMLExporter(ColorScheme.Light)
+        ExporterType.STRUCTURIZR -> StructurizrPlantUMLExporter(ColorScheme.Light)
     }
 
     fun export(): Collection<Diagram> = exporter.export(workspace)
@@ -25,8 +25,8 @@ class PlantUmlExporter(val workspace: Workspace) {
 
 class PlantUmlExporterWithElementLinks(workspace: Workspace, url: String) {
     private val exporter = when (workspace.exporterType()) {
-        ExporterType.C4 -> C4PlantUmlExporterWithElementLinks(workspace, url)
-        ExporterType.STRUCTURIZR -> StructurizrPlantUmlExporterWithElementLinks(workspace, url)
+        ExporterType.C4 -> C4PlantUmlExporterWithElementLinks(workspace, url, ColorScheme.Light)
+        ExporterType.STRUCTURIZR -> StructurizrPlantUmlExporterWithElementLinks(workspace, url, ColorScheme.Light)
     }
 
     init {
@@ -141,7 +141,7 @@ private class WriterWithElementLinks(
     }
 }
 
-class C4PlantUmlExporterWithElementLinks(workspace: Workspace, url: String) : C4PlantUMLExporter() {
+class C4PlantUmlExporterWithElementLinks(workspace: Workspace, url: String, colorScheme: ColorScheme = ColorScheme.Light) : C4PlantUMLExporter(colorScheme) {
     private val withElementLinks = WriterWithElementLinks(workspace, url)
 
     override fun writeHeader(view: ModelView, writer: IndentingWriter) {
@@ -153,7 +153,7 @@ class C4PlantUmlExporterWithElementLinks(workspace: Workspace, url: String) : C4
     }
 }
 
-class StructurizrPlantUmlExporterWithElementLinks(workspace: Workspace, url: String) : StructurizrPlantUMLExporter() {
+class StructurizrPlantUmlExporterWithElementLinks(workspace: Workspace, url: String, colorScheme: ColorScheme = ColorScheme.Light) : StructurizrPlantUMLExporter(colorScheme) {
     private val withElementLinks = WriterWithElementLinks(workspace, url)
 
     override fun writeHeader(view: ModelView, writer: IndentingWriter) {

@@ -317,7 +317,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
         styles {
             element "Person" {
                 color #ffffff
-                fontSize 22
                 shape Person
             }
             element "Customer" {
@@ -356,6 +355,11 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             }
             element "Failover" {
                 opacity 25
+            }
+
+            // default style
+            element "Element" {
+                fontSize 24
             }
         }
     }

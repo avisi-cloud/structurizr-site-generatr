@@ -71,7 +71,7 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "component-1-backend",
-                "Software system - Backend - Components",
+                "Component View: Software system - Backend",
                 "Component view 1 - Backend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -81,7 +81,7 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
             ),
             DiagramViewModel(
                 "component-2-backend",
-                "Software system - Backend - Components",
+                "Component View: Software system - Backend",
                 "Component view 2 - Backend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -96,7 +96,7 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "component-1-frontend",
-                "Software system - Frontend - Components",
+                "Component View: Software system - Frontend",
                 "Component view 1 - Frontend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -106,7 +106,7 @@ class SoftwareSystemContainerComponentsPageViewModelTest : ViewModelTest() {
             ),
             DiagramViewModel(
                 "component-2-frontend",
-                "Software system - Frontend - Components",
+                "Component View: Software system - Frontend",
                 "Component view 2 - Frontend",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
