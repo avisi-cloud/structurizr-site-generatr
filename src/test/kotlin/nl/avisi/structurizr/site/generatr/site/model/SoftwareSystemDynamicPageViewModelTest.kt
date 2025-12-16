@@ -39,7 +39,14 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/backend-dynamic.svg"),
                 ImageViewModel(viewModel, "/png/backend-dynamic.png"),
-                ImageViewModel(viewModel, "/puml/backend-dynamic.puml")
+                ImageViewModel(viewModel, "/puml/backend-dynamic.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/backend-dynamic.legend.svg"),
+                    ImageViewModel(viewModel, "/png/backend-dynamic.legend.png"),
+                    ImageViewModel(viewModel, "/puml/backend-dynamic.legend.puml"),
+                )
             ),
             DiagramViewModel(
                 "frontend-dynamic",
@@ -49,7 +56,14 @@ class SoftwareSystemDynamicPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/frontend-dynamic.svg"),
                 ImageViewModel(viewModel, "/png/frontend-dynamic.png"),
-                ImageViewModel(viewModel, "/puml/frontend-dynamic.puml")
+                ImageViewModel(viewModel, "/puml/frontend-dynamic.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/frontend-dynamic.legend.svg"),
+                    ImageViewModel(viewModel, "/png/frontend-dynamic.legend.png"),
+                    ImageViewModel(viewModel, "/puml/frontend-dynamic.legend.puml"),
+                )
             )
         )
     }

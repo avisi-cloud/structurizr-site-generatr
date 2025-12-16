@@ -8,5 +8,5 @@ data class GeneratorContext(
     val branches: List<String>,
     val currentBranch: String,
     val serving: Boolean,
-    val svgFactory: (key: String, url: String) -> String?
+    val svgFactory: (key: String, url: String) -> Pair<String, String>?
 )

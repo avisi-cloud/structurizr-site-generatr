@@ -40,7 +40,14 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/container-1.svg"),
                 ImageViewModel(viewModel, "/png/container-1.png"),
-                ImageViewModel(viewModel, "/puml/container-1.puml")
+                ImageViewModel(viewModel, "/puml/container-1.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/container-1.legend.svg"),
+                    ImageViewModel(viewModel, "/png/container-1.legend.png"),
+                    ImageViewModel(viewModel, "/puml/container-1.legend.puml"),
+                )
             ),
             DiagramViewModel(
                 "container-2",
@@ -50,7 +57,14 @@ class SoftwareSystemContainerPageViewModelTest : ViewModelTest() {
                 800,
                 ImageViewModel(viewModel, "/svg/container-2.svg"),
                 ImageViewModel(viewModel, "/png/container-2.png"),
-                ImageViewModel(viewModel, "/puml/container-2.puml")
+                ImageViewModel(viewModel, "/puml/container-2.puml"),
+                LegendViewModel(
+                    """<svg viewBox="0 0 800 900"></svg>""",
+                    800,
+                    ImageViewModel(viewModel, "/svg/container-2.legend.svg"),
+                    ImageViewModel(viewModel, "/png/container-2.legend.png"),
+                    ImageViewModel(viewModel, "/puml/container-2.legend.puml"),
+                )
             )
         )
     }

@@ -12,6 +12,12 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
             style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
             attributes["id"] = viewModel.key
             rawHtml(viewModel.svg)
+            if (viewModel.legend.svg != null) {
+                div {
+                    style = "width: min(100%, ${viewModel.legend.widthInPixels}px);"
+                    rawHtml(viewModel.legend.svg)
+                }
+            }
             figcaption {
                 a {
                     onClick = "openSvgModal('$dialogId', '$svgId')"
@@ -34,6 +40,14 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 a(href = viewModel.pngLocation.relativeHref, target = "_blank") { +"png" }
                 +"|"
                 a(href = viewModel.pumlLocation.relativeHref, target = "_blank") { +"puml" }
+                +"]"
+                br
+                +"Legend ["
+                a(href = viewModel.legend.svgLocation.relativeHref, target = "_blank") { +"svg" }
+                +"|"
+                a(href = viewModel.legend.pngLocation.relativeHref, target = "_blank") { +"png" }
+                +"|"
+                a(href = viewModel.legend.svgLocation.relativeHref, target = "_blank") { +"puml" }
                 +"]"
             }
         }

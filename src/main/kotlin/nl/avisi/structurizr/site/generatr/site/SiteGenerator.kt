@@ -73,7 +73,7 @@ fun generateSite(
     serving: Boolean = false
 ) {
     val generatorContext = GeneratorContext(version, workspace, branches, currentBranch, serving) { key, url ->
-        val diagramCache = ConcurrentHashMap<String, String>()
+        val diagramCache = ConcurrentHashMap<String, Pair<String, String>>()
         workspace.views.views.singleOrNull { view -> view.key == key }
             ?.let { generateDiagramWithElementLinks(workspace, it, url, diagramCache) }
     }
