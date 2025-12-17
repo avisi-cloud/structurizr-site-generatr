@@ -28,7 +28,7 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "deployment-1",
-                "Software system - Deployment - Default",
+                "Deployment View: Software system - Default",
                 "Deployment view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -38,7 +38,7 @@ class SoftwareSystemDeploymentPageViewModelTest : ViewModelTest() {
             ),
             DiagramViewModel(
                 "deployment-2",
-                "Software system - Deployment - Default",
+                "Deployment View: Software system - Default",
                 "Deployment view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,

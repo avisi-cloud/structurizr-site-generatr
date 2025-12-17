@@ -22,7 +22,7 @@ class DiagramIndexViewModelTest : ViewModelTest() {
         generatorContext.workspace.views.createSystemContextView(softwareSystem, "system-1", "")
         val viewModel = DiagramIndexViewModel(diagramViewModels())
 
-        assertThat(viewModel.entries).isEqualTo(listOf(IndexEntry("system-1", "Software system - System Context")))
+        assertThat(viewModel.entries).isEqualTo(listOf(IndexEntry("system-1", "System Context View: Software system")))
     }
 
     @Test
@@ -31,7 +31,7 @@ class DiagramIndexViewModelTest : ViewModelTest() {
         generatorContext.workspace.views.createSystemContextView(softwareSystem, "system-1", "Some description")
         val viewModel = DiagramIndexViewModel(diagramViewModels())
 
-        assertThat(viewModel.entries).isEqualTo(listOf(IndexEntry("system-1", "Software system - System Context (Some description)")))
+        assertThat(viewModel.entries).isEqualTo(listOf(IndexEntry("system-1", "System Context View: Software system (Some description)")))
     }
 
     @Test
@@ -52,7 +52,7 @@ class DiagramIndexViewModelTest : ViewModelTest() {
 
         assertThat(viewModel.visible).isTrue()
         assertThat(viewModel.entries).isEqualTo(listOf(
-            IndexEntry("system-1", "Software system - System Context (Some description)"),
+            IndexEntry("system-1", "System Context View: Software system (Some description)"),
             IndexEntry("imageview-2", "Image View Title (Image View Description)")
         ))
     }
