@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.2.21"
-    kotlin("plugin.serialization") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
+    kotlin("plugin.serialization") version "2.3.0"
     application
 }
 
@@ -41,7 +41,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
 
     // Support for Structurizr scripting languages
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.2.21")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.3.0")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.25")
     runtimeOnly("org.jruby:jruby-core:9.4.14.0")
 
