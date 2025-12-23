@@ -62,7 +62,10 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                         !docs internet-banking-system/api-application/email-component/docs
                     }
                 }
-                database = container "Database" "Stores user registration information, hashed authentication credentials, access logs, etc." "Oracle Database Schema" "Database"
+                database = container "Database" "Stores user registration information, hashed authentication credentials, access logs, etc." "Oracle Database Schema" "Database" {
+                    !adrs internet-banking-system/database/adr
+                    !docs internet-banking-system/database/docs
+                }
             }
         }
 
