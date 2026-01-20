@@ -22,7 +22,7 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
         assertThat(viewModel.diagrams).containsExactly(
             DiagramViewModel(
                 "context-1",
-                "Software system - System Context",
+                "System Context View: Software system",
                 "System context view 1",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
@@ -32,7 +32,7 @@ class SoftwareSystemContextPageViewModelTest : ViewModelTest() {
             ),
             DiagramViewModel(
                 "context-2",
-                "Software system - System Context",
+                "System Context View: Software system",
                 "System context view 2",
                 """<svg viewBox="0 0 800 900"></svg>""",
                 800,
