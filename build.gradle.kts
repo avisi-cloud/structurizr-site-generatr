@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -48,6 +50,8 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.28.1")
+
+    testImplementation("com.microsoft.playwright:playwright:1.57.0")
 }
 
 application {
@@ -70,8 +74,17 @@ tasks {
         from("package.json")
     }
 
+    register<JavaExec>("playwright") {
+        classpath(sourceSets["test"].runtimeClasspath)
+        mainClass = "com.microsoft.playwright.CLI"
+        args = (project.properties["args"] as String?)?.split(" ") ?: emptyList()
+    }
+
     test {
         useJUnitPlatform()
+        systemProperty("file.encoding", "UTF-8")
+        testLogging.events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.STANDARD_OUT, TestLogEvent.STANDARD_ERROR)
+        testLogging.exceptionFormat = TestExceptionFormat.FULL
     }
 
     jar {

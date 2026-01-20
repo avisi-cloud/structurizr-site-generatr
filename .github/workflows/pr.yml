@@ -22,6 +22,8 @@ jobs:
           java-version: 21
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3.5.0
+      - name: Ensure browsers are installed
+        run: ./gradlew playwright -Pargs="install --with-deps"
       - name: Execute Gradle build
         run: ./gradlew test installDist
       - name: Archive production artifacts
