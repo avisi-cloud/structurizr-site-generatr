@@ -66,6 +66,11 @@ private fun HTML.bodyFragment(viewModel: PageViewModel, block: DIV.() -> Unit) {
 
         pageHeader(viewModel.headerBar)
 
+        // Mobile menu overlay
+        div(classes = "mobile-menu-overlay") {
+            id = "mobile-menu-overlay"
+        }
+
         div(classes = "site-layout") {
             id = "site"
             menu(viewModel.menu, viewModel.includeTreeview)
