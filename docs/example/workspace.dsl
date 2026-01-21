@@ -360,6 +360,15 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 opacity 25
             }
 
+            element "Group" {
+                background #f1f1f1
+                color #444444
+            }
+            element "Boundary" {
+                background #f1f1f1
+                color #444444
+            }
+
             // default style
             element "Element" {
                 fontSize 24
