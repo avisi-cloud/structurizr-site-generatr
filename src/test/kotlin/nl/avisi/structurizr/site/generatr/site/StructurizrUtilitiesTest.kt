@@ -4,11 +4,12 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.structurizr.Workspace
 import nl.avisi.structurizr.site.generatr.includedProperties
+import nl.avisi.structurizr.site.generatr.site.model.DiagramSvgs
 import kotlin.test.Test
 
 class StructurizrUtilitiesTest {
 
-    private val svgFactory = { _: String, _: String -> "" }
+    private val svgFactory = { _: String, _: String -> DiagramSvgs("", "") }
 
     private fun generatorContext(
         workspaceName: String = "Workspace name",

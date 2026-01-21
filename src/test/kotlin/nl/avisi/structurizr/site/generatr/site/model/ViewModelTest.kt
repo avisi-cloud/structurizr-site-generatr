@@ -4,6 +4,7 @@ import com.structurizr.Workspace
 import com.structurizr.documentation.Decision
 import com.structurizr.documentation.Format
 import com.structurizr.documentation.Section
+import com.structurizr.export.Diagram
 import com.structurizr.model.Element
 import com.structurizr.view.ImageView
 import nl.avisi.structurizr.site.generatr.site.GeneratorContext
@@ -12,7 +13,10 @@ import java.time.ZoneId
 import java.util.*
 
 abstract class ViewModelTest {
-    protected val svgFactory = { _: String, _: String -> """<svg viewBox="0 0 800 900"></svg>""" }
+    protected val svgFactory = { _: String, _: String -> DiagramSvgs(
+        """<svg viewBox="0 0 800 900"></svg>""",
+        """<svg viewBox="0 0 800 900"></svg>""",
+    ) }
 
     protected fun generatorContext(
         workspaceName: String = "Workspace name",

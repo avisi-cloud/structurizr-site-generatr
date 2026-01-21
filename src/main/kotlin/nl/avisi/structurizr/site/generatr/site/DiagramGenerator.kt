@@ -8,6 +8,7 @@ import com.structurizr.view.View
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
+import nl.avisi.structurizr.site.generatr.site.model.DiagramSvgs
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URI
@@ -23,11 +24,27 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
     plantUMLDiagrams.parallelStream()
         .forEach { diagram ->
             val plantUMLFile = File(pumlDir, "${diagram.key}.puml")
-            if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
+            val plantUMLLegendFile = File(pumlDir, "${diagram.key}.legend.puml")
+
+            val diagramNeedsUpdating = !plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition
+            val legendNeedsUpdating = !plantUMLLegendFile.exists() || plantUMLLegendFile.readText() != diagram.legend?.definition
+
+            if (diagramNeedsUpdating || legendNeedsUpdating) {
                 println("${diagram.key}...")
-                saveAsSvg(diagram, svgDir)
-                saveAsPng(diagram, pngDir)
-                saveAsPUML(diagram, plantUMLFile)
+                if (diagramNeedsUpdating) {
+                    saveAsSvg(diagram.withCachedIncludes().definition, svgDir, diagram.key)
+                    saveAsPng(diagram.withCachedIncludes().definition, pngDir, diagram.key)
+                    saveAsPUML(diagram.definition, plantUMLFile)
+                }
+                if (legendNeedsUpdating) {
+                    val diagramLegendDefinition = diagram.legend?.definition
+
+                    if (diagramLegendDefinition != null) {
+                        saveAsSvg(diagramLegendDefinition, svgDir,diagram.key + ".legend")
+                        saveAsPng(diagramLegendDefinition, pngDir, diagram.key + ".legend")
+                        saveAsPUML(diagramLegendDefinition, plantUMLLegendFile)
+                    }
+                }
             } else {
                 println("${diagram.key} UP-TO-DATE")
             }
@@ -38,18 +55,23 @@ fun generateDiagramWithElementLinks(
     workspace: Workspace,
     view: View,
     url: String,
-    diagramCache: ConcurrentHashMap<String, String>
-): String {
+    diagramCache: ConcurrentHashMap<String, DiagramSvgs>
+): DiagramSvgs {
     val diagram = generatePlantUMLDiagramWithElementLinks(workspace, view, url)
 
     val name = "${diagram.key}-${view.key}"
-    return diagramCache.getOrPut(name) {
-        val reader = SourceStringReader(diagram.withCachedIncludes().definition)
-        val stream = ByteArrayOutputStream()
+    return diagramCache.getOrPut(name) { DiagramSvgs(
+        convertDefinitionToSvg(diagram.withCachedIncludes().definition),
+        diagram.legend?.definition?.let { convertDefinitionToSvg(it) }
+    ) }
+}
 
-        reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
-        stream.toString(Charsets.UTF_8)
-    }
+private fun convertDefinitionToSvg(definition: String): String {
+    val reader = SourceStringReader(definition)
+    val stream = ByteArrayOutputStream()
+
+    reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
+    return stream.toString(Charsets.UTF_8)
 }
 
 private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
@@ -58,12 +80,12 @@ private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> 
     return plantUMLExporter.export()
 }
 
-private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
-    plantUMLFile.writeText(diagram.definition)
+private fun saveAsPUML(definition: String, plantUMLFile: File) {
+    plantUMLFile.writeText(definition)
 }
 
-private fun saveAsSvg(diagram: Diagram, svgDir: File, name: String = diagram.key) {
-    val reader = SourceStringReader(diagram.withCachedIncludes().definition)
+private fun saveAsSvg(definition: String, svgDir: File, name: String) {
+    val reader = SourceStringReader(definition)
     val svgFile = File(svgDir, "$name.svg")
 
     svgFile.outputStream().use {
@@ -71,9 +93,9 @@ private fun saveAsSvg(diagram: Diagram, svgDir: File, name: String = diagram.key
     }
 }
 
-private fun saveAsPng(diagram: Diagram, pngDir: File) {
-    val reader = SourceStringReader(diagram.withCachedIncludes().definition)
-    val pngFile = File(pngDir, "${diagram.key}.png")
+private fun saveAsPng(definition: String, pngDir: File, name: String) {
+    val reader = SourceStringReader(definition)
+    val pngFile = File(pngDir, "$name.png")
 
     pngFile.outputStream().use {
         reader.outputImage(it)
