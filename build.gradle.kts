@@ -35,7 +35,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.22.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.12.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
 
     implementation("org.eclipse.jetty:jetty-server:12.1.5")
     implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.1.5")
