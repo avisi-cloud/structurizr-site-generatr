@@ -11,8 +11,10 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
 import java.io.IOException
 import java.net.BindException
-import java.net.InetSocketAddress
-import java.net.Socket
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.time.Duration
 
 @ExtendWith(RetryExtension::class)
@@ -84,13 +86,15 @@ abstract class E2ETestFixture {
     }
 
     private fun siteIsReachable(): Boolean {
-        Socket().use { socket ->
-            try {
-                socket.connect(InetSocketAddress("127.0.0.1", PORT))
-            } catch (_: IOException) {
-                return false
-            }
-            return true
+        try {
+            val response = HttpClient
+                .newBuilder()
+                .connectTimeout(Duration.ofMillis(250))
+                .build()
+                .send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:$PORT")).GET().build(), HttpResponse.BodyHandlers.ofString())
+            return response.statusCode() == 200 && response.body().contains("Structurizr site generatr")
+        } catch (_: IOException) {
+            return false
         }
     }
 }
