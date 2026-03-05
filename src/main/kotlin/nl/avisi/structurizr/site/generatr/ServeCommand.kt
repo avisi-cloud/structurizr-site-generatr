@@ -145,7 +145,13 @@ class ServeCommand : Subcommand("serve", "Start a development server") {
             .filter { it.isDirectory() && !it.isHidden() && !it.absolutePathString().startsWith(absoluteSiteDir) }
             .forEach { it.watch(watchService) }
 
-        Thread { monitorFileChanges(watchService) }
+        Thread {
+            try {
+                monitorFileChanges(watchService)
+            } catch (_: ClosedWatchServiceException) {
+                // ignore, server shutdown
+            }
+        }
             .apply { isDaemon = true }
             .start()
 

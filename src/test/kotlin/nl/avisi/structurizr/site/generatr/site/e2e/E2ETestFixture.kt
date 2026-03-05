@@ -11,8 +11,10 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
 import java.io.IOException
 import java.net.BindException
-import java.net.InetSocketAddress
-import java.net.Socket
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.time.Duration
 
 @ExtendWith(RetryExtension::class)
@@ -26,6 +28,7 @@ abstract class E2ETestFixture {
         protected val SITE_URL = "http://127.0.0.1:$PORT"
     }
 
+    private lateinit var serverThread: Thread
     private lateinit var playwright: Playwright
     private lateinit var browser: Browser
     private lateinit var context: BrowserContext
@@ -34,7 +37,7 @@ abstract class E2ETestFixture {
     @BeforeAll
     @Order(1)
     fun serveExampleSite() {
-        Thread(::serve).apply {
+        serverThread = Thread(::serve).apply {
             isDaemon = true
             start()
         }
@@ -71,11 +74,14 @@ abstract class E2ETestFixture {
     @AfterAll
     fun closeBrowser() {
         playwright.close()
+        serverThread.interrupt()
     }
 
     private fun serve() {
         try {
             main(arrayOf("serve", "-w", "docs/example/workspace.dsl", "-p", PORT.toString()))
+        } catch (_: InterruptedException) {
+            // ignore, server shutdown
         } catch (exception: IOException) {
             if (exception.cause !is BindException) {
                 throw exception
@@ -84,13 +90,15 @@ abstract class E2ETestFixture {
     }
 
     private fun siteIsReachable(): Boolean {
-        Socket().use { socket ->
-            try {
-                socket.connect(InetSocketAddress("127.0.0.1", PORT))
-            } catch (_: IOException) {
-                return false
-            }
-            return true
+        try {
+            val response = HttpClient
+                .newBuilder()
+                .connectTimeout(Duration.ofMillis(250))
+                .build()
+                .send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:$PORT")).GET().build(), HttpResponse.BodyHandlers.ofString())
+            return response.statusCode() == 200 && response.body().contains("Structurizr site generatr")
+        } catch (_: IOException) {
+            return false
         }
     }
 }
