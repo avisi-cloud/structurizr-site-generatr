@@ -28,6 +28,7 @@ abstract class E2ETestFixture {
         protected val SITE_URL = "http://127.0.0.1:$PORT"
     }
 
+    private lateinit var serverThread: Thread
     private lateinit var playwright: Playwright
     private lateinit var browser: Browser
     private lateinit var context: BrowserContext
@@ -36,7 +37,7 @@ abstract class E2ETestFixture {
     @BeforeAll
     @Order(1)
     fun serveExampleSite() {
-        Thread(::serve).apply {
+        serverThread = Thread(::serve).apply {
             isDaemon = true
             start()
         }
@@ -73,11 +74,14 @@ abstract class E2ETestFixture {
     @AfterAll
     fun closeBrowser() {
         playwright.close()
+        serverThread.interrupt()
     }
 
     private fun serve() {
         try {
             main(arrayOf("serve", "-w", "docs/example/workspace.dsl", "-p", PORT.toString()))
+        } catch (_: InterruptedException) {
+            // ignore, server shutdown
         } catch (exception: IOException) {
             if (exception.cause !is BindException) {
                 throw exception
