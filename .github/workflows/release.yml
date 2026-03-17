@@ -65,7 +65,7 @@ jobs:
           path: build/distributions
 
       - name: Build and publish container image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         id: build_push
         with:
           push: true
