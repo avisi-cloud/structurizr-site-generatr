@@ -15,18 +15,24 @@ import nl.avisi.structurizr.site.generatr.*
 enum class ExporterType { C4, STRUCTURIZR }
 
 class PlantUmlExporter(val workspace: Workspace) {
-    private val exporter = when (workspace.exporterType()) {
-        ExporterType.C4 -> C4PlantUMLExporter(ColorScheme.Light)
-        ExporterType.STRUCTURIZR -> StructurizrPlantUMLExporter(ColorScheme.Light)
+    fun export(colorScheme: ColorScheme): Collection<Diagram> {
+        val exporter = when (workspace.exporterType()) {
+            ExporterType.C4 -> C4PlantUMLExporter(colorScheme)
+            ExporterType.STRUCTURIZR -> StructurizrPlantUMLExporter(colorScheme)
+        }
+        return exporter.export(workspace)
     }
-
-    fun export(): Collection<Diagram> = exporter.export(workspace)
 }
 
-class PlantUmlExporterWithElementLinks(workspace: Workspace, url: String) {
+class PlantUmlExporterWithElementLinks(
+    workspace: Workspace, 
+    url: String, 
+    colorScheme: ColorScheme // <--- Add this parameter
+) {
     private val exporter = when (workspace.exporterType()) {
-        ExporterType.C4 -> C4PlantUmlExporterWithElementLinks(workspace, url, ColorScheme.Light)
-        ExporterType.STRUCTURIZR -> StructurizrPlantUmlExporterWithElementLinks(workspace, url, ColorScheme.Light)
+        // Pass the colorScheme variable here instead of ColorScheme.Light
+        ExporterType.C4 -> C4PlantUmlExporterWithElementLinks(workspace, url, colorScheme)
+        ExporterType.STRUCTURIZR -> StructurizrPlantUmlExporterWithElementLinks(workspace, url, colorScheme)
     }
 
     init {
