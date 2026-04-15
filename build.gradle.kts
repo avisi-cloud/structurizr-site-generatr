@@ -3,8 +3,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.3.10"
-    kotlin("plugin.serialization") version "2.3.10"
+    kotlin("jvm") version "2.3.20"
+    kotlin("plugin.serialization") version "2.3.20"
     application
 }
 
@@ -43,7 +43,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
 
     // Support for Structurizr scripting languages
-    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.3.10")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.3.20")
     runtimeOnly("org.codehaus.groovy:groovy-jsr223:3.0.25")
     runtimeOnly("org.jruby:jruby-core:9.4.14.0")
 
