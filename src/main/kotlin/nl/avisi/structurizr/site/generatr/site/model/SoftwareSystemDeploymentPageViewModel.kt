@@ -10,7 +10,7 @@ class SoftwareSystemDeploymentPageViewModel(generatorContext: GeneratorContext, 
         .filter {
             it.softwareSystem == softwareSystem || it.properties["generatr.view.deployment.belongsTo"] == softwareSystem.name
         }
-        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
+        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory, generatorContext.legendSvgFactory) }
     val visible = generatorContext.workspace.views.hasDeploymentViews(softwareSystem)
     val diagramIndex = DiagramIndexViewModel(diagrams)
 }

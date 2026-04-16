@@ -74,8 +74,8 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           tags: |
-            ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
@@ -84,8 +84,9 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ github.ref_name }}
       - name: sign container image
+        if: ${{ env.COSIGN_KEY != '' }}
         run: |
-          cosign sign --yes --key env://COSIGN_KEY ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}@${{ steps.build_push.outputs.digest }}
+          cosign sign --yes --key env://COSIGN_KEY ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}@${{ steps.build_push.outputs.digest }}
         shell: bash
         env:
           COSIGN_KEY: ${{secrets.COSIGN_KEY}}
@@ -93,12 +94,16 @@ jobs:
 
       - name: Check images
         run: |
-          docker buildx imagetools inspect ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
-          docker pull ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
-          cosign verify --key cosign.pub ghcr.io/avisi-cloud/${IMAGE_NAME}:${{ github.ref_name }}
+          docker buildx imagetools inspect ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${{ github.ref_name }}
+          docker pull ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${{ github.ref_name }}
+      - name: Verify container image signature
+        if: ${{ env.COSIGN_KEY != '' }}
+        run: cosign verify --key cosign.pub ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${{ github.ref_name }}
+        env:
+          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
       - uses: anchore/sbom-action@v0
         with:
-          image: ghcr.io/avisi-cloud/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          image: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
 
   create-draft-release:
     runs-on: ubuntu-latest
@@ -150,7 +155,7 @@ jobs:
       - name: Generate example site
         run: >
           build/install/structurizr-site-generatr/bin/structurizr-site-generatr generate-site
-          --git-url https://github.com/avisi-cloud/structurizr-site-generatr.git
+          --git-url ${{ github.server_url }}/${{ github.repository }}.git
           --workspace-file docs/example/workspace.dsl
           --assets-dir docs/example/assets
           --branches main
