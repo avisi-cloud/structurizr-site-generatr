@@ -219,7 +219,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         systemlandscape "SystemLandscape" {
             include *
-            autoLayout
         }
 
         image atm {
@@ -236,7 +235,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 mainframe
                 email
             }
-            autoLayout
             title "System Context of Internet Banking System"
             description "Describes the overall context"
         }
@@ -251,7 +249,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 apiApplication
                 database
             }
-            autoLayout
         }
 
         component apiApplication "Components" {
@@ -262,7 +259,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 accountsSummaryController mainframeBankingSystemFacade
                 resetPasswordController emailComponent
             }
-            autoLayout
         }
 
         image database {
@@ -284,7 +280,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             database -> securityComponent "Returns user data to"
             securityComponent -> signinController "Returns true if the hashed password matches"
             signinController -> singlePageApplication "Sends back an authentication token to"
-            autoLayout
         }
 
         deployment internetBankingSystem "Development" "DevelopmentDeployment" {
@@ -294,7 +289,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 developerWebApplicationInstance developerApiApplicationInstance
                 developerDatabaseInstance
             }
-            autoLayout
         }
 
         deployment internetBankingSystem "Live" "LiveDeployment" {
@@ -306,7 +300,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                 livePrimaryDatabaseInstance
                 liveSecondaryDatabaseInstance
             }
-            autoLayout
         }
 
         deployment * "Environment Landscape" "EnvLandscapeMainframe" {
