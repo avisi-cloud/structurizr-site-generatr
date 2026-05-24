@@ -7,6 +7,7 @@ import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
 fun DIV.menu(viewModel: MenuViewModel, nestGroups: Boolean) {
     aside(classes = "menu p-3") {
+        id = "site-menu"
         generalSection(viewModel.generalItems)
         softwareSystemsSection(viewModel, nestGroups)
     }
