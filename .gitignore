@@ -6,3 +6,5 @@ out
 *.md_
 .vscode
 bin
+
+node_modules
