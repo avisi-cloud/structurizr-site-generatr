@@ -457,16 +457,16 @@ class PlantUmlExporterTest {
     }
 
     private fun String.withoutC4HeaderAndFooter() = this
-        .split(System.lineSeparator())
+        .lines()
         .dropWhile { !it.startsWith("System") && !it.startsWith("Container") }
         .dropLast(3)
-        .joinToString(System.lineSeparator())
+        .joinToString("\n")
         .trimEnd()
 
     private fun String.withoutStructurizrHeaderAndFooter() = this
-        .split(System.lineSeparator())
+        .lines()
         .dropWhile { !it.startsWith("rectangle") }
         .dropLast(1)
-        .joinToString(System.lineSeparator())
+        .joinToString("\n")
         .trimEnd()
 }
