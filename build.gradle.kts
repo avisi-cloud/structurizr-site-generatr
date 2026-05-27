@@ -28,7 +28,7 @@ dependencies {
     implementation("com.structurizr:structurizr-dsl:6.2.1")
     implementation("com.structurizr:structurizr-export:6.2.1")
 
-    implementation("net.sourceforge.plantuml:plantuml:1.2026.2")
+    implementation("net.sourceforge.plantuml:plantuml:1.2026.5")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
     implementation("org.asciidoctor:asciidoctorj:3.0.1")
