@@ -5,6 +5,13 @@ import com.structurizr.model.Element
 import com.structurizr.view.ThemeUtils
 import java.io.File
 
+/**
+ * The url an element defines in the model is moved here, because the url field itself is
+ * used to carry the generated drill-down links. Read it from this property to render the
+ * element's own link.
+ */
+const val ORIGINAL_URL_PROPERTY = "Url"
+
 fun createStructurizrWorkspace(workspaceFile: File) =
     StructurizrDslParser()
         .apply { parse(workspaceFile) }
@@ -19,7 +26,7 @@ fun createStructurizrWorkspace(workspaceFile: File) =
 
 private fun moveUrlToProperty(element: Element) {
     if (element.url != null) {
-        element.addProperty("Url", element.url)
+        element.addProperty(ORIGINAL_URL_PROPERTY, element.url)
         element.url = null
     }
 }
