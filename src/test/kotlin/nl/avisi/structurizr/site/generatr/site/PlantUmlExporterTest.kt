@@ -2,13 +2,19 @@ package nl.avisi.structurizr.site.generatr.site
 
 import assertk.assertThat
 import assertk.assertions.contains
+import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import com.structurizr.Workspace
+import nl.avisi.structurizr.site.generatr.ORIGINAL_URL_PROPERTY
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 
 class PlantUmlExporterTest {
+    private companion object {
+        const val ELEMENT_URL = "https://example.com/personas#felix"
+    }
+
     @TestFactory
     fun `adds skinparam to remove explicit size from generated svg`() = exporters().map { (type, exporterFn) ->
         DynamicTest.dynamicTest("($type)") {
@@ -371,6 +377,50 @@ class PlantUmlExporterTest {
             System2 --> System1 <<Relationship-UmVsYXRpb25zaGlw>> : "uses"
             """.trimIndent()
         )
+    }
+
+    @TestFactory
+    fun `renders the url defined on an element when there is no view to drill into`() =
+        exporters().map { (type, exporterFn) ->
+            DynamicTest.dynamicTest("($type)") {
+                val workspace = createWorkspaceWithPersonWithUrl()
+
+                val diagram = exporterFn(workspace, "/system-1/context/")
+                    .export(workspace.views.systemContextViews.first())
+
+                assertThat(diagram.definition).contains(ELEMENT_URL)
+            }
+        }
+
+    @TestFactory
+    fun `prefers the drill-down link over the url defined on an element`() =
+        exporters().map { (type, exporterFn) ->
+            DynamicTest.dynamicTest("($type)") {
+                val workspace = createWorkspaceWithOneSystemWithContainers()
+                val system = workspace.model.getSoftwareSystemWithName("System 1")!!
+                system.addProperty(ORIGINAL_URL_PROPERTY, ELEMENT_URL)
+
+                val diagram = exporterFn(workspace, "/container/")
+                    .export(workspace.views.systemContextViews.first())
+
+                assertThat(diagram.definition).contains("../system-1/container/")
+                assertThat(diagram.definition).doesNotContain(ELEMENT_URL)
+            }
+        }
+
+    private fun createWorkspaceWithPersonWithUrl(): Workspace {
+        val workspace = Workspace("workspace name", "")
+        val system = workspace.model.addSoftwareSystem("System 1")
+        val person = workspace.model.addPerson("Admin")
+        // createStructurizrWorkspace moves an element's url into this property,
+        // because the url field itself carries the generated drill-down links.
+        person.addProperty(ORIGINAL_URL_PROPERTY, ELEMENT_URL)
+        person.uses(system, "Uses")
+
+        workspace.views.createSystemContextView(system, "Context1", "")
+            .apply { addAllElements() }
+
+        return workspace
     }
 
     private fun createWorkspaceWithOneSystem(): Workspace {

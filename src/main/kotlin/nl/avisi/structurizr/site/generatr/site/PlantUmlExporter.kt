@@ -83,7 +83,12 @@ private class WriterWithElementLinks(
             needsLinkToContainerViews(element, view, workspace) -> getUrlToElement(element)
             needsLinkToComponentViews(element, view, workspace) -> getUrlToElement(element)
             needsLinkToCodeViews(element, workspace) -> getUrlToElement(element)
-            else -> null
+            // No view to drill into. Fall back to the URL the model defines, so a person
+            // can link to its persona, or a leaf container to its ADR. createStructurizrWorkspace
+            // moves that URL into the "Url" property (the url field itself is needed for the
+            // drill-down links above), so read it from there. Drill-down links keep
+            // precedence, so existing behaviour is unchanged.
+            else -> element?.properties?.get(ORIGINAL_URL_PROPERTY)?.takeIf { it.isNotBlank() }
         }
 
         if (url != null)
