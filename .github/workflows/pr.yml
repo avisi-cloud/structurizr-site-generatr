@@ -15,8 +15,8 @@ jobs:
   build-gradle:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
@@ -37,7 +37,7 @@ jobs:
     needs: build-gradle
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v4
