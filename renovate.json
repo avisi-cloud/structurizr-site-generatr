@@ -3,6 +3,7 @@
   "extends": ["config:recommended"],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 6,
+  "minimumReleaseAge": "14 days",
   "packageRules": [
     {
       "groupName": "kotlin",
