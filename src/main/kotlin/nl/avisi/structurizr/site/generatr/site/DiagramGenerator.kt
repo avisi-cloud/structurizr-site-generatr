@@ -31,6 +31,19 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
             } else {
                 println("${diagram.key} UP-TO-DATE")
             }
+
+            val legend = diagram.legend
+            if (legend != null) {
+                val legendPumlFile = File(pumlDir, "${diagram.key}.legend.puml")
+                if (!legendPumlFile.exists() || legendPumlFile.readText() != legend.definition) {
+                    println("${diagram.key}.legend...")
+                    saveLegendAsSvg(legend.definition, diagram.key, svgDir)
+                    saveLegendAsPng(legend.definition, diagram.key, pngDir)
+                    legendPumlFile.writeText(legend.definition)
+                } else {
+                    println("${diagram.key}.legend UP-TO-DATE")
+                }
+            }
         }
 }
 
@@ -58,6 +71,24 @@ private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> 
     return plantUMLExporter.export()
 }
 
+private fun saveLegendAsSvg(legendDefinition: String, diagramKey: String, svgDir: File) {
+    val reader = SourceStringReader(legendDefinition)
+    val svgFile = File(svgDir, "$diagramKey.legend.svg")
+
+    svgFile.outputStream().use {
+        reader.outputImage(it, FileFormatOption(FileFormat.SVG, false))
+    }
+}
+
+private fun saveLegendAsPng(legendDefinition: String, diagramKey: String, pngDir: File) {
+    val reader = SourceStringReader(legendDefinition)
+    val pngFile = File(pngDir, "$diagramKey.legend.png")
+
+    pngFile.outputStream().use {
+        reader.outputImage(it)
+    }
+}
+
 private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
     plantUMLFile.writeText(diagram.definition)
 }
@@ -78,6 +109,23 @@ private fun saveAsPng(diagram: Diagram, pngDir: File) {
     pngFile.outputStream().use {
         reader.outputImage(it)
     }
+}
+
+fun generateLegendSvgs(workspace: Workspace): Map<String, String> {
+    val diagrams = generatePlantUMLDiagrams(workspace)
+    val legendSvgs = ConcurrentHashMap<String, String>()
+
+    diagrams.parallelStream().forEach { diagram ->
+        val legend = diagram.legend
+        if (legend != null) {
+            val reader = SourceStringReader(legend.definition)
+            val stream = ByteArrayOutputStream()
+            reader.outputImage(stream, FileFormatOption(FileFormat.SVG, false))
+            legendSvgs[diagram.key] = stream.toString(Charsets.UTF_8)
+        }
+    }
+
+    return legendSvgs
 }
 
 private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {

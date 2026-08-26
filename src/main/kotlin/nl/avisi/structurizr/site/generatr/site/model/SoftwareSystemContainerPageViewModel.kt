@@ -8,7 +8,7 @@ class SoftwareSystemContainerPageViewModel(generatorContext: GeneratorContext, s
     SoftwareSystemPageViewModel(generatorContext, softwareSystem, Tab.CONTAINER) {
     val diagrams = generatorContext.workspace.views.containerViews
         .filter { it.softwareSystem == softwareSystem }
-        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
+        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory, generatorContext.legendSvgFactory) }
     val images = generatorContext.workspace.views.imageViews
         .filter { it.element == softwareSystem }
         .map { ImageViewViewModel(it) }

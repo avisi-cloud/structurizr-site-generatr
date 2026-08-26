@@ -23,9 +23,28 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 }
             }
         }
+        if (viewModel.hasLegend) {
+            details(classes = "mt-2 mb-4") {
+                style = "width: min(100%, ${viewModel.diagramWidthInPixels}px);"
+                summary(classes = "is-clickable") {
+                    +"Show legend"
+                }
+                div(classes = "mt-2") {
+                    style = viewModel.legendWidthInPixels?.let {
+                        "width: min(100%, ${it}px);"
+                    } ?: "width: 100%;"
+                    rawHtml(viewModel.legendSvg!!)
+                }
+            }
+        }
         modal(dialogId) {
             // TODO: no links in this SVG
             rawHtml(viewModel.svg, svgId, "modal-box-content")
+            if (viewModel.hasLegend) {
+                div(classes = "mt-4") {
+                    rawHtml(viewModel.legendSvg!!)
+                }
+            }
             div(classes = "has-text-centered") {
                 +viewModel.title
                 +" ["
@@ -35,6 +54,15 @@ fun FlowContent.diagram(viewModel: DiagramViewModel) {
                 +"|"
                 a(href = viewModel.pumlLocation.relativeHref, target = "_blank") { +"puml" }
                 +"]"
+                if (viewModel.hasLegend) {
+                    +" [legend: "
+                    a(href = viewModel.legendSvgLocation!!.relativeHref, target = "_blank") { +"svg" }
+                    +"|"
+                    a(href = viewModel.legendPngLocation!!.relativeHref, target = "_blank") { +"png" }
+                    +"|"
+                    a(href = viewModel.legendPumlLocation!!.relativeHref, target = "_blank") { +"puml" }
+                    +"]"
+                }
             }
         }
     } else
