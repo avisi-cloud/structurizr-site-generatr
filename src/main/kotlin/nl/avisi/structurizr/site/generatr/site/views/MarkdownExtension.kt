@@ -73,6 +73,10 @@ fun BODY.mermaidScript(viewModel: PageViewModel) {
     script(type = "module") {
         unsafe {
             raw("import mermaid from '${viewModel.cdn.mermaidJs()}';")
+            if (viewModel.customMermaidInit.includeCustomInit) {
+                raw("import init from '${viewModel.customMermaidInit.resourceURI}';")
+                raw("init(mermaid);")
+            }
         }
     }
 }
