@@ -6,6 +6,7 @@ import kotlinx.cli.*
 import nl.avisi.structurizr.site.generatr.site.*
 import java.io.File
 
+
 class GenerateSiteCommand : Subcommand(
     "generate-site",
     "Generate a site for the selected workspace."
@@ -59,7 +60,10 @@ class GenerateSiteCommand : Subcommand(
         ArgType.String, "exclude-branches", "ex",
         "Comma-separated list of branches to exclude from the generated site"
     ).default("")
-
+    private val parallel by option(
+        ArgType.Boolean, "parallel", "par",
+        "When set to TRUE will generate the site for each branch in parallel"
+    ).default(value = false)
     override fun execute() {
         val siteDir = File(outputDir).apply { mkdirs() }
         val gitUrl = gitUrl
@@ -105,22 +109,62 @@ class GenerateSiteCommand : Subcommand(
         if (!branchesToGenerate.contains(defaultBranch)) {
             throw Exception("$defaultBranch does not contain a valid structurizr workspace. Site generation halted.")
         }
+        clonedRepository.checkoutBranch(defaultBranch)
 
-        branchesToGenerate.forEach { branch ->
-            println("Generating site for branch $branch")
-            clonedRepository.checkoutBranch(branch)
+        if (parallel) {
+            System.setProperty("org.jruby.embed.localcontext.scope", "threadsafe");
+            branchesToGenerate.withIndex().toList().parallelStream().forEach { branchIndex ->
+                val branch = branchIndex.value
+                val index = branchIndex.index
+                val isDefaultBranch = branch == defaultBranch
+                println("Generating site for branch $branch")
+                
+                val path = if (isDefaultBranch) {
+                    // Default branch is already in the main clone directory
+                    clonedRepository.cloneDir
+                } else {
+                    // Clone the branch to a separate directory for parallel processing
+                    val branchCloneDir = File("build/model-clone-$index")
+                    clonedRepository.localBranchClone(branchCloneDir, branch)
+                    branchCloneDir
+                }
+                
+                val branchWorkspaceFile = File(path, workspaceFile)
+                val workspace = createStructurizrWorkspace(branchWorkspaceFile)
+                writeStructurizrJson(workspace, File(siteDir, branch))
+                generateDiagrams(workspace, File(siteDir, branch))
+                generateSite(
+                    version,
+                    workspace,
+                    assetsDir?.let { File(path, it) },
+                    siteDir,
+                    branchesToGenerate,
+                    branch
+                )
+                
+                // Clean up the temporary clone directory for non-default branches
+                if (!isDefaultBranch) {
+                    File("build/model-clone-$index").deleteRecursively()
+                }
+            }
+        } else {
+            branchesToGenerate.forEach { branch ->
+                println("Generating site for branch $branch")
 
-            val workspace = createStructurizrWorkspace(workspaceFileInRepo)
-            writeStructurizrJson(workspace, File(siteDir, branch))
-            generateDiagrams(workspace, File(siteDir, branch))
-            generateSite(
-                version,
-                workspace,
-                assetsDir?.let { File(cloneDir, it) },
-                siteDir,
-                branchesToGenerate,
-                branch
-            )
+                clonedRepository.checkoutBranch(branch)
+
+                val workspace = createStructurizrWorkspace(workspaceFileInRepo)
+                writeStructurizrJson(workspace, File(siteDir, branch))
+                generateDiagrams(workspace, File(siteDir, branch))
+                generateSite(
+                    version,
+                    workspace,
+                    assetsDir?.let { File(cloneDir, it) },
+                    siteDir,
+                    branchesToGenerate,
+                    branch
+                )
+            }
         }
     }
 

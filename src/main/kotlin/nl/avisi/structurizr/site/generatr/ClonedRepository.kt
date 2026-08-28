@@ -56,4 +56,19 @@ class ClonedRepository(
             .onEach { println("Found the following branch: $it") }
             .filter { it !in excludeBranches }
 
+    fun localBranchClone(targetDir: File, branch: String) {
+        // Clean up target directory if it exists
+        if (targetDir.exists()) {
+            targetDir.deleteRecursively()
+        }
+
+        // Clone from the local repository directory to the target directory
+        val cloneCommand = Git.cloneRepository()
+            .setURI(cloneDir.toURI().toString())
+            .setDirectory(targetDir)
+            .setBranch(branch)
+        
+        cloneCommand.call()
+    }
+
 }
