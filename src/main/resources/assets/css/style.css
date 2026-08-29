@@ -94,7 +94,16 @@ a.navbar-item:hover {
     .site-layout {
         grid-template-columns: 1fr !important;
     }
-    
+
+    /* Prevent wide content (e.g. tables) from stretching the page horizontally */
+    .site-layout > * {
+        min-width: 0;
+    }
+
+    .site-layout .container.is-fluid {
+        overflow-x: auto;
+    }
+
     /* Fix navbar positioning on mobile */
     .navbar {
         justify-content: flex-start !important;
@@ -138,10 +147,7 @@ a.navbar-item:hover {
     /* Mobile menu overlay */
     .mobile-menu-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+        inset: 0;
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 999;
         opacity: 0;
