@@ -10,36 +10,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileOverlay = document.getElementById('mobile-menu-overlay');
   
   if (navbarBurger && siteMenu && mobileOverlay) {
-    
+
+    function setMenu(open) {
+      navbarBurger.classList.toggle('is-active', open);
+      siteMenu.classList.toggle('is-active', open);
+      mobileOverlay.classList.toggle('is-active', open);
+      navbarBurger.setAttribute('aria-expanded', open.toString());
+      // Lock background scrolling while the drawer is open
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    }
+
     function toggleMenu() {
-      // Toggle the is-active class on the burger, menu, and overlay
-      navbarBurger.classList.toggle('is-active');
-      siteMenu.classList.toggle('is-active');
-      mobileOverlay.classList.toggle('is-active');
-      
-      // Update aria-expanded attribute
-      const isExpanded = navbarBurger.classList.contains('is-active');
-      navbarBurger.setAttribute('aria-expanded', isExpanded.toString());
+      setMenu(!siteMenu.classList.contains('is-active'));
     }
-    
-    function closeMenu() {
-      navbarBurger.classList.remove('is-active');
-      siteMenu.classList.remove('is-active');
-      mobileOverlay.classList.remove('is-active');
-      navbarBurger.setAttribute('aria-expanded', 'false');
-    }
-    
+
     // Add click event listener to the burger
     navbarBurger.addEventListener('click', toggleMenu);
-    
+
     // Close menu when clicking on the overlay
-    mobileOverlay.addEventListener('click', closeMenu);
-    
-    // Close menu on window resize if switching to desktop view
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1023) {
-        closeMenu();
+    mobileOverlay.addEventListener('click', () => setMenu(false));
+
+    // Close menu with the Escape key
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && siteMenu.classList.contains('is-active')) {
+        setMenu(false);
+        navbarBurger.focus();
       }
+    });
+
+    // Close menu when switching to desktop view
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+    desktopQuery.addEventListener('change', (event) => {
+      if (event.matches) setMenu(false);
     });
   }
 });

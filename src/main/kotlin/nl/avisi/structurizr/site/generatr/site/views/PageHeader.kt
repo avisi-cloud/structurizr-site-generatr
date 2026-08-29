@@ -21,7 +21,7 @@ fun BODY.pageHeader(viewModel: HeaderBarViewModel) {
                 role = "button"
                 attributes["aria-label"] = "menu"
                 attributes["aria-expanded"] = "false"
-                attributes["data-target"] = "site-menu"
+                attributes["aria-controls"] = "site-menu"
 
                 // The spans below are the burger menu icon bars (Bulma renders them as the hamburger icon)
                 span { attributes["aria-hidden"] = "true" }
