@@ -88,3 +88,93 @@ a.navbar-item:hover {
 .input::placeholder {
     color: darkgrey!important;
 }
+
+/* Mobile Menu Styles */
+@media screen and (max-width: 1023px) {
+    .site-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Prevent wide content (e.g. tables) from stretching the page horizontally */
+    .site-layout > * {
+        min-width: 0;
+    }
+
+    .site-layout .container.is-fluid {
+        overflow-x: auto;
+    }
+
+    .navbar-brand {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .navbar-burger {
+        /* Stay above the drawer (z-index 1000) so it remains tappable to close the menu */
+        position: relative;
+        z-index: 1001;
+        min-width: 44px;
+        min-height: 44px;
+        margin-right: 1rem !important;
+        margin-left: 0 !important;
+    }
+
+    /* Ensure navbar items stay on left */
+    .navbar-brand .navbar-item {
+        margin-left: 0 !important;
+        margin-right: 0.5rem !important;
+    }
+
+    /* Mobile menu overlay */
+    #mobile-menu-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #mobile-menu-overlay.is-active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 300px !important;
+        max-width: 85vw;
+        height: 100vh !important;
+        height: 100dvh !important;
+        z-index: 1000 !important;
+        background-color: var(--bulma-scheme-main) !important;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease !important;
+        overflow-y: auto !important;
+    }
+
+    .menu.is-active {
+        transform: translateX(0);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    /* Larger touch targets for menu items on mobile */
+    .menu .menu-list a {
+        padding: 0.75rem 1rem !important;
+        border-radius: 4px !important;
+        display: block !important;
+        text-decoration: none !important;
+    }
+
+    /* Search input in the mobile drawer */
+    .menu .mobile-menu-search {
+        padding: 0.5rem 0.75rem;
+    }
+}
