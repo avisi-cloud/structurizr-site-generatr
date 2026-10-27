@@ -1,14 +1,64 @@
 package nl.avisi.structurizr.site.generatr.site.views
 
 import kotlinx.html.*
+import nl.avisi.structurizr.site.generatr.site.model.HeaderBarViewModel
 import nl.avisi.structurizr.site.generatr.site.model.LinkViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuNodeViewModel
 import nl.avisi.structurizr.site.generatr.site.model.MenuViewModel
 
-fun DIV.menu(viewModel: MenuViewModel, nestGroups: Boolean) {
+fun DIV.menu(viewModel: MenuViewModel, nestGroups: Boolean, headerBar: HeaderBarViewModel) {
     aside(classes = "menu p-3") {
+        id = "site-menu"
+        searchSection(headerBar)
         generalSection(viewModel.generalItems)
         softwareSystemsSection(viewModel, nestGroups)
+        branchesSection(headerBar)
+        footerSection(headerBar)
+    }
+}
+
+// Mobile-only sections (hidden on desktop, where the navbar provides this functionality)
+private fun ASIDE.searchSection(headerBar: HeaderBarViewModel) {
+    div(classes = "mobile-menu-search is-hidden-desktop") {
+        input(classes = "input is-small is-rounded") {
+            type = InputType.search
+            placeholder = "Search..."
+            onKeyUp = "redirect(event, value, '${headerBar.searchLink.relativeHref}')"
+        }
+    }
+}
+
+private fun ASIDE.branchesSection(headerBar: HeaderBarViewModel) {
+    if (headerBar.branches.isEmpty()) return
+    div(classes = "is-hidden-desktop") {
+        p(classes = "menu-label") { +"Branches" }
+        ul(classes = "menu-list has-site-branding") {
+            headerBar.branches.forEach { branchLink ->
+                li {
+                    a(href = branchLink.relativeHref) { +branchLink.title }
+                }
+            }
+        }
+    }
+}
+
+private fun ASIDE.footerSection(headerBar: HeaderBarViewModel) {
+    div(classes = "is-hidden-desktop") {
+        if (headerBar.allowToggleTheme) {
+            ul(classes = "menu-list has-site-branding") {
+                li {
+                    a {
+                        role = "button"
+                        onClick = "toggleTheme()"
+                        +"Toggle theme"
+                    }
+                }
+            }
+        }
+        p(classes = "menu-label") {
+            span { +"v" }
+            span { +headerBar.version }
+        }
     }
 }
 
