@@ -40,7 +40,7 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-server:12.1.12")
     implementation("org.eclipse.jetty.websocket:jetty-websocket-jetty-server:12.1.12")
 
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.18")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.20")
 
     // Support for Structurizr scripting languages
     runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:2.4.10")
