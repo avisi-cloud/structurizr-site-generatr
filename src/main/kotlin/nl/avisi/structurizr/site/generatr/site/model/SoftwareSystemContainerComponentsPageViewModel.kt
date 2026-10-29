@@ -10,7 +10,7 @@ class SoftwareSystemContainerComponentsPageViewModel(generatorContext: Generator
     override val url = url(container)
     val diagrams = generatorContext.workspace.views.componentViews
         .filter { it.container == container }
-        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory) }
+        .map { DiagramViewModel.forView(this, it, generatorContext.svgFactory, generatorContext.legendSvgFactory) }
     val images = generatorContext.workspace.views.imageViews
         .filter { it.element == container }
         .map { ImageViewViewModel(it) }

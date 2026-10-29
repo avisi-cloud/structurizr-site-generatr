@@ -72,11 +72,16 @@ fun generateSite(
     currentBranch: String,
     serving: Boolean = false
 ) {
-    val generatorContext = GeneratorContext(version, workspace, branches, currentBranch, serving) { key, url ->
-        val diagramCache = ConcurrentHashMap<String, String>()
-        workspace.views.views.singleOrNull { view -> view.key == key }
-            ?.let { generateDiagramWithElementLinks(workspace, it, url, diagramCache) }
-    }
+    val diagramCache = ConcurrentHashMap<String, String>()
+    val legendSvgs = generateLegendSvgs(workspace)
+    val generatorContext = GeneratorContext(
+        version, workspace, branches, currentBranch, serving,
+        svgFactory = { key, url ->
+            workspace.views.views.singleOrNull { view -> view.key == key }
+                ?.let { generateDiagramWithElementLinks(workspace, it, url, diagramCache) }
+        },
+        legendSvgFactory = { key -> legendSvgs[key] }
+    )
 
     val branchDir = File(exportDir, currentBranch)
 
