@@ -3,11 +3,13 @@ package nl.avisi.structurizr.site.generatr.site
 import com.structurizr.Workspace
 import com.structurizr.export.Diagram
 import com.structurizr.export.plantuml.PlantUMLDiagram
+import com.structurizr.view.ColorScheme
 import com.structurizr.view.ModelView
 import com.structurizr.view.View
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
+import nl.avisi.structurizr.site.generatr.* // <--- FIXED: Star import to find ColorScheme
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URI
@@ -18,31 +20,51 @@ fun generateDiagrams(workspace: Workspace, exportDir: File) {
     val svgDir = svgDir(exportDir)
     val pngDir = pngDir(exportDir)
 
-    val plantUMLDiagrams = generatePlantUMLDiagrams(workspace)
-
-    plantUMLDiagrams.parallelStream()
+    // 1. Generate Light Mode Diagrams (Default)
+    generatePlantUMLDiagrams(workspace, ColorScheme.Light).parallelStream()
         .forEach { diagram ->
-            val plantUMLFile = File(pumlDir, "${diagram.key}.puml")
-            if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
-                println("${diagram.key}...")
-                saveAsSvg(diagram, svgDir)
-                saveAsPng(diagram, pngDir)
-                saveAsPUML(diagram, plantUMLFile)
-            } else {
-                println("${diagram.key} UP-TO-DATE")
-            }
+            processDiagram(diagram, pumlDir, svgDir, pngDir, suffix = "")
         }
+
+    // 2. Generate Dark Mode Diagrams (With "-dark" suffix)
+    generatePlantUMLDiagrams(workspace, ColorScheme.Dark).parallelStream()
+        .forEach { diagram ->
+            processDiagram(diagram, pumlDir, svgDir, pngDir, suffix = "-dark")
+        }
+}
+
+private fun processDiagram(
+    diagram: Diagram,
+    pumlDir: File,
+    svgDir: File,
+    pngDir: File,
+    suffix: String
+) {
+    val name = "${diagram.key}$suffix"
+    val plantUMLFile = File(pumlDir, "$name.puml")
+    
+    // Check if the file content has changed or if it doesn't exist
+    if (!plantUMLFile.exists() || plantUMLFile.readText() != diagram.definition) {
+        println("$name...")
+        saveAsSvg(diagram, svgDir, name)
+        saveAsPng(diagram, pngDir, name)
+        saveAsPUML(diagram, plantUMLFile)
+    } else {
+        println("$name UP-TO-DATE")
+    }
 }
 
 fun generateDiagramWithElementLinks(
     workspace: Workspace,
     view: View,
     url: String,
-    diagramCache: ConcurrentHashMap<String, String>
+    diagramCache: ConcurrentHashMap<String, String>,
+    colorScheme: ColorScheme = ColorScheme.Light
 ): String {
-    val diagram = generatePlantUMLDiagramWithElementLinks(workspace, view, url)
+    val diagram = generatePlantUMLDiagramWithElementLinks(workspace, view, url, colorScheme)
 
-    val name = "${diagram.key}-${view.key}"
+    // Include color scheme in cache key to separate Light/Dark versions
+    val name = "${diagram.key}-${view.key}-${colorScheme.name.lowercase()}"
     return diagramCache.getOrPut(name) {
         val reader = SourceStringReader(diagram.withCachedIncludes().definition)
         val stream = ByteArrayOutputStream()
@@ -52,10 +74,9 @@ fun generateDiagramWithElementLinks(
     }
 }
 
-private fun generatePlantUMLDiagrams(workspace: Workspace): Collection<Diagram> {
+private fun generatePlantUMLDiagrams(workspace: Workspace, colorScheme: ColorScheme): Collection<Diagram> {
     val plantUMLExporter = PlantUmlExporter(workspace)
-
-    return plantUMLExporter.export()
+    return plantUMLExporter.export(colorScheme)
 }
 
 private fun saveAsPUML(diagram: Diagram, plantUMLFile: File) {
@@ -71,18 +92,22 @@ private fun saveAsSvg(diagram: Diagram, svgDir: File, name: String = diagram.key
     }
 }
 
-private fun saveAsPng(diagram: Diagram, pngDir: File) {
+private fun saveAsPng(diagram: Diagram, pngDir: File, name: String = diagram.key) {
     val reader = SourceStringReader(diagram.withCachedIncludes().definition)
-    val pngFile = File(pngDir, "${diagram.key}.png")
+    val pngFile = File(pngDir, "$name.png")
 
     pngFile.outputStream().use {
         reader.outputImage(it)
     }
 }
 
-private fun generatePlantUMLDiagramWithElementLinks(workspace: Workspace, view: View, url: String): Diagram {
-    val plantUMLExporter = PlantUmlExporterWithElementLinks(workspace, url)
-
+private fun generatePlantUMLDiagramWithElementLinks(
+    workspace: Workspace, 
+    view: View, 
+    url: String, 
+    colorScheme: ColorScheme
+): Diagram {
+    val plantUMLExporter = PlantUmlExporterWithElementLinks(workspace, url, colorScheme)
     return plantUMLExporter.export(view)
 }
 
